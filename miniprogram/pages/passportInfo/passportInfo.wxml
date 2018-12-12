@@ -3,10 +3,54 @@
 
   <view class="list">
     <view class="list-item">
-      <text class="request-text">颁发机构：{{authority}}</text>
+      <text class="request-text">护照号码：{{passport_no}}</text>
     </view>
     <view class="list-item">
+      <text class="request-text">国籍：{{country}}</text>
+    </view>
+    <view class="list-item">
+      <text class="request-text">护照类型：{{type}}</text>
+    </view>
+    <view class="list-item">
+      <text class="request-text">姓名：{{name_cn}}</text>
+    </view>
+    <view class="list-item">
+      <text class="request-text">姓名拼音：{{name}}</text>
+    </view>
+    <view class="list-item">
+      <text class="request-text">性别：{{sex}}</text>
+    </view>
+
+    <view class="list-item">
       <text class="request-text">出生日期：{{birth_date}}</text>
+    </view>
+    
+    <view class="list-item">
+      <text class="request-text">出生地：{{birth_place}}</text>
+    </view>
+    
+    <view class="list-item">
+      <text class="request-text">出生地(全)：{{birth_place_raw}}</text>
+    </view>
+    
+    <view class="list-item">
+      <text class="request-text">颁发机构：{{authority}}</text>
+    </view>
+    
+    <view class="list-item">
+      <text class="request-text">颁发日期：{{issue_date}}</text>
+    </view>
+    <view class="list-item">
+      <text class="request-text">有效期至：{{expiry_date}}</text>
+    </view>
+    <view class="list-item">
+      <text class="request-text">颁发地：{{issue_place}}</text>
+    </view>
+    <view class="list-item">
+      <text class="request-text">颁发地(全)：{{issue_place_raw}}</text>
+    </view>
+    <view class="list-item">
+      <text class="request-text">success：{{success}}</text>
     </view>
   </view>
 </view>

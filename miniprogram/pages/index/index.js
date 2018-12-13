@@ -1,4 +1,5 @@
 //index.js
+const uploadFile = require('../../uploadAliyun.js')
 const app = getApp()
 
 Page({
@@ -68,8 +69,7 @@ Page({
     })
   },
 
-  // 上传图片
-  doUpload: function () {
+  doUploadPassport: function () {
     // 选择图片
     wx.chooseImage({
       count: 1,
@@ -124,4 +124,41 @@ Page({
     })
   },
 
+  doUploadPhoto: function () {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        var tempFilePaths = res.tempFilePaths
+        console.log(tempFilePaths[0])
+
+        uploadFile(tempFilePaths[0], 'passport/', '100')
+        // wx.uploadFile({
+        //   url: 'https://evisa.oss-cn-shanghai.aliyuncs.com',
+        //   filePath: tempFilePaths[0],
+        //   name: 'file',
+        //   formData: {
+        //     user: 'evisa',
+        //     key:'key',
+        //     name: tempFilePaths[0],
+        //     success_action_status:'200',
+        //     OSSAccessKeyId:'LTAIQMDDOG5SOtsh',
+        //     signature:'xxxxxx',
+        //     policy:'xxxxxx'
+        //   },
+        //   success: function (res) {
+        //     console.log('uploaded')
+        //     console.log(res.data)
+        //   },
+        //   error: function (res) {
+        //     console.log(res.err)
+        //   }
+        // })
+      },
+      fail: e => {
+        console.error(e)
+      }
+    })
+  },
 })

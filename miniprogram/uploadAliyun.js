@@ -5,20 +5,9 @@ require('./crypto/hmac.js');
 require('./crypto/sha1.js');
 const Crypto = require('./crypto/crypto.js');
 
-const uploadFile = function (filePath, fileW, objectId, successCB, errorCB) {
-    if (!filePath || filePath.length < 9) {
-        wx.showModal({
-            title: '视频错误',
-            content: '请重试',
-            showCancel: false,
-        })
-        return;
-    }
+const uploadFile = function (filePath, targetPath) {
 
-    console.log('上传视频…');
-    //const aliyunFileKey = fileW+filePath.replace('wxfile://', '')；
-
-    const aliyunFileKey = fileW + '' + (new Date().getTime()) + '_' + objectId + '.jpg';
+    const aliyunFileKey = targetPath;
     const aliyunServerURL = env.uploadImageUrl;
     const accessid = env.accessid;
     const policyBase64 = getPolicyBase64();
@@ -28,7 +17,7 @@ const uploadFile = function (filePath, fileW, objectId, successCB, errorCB) {
     console.log('aliyunFileKey=', aliyunFileKey);
 
     wx.uploadFile({
-        url: aliyunServerURL, //仅为示例，非真实的接口地址
+        url: aliyunServerURL,
         filePath: filePath,
         name: 'file',
         formData: {
@@ -39,16 +28,15 @@ const uploadFile = function (filePath, fileW, objectId, successCB, errorCB) {
             'success_action_status': '200',
         },
         success: function (res) {
+          console.log('uploadFile.success ', res.data)
             if (res.statusCode != 200) {
               console.log(res.data)
                 return;
             }
-            console.log('上传视频成功', res)
-          console.log(aliyunFileKey);
         },
         fail: function (err) {
-            err.wxaddinfo = aliyunServerURL;
-          console.log(err);
+          err.wxaddinfo = aliyunServerURL;
+          console.log('uploadFile.fail', err);
         },
     })
 }

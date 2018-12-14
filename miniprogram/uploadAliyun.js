@@ -5,7 +5,7 @@ require('./crypto/hmac.js');
 require('./crypto/sha1.js');
 const Crypto = require('./crypto/crypto.js');
 
-const uploadFile = function (filePath, targetPath) {
+const uploadFile = function (filePath, targetPath, successcb, failcb) {
 
     const aliyunFileKey = targetPath;
     const aliyunServerURL = env.uploadImageUrl;
@@ -29,12 +29,14 @@ const uploadFile = function (filePath, targetPath) {
         },
         success: function (res) {
           console.log('uploadFile.success ', res.data)
-            if (res.statusCode != 200) {
-              console.log(res.data)
-                return;
-            }
+          successcb(res)
+          if (res.statusCode != 200) {
+            console.log(res.data)
+              return;
+          }
         },
         fail: function (err) {
+          failcb(err)
           err.wxaddinfo = aliyunServerURL;
           console.log('uploadFile.fail', err);
         },

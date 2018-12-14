@@ -70,8 +70,16 @@ Page({
 
         console.log('uploading ', photoFileName)
 
-        uploadFile(tempFilePaths[0], photoFileName)
-        
+        uploadFile(tempFilePaths[0], photoFileName, function(res) {
+          wx.navigateTo({
+            url: '../otherinfo/otherinfo',
+          })
+          },
+          function(err) {
+            // do nothing
+          }
+        )
+
         console.log('uploaded ', photoFileName)
       },
       fail: e => {

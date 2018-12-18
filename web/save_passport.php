@@ -48,7 +48,11 @@
 	$mysqli->query($savepassportstr);
 	
 	// return inserted id to client.
-	print(json_encode(array('id' => $mysqli->insert_id))); 
+	$lastId = 'no';
+	if ($mysqli->insert_id) {
+		$id = $mysqli->insert_id;
+	}
+	print(json_encode(array('id' => $id))); 
  }
  
  

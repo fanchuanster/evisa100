@@ -23,9 +23,8 @@
 	"issue_date="."CAST('".$data->issue_date."' AS DATE)".",".
 	"issue_place='".$data->issue_place."',".
 	"issue_place_raw='".$data->issue_place_raw."',".
-	"expiry_date="."CAST('".$data->expiry_date."' AS DATE))".
+	"expiry_date="."CAST('".$data->expiry_date."' AS DATE)".
 	" WHERE id='".$data->id."'";
-	print($updatestr);
 
 	$mysqli->query($updatestr);
  } else {
@@ -47,8 +46,9 @@
 	"CAST('".$data->expiry_date."' AS DATE))";
 
 	$mysqli->query($savepassportstr);
-	var_dump(json_encode(array('id' => $mysqli->insert_id)));
- 
+	
+	// return inserted id to client.
+	print(json_encode(array('id' => $mysqli->insert_id))); 
  }
  
  

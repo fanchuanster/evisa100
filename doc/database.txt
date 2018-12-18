@@ -1,16 +1,20 @@
-CREATE TABLE passport (id int(11) AUTO_INCREMENT, passport_no VARCHAR(20) UNIQUE, name VARCHAR(10), name_cn VARCHAR(10), sex VARCHAR(10), 
+﻿CREATE TABLE passport (id int(11) AUTO_INCREMENT, passport_no VARCHAR(20) UNIQUE, name VARCHAR(10), name_cn VARCHAR(10), sex VARCHAR(10), 
 birth_date DATE, birth_place VARCHAR(10), birth_place_raw VARCHAR(20) default null, 
 country VARCHAR(10), src_country VARCHAR(10) default null, type VARCHAR(10), 
 authority VARCHAR(56), issue_date DATE, issue_place VARCHAR(10), issue_place_raw VARCHAR(20) default null, expiry_date DATE, 
-line0 VARCHAR(56), line1 VARCHAR(56), person_id VARCHAR(20) default null, PRIMARY KEY(id));
+line0 VARCHAR(56), line1 VARCHAR(56), person_id VARCHAR(20) default null, 
+openid VARCHAR(30), 
+phone varchar(20), address VARCHAR(50), email varchar(30), occupation varchar(30), otherinfo varchar(150), 
+created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY(id));
 
-create table application (id int(11) AUTO_INCREMENT, applicant_id int(11), current_status int default 0, 
-                           to_country varchar(10), visa_type varchar(20), entry_date DATE, exit_date DATE, entry_point VARCHAR(50), transportation_by varchar(20),
-                          PRIMARY KEY (id));
+create table application (
+id int(11) AUTO_INCREMENT, passport_no varchar(20), current_status int default 0, 
+to_country varchar(10), visa_type varchar(20), entry_date DATE, exit_date DATE, entry_point VARCHAR(50), transportation_by varchar(20),
+created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id));
 
-create table applicant (id int(11) AUTO_INCREMENT, openid VARCHAR(30), passport_id int(11), 
-                        phone varchar(20), address VARCHAR(50), email varchar(30),
-                        occupation varchar(30), otherinfo varchar(120), PRIMARY KEY (id));
+PRIMARY KEY (id));
 
 // qliyun ESC remote connction passwor 342358
 

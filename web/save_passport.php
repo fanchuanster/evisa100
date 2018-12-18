@@ -7,6 +7,8 @@
  $input = file_get_contents("php://input");
  $data = json_decode($input);
  
+ var_dump($data);
+ 
  if ($data->id) {
 	// update it.
 	$updatestr = "update passport set ".
@@ -47,7 +49,7 @@
 	"CAST('".$data->expiry_date."' AS DATE))";
 
 	$mysqli->query($savepassportstr);
-	print(json_encode('id' => $mysqli->insert_id));
+	print(json_encode(array('id' => $mysqli->insert_id)));
  
  }
  

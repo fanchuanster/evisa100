@@ -50,9 +50,9 @@
 	// return inserted id to client.
 	$lastId = 'no';
 	if ($mysqli->insert_id) {
-		$id = $mysqli->insert_id;
+		$lastId = $mysqli->insert_id;
 	}
-	print(json_encode(array('id' => $id))); 
+	print(json_encode(array('id' => $lastId))); 
  }
  
  

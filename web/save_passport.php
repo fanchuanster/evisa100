@@ -49,7 +49,7 @@
 	"CAST('".$data->expiry_date."' AS DATE))";
 
 	$mysqli->query($savepassportstr);
-	print(json_encode(array('id' => $mysqli->insert_id)));
+	var_dump(json_encode(array('id' => $mysqli->insert_id)));
  
  }
  

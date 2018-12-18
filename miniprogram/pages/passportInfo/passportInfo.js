@@ -35,7 +35,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      passportInfo : app.globalData.passportInfo
+      passportInfo : wx.getStorageSync('passportInfo')
     })
   },
 
@@ -136,7 +136,7 @@ Page({
    * Lifecycle function--Called when page hide
    */
   onHide: function () {
-    console.log('passportinfo page hide')
+    wx.setStorageSync('passportInfo', this.data.passportInfo)
   },
 
   nextToUploadPhoto: function() {

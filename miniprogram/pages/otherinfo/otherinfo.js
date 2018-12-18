@@ -17,6 +17,40 @@ Page({
     })
   },
 
+  inputOtherinfophone: function (e) {
+    this.setData({
+      ['otherinfo.phone']: e.detail.value
+    })
+  },
+  inputOtherinfoaddress: function (e) {
+    this.setData({
+      ['otherinfo.address']: e.detail.value
+    })
+  },
+  inputOtherinfoemail: function (e) {
+    this.setData({
+      ['otherinfo.email']: e.detail.value
+    })
+  },
+  inputOtherinfooccupation: function (e) {
+    this.setData({
+      ['otherinfo.occupation']: e.detail.value
+    })
+  },
+  inputOtherinfofather_name: function (e) {
+    this.setData({
+      ['otherinfo.father_name']: e.detail.value
+    })
+  },
+  inputOtherinfomother_name: function (e) {
+    this.setData({
+      ['otherinfo.mother_name']: e.detail.value
+    })
+  },
+
+  submit:function() {
+
+  },
   /**
    * Lifecycle function--Called when page is initially rendered
    */
@@ -35,14 +69,14 @@ Page({
    * Lifecycle function--Called when page hide
    */
   onHide: function () {
-
+    wx.setStorageSync('otherinfo', this.data.otherinfo)
   },
 
   /**
    * Lifecycle function--Called when page unload
    */
   onUnload: function () {
-
+    wx.setStorageSync('otherinfo', this.data.otherinfo)
   },
 
   /**

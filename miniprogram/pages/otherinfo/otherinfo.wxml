@@ -2,10 +2,26 @@
 
   <view class="list">
     <view class="list-item">
-      <input name="father" placeholder="护照号码" value="{{otherinfo.father_name}}" bindinput="inputPassportNo" type="text"/>
+    <input placeholder="电话号码" value="{{otherinfo.phone}}" bindinput="inputOtherinfophone" type="text"/>
     </view>
     <view class="list-item">
-      <input name="country" placeholder="国籍" value="{{otherinfo.mother_name}}" bindinput="inputPassportcountry" type="text"/>
+    <input placeholder="住址" value="{{otherinfo.address}}" bindinput="inputOtherinfoaddress" type="text"/>
+    </view>
+    <view class="list-item">
+    <input placeholder="电子邮箱" value="{{otherinfo.email}}" bindinput="inputOtherinfoemail" type="text"/>
+    </view>
+    <view class="list-item">
+    <input placeholder="职业" value="{{otherinfo.occupation}}" bindinput="inputOtherinfooccupation" type="text"/>
+    </view>
+    <view class="list-item">
+    <input placeholder="父亲名字" value="{{otherinfo.father_name}}" bindinput="inputPassportfather_name" type="text"/>
+    </view>
+    <view class="list-item">
+    <input placeholder="母亲名字" value="{{otherinfo.mother_name}}" bindinput="inputPassportmother_name" type="text"/>
     </view>
   </view>
+
+  <view class="nav" bindtap='nextToUploadPhoto'>
+      <button>提交</button>
+    </view>
 </view>

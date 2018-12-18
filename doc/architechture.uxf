@@ -17,14 +17,16 @@
     <coordinates>
       <x>680</x>
       <y>600</y>
-      <w>100</w>
-      <h>220</h>
+      <w>190</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>application
 +status
 +to
 +entry_date
 +exit_date
++entry_point
++transportation_by
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -41,9 +43,9 @@
 +address
 +email
 +occupation
-+fathername
-+mothername
-+openid_owner
++father_name
++mother_name
++otherinfo
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -62,7 +64,7 @@
     <id>Relation</id>
     <coordinates>
       <x>480</x>
-      <y>610</y>
+      <y>630</y>
       <w>220</w>
       <h>30</h>
     </coordinates>

@@ -1,0 +1,48 @@
+CREATE TABLE passport (id int(11) AUTO_INCREMENT, passport_no VARCHAR(20) UNIQUE, name VARCHAR(10), name_cn VARCHAR(10), sex VARCHAR(10), 
+birth_date DATE, birth_place VARCHAR(10), birth_place_raw VARCHAR(20) default null, 
+country VARCHAR(10), src_country VARCHAR(10) default null, type VARCHAR(10), 
+authority VARCHAR(56), issue_date DATE, issue_place VARCHAR(10), issue_place_raw VARCHAR(20) default null, expiry_date DATE, 
+line0 VARCHAR(56), line1 VARCHAR(56), person_id VARCHAR(20) default null, PRIMARY KEY(id));
+
+create table application (id int(11) AUTO_INCREMENT, applicant_id int(11), current_status int default 0, 
+                           to_country varchar(10), visa_type varchar(20), entry_date DATE, exit_date DATE, entry_point VARCHAR(50), transportation_by varchar(20),
+                          PRIMARY KEY (id));
+
+create table applicant (id int(11) AUTO_INCREMENT, openid VARCHAR(30), passport_id int(11), 
+                        phone varchar(20), address VARCHAR(50), email varchar(30),
+                        occupation varchar(30), otherinfo varchar(120), PRIMARY KEY (id));
+
+// qliyun ESC remote connction passwor 342358
+
+// database query
+select * from passport where passport_no=$_POST["passport_no"];
+
+insert passport('authority'. 'birth_date', 'birth_place', 'birth_place_raw', 'country',
+'issue_date','issue_place', 'issue_place_raw', 'expiry_date', 
+'line0', 'line1', 'name', 'name_cn', 'name_cn_raw', 
+'passport_no', 'sex', 'type', 'src_country') 
+values($_POST["authority"], $_POST["birth_date"], $_POST["birth_place"], $_POST["birth_place_raw"], $_POST["country"], 
+$_POST["issue_date"], $_POST["issue_place"], $_POST["issue_place_raw"], $_POST["expiry_date"], 
+$_POST["line0"], $_POST["line1"], $_POST["name"], $_POST["name_cn"], $_POST["name_cn_raw"], 
+$_POST["passport_no"], $_POST["sex"], $_POST["type"], $_POST["src_country"])
+
+insert into passport(passport_no, name, name_cn, sex,birth_date,birth_place,birth_place_raw,country,type,authority, issue_date, issue_place,issue_place_raw,expiry_date) 
+values(
+$_POST['passport_no'],
+$_POST['name'],
+$_POST['name_cn'],
+$_POST['sex'],
+CAST($_POST['birth_date'] AS DATE),
+$_POST['birth_place'],
+$_POST['birth_place_raw'],
+$_POST['country'],
+$_POST['type'],
+$_POST['authority'],
+CAST($_POST['issue_date'] AS DATE),
+$_POST['issue_place'],
+$_POST['issue_place_raw'],
+CAST($_POST['expiry_date'] AS DATE))
+
+
+
+'dong wen', '董文','M',CAST('19840125' AS DATE),'湖北','湖北/HUBEI','CHN','PO','公安部出入境管理局',CAST('20140207' AS DATE),'上海','上海/SHANGHAI',CAST('20240206' AS DATE));

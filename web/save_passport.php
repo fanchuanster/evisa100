@@ -3,8 +3,8 @@
  $mysqli = new mysqli("localhost", "root", "root", "evisa");
  $mysqli->query("set NAMES 'utf8'");
  $mysqli->query("SET CHARACTER SET utf8");
- var_dump('good')
- print('good')
+ var_dump('good');
+ print('good');
  // $savePassportStr = "
 // insert into passport(passport_no, name, name_cn, sex,birth_date,birth_place,birth_place_raw,country,type,authority, issue_date, issue_place,issue_place_raw,expiry_date) 
 // values(".$_POST['passport_no'].",".

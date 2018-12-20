@@ -19,7 +19,7 @@
   $result = $mysqli->query($querystr);
   
   $records = array();
-  while ($row = $mysqli->fetch_assoc($result)) {
+  while ($row = $result->fetch_assoc()) {
 	  $records[] = $row;
   }
 

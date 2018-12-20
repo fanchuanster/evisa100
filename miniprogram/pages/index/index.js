@@ -107,9 +107,10 @@ Page({
           success: function(res) {
             var data = res.data
             wx.request({
-              url: 'https://ocrhz.market.alicloudapi.com/rest/160601/ocr/ocr_passport.json_error',
+              url: 'https://ocrdiy.market.alicloudapi.com/api/predict/ocr_sdt',
               data: {
-                image: data
+                image: data,
+                configure: { template_id:"e132cad9-55e9-417f-9111-c82d3105ed501545292863"}
               },
               method: 'POST',
               header: {
@@ -117,10 +118,11 @@ Page({
                 'Authorization': "APPCODE 391037852026434fa5c6e3780ef61220"
               },
               success: function (res) {
-                var objstr = '{"authority":"公安部出入境管理局","birth_date":"19840125","birth_day":"840125","birth_place":"湖北","birth_place_raw":"湖北/HUBEI","country":"CHN","expiry_date":"20240206","expiry_day":"240206","issue_date":"20140207","issue_place":"上海","issue_place_raw":"上海/SHANGHAI","line0":"POCHNDONG<<WEN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<","line1":"E062791038CHN8401256M2402066LGKNMOME<<<<A994","name":"DONG.WEN","name_cn":"董文","name_cn_raw":"DONGHEN董文","passport_no":"E06279103","person_id":"LGKNMOME<<<<A9","request_id":"20181213181912_b4c9daa1c5f4c2ac6924f53c364119e2","sex":"M","src_country":"CHN","success":true,"type":"PO"}'
-                res.data = (JSON.parse(objstr))
+                // var objstr = '{"authority":"公安部出入境管理局","birth_date":"19840125","birth_day":"840125","birth_place":"湖北","birth_place_raw":"湖北/HUBEI","country":"CHN","expiry_date":"20240206","expiry_day":"240206","issue_date":"20140207","issue_place":"上海","issue_place_raw":"上海/SHANGHAI","line0":"POCHNDONG<<WEN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<","line1":"E062791038CHN8401256M2402066LGKNMOME<<<<A994","name":"DONG.WEN","name_cn":"董文","name_cn_raw":"DONGHEN董文","passport_no":"E06279103","person_id":"LGKNMOME<<<<A9","request_id":"20181213181912_b4c9daa1c5f4c2ac6924f53c364119e2","sex":"M","src_country":"CHN","success":true,"type":"PO"}'
+                // res.data = (JSON.parse(objstr))
+                console.log(res.data)
 
-                wx.setStorageSync('passportInfo', res.data)
+                wx.setStorageSync('passportInfo', res.data.items)
                 wx.navigateTo({
                   url: '../passportInfo/passportInfo',
                 })                

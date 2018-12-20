@@ -38,7 +38,7 @@ Page({
   },
   inputPassportcountry: function (e) {
     this.setData({
-      ['passportInfo.country']: e.detail.value
+      ['passportInfo.nationality']: e.detail.value
     })
   },
 
@@ -50,7 +50,7 @@ Page({
 
   inputPassportname_cn: function (e) {
     this.setData({
-      ['passportInfo.type']: e.detail.value
+      ['passportInfo.name_cn']: e.detail.value
     })
   },
   inputPassportname: function (e) {
@@ -74,11 +74,6 @@ Page({
     })
   },
 
-  inputPassportbirth_place_raw: function (e) {
-    this.setData({
-      ['passportInfo.birth_place_raw']: e.detail.value
-    })
-  },
   inputPassportauthority: function (e) {
     this.setData({
       ['passportInfo.authority']: e.detail.value
@@ -97,17 +92,6 @@ Page({
   inputPassportissue_place: function (e) {
     this.setData({
       ['passportInfo.issue_place']: e.detail.value
-    })
-  },
-  inputPassportissue_place_raw: function (e) {
-    this.setData({
-      ['passportInfo.issue_place_raw']: e.detail.value
-    })
-  },
-
-  inputPassportissue_place_raw: function (e) {
-    this.setData({
-      ['passportInfo.issue_place_raw']: e.detail.value
     })
   },
   

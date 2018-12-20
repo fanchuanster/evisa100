@@ -1,4 +1,3 @@
-// miniprogram/pages/otherinfo/otherinfo.js
 Page({
 
   /**

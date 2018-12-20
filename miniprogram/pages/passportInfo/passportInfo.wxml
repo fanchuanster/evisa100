@@ -6,11 +6,11 @@
       <input name="pst_no" placeholder="护照号码" value="{{passportInfo.passport_no}}" bindinput="inputPassportNo" type="text"/>
     </view>
     <view class="list-item">
-      <input name="country" placeholder="国籍" value="{{passportInfo.country}}" bindinput="inputPassportcountry" type="text"/>
-    </view>
-    <view class="list-item">
       <input name="type" placeholder="护照类型" value="{{passportInfo.type}}" bindinput="inputPassporttype" type="text"/>
     </view>
+    <view class="list-item">
+      <input name="country" placeholder="国籍" value="{{passportInfo.nationality}}" bindinput="inputPassportcountry" type="text"/>
+    </view>    
     <view class="list-item">
       <input name="name_cn" placeholder="姓名" value="{{passportInfo.name_cn}}" bindinput="inputPassportname_cn" type="text"/>
     </view>
@@ -20,19 +20,15 @@
     <view class="list-item">
       <input name="sex" placeholder="性别" value="{{passportInfo.sex}}" bindinput="inputPassportsex" type="text"/>
     </view>
-
     <view class="list-item">
       <input name="birth_date" placeholder="出生日期" value="{{passportInfo.birth_date}}" bindinput="inputPassportbirth_date" type="text"/>
     </view>
-    
     <view class="list-item">
       <input name="bp" placeholder="出生地" value="{{passportInfo.birth_place}}" bindinput="inputPassportbirth_place" type="text"/>
     </view>
-    
     <view class="list-item">
-      <input name="bpf" placeholder="出生地(全)" value="{{passportInfo.birth_place_raw}}" bindinput="inputPassportbirth_place_raw" type="text"/>
+      <input name="issue_place" placeholder="颁发地" value="{{passportInfo.issue_place}}" bindinput="inputPassportissue_place" type="text"/>
     </view>
-    
     <view class="list-item">
     <input name="authority" placeholder="颁发机构" value="{{passportInfo.authority}}" bindinput="inputPassportauthority" type="text"/>
     </view>
@@ -40,15 +36,8 @@
     <view class="list-item">
       <input name="issue_date" placeholder="颁发日期" value="{{passportInfo.issue_date}}" bindinput="inputPassportissue_date" type="text"/>
     </view>
-
     <view class="list-item">
       <input name="expiry_date" placeholder="有效期至" value="{{passportInfo.expiry_date}}" bindinput="inputPassportexpiry_date" type="text"/>
-    </view>
-    <view class="list-item">
-      <input name="issue_place" placeholder="颁发地" value="{{passportInfo.issue_place}}" bindinput="inputPassportissue_place" type="text"/>
-    </view>
-    <view class="list-item">
-      <input name="issue_place_raw" placeholder="颁发地(全)" value="{{passportInfo.issue_place_raw}}" bindinput="inputPassportissue_place_raw" type="text"/>
     </view>
     <view class="nav" bindtap='nextToUploadPhoto'>
       <button>next</button>

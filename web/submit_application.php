@@ -13,8 +13,8 @@
 	"passport_id=".$data->passport_id.",".
 	"to_country='".$data->to_country."',".
 	"visa_type='".$data->visa_type."',".
-	"entry_date=CAST('".$data->to_country."' AS DATE),".
-	"exit_date=CAST('".$data->to_country."' AS DATE),".
+	"entry_date=CAST('".$data->entry_date."' AS DATE),".
+	"exit_date=CAST('".$data->exit_date."' AS DATE),".
 	"other_info='".$other_info."'".
 	" WHERE id='".$data->id."'";
         

@@ -24,6 +24,5 @@
   }
 
   print(json_encode($records)); 
- }
 
 ?>

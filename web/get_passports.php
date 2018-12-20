@@ -16,7 +16,7 @@
   
   var_dump($querystr);
   
-  $result = $mysqli->query($updatestr);
+  $result = $mysqli->query($querystr);
   
   $records = array();
   while ($row = $mysqli->fetch_assoc($result)) {

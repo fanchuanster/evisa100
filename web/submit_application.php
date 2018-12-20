@@ -3,13 +3,14 @@
  $mysqli = new mysqli("localhost", "root", "root", "evisa");
  
  $input = file_get_contents("php://input");
+  
  $data = json_decode($input);
  $other_info = json_encode($data->other_info);
 
  if ($data->id) {
 	// update it.
 	$updatestr = "update application set ".
-	"passport_id='".$data->passport_id."',".
+	"passport_id=".$data->passport_id.",".
 	"to_country='".$data->to_country."',".
 	"visa_type='".$data->visa_type."',".
 	"entry_date=CAST('".$data->to_country."' AS DATE),".
@@ -22,13 +23,13 @@
 	$mysqli->query($updatestr);
  } else {
 	 // insert it.
-	$insertStr = "insert into passport(passport_id, to_country, visa_type, entry_date, exit_date, other_info) ".
-	"values('".$data->passport_id."','".
+	$insertStr = "insert into application(passport_id, to_country, visa_type, entry_date, exit_date, other_info) ".
+	"values(".$data->passport_id.",'".
 	$data->to_country."','".
 	$data->visa_type."','".
 	$data->entry_date."','".
 	$data->exit_date."','".
-	$data->other_info."')";
+	$other_info."')";
          
     var_dump($insertStr);
 	$mysqli->query($insertStr);

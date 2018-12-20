@@ -8,7 +8,7 @@
   'passport_no', passport_no, 'openid', openid, 'data', data from application, passport ".
 			"WHERE passport.id=passport_id and current_status=0 LIMIT 1";
   
-  var_dump($querystr);
+  // var_dump($querystr);
   
   $result = $mysqli->query($querystr);
   
@@ -17,6 +17,6 @@
 	  $records[] = $row;
   }
 
-  print(json_encode($records)); 
+  print('{"data":'.json_encode($records).'}'); 
 
 ?>

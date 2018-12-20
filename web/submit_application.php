@@ -18,7 +18,7 @@
 	"other_info='".$other_info."'".
 	" WHERE id='".$data->id."'";
         
-	var_dump($updatestr);
+	// var_dump($updatestr);
 
 	$mysqli->query($updatestr);
  } else {
@@ -31,7 +31,7 @@
 	"CAST('".$data->exit_date."' AS DATE),'".
 	$other_info."')";
          
-    var_dump($insertStr);
+    // var_dump($insertStr);
 	$mysqli->query($insertStr);
 	
 	// return inserted id to client.

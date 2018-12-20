@@ -1,24 +1,44 @@
 <?php
 
  $mysqli = new mysqli("localhost", "root", "root", "evisa");
- $mysqli->query("set NAMES 'utf8'");
- $mysqli->query("SET CHARACTER SET utf8");
  
  $input = file_get_contents("php://input");
  $data = json_decode($input);
- 
- // ensure it does not exist.
- $mysqli->query("delete from applicant where passport_no='".$data->passport_no"'");
- 
- $saveApplicantInfo = "insert into applicant(openid, passport_no, phone, email, address, occupation, otherinfo) ".
-"values('".$data->openid."','".
-$data->passport_no."','".
-$data->phone."','".
-$data->email."','".
-$data->address."','".
-$data->occupation."','".
-$data->otherinfo."',')";
+ $other_info = json_encode($data->other_info);
 
-  $mysqli->query($saveApplicantInfo);
+ if ($data->id) {
+	// update it.
+	$updatestr = "update application set ".
+	"passport_id='".$data->passport_id."',".
+	"to_country='".$data->to_country."',".
+	"visa_type='".$data->visa_type."',".
+	"entry_date=CAST('".$data->to_country."' AS DATE),".
+	"exit_date=CAST('".$data->to_country."' AS DATE),".
+	"other_info='".$other_info."'".
+	" WHERE id='".$data->id."'";
+        
+	var_dump($updatestr);
+
+	$mysqli->query($updatestr);
+ } else {
+	 // insert it.
+	$insertStr = "insert into passport(passport_id, to_country, visa_type, entry_date, exit_date, other_info) ".
+	"values('".$data->passport_id."','".
+	$data->to_country."','".
+	$data->visa_type."','".
+	$data->entry_date."','".
+	$data->exit_date."','".
+	$data->other_info."')";
+         
+    var_dump($insertStr);
+	$mysqli->query($insertStr);
+	
+	// return inserted id to client.
+	$lastId = '';
+	if ($mysqli->insert_id) {
+		$lastId = $mysqli->insert_id;
+	}
+	print(json_encode(array('id' => $lastId))); 
+ }
 
 ?>

@@ -5,7 +5,7 @@ PRIMARY KEY(id));
 
 create table application (
 id int(11) AUTO_INCREMENT, passport_id int(11), current_status int default 0, 
-to_country varchar(10), visa_type varchar(20), entry_date DATE, exit_date DATE, otherinfo varchar(1024),
+to_country varchar(10), visa_type varchar(20), entry_date DATE, exit_date DATE, other_info varchar(1024),
 created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (id));
 

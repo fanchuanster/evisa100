@@ -26,9 +26,9 @@
 	$insertStr = "insert into application(passport_id, to_country, visa_type, entry_date, exit_date, other_info) ".
 	"values(".$data->passport_id.",'".
 	$data->to_country."','".
-	$data->visa_type."','".
-	$data->entry_date."','".
-	$data->exit_date."','".
+	$data->visa_type."',".
+	"CAST('".$data->entry_date."' AS DATE),".
+	"CAST('".$data->exit_date."' AS DATE),'".
 	$other_info."')";
          
     var_dump($insertStr);

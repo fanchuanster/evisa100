@@ -6,7 +6,7 @@
  
   $querystr = "SELECT 'passport_no', passport_no, 'openid', openid, 'data', data from passport ".
 			"WHERE ";
-  if (isset($_GET['id']) {
+  if (isset($_GET['id'])) {
 	  $querystr .= "id=".$_GET['id'];
   } else if (isset($_GET['passport_no'])) {
 	  $querystr .= "passport_no='".$_GET['passport_no']."'";

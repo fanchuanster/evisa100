@@ -1,60 +1,39 @@
 <?php
 
  $mysqli = new mysqli("localhost", "root", "root", "evisa");
- $mysqli->query("set NAMES 'utf8'");
- $mysqli->query("SET CHARACTER SET utf8");
+ //$mysqli->query("set NAMES 'utf8'");
+ //$mysqli->query("SET CHARACTER SET utf8");
  
  $input = file_get_contents("php://input");
  $data = json_decode($input);
-   
+ $details = json_encode($data->data);
+
  if ($data->id) {
 	// update it.
 	$updatestr = "update passport set ".
 	"passport_no='".$data->passport_no."',".
-	"name='".$data->name."',".
-	"name_cn='".$data->name_cn."',".
-	"sex='".$data->sex."',".
-	"birth_date="."CAST('".$data->birth_date."' AS DATE)".",".
-	"birth_place='".$data->birth_place."',".
-	"birth_place_raw='".$data->birth_place_raw."',".
-	"country='".$data->country."',".
-	"type='".$data->type."',".
-	"authority='".$data->authority."',".
-	"issue_date="."CAST('".$data->issue_date."' AS DATE)".",".
-	"issue_place='".$data->issue_place."',".
-	"issue_place_raw='".$data->issue_place_raw."',".
-	"expiry_date="."CAST('".$data->expiry_date."' AS DATE)".
+	"openid='".$data->openid."',".
+	"data='".$details."'".
 	" WHERE id='".$data->id."'";
+        //var_dump($updatestr);
 
 	$mysqli->query($updatestr);
  } else {
 	 // insert it.
-	$insertStr = "insert into passport(passport_no, name, name_cn, sex,birth_date,birth_place,birth_place_raw,country,type,authority, issue_date, issue_place,issue_place_raw,expiry_date) ".
+	$insertStr = "insert into passport(passport_no, openid, data) ".
 	"values('".$data->passport_no."','".
-	$data->name."','".
-	$data->name_cn."','".
-	$data->sex."',".
-	"CAST('".$data->birth_date."' AS DATE)".",'".
-	$data->birth_place."','".
-	$data->birth_place_raw."','".
-	$data->country."','".
-	$data->type."','".
-	$data->authority."',".
-	"CAST('".$data->issue_date."' AS DATE)".",'".
-	$data->issue_place."','".
-	$data->issue_place_raw."',".
-	"CAST('".$data->expiry_date."' AS DATE))";
-
+	$data->openid."','".
+	$details."')";
+         
+        //var_dump($insertStr);
 	$mysqli->query($insertStr);
 	
 	// return inserted id to client.
-	$lastId = 'no';
+	$lastId = '';
 	if ($mysqli->insert_id) {
 		$lastId = $mysqli->insert_id;
 	}
 	print(json_encode(array('id' => $lastId))); 
  }
- 
- 
 
 ?>

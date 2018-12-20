@@ -12,36 +12,4 @@ PRIMARY KEY (id));
 PRIMARY KEY (id));
 
 // qliyun ESC remote connction passwor 342358
-
-// database query
-select * from passport where passport_no=$_POST["passport_no"];
-
-insert passport('authority'. 'birth_date', 'birth_place', 'birth_place_raw', 'country',
-'issue_date','issue_place', 'issue_place_raw', 'expiry_date', 
-'line0', 'line1', 'name', 'name_cn', 'name_cn_raw', 
-'passport_no', 'sex', 'type', 'src_country') 
-values($_POST["authority"], $_POST["birth_date"], $_POST["birth_place"], $_POST["birth_place_raw"], $_POST["country"], 
-$_POST["issue_date"], $_POST["issue_place"], $_POST["issue_place_raw"], $_POST["expiry_date"], 
-$_POST["line0"], $_POST["line1"], $_POST["name"], $_POST["name_cn"], $_POST["name_cn_raw"], 
-$_POST["passport_no"], $_POST["sex"], $_POST["type"], $_POST["src_country"])
-
-insert into passport(passport_no, name, name_cn, sex,birth_date,birth_place,birth_place_raw,country,type,authority, issue_date, issue_place,issue_place_raw,expiry_date) 
-values(
-$_POST['passport_no'],
-$_POST['name'],
-$_POST['name_cn'],
-$_POST['sex'],
-CAST($_POST['birth_date'] AS DATE),
-$_POST['birth_place'],
-$_POST['birth_place_raw'],
-$_POST['country'],
-$_POST['type'],
-$_POST['authority'],
-CAST($_POST['issue_date'] AS DATE),
-$_POST['issue_place'],
-$_POST['issue_place_raw'],
-CAST($_POST['expiry_date'] AS DATE))
-
-
-
 'dong wen', '董文','M',CAST('19840125' AS DATE),'湖北','湖北/HUBEI','CHN','PO','公安部出入境管理局',CAST('20140207' AS DATE),'上海','上海/SHANGHAI',CAST('20240206' AS DATE));

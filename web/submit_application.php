@@ -39,7 +39,7 @@
 	if ($mysqli->insert_id) {
 		$lastId = $mysqli->insert_id;
 	}
-	print(json_encode(array('id' => $lastId))); 
+	print('{"data":'.$lastId.'}'); 
  }
 
 ?>

@@ -15,7 +15,7 @@
 	"openid='".$data->openid."',".
 	"data='".$details."'".
 	" WHERE id='".$data->id."'";
-        //var_dump($updatestr);
+    var_dump($updatestr);
 
 	$mysqli->query($updatestr);
  } else {

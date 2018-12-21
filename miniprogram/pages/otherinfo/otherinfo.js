@@ -1,3 +1,4 @@
+const app = getApp()
 Page({
 
   /**
@@ -12,7 +13,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      passportInfo: wx.getStorageSync('otherinfo')
+      passportInfo: wx.getStorageSync('passportInfo')
     })
   },
 
@@ -23,7 +24,7 @@ Page({
   },
   inputOtherinfoaddress: function (e) {
     this.setData({
-      ['otherinfo.address']: e.detail.value
+      ['passportInfo.address']: e.detail.value
     })
   },
   inputOtherinfoemail: function (e) {
@@ -50,11 +51,7 @@ Page({
   submit:function() {
     wx.request({
       url: 'https://fan.blockai.me/save_passport.php',
-      data: {
-        passport_no: this.data.passportInfo.passport_no,
-        openid: app.globalData.openid,
-        details: this.data.passportInfo
-      },
+      data: this.data.passportInfo,
       method: 'POST',
       header: {
         'content-type': 'application/json; charset=UTF-8'
@@ -85,14 +82,14 @@ Page({
    * Lifecycle function--Called when page hide
    */
   onHide: function () {
-    wx.setStorageSync('passportInfo', this.data.otherinfo)
+    wx.setStorageSync('passportInfo', this.data.passportInfo)
   },
 
   /**
    * Lifecycle function--Called when page unload
    */
   onUnload: function () {
-    wx.setStorageSync('passportInfo', this.data.otherinfo)
+    wx.setStorageSync('passportInfo', this.data.passportInfo)
   },
 
   /**

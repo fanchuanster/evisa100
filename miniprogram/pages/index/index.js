@@ -120,8 +120,16 @@ Page({
                 var objstr = '{"config_str":{"template_id":"e132cad9-55e9-417f-9111-c82d3105ed501545292863"},"items":{"authority":"MPS Exit&Entry Administration","authority_cn":"公安部出入境管理局","birth_date":"25","birth_place":"湖北/HUBEI","country_code":"CHN","expiry_date":"062月/FEB2024","issue_date":"07 2月/FEB 2014","issue_place":"上海/SHANGHAI","name":"DONG,WEN","name_cn":"董文","nationality":"中国/CHINESE","passport_no":"E06279103","sex":"男/M","type":"P"},"request_id":"20181221174315_5bfa13c25816d99985e25694c498dc52","success":true}'
                 
                 res.data = JSON.parse(objstr)
+
+                var passportInfo = 
+                { 
+                  openid : app.globalData.openid,
+                  passport_no: res.data.items.passport_no
+                }
+                delete res.data.items.passport_no
+                passportInfo.details = res.data.items
                 
-                wx.setStorageSync('passportInfo', res.data.items)
+                wx.setStorageSync('passportInfo', passportInfo)
                 wx.navigateTo({
                   url: '../passportInfo/passportInfo',
                 })                

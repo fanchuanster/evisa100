@@ -1,4 +1,4 @@
-// miniprogram/pages/passportInfo/passportInfo.js
+// miniprogram/pages/passportInfo/passportInfo.details.js
 const app = getApp()
 Page({
 
@@ -33,65 +33,65 @@ Page({
 
   inputPassportNo: function (e) {
     this.setData({
-      ['passportInfo.passport_no']: e.detail.value
+      ['passportInfo.details.passport_no']: e.detail.value
     })
   },
   inputPassportcountry: function (e) {
     this.setData({
-      ['passportInfo.nationality']: e.detail.value
+      ['passportInfo.details.nationality']: e.detail.value
     })
   },
 
   inputPassporttype: function (e) {
     this.setData({
-      ['passportInfo.type']: e.detail.value
+      ['passportInfo.details.type']: e.detail.value
     })
   },
 
   inputPassportname_cn: function (e) {
     this.setData({
-      ['passportInfo.name_cn']: e.detail.value
+      ['passportInfo.details.name_cn']: e.detail.value
     })
   },
   inputPassportname: function (e) {
     this.setData({
-      ['passportInfo.name']: e.detail.value
+      ['passportInfo.details.name']: e.detail.value
     })
   },
   inputPassportinputPassportsextype: function (e) {
     this.setData({
-      ['passportInfo.sex']: e.detail.value
+      ['passportInfo.details.sex']: e.detail.value
     })
   },
   inputPassportbirth_date: function (e) {
     this.setData({
-      ['passportInfo.birth_date']: e.detail.value
+      ['passportInfo.details.birth_date']: e.detail.value
     })
   },
   inputPassportbirth_place: function (e) {
     this.setData({
-      ['passportInfo.birth_place']: e.detail.value
+      ['passportInfo.details.birth_place']: e.detail.value
     })
   },
 
   inputPassportauthority: function (e) {
     this.setData({
-      ['passportInfo.authority']: e.detail.value
+      ['passportInfo.details.authority']: e.detail.value
     })
   },
   inputPassportissue_date: function (e) {
     this.setData({
-      ['passportInfo.issue_date']: e.detail.value
+      ['passportInfo.details.issue_date']: e.detail.value
     })
   },
   inputPassportexpiry_date: function (e) {
     this.setData({
-      ['passportInfo.expiry_date']: e.detail.value
+      ['passportInfo.details.expiry_date']: e.detail.value
     })
   },
   inputPassportissue_place: function (e) {
     this.setData({
-      ['passportInfo.issue_place']: e.detail.value
+      ['passportInfo.details.issue_place']: e.detail.value
     })
   },
   
@@ -103,33 +103,17 @@ Page({
   },
 
   nextToUploadPhoto: function() {
+    var that = this
     wx.request({
       url: 'https://fan.blockai.me/save_passport.php',
-      data: {
-        passport_no: this.data.passportInfo.passport_no,
-        openid: app.globalData.openid,
-        details:{
-          name: this.data.passportInfo.name,
-          name_cn: this.data.passportInfo.name_cn,
-          sex: this.data.passportInfo.sex,
-          birth_date: this.data.passportInfo.birth_date,
-          birth_place: this.data.passportInfo.birth_place,
-          nationality: this.data.passportInfo.nationality,
-          type: this.data.passportInfo.type,
-          authority: this.data.passportInfo.authority,
-          authority_cn: this.data.passportInfo.authority_cn,
-          issue_date: this.data.passportInfo.issue_date,
-          issue_place: this.data.passportInfo.issue_place,
-          expiry_date: this.data.passportInfo.expiry_date,
-        }
-      },
+      data: this.data.passportInfo,
       method: 'POST',
       header: {
         'content-type': 'application/json; charset=UTF-8'
       },
       success: function (res) {
         console.log(res)
-        this.data.passportInfo.id = res.data.id
+        that.data.passportInfo.id = res.data.id
         wx.navigateTo({
           url: '../photo/photo',
         })

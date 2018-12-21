@@ -33,6 +33,7 @@
 	if ($mysqli->insert_id) {
 		$lastId = $mysqli->insert_id;
 	}
+	var_dump($mysqli->insert_id);
 	print('{"id":'.$lastId.'}'); 
  }
 

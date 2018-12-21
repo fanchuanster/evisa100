@@ -128,11 +128,7 @@ Page({
         'content-type': 'application/json; charset=UTF-8'
       },
       success: function (res) {
-        console.log(res);
-
-        if (!this.data.passportInfo.id) {
-          this.data.passportInfo.id = res.data.id;
-        }
+        console.log(res)
       },
       error: function (res) {
         console.log(res.err)

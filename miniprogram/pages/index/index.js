@@ -11,12 +11,14 @@ Page({
   },
 
   onLoad: function() {
+    console.log('index.js.onLoad')
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
       })
+    }
 
-      wx.cloud.callFunction({
+    wx.cloud.callFunction({
         name: 'login',
         data: {},
         success: res => {
@@ -35,7 +37,7 @@ Page({
       })
       
       return
-    }
+    },
 
     // 获取用户信息
     // wx.getSetting({
@@ -54,7 +56,7 @@ Page({
     //     }
     //   }
     // })
-  },
+  
 
   onGetUserInfo: function(e) {
     if (!this.logged && e.detail.userInfo) {

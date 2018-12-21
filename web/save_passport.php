@@ -29,12 +29,7 @@
 	$mysqli->query($insertStr);
 	
 	// return inserted id to client.
-	$lastId = '';
-	if ($mysqli->insert_id) {
-		$lastId = $mysqli->insert_id;
-	}
-	var_dump($mysqli->insert_id);
-	print('{"id":'.$lastId.'}'); 
+	print('{"id":'.$mysqli->insert_id.'}'); 
  }
 
 ?>

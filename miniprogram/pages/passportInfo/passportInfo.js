@@ -129,15 +129,15 @@ Page({
       },
       success: function (res) {
         console.log(res)
+        this.data.passportInfo.id = res.data.id
+        wx.navigateTo({
+          url: '../photo/photo',
+        })
       },
       error: function (res) {
         console.log(res.err)
       }
-    })
-
-    wx.navigateTo({
-      url: '../photo/photo',
-    })
+    })    
   },
 
   /**

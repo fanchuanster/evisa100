@@ -72,15 +72,13 @@ Page({
 
         uploadFile(tempFilePaths[0], photoFileName, function(res) {
           wx.navigateTo({
-            url: '../otherinfo/otherinfo',
-          })
+              url: '../otherinfo/otherinfo',
+            })
           },
           function(err) {
-            // do nothing
+            console.log(err)
           }
         )
-
-        console.log('uploaded ', photoFileName)
       },
       fail: e => {
         console.error(e)

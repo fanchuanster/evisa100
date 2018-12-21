@@ -4,7 +4,7 @@ Page({
    * Page initial data
    */
   data: {
-    otherinfo:null
+    passportInfo:null
   },
 
   /**
@@ -12,13 +12,13 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      otherinfo: wx.getStorageSync('otherinfo')
+      passportInfo: wx.getStorageSync('otherinfo')
     })
   },
 
   inputOtherinfophone: function (e) {
     this.setData({
-      ['otherinfo.phone']: e.detail.value
+      ['passportInfo.phone']: e.detail.value
     })
   },
   inputOtherinfoaddress: function (e) {
@@ -28,27 +28,44 @@ Page({
   },
   inputOtherinfoemail: function (e) {
     this.setData({
-      ['otherinfo.email']: e.detail.value
+      ['passportInfo.email']: e.detail.value
     })
   },
   inputOtherinfooccupation: function (e) {
     this.setData({
-      ['otherinfo.occupation']: e.detail.value
+      ['passportInfo.occupation']: e.detail.value
     })
   },
   inputOtherinfofather_name: function (e) {
     this.setData({
-      ['otherinfo.father_name']: e.detail.value
+      ['passportInfo.father_name']: e.detail.value
     })
   },
   inputOtherinfomother_name: function (e) {
     this.setData({
-      ['otherinfo.mother_name']: e.detail.value
+      ['passportInfo.mother_name']: e.detail.value
     })
   },
 
   submit:function() {
-
+    wx.request({
+      url: 'https://fan.blockai.me/save_passport.php',
+      data: {
+        passport_no: this.data.passportInfo.passport_no,
+        openid: app.globalData.openid,
+        details: this.data.passportInfo
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/json; charset=UTF-8'
+      },
+      success: function (res) {
+        console.log(res)
+      },
+      error: function (res) {
+        console.log(res.err)
+      }
+    })
   },
   /**
    * Lifecycle function--Called when page is initially rendered
@@ -68,14 +85,14 @@ Page({
    * Lifecycle function--Called when page hide
    */
   onHide: function () {
-    wx.setStorageSync('otherinfo', this.data.otherinfo)
+    wx.setStorageSync('passportInfo', this.data.otherinfo)
   },
 
   /**
    * Lifecycle function--Called when page unload
    */
   onUnload: function () {
-    wx.setStorageSync('otherinfo', this.data.otherinfo)
+    wx.setStorageSync('passportInfo', this.data.otherinfo)
   },
 
   /**

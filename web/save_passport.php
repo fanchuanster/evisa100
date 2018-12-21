@@ -6,7 +6,7 @@
  
  $input = file_get_contents("php://input");
  $data = json_decode($input);
- $details = json_encode($data->data);
+ $details = json_encode($data->details);
 
  if ($data->id) {
 	// update it.

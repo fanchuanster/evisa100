@@ -19,36 +19,37 @@ Page({
 
   inputOtherinfophone: function (e) {
     this.setData({
-      ['passportInfo.phone']: e.detail.value
+      ['passportInfo.details.phone']: e.detail.value
     })
   },
   inputOtherinfoaddress: function (e) {
     this.setData({
-      ['passportInfo.address']: e.detail.value
+      ['passportInfo.details.address']: e.detail.value
     })
   },
   inputOtherinfoemail: function (e) {
     this.setData({
-      ['passportInfo.email']: e.detail.value
+      ['passportInfo.details.email']: e.detail.value
     })
   },
   inputOtherinfooccupation: function (e) {
     this.setData({
-      ['passportInfo.occupation']: e.detail.value
+      ['passportInfo.details.occupation']: e.detail.value
     })
   },
   inputOtherinfofather_name: function (e) {
     this.setData({
-      ['passportInfo.father_name']: e.detail.value
+      ['passportInfo.details.father_name']: e.detail.value
     })
   },
   inputOtherinfomother_name: function (e) {
     this.setData({
-      ['passportInfo.mother_name']: e.detail.value
+      ['passportInfo.details.mother_name']: e.detail.value
     })
   },
 
   submit:function() {
+    console.log(this.data.passportInfo)
     wx.request({
       url: 'https://fan.blockai.me/save_passport.php',
       data: this.data.passportInfo,

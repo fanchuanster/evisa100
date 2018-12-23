@@ -51,8 +51,45 @@ namespace EVisa100
                 response = response.Replace("\"{", "{").Replace("}\"", "}").Replace("\\\"", "\"");
 
                 var application = JsonSerializer.Deserialize<Application>(response);
-                
+
+                application.Passport = GetPassport(application.passport_id);
+
                 return application;                
+            }
+            catch (WebException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return null;
+        }
+
+        public Passport GetPassport(int id)
+        {
+            var url = "https://fan.blockai.me/get_passports.php";
+
+            UriBuilder urlBuilder = new UriBuilder(url);
+            urlBuilder.Query = $"id={id}";
+
+            var httpRequest = (HttpWebRequest)WebRequest.Create(urlBuilder.ToString());
+            httpRequest.Method = "GET";
+            httpRequest.ContentType = "application/json; charset=UTF-8";
+
+            try
+            {
+                var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+                var stream = httpResponse.GetResponseStream();
+                var reader = new StreamReader(stream);
+                var response = reader.ReadToEnd();
+
+                // string ot object.
+                response = response.Replace("\"{", "{").Replace("}\"", "}").Replace("\\\"", "\"");
+
+                var responseData = JsonSerializer.Deserialize<ResponseData<Passport>>(response);
+                if (responseData.data.Length > 0)
+                {
+                    return responseData.data[0];
+                }                    
             }
             catch (WebException ex)
             {

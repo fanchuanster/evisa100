@@ -39,37 +39,32 @@ namespace EVisa100.Automations
                 var pwd = driver.FindElement(By.Id("auth_pwd"));
                 pwd.SendKeys("passw0rd");
                 pwd.Submit();
-
+                
                 IWebElement getServiceBtn = driver.FindElement(By.CssSelector("#bloglist > div:nth-child(2) > div > div.panel-heading > div.pull-right.text-left"));
                 wait.Until(d => getServiceBtn.Displayed && getServiceBtn.Enabled);
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(2000);
                 getServiceBtn.Click();
 
-                driver.Navigate().GoToUrl(@"https://immigration.ecitizen.go.ke/index.php/dashboard");
+                driver.FindElement(By.LinkText("Make Applicaiton")).Click();
 
-                var applicationButton = driver.FindElement(By.LinkText("Make Applicaiton"));
-                applicationButton.Click();
+                // Expand kenya visa list.
+                driver.FindElement(By.XPath(@"//*[@id=""accordion-test-2""]/div/div[1]/h4/a")).Click();
 
-                var kenyaVisa = driver.FindElement(By.XPath(@"//*[@id=""accordion-test-2""]/div/div[1]/h4/a"));
-                kenyaVisa.Click();
+                driver.FindElement(By.LinkText("1. Apply for a Single Entry Visa")).Click();
 
-                IWebElement singleEntryVisa = driver.FindElement(By.LinkText("1. Apply for a Single Entry Visa"));
-                singleEntryVisa.Click();
+                driver.FindElement(By.LinkText("Apply Now")).Click();
 
-                var applyNow = driver.FindElement(By.LinkText("Apply Now"));
-                applyNow.Click();
+                var drpWhereApplicatio = new SelectElement(driver.FindElement(By.XPath(@"//*[@id=""element_2""]")));
+                drpWhereApplicatio.SelectByText("China");
 
-                SelectElement drpWhere = new SelectElement(driver.FindElement(By.XPath(@"//*[@id=""element_2""]")));
-                drpWhere.SelectByText("China");
-
-                SelectElement drpForWhom = new SelectElement(driver.FindElement(By.XPath(@"//*[@id=""element_54""]")));
+                var drpForWhom = new SelectElement(driver.FindElement(By.XPath(@"//*[@id=""element_54""]")));
                 drpForWhom.SelectByText("Agent");
 
                 var surnameInput = driver.FindElement(By.XPath(@"//*[@id=""element_4""]"));
-                surnameInput.SendKeys("DONG");
+                surnameInput.SendKeys(application.Passport.SurName);
 
                 var givennameInput = driver.FindElement(By.XPath(@"//*[@id=""element_5""]"));
-                givennameInput.SendKeys("WEN");
+                givennameInput.SendKeys(application.Passport.GivenName);
 
                 // male or female.
                 var radios = driver.FindElements(By.XPath(@"//input[@type=""radio""]"));

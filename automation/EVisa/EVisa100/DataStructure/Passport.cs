@@ -25,4 +25,9 @@ namespace EVisa100.DataStructure
         public DateTime exit_date;
         public Dictionary<string, string> other_info;
     }
+
+    public class ResponseData<T>
+    {
+        public T[] data;
+    }
 }

@@ -22,6 +22,8 @@ namespace EVisa100.Automations
     {
         void Execute(Application application)
         {
+            const string initPage = "https://accounts.ecitizen.go.ke/login";
+
             var options = new ChromeOptions();
             options.AddArgument("no-sandbox");
             using (IWebDriver driver = new ChromeDriver(options))
@@ -30,7 +32,7 @@ namespace EVisa100.Automations
                 driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(100);
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
 
-                driver.Navigate().GoToUrl("https://accounts.ecitizen.go.ke/login");
+                driver.Navigate().GoToUrl(initPage);
 
                 driver.FindElement(By.Id("auth_username")).SendKeys("fanchuanster@gmail.com");
 
@@ -236,8 +238,6 @@ namespace EVisa100.Automations
 
                 // submit button - #submit_primary
                 driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
-
-                return true;
             }
 
         }

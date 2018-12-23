@@ -11,6 +11,11 @@ namespace EVisa100.Automations
     {
         static Dictionary<string, Type> codeToAutomation;
 
+        static AutomationsFactory()
+        {
+            Register<KenyaAutomation>("ke");
+        }
+
         public static void Register<T>(string countryCode)
         {
             if (codeToAutomation == null)

@@ -22,7 +22,7 @@ namespace EVisa100.DataStructure
         public string to_country;
         public string visa_type;
         public DateTime entry_date;
-        public DateTime exit_date;
+        public DateTime @exit_date;
         public Dictionary<string, string> other_info;
     }
 

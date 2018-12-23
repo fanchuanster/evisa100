@@ -47,8 +47,8 @@ namespace EVisa100
                 var stream = httpResponse.GetResponseStream();
                 var reader = new StreamReader(stream);
                 var response = reader.ReadToEnd();
-                var application = JsonSerializer.Deserialize<ResponseData<Application>>(response);
-                return application.data[0];
+                var application = JsonSerializer.Deserialize<Application>(response);
+                return application;
             }
             catch (WebException ex)
             {

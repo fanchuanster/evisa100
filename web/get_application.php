@@ -8,7 +8,7 @@
 			" FROM application".
 			" WHERE current_status=0 LIMIT 1";
   
-  var_dump($querystr);
+  //var_dump($querystr);
   
   $result = $mysqli->query($querystr);
   

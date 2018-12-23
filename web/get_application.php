@@ -12,11 +12,7 @@
   
   $result = $mysqli->query($querystr);
   
-  $records = array();
-  while ($row = $result->fetch_assoc()) {
-	  $records[] = $row;
-  }
+  $row = $result->fetch_assoc();
 
-  print(json_encode($records)); 
-
+  print(json_encode($row)); 
 ?>

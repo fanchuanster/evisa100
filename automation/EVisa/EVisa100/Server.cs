@@ -39,16 +39,15 @@ namespace EVisa100
             httpRequest.Method = "GET";
 
             httpRequest.ContentType = "application/json; charset=UTF-8";
-
-            HttpWebResponse httpResponse = null;
+            
             try
             {
-                httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+                var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
                 var stream = httpResponse.GetResponseStream();
                 var reader = new StreamReader(stream);
                 var response = reader.ReadToEnd();
                 var application = JsonSerializer.Deserialize<Application>(response);
-                return application;
+                return application;                
             }
             catch (WebException ex)
             {

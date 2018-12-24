@@ -1,3 +1,7 @@
 node_modules
 dist
 .DS_Store
+.vscode
+.wepycache
+package-lock.json
+*.wpy___jb_tmp___

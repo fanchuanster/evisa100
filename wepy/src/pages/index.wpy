@@ -23,7 +23,7 @@
     </view>
 
     <panel>
-      <view class="title" slot="title">测试数据绑定</view>
+      <view class="title" slot="title">测数据绑定</view>
 
       <text class="info">{{normalTitle}}</text>
       <text class="info">{{setTimeoutTitle}}</text>
@@ -38,7 +38,7 @@
 
     <panel>
       <view class="title" slot="title">其它测试</view>
-      <button @tap="toast" size="mini">第三方组件</button>
+      <button @tap="toast" size="mini">三方组件</button>
       <button @tap="communicate" size="mini">组件通信</button>
       <button @tap="tap" size="mini">混合TAP事件</button>
     </panel>
@@ -126,7 +126,7 @@
         nickName: '加载中...'
       },
       normalTitle: '原始标题',
-      setTimeoutTitle: '标题三秒后会被修改',
+      setTimeoutTitle: '标题4秒后会被修改',
       count: 0,
       netrst: '',
       groupList: [

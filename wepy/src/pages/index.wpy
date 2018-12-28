@@ -255,7 +255,7 @@
         let code = res.code
         console.log('logined with code = ' + code)
 
-        wepy.request({url: 'https://fan.blockai.me/get_openid.php?appid=wx18e03ddea0cde133&secret=f7d7bf01e27d40aed1e2fd03ad8a7322&js_code=' + code + '&grant_type=authorization_code',
+        wepy.request({url: 'https://fan.blockai.me/get_openid.php?appid=wx18e03ddea0cde133&appsecret=f7d7bf01e27d40aed1e2fd03ad8a7322&js_code=' + code + '&grant_type=authorization_code',
           method: 'GET'
         }).then(res => console.log(res))
       })

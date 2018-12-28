@@ -3,7 +3,7 @@
 	$appid = $_GET['appid'];
 	$appsecret = $_GET['appsecret'];
 	$js_code = $_GET['js_code'];
-	$request = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=".$appid."&appsecret=".$appsecret."&js_code=".$js_code."&grant_type=authorization_code";
+	$request = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=".$appid."&secret=".$appsecret."&js_code=".$js_code."&grant_type=authorization_code";
 	var_dump($request);
 	$weixin =  file_get_contents($request);
 	var_dump($weixin);

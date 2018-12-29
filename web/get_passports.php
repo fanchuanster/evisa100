@@ -23,5 +23,5 @@
 	  $records[] = $row;
   }
 
-  print('{"data":'.json_encode($records).'}');
+  print(json_encode($records));
 ?>

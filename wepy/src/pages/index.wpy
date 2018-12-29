@@ -125,6 +125,7 @@
       userInfo: {
         nickName: '加载中...'
       },
+      passports: null,
       normalTitle: '原始标题',
       setTimeoutTitle: '标题4秒后会被修改',
       count: 0,
@@ -234,28 +235,13 @@
     }
 
     onLoad() {
+      console.log('index onload ...')
       let self = this
-      this.$parent.getUserInfo(function (userInfo) {
-        if (userInfo) {
-          self.userInfo = userInfo
-        }
-        self.normalTitle = '标题已被修改'
-
-        self.setTimeoutTitle = '标题三秒后会被修改'
-        setTimeout(() => {
-          self.setTimeoutTitle = '到三秒了'
-          self.$apply()
-        }, 3000)
-
-        self.$apply()
-      })
-
-      wepy.login().then(function(res) {
-        let code = res.code  
-
-        wepy.request({url: 'https://fan.blockai.me/get_openid.php?appid=wx18e03ddea0cde133&secret=f7d7bf01e27d40aed1e2fd03ad8a7322&js_code=' + code + '&grant_type=authorization_code',
-          method: 'GET'
-        }).then(res => self.openid = res.data)
+      this.$parent.getOpenid().then(function(openid) {
+        wepy.request({url: 'https://fan.blockai.me/get_passports.php?openid=' + openid, method: 'GET'}).then(function(res) {
+          console.log(res.data)
+          self.data.passports = res.data
+        })
       })
     }
   }

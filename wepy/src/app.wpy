@@ -60,7 +60,7 @@ export default class extends wepy.app {
     console.log(data)
   }
 
-  getUserInfo(cb) {
+  async getUserInfo(cb) {
     const that = this
     if (this.globalData.userInfo) {
       return this.globalData.userInfo
@@ -71,6 +71,22 @@ export default class extends wepy.app {
         cb && cb(res.userInfo)
       }
     })
+  }
+
+  async getOpenid(cb) {
+    const that = this
+    if (this.globalData.openid) {
+      return this.globalData.openid
+    }
+    wepy.login().then(function(res) {
+        let code = res.code
+        wepy.request({url: 'https://fan.blockai.me/get_openid.php?appid=wx18e03ddea0cde133&secret=f7d7bf01e27d40aed1e2fd03ad8a7322&js_code=' + code + '&grant_type=authorization_code',
+          method: 'GET'
+        }).then(function(res) {
+          that.globalData.openid = res.data
+          cb && cb(res.data)
+        })
+      })
   }
 }
 </script>

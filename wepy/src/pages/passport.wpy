@@ -4,10 +4,49 @@
   <view class="container">
     <panel>
       <view class="title" slot="title">护照</view>
-      <view direction="vertical">
-        <text class="info">openid</text>: {{passport.passport_no}}
-        <text class="info">passport_no</text>: {{passport.passport_no}}
-        <text class="info">authority</text>: {{passport.data.authority}}
+      <view>
+        <text class="fieldLabel">护照号码</text>
+        <input placeholder="护照号码" value="{{passport.passport_no}}" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">颁发机构(英)</text>
+        <input placeholder="颁发机构" value="{{passport.data.authority}}" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">颁发地</text>
+        <input placeholder="颁发地" value="{{passport.data.issue_place}}" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">颁发日期</text>
+        <input placeholder="颁发地" value="{{passport.data.issue_date}}" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">有效期至</text>
+        <input placeholder="有效期至" value="{{passport.data.expiry_date}}" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">国籍</text>
+        <input placeholder="国籍" value="{{passport.data.nationality}}" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">护照类型</text>
+        <input placeholder="护照类型" value="{{passport.data.type}}" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">姓名</text>
+        <input placeholder="姓名" value="{{passport.data.name_cn}}" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">姓名(拼)</text>
+        <input placeholder="姓名(拼音)" value="{{passport.data.name}}" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">性别</text>
+        <input placeholder="性别" value="{{passport.data.sex}}" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">出生日期</text>
+        <input placeholder="出生日期" value="{{passport.data.birth_date}}" type="text"/>
       </view>
     </panel>
   </view>

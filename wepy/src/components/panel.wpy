@@ -17,6 +17,10 @@
     .info {
       padding: 15rpx;
     }
+    .fieldLabel {
+      font-size: 10px;
+      font-weight: lighter
+    }
     .testcounter {
       margin-top: 15rpx;
       position: absolute;

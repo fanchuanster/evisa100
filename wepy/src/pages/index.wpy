@@ -236,6 +236,8 @@
 
     onLoad() {
       console.log('index onload ...')
+      this.$parent.getUserInfo().then(info => console.log(info))
+
       let self = this
       this.$parent.getOpenid().then(function(openid) {
         wepy.request({url: 'https://fan.blockai.me/get_passports.php?openid=' + openid, method: 'GET'}).then(function(res) {

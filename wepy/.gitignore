@@ -5,5 +5,6 @@ dist
 .wepycache
 package-lock.json
 *.wpy___jb_tmp___
+*Copy.wpy
 
 

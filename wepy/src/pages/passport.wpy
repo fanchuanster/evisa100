@@ -6,7 +6,7 @@
       <view class="title" slot="title">护照</view>
       <view>
         <text class="fieldLabel">护照号码</text>
-        <input placeholder="护照号码" value="{{passport.passport_no}}" type="text"/>
+        <input placeholder="护照号码" value="{{passport.passport_no}}" bindinput="oninputPassport" type="text"/>
       </view>
       <view>
         <text class="fieldLabel">颁发机构(英)</text>
@@ -18,11 +18,19 @@
       </view>
       <view>
         <text class="fieldLabel">颁发日期</text>
-        <input placeholder="颁发地" value="{{passport.data.issue_date}}" type="text"/>
+        <picker mode="date" value="{{passport.data.issue_date}}" start="1980-01-01" end="2019-09-01" @change="bindDateChange">
+          <view class="picker">
+            {{passport.data.issue_date}}
+          </view>
+        </picker>
       </view>
       <view>
         <text class="fieldLabel">有效期至</text>
-        <input placeholder="有效期至" value="{{passport.data.expiry_date}}" type="text"/>
+        <picker mode="date" value="{{passport.data.expiry_date}}" start="1980-01-01" end="2019-09-01" @change="bindExpiryChange">
+          <view class="picker">
+            {{passport.data.expiry_date}}
+          </view>
+        </picker>
       </view>
       <view>
         <text class="fieldLabel">国籍</text>
@@ -42,11 +50,24 @@
       </view>
       <view>
         <text class="fieldLabel">性别</text>
-        <input placeholder="性别" value="{{passport.data.sex}}" type="text"/>
+        <radio-group class="radio-group" bindchange="radioChange">
+        <label class="radio">
+          <radio value="M" checked="{{passport.data.sex == 'M'}}" />
+          男
+        </label>
+        <label class="radio">
+          <radio value="F" checked="{{item.checked}}" />
+          女
+        </label>
+      </radio-group>
       </view>
       <view>
         <text class="fieldLabel">出生日期</text>
-        <input placeholder="出生日期" value="{{passport.data.birth_date}}" type="text"/>
+        <picker mode="date" value="{{passport.data.birth_date}}" start="1980-01-01" end="2018-09-01" @change="bindBirthChange">
+          <view class="picker">
+            {{passport.data.birth_date}}
+          </view>
+        </picker>
       </view>
     </panel>
   </view>
@@ -73,6 +94,24 @@
     }
 
     methods = {
+      oninputPassport(e) {
+        this.passport.passport_no = e.detail.value
+        console.log(this.passport.passport_no)
+      },
+      bindDateChange(e) {
+        this.passport.data.issue_date = e.detail.value
+      },
+      bindExpiryChange(e) {
+        this.passport.data.expiry_date = e.detail.value
+      },
+      bindBirthChange(e) {
+        this.passport.data.birth_date = e.detail.value
+        console.log(this.passport.data)
+      },
+      radioChange(e) {
+        console.log('radio发生change事件，携带value值为：', e.detail.value)
+        this.passport.data.sex = e.detail.value
+      }
     }
 
     onLoad() {

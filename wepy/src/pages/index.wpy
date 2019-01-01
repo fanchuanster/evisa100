@@ -187,6 +187,21 @@
       }
     }
 
+    dateFromString (str) {
+      str = str.replace(/\D/g, '')
+      if (str.length < 7) {
+        return str
+      }
+
+      let dd = str.substr(0, 2)
+      str = str.substr(2)
+      let yyyy = str.substr(str.length - 4)
+      let mm = str.substr(0, str.length - 4) - 1// 0 based
+
+      let date = new Date(yyyy, mm, dd)
+      return date
+    }
+
     methods = {
       plus () {
         this.mynum++
@@ -222,50 +237,54 @@
         }
         delete res.data.items.passport_no
         passportInfo.data = res.data.items
+        passportInfo.data.birth_date = this.dateFromString(passportInfo.data.birth_date)
+        passportInfo.data.issue_date = this.dateFromString(passportInfo.data.issue_date)
+        passportInfo.data.expiry_date = this.dateFromString(passportInfo.data.expiry_date)
+        passportInfo.data.sex = passportInfo.data.sex.replace(/\W/g, '')
 
         wepy.setStorageSync('passportInfo', passportInfo)
         wepy.navigateTo({
           url: './passport'
         })
 
-        console.log('after navigateto')
+        // console.log('after navigateto')
 
-        const imagePath = res.tempFilePaths[0]
-        console.log(imagePath)
-        wx.getFileSystemManager().readFile({
-          filePath: imagePath,
-          encoding: 'base64',
-          success: function(res) {
-            console.log('ocr sending...')
-            wepy.request({
-              url: 'https://ocrdiy.market.alicloudapi.com/api/predict/ocr_sdt_err',
-              method: 'POST',
-              data: {
-                image: res.data,
-                configure: { template_id: 'e132cad9-55e9-417f-9111-c82d3105ed501545292863' }
-              },
-              header: {
-                'content-type': 'application/json; charset=UTF-8',
-                Authorization: 'APPCODE 391037852026434fa5c6e3780ef61220'
-              }
-            }).then(function(res) {
-              var objstr = '{"config_str":{"template_id":"e132cad9-55e9-417f-9111-c82d3105ed501545292863"},"items":{"authority":"MPS Exit&Entry Administration","authority_cn":"公安部出入境管理局","birth_date":"25","birth_place":"湖北/HUBEI","country_code":"CHN","expiry_date":"062月/FEB2024","issue_date":"07 2月/FEB 2014","issue_place":"上海/SHANGHAI","name":"DONG,WEN","name_cn":"董文","nationality":"中国/CHINESE","passport_no":"E06279103","sex":"男/M","type":"P"},"request_id":"20181221174315_5bfa13c25816d99985e25694c498dc52","success":true}'
-              res.data = JSON.parse(objstr)
+        // const imagePath = res.tempFilePaths[0]
+        // console.log(imagePath)
+        // wx.getFileSystemManager().readFile({
+        //   filePath: imagePath,
+        //   encoding: 'base64',
+        //   success: function(res) {
+        //     console.log('ocr sending...')
+        //     wepy.request({
+        //       url: 'https://ocrdiy.market.alicloudapi.com/api/predict/ocr_sdt_err',
+        //       method: 'POST',
+        //       data: {
+        //         image: res.data,
+        //         configure: { template_id: 'e132cad9-55e9-417f-9111-c82d3105ed501545292863' }
+        //       },
+        //       header: {
+        //         'content-type': 'application/json; charset=UTF-8',
+        //         Authorization: 'APPCODE 391037852026434fa5c6e3780ef61220'
+        //       }
+        //     }).then(function(res) {
+        //       var objstr = '{"config_str":{"template_id":"e132cad9-55e9-417f-9111-c82d3105ed501545292863"},"items":{"authority":"MPS Exit&Entry Administration","authority_cn":"公安部出入境管理局","birth_date":"25","birth_place":"湖北/HUBEI","country_code":"CHN","expiry_date":"062月/FEB2024","issue_date":"07 2月/FEB 2014","issue_place":"上海/SHANGHAI","name":"DONG,WEN","name_cn":"董文","nationality":"中国/CHINESE","passport_no":"E06279103","sex":"男/M","type":"P"},"request_id":"20181221174315_5bfa13c25816d99985e25694c498dc52","success":true}'
+        //       res.data = JSON.parse(objstr)
 
-              var passportInfo = {
-                openid: that.$parent.globalData.openid,
-                passport_no: res.data.items.passport_no
-              }
-              delete res.data.items.passport_no
-              passportInfo.data = res.data.items
+        //       var passportInfo = {
+        //         openid: that.$parent.globalData.openid,
+        //         passport_no: res.data.items.passport_no
+        //       }
+        //       delete res.data.items.passport_no
+        //       passportInfo.data = res.data.items
 
-              wepy.setStorageSync('passportInfo', passportInfo)
-              wepy.navigateTo({
-                url: './passport'
-              })
-            })
-          }
-        })
+        //       wepy.setStorageSync('passportInfo', passportInfo)
+        //       wepy.navigateTo({
+        //         url: './passport'
+        //       })
+        //     })
+        //   }
+        // })
       },
       communicate () {
         console.log(this.$name + ' tap')

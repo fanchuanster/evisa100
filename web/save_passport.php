@@ -5,25 +5,25 @@
  //$mysqli->query("SET CHARACTER SET utf8");
  
  $input = file_get_contents("php://input");
- $data = json_decode($input);
- $details = json_encode($data->details);
+ $passport = json_decode($input);
+ $data = json_encode($passport->data);
 
- if ($data->id) {
+ if ($passport->id) {
 	// update it.
 	$updatestr = "update passport set ".
-	"passport_no='".$data->passport_no."',".
-	"openid='".$data->openid."',".
-	"data='".$details."'".
-	" WHERE id='".$data->id."'";
+	"passport_no='".$passport->passport_no."',".
+	"openid='".$passport->openid."',".
+	"data='".$data."'".
+	" WHERE id='".$passport->id."'";
     var_dump($updatestr);
 
 	$mysqli->query($updatestr);
  } else {
 	 // insert it.
 	$insertStr = "insert into passport(passport_no, openid, data) ".
-	"values('".$data->passport_no."','".
-	$data->openid."','".
-	$details."')";
+	"values('".$passport->passport_no."','".
+	$passport->openid."','".
+	$data."')";
          
         //var_dump($insertStr);
 	$mysqli->query($insertStr);

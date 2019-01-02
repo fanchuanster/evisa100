@@ -112,7 +112,7 @@
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      navigationBarTitleText: '添加护照'
     }
     components = {
       panel: Panel,
@@ -199,6 +199,7 @@
       let mm = str.substr(0, str.length - 4) - 1// 0 based
 
       let date = new Date(yyyy, mm, dd)
+      console.log(date)
       return date
     }
 

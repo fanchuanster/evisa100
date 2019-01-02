@@ -10,11 +10,11 @@
       </view>
       <view>
         <text class="fieldLabel">颁发机构(英)</text>
-        <input placeholder="颁发机构" value="{{passport.data.authority}}" type="text"/>
+        <input placeholder="颁发机构" name="authority" value="{{passport.data.authority}}" bindinput="oninputAuthority" type="text"/>
       </view>
       <view>
         <text class="fieldLabel">颁发地</text>
-        <input placeholder="颁发地" value="{{passport.data.issue_place}}" type="text"/>
+        <input placeholder="颁发地" value="{{passport.data.issue_place}}" bindinput="oninputIssuePlace" type="text"/>
       </view>
       <view>
         <text class="fieldLabel">颁发日期</text>
@@ -34,19 +34,19 @@
       </view>
       <view>
         <text class="fieldLabel">国籍</text>
-        <input placeholder="国籍" value="{{passport.data.nationality}}" type="text"/>
+        <input placeholder="国籍" value="{{passport.data.nationality}}" bindinput="oninputNationality" type="text"/>
       </view>
-      <view>
+      <!-- <view>
         <text class="fieldLabel">护照类型</text>
         <input placeholder="护照类型" value="{{passport.data.type}}" type="text"/>
-      </view>
+      </view> -->
       <view>
         <text class="fieldLabel">姓名</text>
-        <input placeholder="姓名" value="{{passport.data.name_cn}}" type="text"/>
+        <input placeholder="姓名" value="{{passport.data.name_cn}}" bindinput="oninputNamecn" type="text"/>
       </view>
       <view>
         <text class="fieldLabel">姓名(拼)</text>
-        <input placeholder="姓名(拼音)" value="{{passport.data.name}}" type="text"/>
+        <input placeholder="姓名(拼音)" value="{{passport.data.name}}" bindinput="oninputName" type="text"/>
       </view>
       <view>
         <text class="fieldLabel">性别</text>
@@ -63,11 +63,14 @@
       </view>
       <view>
         <text class="fieldLabel">出生日期</text>
-        <picker mode="date" value="{{passport.data.birth_date}}" start="1980-01-01" end="2018-09-01" @change="bindBirthChange">
+        <picker mode="date" value="{{passport.data.birth_date}}" start="1960-01-01" end="2018-09-01" @change="bindBirthChange">
           <view class="picker">
             {{passport.data.birth_date}}
           </view>
         </picker>
+      </view>
+      <view class="nav" bindtap='nextToPersonalInfo'>
+        <button>下一步</button>
       </view>
     </panel>
   </view>
@@ -98,6 +101,21 @@
         this.passport.passport_no = e.detail.value
         console.log(this.passport.passport_no)
       },
+      oninputAuthority(e) {
+        this.passport.authority = e.detail.value
+      },
+      oninputIssuePlace(e) {
+        this.passport.issue_place = e.detail.value
+      },
+      oninputNamecn(e) {
+        this.passport.name_cn = e.detail.value
+      },
+      oninputName(e) {
+        this.passport.name = e.detail.value
+      },
+      oninputNationality(e) {
+        this.passport.nationality = e.detail.value
+      },
       bindDateChange(e) {
         this.passport.data.issue_date = e.detail.value
       },
@@ -111,12 +129,17 @@
       radioChange(e) {
         console.log('radio发生change事件，携带value值为：', e.detail.value)
         this.passport.data.sex = e.detail.value
+      },
+      nextToPersonalInfo() {
+        wepy.setStorageSync('passportInfo', this.passport)
+        wepy.navigateTo({
+          url: './personalinfo'
+        })
       }
     }
 
     onLoad() {
       this.passport = wepy.getStorageSync('passportInfo')
-      console.log(this.passport)
     }
   }
 </script>

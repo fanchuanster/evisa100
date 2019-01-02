@@ -69,7 +69,7 @@
           </view>
         </picker>
       </view>
-      <view class="nav" bindtap='nextToPersonalInfo'>
+      <view class="nav" bindtap='next'>
         <button>下一步</button>
       </view>
     </panel>
@@ -130,7 +130,7 @@
         console.log('radio发生change事件，携带value值为：', e.detail.value)
         this.passport.data.sex = e.detail.value
       },
-      nextToPersonalInfo() {
+      next() {
         wepy.setStorageSync('passportInfo', this.passport)
         wepy.navigateTo({
           url: './personalinfo'

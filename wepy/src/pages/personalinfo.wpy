@@ -36,8 +36,8 @@
         <text class="fieldLabel">电子邮件</text>
         <input placeholder="比如 zhangyun1989@163.com" value="{{passport.data.email}}" bindinput="oninputEmail" type="text"/>
       </view>
-      <view class="nav" bindtap='submit'>
-        <button>提交</button>
+      <view class="nav" bindtap='next'>
+        <button>下一步</button>
       </view>
     </panel>
   </view>
@@ -46,7 +46,7 @@
   import wepy from 'wepy'
   import Panel from '@/components/panel' // alias example
 
-  export default class Passport extends wepy.page {
+  export default class PersonalInfo extends wepy.page {
     config = {
       navigationBarTitleText: '护照信息'
     }
@@ -88,16 +88,11 @@
       }
     }
 
-    submit() {
-      console.log(this.data.passportInfo)
-      wepy.request({
-        url: 'https://fan.blockai.me/save_passport.php',
-        method: 'POST',
-        data: this.passport,
-        header: {
-          'content-type': 'application/json; charset=UTF-8'
-        }
-      }).then(res => { console.log(res) })
+    next() {
+      wepy.setStorageSync('passportInfo', this.passport)
+      wepy.navigateTo({
+        url: './travelinfo'
+      })
     }
 
     onLoad() {

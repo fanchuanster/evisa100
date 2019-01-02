@@ -1,0 +1,114 @@
+<style lang="less">
+</style>
+<template>
+  <view class="container">
+    <panel>
+      <view class="title" slot="title">个人其他信息</view>
+      <view>
+        <text class="fieldLabel">个人职业</text>
+        <input placeholder="比如 软件工程师" value="{{passport.data.occupation}}" bindinput="oninputOccupation" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">父亲名字(拼)</text>
+        <input placeholder="比如 Zhang, Mingqiang" value="{{passport.data.father_name}}" bindinput="oninputFatherName" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">母亲名字(拼)</text>
+        <input placeholder="比如 Chen, Xiuyun" value="{{passport.data.mother_name}}" bindinput="oninputMotherName" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">所在城市</text>
+        <picker mode="region" value="{{passport.data.region}}" @change="bindRegionChange" custom-item="{{customItem}}">
+          <view class="picker">
+            当前选择：{{passport.data.region}}
+          </view>
+        </picker>
+      </view>
+      <view>
+        <text class="fieldLabel">居住地址</text>
+        <input placeholder="" value="{{passport.data.address}}" bindinput="oninputAddress" type="text"/>
+      </view>
+      <view>
+        <text class="fieldLabel">电话号码</text>
+        <input placeholder="" value="{{passport.data.phone}}" bindinput="oninputPhone" type="number"/>
+      </view>
+      <view>
+        <text class="fieldLabel">电子邮件</text>
+        <input placeholder="比如 zhangyun1989@163.com" value="{{passport.data.email}}" bindinput="oninputEmail" type="text"/>
+      </view>
+      <view class="nav" bindtap='submit'>
+        <button>提交</button>
+      </view>
+    </panel>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import Panel from '@/components/panel' // alias example
+
+  export default class Passport extends wepy.page {
+    config = {
+      navigationBarTitleText: '护照信息'
+    }
+    components = {
+      panel: Panel
+    }
+    mixins = []
+    data = {
+      passport: null,
+      customItem: '全部'
+    }
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+      oninputOccupation(e) {
+        this.passport.data.occupation = e.detail.value
+      },
+      oninputFatherName(e) {
+        this.passport.data.father_name = e.detail.value
+      },
+      oninputMotherName(e) {
+        this.passport.data.mother_name = e.detail.value
+      },
+      bindRegionChange(e) {
+        this.passport.data.region = e.detail.value
+      },
+      oninputAddress(e) {
+        this.passport.data.address = e.detail.value
+      },
+      oninputPhone(e) {
+        this.passport.data.phone = e.detail.value
+      },
+      oninputEmail(e) {
+        this.passport.data.email = e.detail.value
+      }
+    }
+
+    submit() {
+      console.log(this.data.passportInfo)
+      wepy.request({
+        url: 'https://fan.blockai.me/save_passport.php',
+        method: 'POST',
+        data: this.passport,
+        header: {
+          'content-type': 'application/json; charset=UTF-8'
+        }
+      }).then(res => { console.log(res) })
+    }
+
+    onLoad() {
+      this.passport = wepy.getStorageSync('passportInfo')
+      if (!this.passport.data.region) {
+        this.passport.data.region = ['上海市', '上海市', '全部']
+      }
+      if (!this.passport.data.occupation) {
+        this.passport.data.occupation = ''
+        console.log('set occupation')
+      }
+    }
+  }
+</script>

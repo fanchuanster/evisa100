@@ -8,10 +8,12 @@
 			" FROM application".
 			" WHERE current_status=0 LIMIT 1";
     
-  var_dump($querystr);
-  // $result = $mysqli->query($querystr);
+  $result = $mysqli->query($querystr);
   
-  // $row = $result->fetch_assoc();
+  $records = array();
+  while ($row = $result->fetch_assoc()) {
+	  $records[] = $row;
+  }
 
-  // print(json_encode($row)); 
+  print(json_encode($records));
 ?>

@@ -107,18 +107,19 @@
       console.log('passport to save:')
       console.log(passport)
       wepy.request({
-        url: 'https://fan.blockai.me/save_passport.php',
+        url: 'https://fan.blockai.me/submit_application.php',
         method: 'POST',
-        data: this.passport,
+        data: this.travelInfo,
         header: {
           'content-type': 'application/json; charset=UTF-8'
         }
       }).then(res => { console.log(res) })
     }
 
-    onLoad() {
+    onLoad(option) {
       this.entryPoints = this.allPoints[0]
       this.travelInfo.to_country = 'ke'
+      this.travelInfo.passport_id = option.passport_id
     }
   }
 </script>

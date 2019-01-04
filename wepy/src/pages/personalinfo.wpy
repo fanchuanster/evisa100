@@ -89,9 +89,24 @@
     }
 
     next() {
-      wepy.setStorageSync('passportInfo', this.passport)
-      wepy.navigateTo({
-        url: './travelinfo'
+      wepy.request({
+        url: 'https://fan.blockai.me/save_passport.php',
+        method: 'POST',
+        data: this.passport,
+        header: {
+          'content-type': 'application/json; charset=UTF-8'
+        }
+      }).then(res => {
+        console.log(res)
+        if (!this.passport.id) {
+          console.log('set passport.id to ' + res.data.id)
+          this.passport.id = res.data.id
+        }
+
+        wepy.setStorageSync('passportInfo', this.passport)
+        wepy.navigateTo({
+          url: './travelinfo?passport_id=' + this.passport.id
+        })
       })
     }
 

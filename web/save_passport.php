@@ -15,7 +15,6 @@
 	"openid='".$passport->openid."',".
 	"data='".$data."'".
 	" WHERE id='".$passport->id."'";
-    var_dump($updatestr);
 
 	$mysqli->query($updatestr);
  } else {

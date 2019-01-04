@@ -67,7 +67,7 @@
       allPoints: [['Eldoret International Airport', 'Garisa Airstrip', 'Jomo Kenyatta Airport, Nairobi'],
       ['Busia', 'Isebania', 'Liboi'], ['Kilindini Sea Port', 'Kisumu', 'Kuinga']],
       array: ['商务', '教育', '前往工作', '求医', '其他', '宗教', '移民定居', '旅游'],
-      index: 0,
+      index: 7,
       by: ['飞机', '陆路', '水路'],
       byindex: 0,
       entryPoints: [],
@@ -92,12 +92,12 @@
       },
       bindByChange(e) {
         this.byindex = e.detail.value
-        this.travelInfo.by = this.by[e.detail.value]
-        this.entryPoints = this.allPoints[e.detail.value]
+        this.travelInfo.by = this.by[this.byindex]
+        this.entryPoints = this.allPoints[this.byindex]
       },
       bindEntryPointChange(e) {
         this.entryPointIndex = e.detail.value
-        this.entryPoints.entry_point = this.entryPoints[e.detail.value]
+        this.entryPoints.entry_point = this.entryPoints[this.entryPointIndex]
       }
     }
     submit() {
@@ -114,9 +114,12 @@
     }
 
     onLoad(option) {
-      this.entryPoints = this.allPoints[0]
       this.travelInfo.to_country = 'ke'
       this.travelInfo.passport_id = option.passport_id
+      this.travelInfo.purpose = this.array[this.index]
+      this.travelInfo.by = this.by[this.byindex]
+      this.entryPoints = this.allPoints[this.byindex]
+      this.entryPoints.entry_point = this.entryPoints[this.entryPointIndex]
     }
   }
 </script>

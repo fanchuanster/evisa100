@@ -31,7 +31,7 @@
 	"CAST('".$travelInfo->entry_date."' AS DATE),".
 	"CAST('".$travelInfo->departure_date."' AS DATE),'".
 	$otherInfo."')";
-         
+    var_dump($updatestr);
 	$mysqli->query($insertStr);
 
 	print('{"id":'.$mysqli->insert_id.'}');

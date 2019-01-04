@@ -1,8 +1,8 @@
 <?php
 
  $mysqli = new mysqli("localhost", "root", "root", "evisa");
- //$mysqli->query("set NAMES 'utf8'");
- //$mysqli->query("SET CHARACTER SET utf8");
+ $mysqli->query("set NAMES 'utf8'");
+ $mysqli->query("SET CHARACTER SET utf8");
  
  $input = file_get_contents("php://input");
  $passport = json_decode($input);
@@ -28,7 +28,7 @@
 	$mysqli->query($insertStr);
 	
 	// return inserted id to client.
-	print('{"id":'.$mysqli->insert_id.'}'); 
+	print('{"id":'.$mysqli->insert_id.'}');
  }
 
 ?>

@@ -1,8 +1,8 @@
 <?php
 
   $mysqli = new mysqli("localhost", "root", "root", "evisa");
-  //$mysqli->query("set NAMES 'utf8'");
-  //$mysqli->query("SET CHARACTER SET utf8");
+  $mysqli->query("set NAMES 'utf8'");
+  $mysqli->query("SET CHARACTER SET utf8");
  
   $querystr = "SELECT 'passport_no', passport_no, 'openid', openid, 'data', data from passport ".
 			"WHERE ";

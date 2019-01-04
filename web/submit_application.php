@@ -36,5 +36,4 @@
 
 	print('{"id":'.$mysqli->insert_id.'}');
  }
-otherInfo
 ?>

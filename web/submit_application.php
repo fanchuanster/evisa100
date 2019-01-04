@@ -32,6 +32,6 @@
 	// $mysqli->query($insertStr);
 
 	// print('{"id":'.$mysqli->insert_id;.'}'); 
- }
+ // }
 
 ?>

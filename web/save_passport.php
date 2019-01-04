@@ -24,7 +24,7 @@
 	$passport->openid."','".
 	$data."')";
          
-        //var_dump($insertStr);
+    var_dump($insertStr);
 	$mysqli->query($insertStr);
 	
 	// return inserted id to client.

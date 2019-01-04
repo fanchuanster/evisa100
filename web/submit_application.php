@@ -1,6 +1,8 @@
 <?php
 
  $mysqli = new mysqli("localhost", "root", "root", "evisa");
+ $mysqli->query("set NAMES 'utf8'");
+ $mysqli->query("SET CHARACTER SET utf8");
  
  $input = file_get_contents("php://input");
  $travelInfo = json_decode($input);
@@ -27,7 +29,7 @@
 	"CAST('".$travelInfo->entry_date."' AS DATE),".
 	"CAST('".$travelInfo->departure_date."' AS DATE))";
          
-    // var_dump($insertStr);
+    var_dump($insertStr);
 	$mysqli->query($insertStr);
 
 	print('{"id":'.$mysqli->insert_id;.'}'); 

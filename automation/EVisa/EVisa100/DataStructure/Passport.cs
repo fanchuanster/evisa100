@@ -38,14 +38,6 @@ namespace EVisa100.DataStructure
                 return fields.LastOrDefault();
             }
         }
-
-        //public bool IsMale
-        //{
-        //    get
-        //    {
-
-        //    }
-        //}
     }
 
     public class Application

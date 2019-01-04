@@ -17,7 +17,7 @@
         
 	var_dump($updatestr);
 
-	$mysqli->query($updatestr);
+	//$mysqli->query($updatestr);
  } else {
 	 // insert it.
 	$insertStr = "insert into application(passport_id, to_country, purpose, entry_date, departure_date) ".
@@ -28,9 +28,9 @@
 	"CAST('".$travelInfo->departure_date."' AS DATE))";
          
     var_dump($insertStr);
-	$mysqli->query($insertStr);
+	//$mysqli->query($insertStr);
 
-	print('{"id":'.$mysqli->insert_id;.'}'); 
+	//print('{"id":'.$mysqli->insert_id;.'}'); 
  }
 
 ?>

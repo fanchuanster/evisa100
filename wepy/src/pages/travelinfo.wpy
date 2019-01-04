@@ -6,33 +6,41 @@
       <view class="title" slot="title">旅行信息</view>
       <view>
         <text class="fieldLabel">旅行目的</text>
-        <picker bindchange="bindPurposeChange" value="{{index}}" range="{{array}}">
+        <picker bindchange="bindPurposeChange" value="{{index}}" range="{{array[0]}}">
         <view class="picker">
-          {{array[index]}}
+          {{array[0][index]}}
         </view>
         </picker>
       </view>
       <view>
         <text class="fieldLabel">入境日期</text>
-        <picker mode="date" value="{{passport.data.entry_date}}" start="now()" end="now()" @change="bindEntryDateChange">
+        <picker mode="date" value="{{travelInfo.entry_date}}" start="2019-01-11" end="2019-09-01" @change="bindEntryDateChange">
           <view class="picker">
-            {{passport.data.entry_date}}
+            {{travelInfo.entry_date}}
           </view>
         </picker>
       </view>
       <view>
         <text class="fieldLabel">离境日期</text>
-        <picker mode="date" value="{{passport.data.departure_date}}" start="now()" end="now()" @change="bindDepartureDateChange">
+        <picker mode="date" value="{{travelInfo.departure_date}}" start="2019-01-11" end="2019-09-01" @change="bindDepartureDateChange">
           <view class="picker">
-            {{passport.data.departure_date}}
+            {{travelInfo.departure_date}}
           </view>
         </picker>
       </view>
       <view>
         <text class="fieldLabel">旅行方式</text>
-        <picker bindchange="bindByChange" value="{{byindex}}" range="{{by}}">
+        <picker bindchange="bindByChange" value="{{byindex}}" range="{{by[0]}}">
         <view class="picker">
-          {{by[byindex]}}
+          {{by[0][byindex]}}
+        </view>
+        </picker>
+      </view>
+      <view>
+        <text class="fieldLabel">入境点</text>
+        <picker bindchange="bindEntryPointChange" value="{{entryPointIndex}}" range="{{entryPoints}}">
+        <view class="picker">
+          {{entryPoints[entryPointIndex]}}
         </view>
         </picker>
       </view>
@@ -48,18 +56,23 @@
 
   export default class TravelInfo extends wepy.page {
     config = {
-      navigationBarTitleText: '护照信息'
+      navigationBarTitleText: '旅行信息'
     }
     components = {
       panel: Panel
     }
     mixins = []
     data = {
-      passport: null,
-      array: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居'],
+      travelInfo: {},
+      allPoints: [['Eldoret International Airport', 'Garisa Airstrip', 'Jomo Kenyatta Airport, Nairobi'],
+      ['Busia', 'Isebania', 'Liboi'], ['Kilindini Sea Port', 'Kisumu', 'Kuinga']],
+      array: [['商务', '教育', '前往工作', '求医', '其他', '宗教', '移民定居', '旅游'],
+      ['Business', 'Education', 'Employment', 'Medical', 'Others', 'Religion', 'Settlement', 'Tourism']],
       index: 0,
-      by: ['飞机', '陆路', '水路'],
-      byindex: 0
+      by: [['飞机', '陆路', '水路'], ['Air', 'Road', 'Ship']],
+      byindex: 0,
+      entryPoints: [],
+      entryPointIndex: 0
     }
     computed = {
       now () {
@@ -70,22 +83,29 @@
     methods = {
       bindPurposeChange(e) {
         this.index = e.detail.value
-        this.passport.data.purpose = this.array[e.detail.value]
-        console.log(this.passport.data.purpose)
+        this.travelInfo.purpose = this.array[1][e.detail.value]
       },
       bindEntryDateChange(e) {
-        this.passport.data.entry_date = e.detail.value
+        this.travelInfo.entry_date = e.detail.value
       },
       bindDepartureDateChange(e) {
-        this.passport.data.departure_date = e.detail.value
+        this.travelInfo.departure_date = e.detail.value
       },
       bindByChange(e) {
         this.byindex = e.detail.value
-        this.passport.data.by = this.by[e.detail.value]
+        this.travelInfo.by = this.by[1][e.detail.value]
+        this.entryPoints = this.allPoints[e.detail.value]
+      },
+      bindEntryPointChange(e) {
+        this.entryPointIndex = e.detail.value
+        this.entryPoints.entry_point = this.entryPoints[e.detail.value]
       }
     }
     submit() {
-      console.log(this.data.passportInfo)
+      let passport = wepy.getStorageSync('passportInfo')
+      passport.travelInfo = this.travelInfo
+      console.log('passport to save:')
+      console.log(passport)
       wepy.request({
         url: 'https://fan.blockai.me/save_passport.php',
         method: 'POST',
@@ -97,7 +117,8 @@
     }
 
     onLoad() {
-      this.passport = wepy.getStorageSync('passportInfo')
+      this.entryPoints = this.allPoints[0]
+      this.travelInfo.to_country = 'ke'
     }
   }
 </script>

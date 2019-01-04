@@ -19,12 +19,12 @@ namespace EVisa100
     {
         static void Main(string[] args)
         {
-            var server = new Server();
+            //var server = new Server();
 
-            var application = server.GetApplication();
+            //var application = server.GetApplication();
 
-            var automation = Automations.AutomationsFactory.GetAutomation(application.to_country);
-            automation.Run(application);
+            var automation = Automations.AutomationsFactory.GetAutomation("ke");
+            automation.Run(null);
         }
         
     }

@@ -20,7 +20,7 @@ namespace EVisa100.Automations
 {
     class KenyaAutomation : IAutomation
     {
-        void Execute(Application application)
+        void Execute(Application appliocation)
         {
             const string initPage = "https://accounts.ecitizen.go.ke/login";
 
@@ -61,10 +61,12 @@ namespace EVisa100.Automations
                 drpForWhom.SelectByText("Agent");
 
                 var surnameInput = driver.FindElement(By.XPath(@"//*[@id=""element_4""]"));
-                surnameInput.SendKeys(application.Passport.SurName);
+                //surnameInput.SendKeys(application.Passport.SurName);
+                surnameInput.SendKeys("Dong");
 
                 var givennameInput = driver.FindElement(By.XPath(@"//*[@id=""element_5""]"));
-                givennameInput.SendKeys(application.Passport.GivenName);
+                //givennameInput.SendKeys(application.Passport.GivenName);
+                givennameInput.SendKeys("Wen");
 
                 // male or female.
                 var radios = driver.FindElements(By.XPath(@"//input[@type=""radio""]"));

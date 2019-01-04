@@ -7,7 +7,7 @@
  $input = file_get_contents("php://input");
  $travelInfo = json_decode($input);
  $otherInfo = json_encode($travelInfo->other_info);
-print($travelInfo);
+ var_dump($travelInfo);
  if ($travelInfo->id) {
 	// update it.
 	$updatestr = "update application set ".

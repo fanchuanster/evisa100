@@ -3,7 +3,7 @@
  $mysqli = new mysqli("localhost", "root", "root", "evisa");
  
  $input = file_get_contents("php://input");
-  
+  var_dump($input);
  $travelInfo = json_decode($input);
 
  if ($travelInfo->id) {
@@ -21,12 +21,12 @@
 	$mysqli->query($updatestr);
  } else {
 	 // insert it.
-	$insertStr = "insert into application(passport_id, to_country, purpose, entry_date, exit_date) ".
+	$insertStr = "insert into application(passport_id, to_country, purpose, entry_date, departure_date) ".
 	"values(".$travelInfo->passport_id.",'".
 	$travelInfo->to_country."','".
 	$travelInfo->purpose."',".
 	"CAST('".$travelInfo->entry_date."' AS DATE),".
-	"CAST('".$travelInfo->exit_date."' AS DATE))";
+	"CAST('".$travelInfo->departure_date."' AS DATE))";
          
     // var_dump($insertStr);
 	$mysqli->query($insertStr);

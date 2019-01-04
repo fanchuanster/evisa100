@@ -6,9 +6,9 @@
       <view class="title" slot="title">旅行信息</view>
       <view>
         <text class="fieldLabel">旅行目的</text>
-        <picker bindchange="bindPurposeChange" value="{{index}}" range="{{array[0]}}">
+        <picker bindchange="bindPurposeChange" value="{{index}}" range="{{array}}">
         <view class="picker">
-          {{array[0][index]}}
+          {{array[index]}}
         </view>
         </picker>
       </view>
@@ -30,9 +30,9 @@
       </view>
       <view>
         <text class="fieldLabel">旅行方式</text>
-        <picker bindchange="bindByChange" value="{{byindex}}" range="{{by[0]}}">
+        <picker bindchange="bindByChange" value="{{byindex}}" range="{{by}}">
         <view class="picker">
-          {{by[0][byindex]}}
+          {{by[byindex]}}
         </view>
         </picker>
       </view>
@@ -66,10 +66,9 @@
       travelInfo: {},
       allPoints: [['Eldoret International Airport', 'Garisa Airstrip', 'Jomo Kenyatta Airport, Nairobi'],
       ['Busia', 'Isebania', 'Liboi'], ['Kilindini Sea Port', 'Kisumu', 'Kuinga']],
-      array: [['商务', '教育', '前往工作', '求医', '其他', '宗教', '移民定居', '旅游'],
-      ['Business', 'Education', 'Employment', 'Medical', 'Others', 'Religion', 'Settlement', 'Tourism']],
+      array: ['商务', '教育', '前往工作', '求医', '其他', '宗教', '移民定居', '旅游'],
       index: 0,
-      by: [['飞机', '陆路', '水路'], ['Air', 'Road', 'Ship']],
+      by: ['飞机', '陆路', '水路'],
       byindex: 0,
       entryPoints: [],
       entryPointIndex: 0
@@ -83,7 +82,7 @@
     methods = {
       bindPurposeChange(e) {
         this.index = e.detail.value
-        this.travelInfo.purpose = this.array[1][e.detail.value]
+        this.travelInfo.purpose = this.array[e.detail.value]
       },
       bindEntryDateChange(e) {
         this.travelInfo.entry_date = e.detail.value
@@ -93,7 +92,7 @@
       },
       bindByChange(e) {
         this.byindex = e.detail.value
-        this.travelInfo.by = this.by[1][e.detail.value]
+        this.travelInfo.by = this.by[e.detail.value]
         this.entryPoints = this.allPoints[e.detail.value]
       },
       bindEntryPointChange(e) {
@@ -102,10 +101,8 @@
       }
     }
     submit() {
-      let passport = wepy.getStorageSync('passportInfo')
-      passport.travelInfo = this.travelInfo
-      console.log('passport to save:')
-      console.log(passport)
+      console.log('travelInfo to save:')
+      console.log(this.travelInfo)
       wepy.request({
         url: 'https://fan.blockai.me/submit_application.php',
         method: 'POST',

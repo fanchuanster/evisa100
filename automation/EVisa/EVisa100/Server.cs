@@ -50,7 +50,7 @@ namespace EVisa100
                 // string ot object.
                 response = response.Replace("\"{", "{").Replace("}\"", "}").Replace("\\\"", "\"");
 
-                var application = JsonSerializer.Deserialize<Application>(response);
+                var application = JsonSerializer.Deserialize<Application[]>(response)[0];
 
                 application.Passport = GetPassport(application.passport_id);
 

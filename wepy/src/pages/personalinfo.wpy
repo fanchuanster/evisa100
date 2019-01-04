@@ -115,10 +115,6 @@
       if (!this.passport.data.region) {
         this.passport.data.region = ['上海市', '上海市', '全部']
       }
-      if (!this.passport.data.occupation) {
-        this.passport.data.occupation = ''
-        console.log('set occupation')
-      }
     }
   }
 </script>

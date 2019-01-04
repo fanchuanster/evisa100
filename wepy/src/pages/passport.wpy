@@ -99,7 +99,6 @@
     methods = {
       oninputPassport(e) {
         this.passport.passport_no = e.detail.value
-        console.log(this.passport.passport_no)
       },
       oninputAuthority(e) {
         this.passport.authority = e.detail.value
@@ -124,7 +123,6 @@
       },
       bindBirthChange(e) {
         this.passport.data.birth_date = e.detail.value
-        console.log(this.passport.data)
       },
       radioChange(e) {
         console.log('radio发生change事件，携带value值为：', e.detail.value)

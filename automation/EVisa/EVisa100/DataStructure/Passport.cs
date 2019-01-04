@@ -58,9 +58,9 @@ namespace EVisa100.DataStructure
 
         public int current_status;
         public string to_country;
-        public string visa_type;
+        public string purpose;
         public DateTime entry_date;
-        public DateTime @exit_date;
+        public DateTime @departure_date;
         public Dictionary<string, string> other_info;
     }
 

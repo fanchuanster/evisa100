@@ -71,7 +71,8 @@
       by: ['飞机', '陆路', '水路'],
       byindex: 0,
       entryPoints: [],
-      entryPointIndex: 0
+      entryPointIndex: 0,
+      otherInfo: {}
     }
     computed = {
       now () {
@@ -92,15 +93,19 @@
       },
       bindByChange(e) {
         this.byindex = e.detail.value
-        this.travelInfo.by = this.by[this.byindex]
+        this.otherInfo.by = this.by[this.byindex]
         this.entryPoints = this.allPoints[this.byindex]
+
+        this.entryPointIndex = 0
+        this.otherInfo.entry_point = this.entryPoints[this.entryPointIndex]
       },
       bindEntryPointChange(e) {
         this.entryPointIndex = e.detail.value
-        this.entryPoints.entry_point = this.entryPoints[this.entryPointIndex]
+        this.otherInfo.entry_point = this.entryPoints[this.entryPointIndex]
       }
     }
     submit() {
+      this.travelInfo.other_info = this.otherInfo
       console.log('travelInfo to save:')
       console.log(this.travelInfo)
       wepy.request({
@@ -117,9 +122,9 @@
       this.travelInfo.to_country = 'ke'
       this.travelInfo.passport_id = option.passport_id
       this.travelInfo.purpose = this.array[this.index]
-      this.travelInfo.by = this.by[this.byindex]
+      this.otherInfo.by = this.by[this.byindex]
       this.entryPoints = this.allPoints[this.byindex]
-      this.entryPoints.entry_point = this.entryPoints[this.entryPointIndex]
+      this.otherInfo.entry_point = this.entryPoints[this.entryPointIndex]
     }
   }
 </script>

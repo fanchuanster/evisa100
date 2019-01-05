@@ -5,9 +5,9 @@
  $mysqli->query("SET CHARACTER SET utf8");
  
  $input = file_get_contents("php://input");
- var_dump($input)
+ var_dump($input);
  $passport = json_decode($input);
- var_dump($passport)
+ var_dump($passport);
  $data = json_encode($passport->data);
 
  if ($passport->id) {

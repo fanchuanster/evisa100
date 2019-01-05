@@ -23,7 +23,7 @@
 	"values('".$passport->passport_no."','".
 	$passport->openid."','".
 	$data."')";
-    var_dump($insertStr);
+	
 	$mysqli->query($insertStr);
 	
 	// return inserted id to client.

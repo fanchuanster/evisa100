@@ -32,7 +32,7 @@
 	"CAST('".$travelInfo->departure_date."' AS DATE),'".
 	$otherInfo."')";
 	
-    var_dump($updatestr);
+    var_dump($insertStr);
 	
 	$mysqli->query($insertStr);
 

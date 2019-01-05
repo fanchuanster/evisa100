@@ -5,11 +5,9 @@
  $mysqli->query("SET CHARACTER SET utf8");
  
  $input = file_get_contents("php://input");
- var_dump($input);
- $passport = json_decode($input);
- 
+ $passport = json_decode($input); 
  $data = json_encode($passport->data);
-var_dump($data);
+
  if ($passport->id) {
 	// update it.
 	$updatestr = "update passport set ".
@@ -25,7 +23,7 @@ var_dump($data);
 	"values('".$passport->passport_no."','".
 	$passport->openid."','".
 	$data."')";
-         
+    var_dump($insertStr);
 	$mysqli->query($insertStr);
 	
 	// return inserted id to client.

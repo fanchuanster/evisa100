@@ -11,7 +11,7 @@ namespace EVisa100.DataStructure
         public int id;
         public string openid;
         public string passport_no;
-        public Dictionary<string, string> data;
+        public Dictionary<string, object> data;
 
         public string SurName
         {
@@ -19,7 +19,7 @@ namespace EVisa100.DataStructure
             {
                 if (data.ContainsKey("name")) return string.Empty;
 
-                var name = data["name"];
+                var name = data["name"] as string;
                 var fields = name.Split(new char[] { ' ', ',', '.', '\n', '\t' });
 
                 return fields.FirstOrDefault();
@@ -32,7 +32,7 @@ namespace EVisa100.DataStructure
             {
                 if (data.ContainsKey("name")) return string.Empty;
 
-                var name = data["name"];
+                var name = data["name"] as string;
                 var fields = name.Split(new char[] { ' ', ',', '.', '\n', '\t' });
 
                 return fields.LastOrDefault();
@@ -52,8 +52,8 @@ namespace EVisa100.DataStructure
         public string to_country;
         public string purpose;
         public DateTime entry_date;
-        public DateTime @departure_date;
-        public Dictionary<string, string> other_info;
+        public DateTime departure_date;
+        public Dictionary<string, object> other_info;
     }
 
     public class ResponseData<T>

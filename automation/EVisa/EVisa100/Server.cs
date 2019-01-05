@@ -10,6 +10,7 @@ using System.Net.Security;
 using EVisa100.DataStructure;
 using System.Web.Script.Serialization;
 using System.IO;
+using System.Diagnostics;
 
 namespace EVisa100
 {
@@ -85,11 +86,10 @@ namespace EVisa100
                 // string ot object.
                 response = response.Replace("\"{", "{").Replace("}\"", "}").Replace("\\\"", "\"");
 
-                var responseData = JsonSerializer.Deserialize<ResponseData<Passport>>(response);
-                if (responseData.data.Length > 0)
-                {
-                    return responseData.data[0];
-                }                    
+                var parsports = JsonSerializer.Deserialize<Passport[]>(response);
+                Debug.Assert(parsports.Length > 0);
+
+                return parsports[0];
             }
             catch (WebException ex)
             {

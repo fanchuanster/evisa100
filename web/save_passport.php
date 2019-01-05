@@ -7,9 +7,9 @@
  $input = file_get_contents("php://input");
  var_dump($input);
  $passport = json_decode($input);
- var_dump($passport);
+ 
  $data = json_encode($passport->data);
-
+var_dump($data);
  if ($passport->id) {
 	// update it.
 	$updatestr = "update passport set ".

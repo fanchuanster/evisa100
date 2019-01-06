@@ -119,7 +119,6 @@
     }
 
     onLoad(option) {
-      console.log(option)
       this.travelInfo.to_country = 'ke'
       this.travelInfo.passport_id = option.passport_id
       this.travelInfo.purpose = this.array[this.index]

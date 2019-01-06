@@ -1,13 +1,14 @@
 ﻿CREATE TABLE passport (id int(11) AUTO_INCREMENT, passport_no VARCHAR(20),
-openid VARCHAR(30), data varchar(2048), 
+openid VARCHAR(30), data varchar(2048) CHARACTER SET utf8 COLLATE utf8_unicode_ci, 
 created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-PRIMARY KEY(id));
+PRIMARY KEY(id)) CHARACTER SET = utf8;
 
 create table application (
 id int(11) AUTO_INCREMENT, passport_id int(11), current_status int default 0, 
-to_country varchar(10), visa_type varchar(20), purpose varchar(30), entry_date DATE, departure_date DATE, other_info varchar(1024),
+to_country varchar(10), visa_type varchar(10), purpose int, entry_date DATE, departure_date DATE, 
+other_info varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
 created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-PRIMARY KEY (id));
+PRIMARY KEY (id)) CHARACTER SET = utf8;
 
 
 // qliyun ESC remote connction passwor 342358

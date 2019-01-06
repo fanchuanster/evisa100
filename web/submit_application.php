@@ -8,6 +8,8 @@
  $travelInfo = json_decode($input);
  $otherInfo = json_encode($travelInfo->other_info);
  
+ $otherInfo = str_replace("\u", "\\u", $otherInfo);
+ 
  if ($travelInfo->id) {
 	// update it.
 	$updatestr = "update application set ".
@@ -31,8 +33,6 @@
 	"CAST('".$travelInfo->entry_date."' AS DATE),".
 	"CAST('".$travelInfo->departure_date."' AS DATE),'".
 	$otherInfo."')";
-	
-    var_dump($insertStr);
 	
 	$mysqli->query($insertStr);
 

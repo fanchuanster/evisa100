@@ -7,16 +7,13 @@
  $input = file_get_contents("php://input");
  $passport = json_decode($input); 
  $data = json_encode($passport->data);
- var_dump($data);
- $data = str_replace("\u", "\\u", $data);
- var_dump($data);
 
  if ($passport->id) {
 	// update it.
 	$updatestr = "update passport set ".
 	"passport_no='".$passport->passport_no."',".
 	"openid='".$passport->openid."',".
-	"data='".$data."'".
+	"data='".addslashes($data)."'".
 	" WHERE id='".$passport->id."'";
 
 	$mysqli->query($updatestr);
@@ -25,7 +22,7 @@
 	$insertStr = "insert into passport(passport_no, openid, data) ".
 	"values('".$passport->passport_no."','".
 	$passport->openid."','".
-	$data."')";
+	addslashes($data)."')";
 	
 	$mysqli->query($insertStr);
 	

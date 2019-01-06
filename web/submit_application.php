@@ -16,7 +16,7 @@
 	"passport_id=".$travelInfo->passport_id.",'".
 	"to_country'='".$travelInfo->to_country."','".
 	"purpose'='".$travelInfo->purpose."','".
-	"otherInfo'='".$otherInfo."','".
+	"otherInfo'='".addslashes($otherInfo)."','".
 	"entry_date'=CAST('".$travelInfo->entry_date."' AS DATE),'".
 	"departure_date'=CAST('".$travelInfo->departure_date."' AS DATE)".
 	" WHERE id='".$travelInfo->id."'";
@@ -32,7 +32,7 @@
 	$travelInfo->purpose."',".
 	"CAST('".$travelInfo->entry_date."' AS DATE),".
 	"CAST('".$travelInfo->departure_date."' AS DATE),'".
-	$otherInfo."')";
+	addslashes($otherInfo)."')";
 	
 	$mysqli->query($insertStr);
 

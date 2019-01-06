@@ -129,7 +129,7 @@
         this.passport.data.sex = e.detail.value
       },
       next() {
-        wepy.setStorageSync('passportInfo', this.passport)
+        wepy.setStorageSync('passport', this.passport)
         wepy.navigateTo({
           url: './personalinfo'
         })
@@ -137,7 +137,7 @@
     }
 
     onLoad() {
-      this.passport = wepy.getStorageSync('passportInfo')
+      this.passport = wepy.getStorageSync('passport')
     }
   }
 </script>

@@ -232,18 +232,18 @@
         var objstr = '{"config_str":{"template_id":"e132cad9-55e9-417f-9111-c82d3105ed501545292863"},"items":{"authority":"MPS Exit&Entry Administration","authority_cn":"公安部出入境管理局","birth_date":"25","birth_place":"湖北/HUBEI","country_code":"CHN","expiry_date":"062月/FEB2024","issue_date":"07 2月/FEB 2014","issue_place":"上海/SHANGHAI","name":"DONG,WEN","name_cn":"董文","nationality":"中国/CHINESE","passport_no":"E06279103","sex":"男/M","type":"P"},"request_id":"20181221174315_5bfa13c25816d99985e25694c498dc52","success":true}'
         res.data = JSON.parse(objstr)
 
-        var passportInfo = {
+        var passport = {
           openid: that.$parent.globalData.openid,
           passport_no: res.data.items.passport_no
         }
         delete res.data.items.passport_no
-        passportInfo.data = res.data.items
-        passportInfo.data.birth_date = this.dateFromString(passportInfo.data.birth_date)
-        passportInfo.data.issue_date = this.dateFromString(passportInfo.data.issue_date)
-        passportInfo.data.expiry_date = this.dateFromString(passportInfo.data.expiry_date)
-        passportInfo.data.sex = passportInfo.data.sex.replace(/\W/g, '')
+        passport.data = res.data.items
+        passport.data.birth_date = this.dateFromString(passport.data.birth_date)
+        passport.data.issue_date = this.dateFromString(passport.data.issue_date)
+        passport.data.expiry_date = this.dateFromString(passport.data.expiry_date)
+        passport.data.sex = passport.data.sex.replace(/\W/g, '')
 
-        wepy.setStorageSync('passportInfo', passportInfo)
+        wepy.setStorageSync('passport', passport)
         wepy.navigateTo({
           url: './passport'
         })
@@ -272,14 +272,14 @@
         //       var objstr = '{"config_str":{"template_id":"e132cad9-55e9-417f-9111-c82d3105ed501545292863"},"items":{"authority":"MPS Exit&Entry Administration","authority_cn":"公安部出入境管理局","birth_date":"25","birth_place":"湖北/HUBEI","country_code":"CHN","expiry_date":"062月/FEB2024","issue_date":"07 2月/FEB 2014","issue_place":"上海/SHANGHAI","name":"DONG,WEN","name_cn":"董文","nationality":"中国/CHINESE","passport_no":"E06279103","sex":"男/M","type":"P"},"request_id":"20181221174315_5bfa13c25816d99985e25694c498dc52","success":true}'
         //       res.data = JSON.parse(objstr)
 
-        //       var passportInfo = {
+        //       var passport = {
         //         openid: that.$parent.globalData.openid,
         //         passport_no: res.data.items.passport_no
         //       }
         //       delete res.data.items.passport_no
-        //       passportInfo.data = res.data.items
+        //       passport.data = res.data.items
 
-        //       wepy.setStorageSync('passportInfo', passportInfo)
+        //       wepy.setStorageSync('passport', passport)
         //       wepy.navigateTo({
         //         url: './passport'
         //       })

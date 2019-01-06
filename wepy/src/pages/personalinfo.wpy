@@ -103,7 +103,7 @@
           this.passport.id = res.data.id
         }
 
-        wepy.setStorageSync('passportInfo', this.passport)
+        wepy.setStorageSync('passport', this.passport)
         wepy.navigateTo({
           url: './travelinfo?passport_id=' + this.passport.id
         })
@@ -111,7 +111,7 @@
     }
 
     onLoad() {
-      this.passport = wepy.getStorageSync('passportInfo')
+      this.passport = wepy.getStorageSync('passport')
       if (!this.passport.data.region) {
         this.passport.data.region = ['上海市', '上海市', '全部']
       }

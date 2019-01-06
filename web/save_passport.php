@@ -7,7 +7,9 @@
  $input = file_get_contents("php://input");
  $passport = json_decode($input); 
  $data = json_encode($passport->data);
+ var_dump($data);
  $data = str_replace("\u", "\\u", $data);
+ var_dump($data);
 
  if ($passport->id) {
 	// update it.

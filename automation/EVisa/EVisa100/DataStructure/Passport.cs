@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace EVisa100.DataStructure
@@ -17,8 +19,6 @@ namespace EVisa100.DataStructure
         {
             get
             {
-                if (data.ContainsKey("name")) return string.Empty;
-
                 var name = data["name"] as string;
                 var fields = name.Split(new char[] { ' ', ',', '.', '\n', '\t' });
 
@@ -30,12 +30,71 @@ namespace EVisa100.DataStructure
         {
             get
             {
-                if (data.ContainsKey("name")) return string.Empty;
-
                 var name = data["name"] as string;
                 var fields = name.Split(new char[] { ' ', ',', '.', '\n', '\t' });
 
                 return fields.LastOrDefault();
+            }
+        }
+
+        public DateTime BirthDate
+        {
+            get
+            {
+                var date = DateTime.Parse(data["birth_date"] as string);
+                return date;
+            }
+        }
+
+        public string BirthPlace
+        {
+            get
+            {
+                string input = data["birth_place"] as string;
+                string pattern = "[^a-zA-Z]";
+                string replacement = "";
+
+                Regex rgx = new Regex(pattern);
+                return rgx.Replace(input, replacement);
+            }
+        }
+
+        public string IssuePlace
+        {
+            get
+            {
+                string input = data["issue_place"] as string;
+                string pattern = "[^a-zA-Z]";
+                string replacement = "";
+
+                Regex rgx = new Regex(pattern);
+                return rgx.Replace(input, replacement);
+            }
+        }
+
+        public string City
+        {
+            get
+            {
+                var region = data["region"] as Object[];
+                return region[1] as string;
+            }
+        }
+
+        public DateTime IssueDate
+        {
+            get
+            {
+                var date = DateTime.Parse(data["issue_date"] as string);
+                return date;
+            }
+        }
+        public DateTime ExpiryDate
+        {
+            get
+            {
+                var date = DateTime.Parse(data["expiry_date"] as string);
+                return date;
             }
         }
     }

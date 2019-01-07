@@ -20,7 +20,7 @@ namespace EVisa100.Automations
 {
     class KenyaAutomation : IAutomation
     {
-        void Execute(Application appliocation)
+        void Execute(Application application)
         {
             const string initPage = "https://accounts.ecitizen.go.ke/login";
 
@@ -45,6 +45,7 @@ namespace EVisa100.Automations
                 System.Threading.Thread.Sleep(2000);
                 getServiceBtn.Click();
 
+                System.Threading.Thread.Sleep(2000);
                 driver.FindElement(By.LinkText("Make Applicaiton")).Click();
 
                 // Expand kenya visa list.
@@ -61,49 +62,47 @@ namespace EVisa100.Automations
                 drpForWhom.SelectByText("Agent");
 
                 var surnameInput = driver.FindElement(By.XPath(@"//*[@id=""element_4""]"));
-                //surnameInput.SendKeys(application.Passport.SurName);
-                surnameInput.SendKeys("Dong");
+                surnameInput.SendKeys(application.Passport.SurName);
 
                 var givennameInput = driver.FindElement(By.XPath(@"//*[@id=""element_5""]"));
-                //givennameInput.SendKeys(application.Passport.GivenName);
-                givennameInput.SendKeys("Wen");
+                givennameInput.SendKeys(application.Passport.GivenName);
 
                 // male or female.
                 var radios = driver.FindElements(By.XPath(@"//input[@type=""radio""]"));
-                if (radios.Count == 2)
+                if (application.Passport.data["sex"].ToString() == "M")
                 {
                     radios[0].Click();
                 }
+                else
+                {
+                    radios[1].Click();
+                }
 
                 var mm = driver.FindElement(By.CssSelector(@"#element_8_1"));
-                mm.SendKeys("01");
+                mm.SendKeys(application.Passport.BirthDate.Month.ToString());
 
                 var dd = driver.FindElement(By.CssSelector(@"#element_8_2"));
-                dd.Clear();
-                dd.SendKeys("25");
+                dd.SendKeys(application.Passport.BirthDate.Day.ToString());
 
                 var yyyy = driver.FindElement(By.CssSelector(@"#element_8_3"));
-                yyyy.Clear();
-                yyyy.SendKeys("1984");
-
+                mm.SendKeys(application.Passport.BirthDate.Year.ToString());
 
                 var birthplace = driver.FindElement(By.CssSelector(@"#element_9"));
-                birthplace.SendKeys("HUBEI");
+                birthplace.SendKeys(application.Passport.BirthPlace);
 
                 var drpBirthCountry = new SelectElement(driver.FindElement(By.CssSelector(@"#element_13")));
                 drpBirthCountry.SelectByText("China");
 
                 var occupation = driver.FindElement(By.CssSelector(@"#element_11"));
-                occupation.SendKeys("Software Engineer");
+                occupation.SendKeys(application.Passport.data["occupation"] as string);
 
                 var fatherName = driver.FindElement(By.CssSelector(@"#element_7"));
-                fatherName.SendKeys("DONG, SHENFA");
+                fatherName.SendKeys(application.Passport.data["father_name"] as string);
 
                 var motherName = driver.FindElement(By.CssSelector(@"#element_55"));
-                motherName.SendKeys("CHEN, YUEYING");
+                motherName.SendKeys(application.Passport.data["mother_name"] as string);
 
-                var continueBtn = driver.FindElement(By.CssSelector(@"#submit_primary"));
-                continueBtn.Click();
+                driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
 
                 // #element_1 - nationality
                 var drpNationality = new SelectElement(driver.FindElement(By.CssSelector(@"#element_1")));
@@ -116,50 +115,46 @@ namespace EVisa100.Automations
 
                 // #element_15 - physical address in the residence country.
                 var address = driver.FindElement(By.CssSelector(@"#element_15"));
-                address.SendKeys("Room 101, Building 67, #399 Nanliu Rd");
+                address.SendKeys(application.Passport.data["address"] as string);
 
                 // #element_16 - phone number in residence country
                 var phoneNumber = driver.FindElement(By.CssSelector(@"#element_16"));
-                phoneNumber.SendKeys("13641841111");
+                phoneNumber.SendKeys(application.Passport.data["phone"] as string);
 
                 // #element_57 - city
                 var city = driver.FindElement(By.CssSelector(@"#element_57"));
-                city.SendKeys("SHANGHAI");
+                city.SendKeys(application.Passport.City);
                 // #element_17 - email
                 var email = driver.FindElement(By.CssSelector(@"#element_17"));
-                email.SendKeys("fanchuanster@163.com");
+                email.SendKeys(application.Passport.data["email"] as string);
 
                 // #submit_primary continue button
-                continueBtn = driver.FindElement(By.CssSelector(@"#submit_primary"));
-                continueBtn.Click();
+                driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
 
                 // #element_51 - passport number
-                var passport = driver.FindElement(By.CssSelector(@"#element_51"));
-                passport.SendKeys("E11111111");
+                driver.FindElement(By.CssSelector(@"#element_51")).SendKeys(application.Passport.passport_no);
                 // #element_20 - place of issue
-                var issuePlace = driver.FindElement(By.CssSelector(@"#element_20"));
-                issuePlace.SendKeys("SHANGHAI");
+                driver.FindElement(By.CssSelector(@"#element_20")).SendKeys(application.Passport.IssuePlace);
                 // issue time: #element_21_1 - mm; #element_21_2 - dd; #element_21_3 - yyyy
                 var issueMM = driver.FindElement(By.CssSelector(@"#element_21_1"));
-                issueMM.SendKeys("02");
+                issueMM.SendKeys(application.Passport.IssueDate.Month.ToString());
                 var issueDD = driver.FindElement(By.CssSelector(@"#element_21_2"));
-                issueDD.SendKeys("07");
+                issueDD.SendKeys(application.Passport.IssueDate.Day.ToString());
                 var issueYYYY = driver.FindElement(By.CssSelector(@"#element_21_3"));
-                issueYYYY.SendKeys("2014");
+                issueYYYY.SendKeys(application.Passport.IssueDate.Year.ToString());
                 // expiry date: ##element_22_1 - mm; ##element_22_2 - dd; #element_22_3 - yyyy
                 var expiryMM = driver.FindElement(By.CssSelector(@"#element_22_1"));
-                expiryMM.SendKeys("02");
+                expiryMM.SendKeys(application.Passport.ExpiryDate.Month.ToString());
                 var expiryDD = driver.FindElement(By.CssSelector(@"#element_22_2"));
-                expiryDD.SendKeys("06");
+                expiryDD.SendKeys(application.Passport.ExpiryDate.Day.ToString());
                 var expiryYYYY = driver.FindElement(By.CssSelector(@"#element_22_3"));
-                expiryYYYY.SendKeys("2024");
+                expiryYYYY.SendKeys(application.Passport.ExpiryDate.Year.ToString());
                 // issued by - #element_23
                 var issuedby = driver.FindElement(By.CssSelector(@"#element_23"));
-                issuedby.SendKeys("MPS Exit & Entry Administration");
+                issuedby.SendKeys(application.Passport.data["authority"] as string);
 
                 // #submit_primary continue button
-                continueBtn = driver.FindElement(By.CssSelector(@"#submit_primary"));
-                continueBtn.Click();
+                driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
 
                 // reason travel - #element_65
                 var reasontravel = new SelectElement(driver.FindElement(By.CssSelector(@"#element_65")));
@@ -194,8 +189,7 @@ namespace EVisa100.Automations
                 entryPoint.SelectByText("Jomo", true);
 
                 // #submit_primary continue button
-                continueBtn = driver.FindElement(By.CssSelector(@"#submit_primary"));
-                continueBtn.Click();
+                driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
 
                 // visited other country in last 3 month - #element_25
                 driver.FindElement(By.CssSelector(@"#element_25")).SendKeys("None");
@@ -215,8 +209,7 @@ namespace EVisa100.Automations
                 convicted.SelectByText("No");
 
                 // #submit_primary continue button
-                continueBtn = driver.FindElement(By.CssSelector(@"#submit_primary"));
-                continueBtn.Click();
+                driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
 
                 // passportUploadBtn - #element_43
                 var passportUploadBtn = driver.FindElement(By.CssSelector(@"#element_43"));

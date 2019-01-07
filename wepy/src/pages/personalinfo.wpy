@@ -102,15 +102,10 @@
           console.log('set passport.id to ' + res.data.id)
           this.passport.id = res.data.id
         }
-
-        wepy.setStorageSync('passport', this.passport)
-        wepy.navigateTo({
-          url: './travelinfo?passport_id=' + this.passport.id
-        })
       })
     }
 
-    onLoad() {
+    onLoad(option) {
       this.passport = wepy.getStorageSync('passport')
       if (!this.passport.data.region) {
         this.passport.data.region = ['上海市', '上海市', '全部']

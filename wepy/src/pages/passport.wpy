@@ -78,6 +78,7 @@
 <script>
   import wepy from 'wepy'
   import Panel from '@/components/panel' // alias example
+  import UploadFile from '../lib/uploadAliyun.js'
 
   export default class Passport extends wepy.page {
     config = {
@@ -88,7 +89,8 @@
     }
     mixins = []
     data = {
-      passport: null
+      passport: null,
+      passportImagePath: ''
     }
     computed = {
       now () {
@@ -130,14 +132,29 @@
       },
       next() {
         wepy.setStorageSync('passport', this.passport)
-        wepy.navigateTo({
-          url: './personalinfo'
-        })
+
+        var photoFileName = 'photo/' + this.passport.passport_no + '_photo.' + this.passportImagePath.split('.').pop()
+        console.log('uploading ' + this.passportImagePath + ' to ' + photoFileName)
+
+        UploadFile(this.passportImagePath, photoFileName,
+        function(res) {
+          console.log('uploading succeeded ')
+          console.log(res)
+          wepy.navigateTo({
+            url: './personalinfo'
+          })
+        },
+        function(err) {
+          console.log('uploading failed ')
+          console.log(err)
+        }
+        )
       }
     }
 
-    onLoad() {
+    onLoad(option) {
       this.passport = wepy.getStorageSync('passport')
+      this.passportImagePath = option.imagePath
     }
   }
 </script>

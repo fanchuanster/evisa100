@@ -20,7 +20,7 @@
     <panel>
       <view class="title" slot="title">护照</view>
       <block wx:for-items="{{passports}}" wx:for-index="index" wx:for-item="item" wx:key="id">
-        <view>
+        <view @tap="tap" id="{{item.id}}" class="mylist">
           <text>{{item.data.name}}</text>: {{item.passport_no}}
         </view>
       </block>
@@ -94,7 +94,7 @@
   import moduleA from 'module-a' // aliasFields ignore module example
   import Group from '../components/group'
   import Toast from 'wepy-com-toast'
-  import testMixin from '../mixins/test'
+  // import testMixin from '../mixins/test'
 
   console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
 
@@ -122,8 +122,6 @@
       group: Group,
       toast: Toast
     }
-
-    mixins = [testMixin]
 
     data = {
       mynum: 20,
@@ -189,18 +187,18 @@
 
     dateFromString (str) {
       str = str.replace(/\D/g, '')
-      if (str.length < 7) {
+      if (str.length < 6) {
         return str
       }
-
       let dd = str.substr(0, 2)
       str = str.substr(2)
       let yyyy = str.substr(str.length - 4)
-      let mm = str.substr(0, str.length - 4) - 1// 0 based
-
-      let date = new Date(yyyy, mm, dd)
-      console.log(date)
-      return date
+      if (str.length === 6) {
+        return yyyy + '-' + 1 + '-' + dd
+      } else {
+        let mm = str.substr(0, str.length - 4) - 1// 0 based
+        return yyyy + '-' + mm + '-' + dd
+      }
     }
 
     methods = {
@@ -217,8 +215,14 @@
           console.log('toast done')
         })
       },
-      tap () {
-        console.log('do noting from ' + this.$name)
+      tap (e) {
+        let passport = this.passports.find(function(element) {
+          return element.id === e.target.id
+        })
+        wepy.setStorageSync('passport', passport)
+        wepy.navigateTo({
+          url: './passport'
+        })
       },
       async newPassport() {
         console.log('new a passport')

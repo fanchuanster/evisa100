@@ -76,7 +76,7 @@ namespace EVisa100.DataStructure
         {
             get
             {
-                var region = data["region"] as Object[];
+                var region = data["region"] as System.Collections.ArrayList;
                 return region[1] as string;
             }
         }

@@ -49,7 +49,7 @@ namespace EVisa100
                 var response = reader.ReadToEnd();
 
                 // string ot object.
-                response = response.Replace("\"{", "{").Replace("}\"", "}").Replace("\\\"", "\"");
+                response = response.Replace("\"{", "{").Replace("}\"", "}").Replace("\\\"", "\"").StripSlashes();
 
                 var application = JsonSerializer.Deserialize<Application[]>(response)[0];
 
@@ -84,7 +84,7 @@ namespace EVisa100
                 var response = reader.ReadToEnd();
 
                 // string ot object.
-                response = response.Replace("\"{", "{").Replace("}\"", "}").Replace("\\\"", "\"");
+                response = response.Replace("\"{", "{").Replace("}\"", "}").Replace("\\\"", "\"").StripSlashes();
 
                 var parsports = JsonSerializer.Deserialize<Passport[]>(response);
                 Debug.Assert(parsports.Length > 0);

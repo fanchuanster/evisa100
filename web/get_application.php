@@ -15,5 +15,5 @@
 	  $records[] = $row;
   }
 
-  print(stripslashes(json_encode($records)));
+  print((json_encode($records)));
 ?>

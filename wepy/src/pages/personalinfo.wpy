@@ -9,11 +9,11 @@
         <input placeholder="比如 软件工程师" value="{{passport.data.occupation}}" bindinput="oninputOccupation" type="text"/>
       </view>
       <view>
-        <text class="fieldLabel">父亲名字(拼)</text>
+        <text class="fieldLabel">父亲名字(拼音)</text>
         <input placeholder="比如 Zhang, Mingqiang" value="{{passport.data.father_name}}" bindinput="oninputFatherName" type="text"/>
       </view>
       <view>
-        <text class="fieldLabel">母亲名字(拼)</text>
+        <text class="fieldLabel">母亲名字(拼音)</text>
         <input placeholder="比如 Chen, Xiuyun" value="{{passport.data.mother_name}}" bindinput="oninputMotherName" type="text"/>
       </view>
       <view>
@@ -30,7 +30,7 @@
       </view>
       <view>
         <text class="fieldLabel">电话号码</text>
-        <input placeholder="" value="{{passport.data.phone}}" bindinput="oninputPhone" type="number"/>
+        <input value="{{passport.data.phone}}" bindinput="oninputPhone" type="number"/>
       </view>
       <view>
         <text class="fieldLabel">电子邮件</text>
@@ -89,6 +89,8 @@
     }
 
     next() {
+      console.log('saving passport:')
+      console.log(this.passport)
       wepy.request({
         url: 'https://fan.blockai.me/save_passport.php',
         method: 'POST',
@@ -98,9 +100,11 @@
         }
       }).then(res => {
         console.log(res)
-        if (!this.passport.id) {
-          console.log('set passport.id to ' + res.data.id)
+        if (res.data.id) {
           this.passport.id = res.data.id
+          wepy.navigateTo({
+            url: './travelinfo?passport_id=' + this.passport.id
+          })
         }
       })
     }
@@ -108,7 +112,7 @@
     onLoad(option) {
       this.passport = wepy.getStorageSync('passport')
       if (!this.passport.data.region) {
-        this.passport.data.region = ['上海市', '上海市', '全部']
+        this.passport.data.region = ['上海市', '上海市', '全部'] // default.
       }
     }
   }

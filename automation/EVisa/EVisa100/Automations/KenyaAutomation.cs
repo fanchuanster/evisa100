@@ -85,7 +85,7 @@ namespace EVisa100.Automations
                 dd.SendKeys(application.Passport.BirthDate.Day.ToString());
 
                 var yyyy = driver.FindElement(By.CssSelector(@"#element_8_3"));
-                mm.SendKeys(application.Passport.BirthDate.Year.ToString());
+                yyyy.SendKeys(application.Passport.BirthDate.Year.ToString());
 
                 var birthplace = driver.FindElement(By.CssSelector(@"#element_9"));
                 birthplace.SendKeys(application.Passport.BirthPlace);
@@ -121,7 +121,7 @@ namespace EVisa100.Automations
                 var phoneNumber = driver.FindElement(By.CssSelector(@"#element_16"));
                 phoneNumber.SendKeys(application.Passport.data["phone"] as string);
 
-                // #element_57 - city
+                // #element_57 - city - todo: to english.
                 var city = driver.FindElement(By.CssSelector(@"#element_57"));
                 city.SendKeys(application.Passport.City);
                 // #element_17 - email
@@ -156,7 +156,7 @@ namespace EVisa100.Automations
                 // #submit_primary continue button
                 driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
 
-                // reason travel - #element_65
+                // reason travel - #element_65 todo: index to name
                 var reasontravel = new SelectElement(driver.FindElement(By.CssSelector(@"#element_65")));
                 reasontravel.SelectByText("Tourism");
                 // entry date: #element_27_1 - mm; #element_27_2 - dd; #element_27_3 - yyyy

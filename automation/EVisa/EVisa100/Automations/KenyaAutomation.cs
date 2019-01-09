@@ -24,9 +24,9 @@ namespace EVisa100.Automations
         {
             const string initPage = "https://accounts.ecitizen.go.ke/login";
 
-            var options = new ChromeOptions();
-            options.AddArgument("no-sandbox");
-            using (IWebDriver driver = new ChromeDriver(options))
+            var options = new FirefoxOptions();
+            //options.AddArgument("no-sandbox");
+            IWebDriver driver = new FirefoxDriver("./", options, TimeSpan.FromMinutes(3));
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
                 driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(100);
@@ -177,11 +177,11 @@ namespace EVisa100.Automations
 
                 // contact there #element_29 - address; #element_31 - email
                 driver.FindElement(By.CssSelector(@"#element_29")).SendKeys("None");
-                driver.FindElement(By.CssSelector(@"#element_31")).SendKeys("fanchuanster@gamil.com");
+                driver.FindElement(By.CssSelector(@"#element_31")).SendKeys("None@gamil.com");
                 
                 // #element_52 - arriving by
                 var arrivingby = new SelectElement(driver.FindElement(By.CssSelector(@"#element_52")));
-                arrivingby.SelectByText("Air");
+                arrivingby.SelectByText(application.By);
 
                 // point of entry - #element_46
                 var entryPoint = new SelectElement(driver.FindElement(By.CssSelector(@"#element_46")));

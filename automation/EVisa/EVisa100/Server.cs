@@ -11,6 +11,7 @@ using EVisa100.DataStructure;
 using System.Web.Script.Serialization;
 using System.IO;
 using System.Diagnostics;
+using EVisa100.Enums;
 
 namespace EVisa100
 {
@@ -52,7 +53,6 @@ namespace EVisa100
                 response = response.Replace("\"{", "{").Replace("}\"", "}").Replace("\\\"", "\"").StripSlashes();
 
                 var application = JsonSerializer.Deserialize<Application[]>(response)[0];
-
                 application.Passport = GetPassport(application.passport_id);
 
                 return application;                

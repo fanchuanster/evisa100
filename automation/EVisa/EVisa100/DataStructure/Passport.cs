@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EVisa100.Enums;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -110,10 +111,19 @@ namespace EVisa100.DataStructure
 
         public int current_status;
         public string to_country;
-        public string purpose;
+        public Purpose purpose;
         public DateTime entry_date;
         public DateTime departure_date;
         public Dictionary<string, object> other_info;
+
+        public string By
+        {
+            get
+            {
+                var by = (TransportationBy)(int)other_info["by"];
+                return by.ToString();
+            }
+        }
     }
 
     public class ResponseData<T>

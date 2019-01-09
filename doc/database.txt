@@ -10,6 +10,8 @@ other_info varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
 created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (id)) CHARACTER SET = utf8;
 
+create table entrypoint (
+
 
 // qliyun ESC remote connction passwor 342358
 'dong wen', '董文','M',CAST('19840125' AS DATE),'湖北','湖北/HUBEI','CHN','PO','公安部出入境管理局',CAST('20140207' AS DATE),'上海','上海/SHANGHAI',CAST('20240206' AS DATE));

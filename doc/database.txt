@@ -10,7 +10,8 @@ other_info varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
 created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (id)) CHARACTER SET = utf8;
 
-create table entrypoint (
+create table entrypoint (id int(11) AUTO_INCREMENT, country varchar(10), air varchar(2048) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+PRIMARY KEY(id)) CHARACTER SET = utf8;
 
 
 // qliyun ESC remote connction passwor 342358

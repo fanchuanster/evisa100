@@ -6,7 +6,7 @@
  
  $input = file_get_contents("php://input");
  $entrypoint = json_decode($input);
-
+var_dump($entrypoint);
  if ($entrypoint->id) {
 	// update it.
 	$updatestr = "update entrypoint set ".

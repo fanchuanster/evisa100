@@ -121,9 +121,9 @@ namespace EVisa100.Automations
                 var phoneNumber = driver.FindElement(By.CssSelector(@"#element_16"));
                 phoneNumber.SendKeys(application.Passport.data["phone"] as string);
 
-                // #element_57 - city - todo: to english.
+                // #element_57 - city
                 var city = driver.FindElement(By.CssSelector(@"#element_57"));
-                city.SendKeys(application.Passport.City);
+                city.SendKeys(application.Passport.CityPinyin);
                 // #element_17 - email
                 var email = driver.FindElement(By.CssSelector(@"#element_17"));
                 email.SendKeys(application.Passport.data["email"] as string);
@@ -161,25 +161,24 @@ namespace EVisa100.Automations
                 reasontravel.SelectByText("Tourism");
                 // entry date: #element_27_1 - mm; #element_27_2 - dd; #element_27_3 - yyyy
                 var entryMM = driver.FindElement(By.CssSelector(@"#element_27_1"));
-                entryMM.SendKeys("01");
+                entryMM.SendKeys(application.entry_date.Month.ToString());
                 var entryDD = driver.FindElement(By.CssSelector(@"#element_27_2"));
-                entryDD.SendKeys("28");
+                entryDD.SendKeys(application.entry_date.Day.ToString());
                 var entryYYYY = driver.FindElement(By.CssSelector(@"#element_27_3"));
-                entryYYYY.SendKeys("2019");
+                entryYYYY.SendKeys(application.entry_date.Year.ToString());
 
                 // departure data: #element_28_1 - mm; #element_28_2 - dd; #element_28_3 - yyyy
                 var departureMM = driver.FindElement(By.CssSelector(@"#element_28_1"));
-                departureMM.SendKeys("02");
+                departureMM.SendKeys(application.departure_date.Month.ToString());
                 var departureDD = driver.FindElement(By.CssSelector(@"#element_28_2"));
-                departureDD.SendKeys("11");
+                departureDD.SendKeys(application.departure_date.Day.ToString());
                 var departureYYYY = driver.FindElement(By.CssSelector(@"#element_28_3"));
-                departureYYYY.SendKeys("2019");
+                departureYYYY.SendKeys(application.departure_date.Year.ToString());
+
                 // contact there #element_29 - address; #element_31 - email
-                var contactAddress = driver.FindElement(By.CssSelector(@"#element_29"));
-                contactAddress.SendKeys("None");
-                var contactEmail = driver.FindElement(By.CssSelector(@"#element_31"));
-                contactEmail.Clear();
-                contactEmail.SendKeys("None@none.com");
+                driver.FindElement(By.CssSelector(@"#element_29")).SendKeys("None");
+                driver.FindElement(By.CssSelector(@"#element_31")).SendKeys("fanchuanster@gamil.com");
+                
                 // #element_52 - arriving by
                 var arrivingby = new SelectElement(driver.FindElement(By.CssSelector(@"#element_52")));
                 arrivingby.SelectByText("Air");

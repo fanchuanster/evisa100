@@ -80,6 +80,7 @@ namespace EVisa100.DataStructure
                 return region[1] as string;
             }
         }
+        public string CityPinyin => CitiesManager.GetCityPinyin(City);
 
         public DateTime IssueDate
         {
@@ -118,5 +119,13 @@ namespace EVisa100.DataStructure
     public class ResponseData<T>
     {
         public T[] data;
+    }
+
+    class City
+    {
+        public string label;
+        public string name;
+        public string pinyin;
+        public string zip;
     }
 }

@@ -5,27 +5,26 @@
  $mysqli->query("SET CHARACTER SET utf8");
  
  $input = file_get_contents("php://input");
- var_dump($input);
- // $entrypoint = json_decode($input);
+ $entrypoint = json_decode($input);
 
- // if ($entrypoint->id) {
-	// // update it.
-	// $updatestr = "update entrypoint set ".
-	// "country='".$entrypoint->country."'".
-	// "data='".addslashes($entrypoint->data)."'".
-	// " WHERE id='".$entrypoint->id."'";
+ if ($entrypoint->id) {
+	// update it.
+	$updatestr = "update entrypoint set ".
+	"country='".$entrypoint->country."'".
+	"data='".addslashes(json_encode($entrypoint->data))."'".
+	" WHERE id='".$entrypoint->id."'";
 
-	// $mysqli->query($updatestr);
- // } else {
-	 // // insert it.
-	// $insertStr = "insert into entrypoint(country, data) ".
-	// "values('".$entrypoint->country."','".
-	// addslashes($entrypoint->data)."')";
+	$mysqli->query($updatestr);
+ } else {
+	 // insert it.
+	$insertStr = "insert into entrypoint(country, data) ".
+	"values('".$entrypoint->country."','".
+	addslashes(json_encode($entrypoint->data))."')";
 	
-	// $mysqli->query($insertStr);
+	$mysqli->query($insertStr);
 	
-	// // return inserted id to client.
-	// print('{"id":'.$mysqli->insert_id.'}');
- // }
+	// return inserted id to client.
+	print('{"id":'.$mysqli->insert_id.'}');
+ }
 
 ?>

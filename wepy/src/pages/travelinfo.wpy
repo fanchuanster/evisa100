@@ -6,9 +6,9 @@
       <view class="title" slot="title">旅行信息</view>
       <view>
         <text class="fieldLabel">旅行目的</text>
-        <picker bindchange="bindPurposeChange" value="{{purposeIndex}}" range="{{purposes}}">
+        <picker bindchange="bindPurposeChange" value="{{travelInfo.purpose}}" range="{{purposes}}">
         <view class="picker">
-          {{purposes[purposeIndex]}}
+          {{purposes[travelInfo.purpose]}}
         </view>
         </picker>
       </view>
@@ -30,17 +30,17 @@
       </view>
       <view>
         <text class="fieldLabel">旅行方式</text>
-        <picker bindchange="bindByChange" value="{{byindex}}" range="{{by}}">
+        <picker bindchange="bindByChange" value="{{otherInfo.by}}" range="{{by}}">
         <view class="picker">
-          {{by[byindex]}}
+          {{by[otherInfo.by]}}
         </view>
         </picker>
       </view>
       <view>
         <text class="fieldLabel">入境点</text>
-        <picker bindchange="bindEntryPointChange" value="{{entryPointIndex}}" range="{{entryPoints}}">
+        <picker bindchange="bindEntryPointChange" value="{{entryPointIndex}}" range="{{allPoints[otherInfo.by]}}" range-key="name_cn">
         <view class="picker">
-          {{entryPoints[entryPointIndex]}}
+          {{allPoints[otherInfo.by][entryPointIndex].name_cn}}
         </view>
         </picker>
       </view>
@@ -64,13 +64,9 @@
     mixins = []
     data = {
       travelInfo: {},
-      allPoints: [['Eldoret International Airport', 'Garisa Airstrip', 'Jomo Kenyatta Airport, Nairobi'],
-      ['Busia', 'Isebania', 'Liboi'], ['Kilindini Sea Port', 'Kisumu', 'Kuinga']],
+      allPoints: [],
       purposes: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居', '其他'],
-      purposeIndex: 0,
       by: ['飞机', '陆路', '水路'],
-      byindex: 0,
-      entryPoints: [],
       entryPointIndex: 0,
       otherInfo: {}
     }
@@ -82,8 +78,7 @@
 
     methods = {
       bindPurposeChange(e) {
-        this.purposeIndex = e.detail.value
-        this.travelInfo.purpose = this.purposeIndex
+        this.travelInfo.purpose = e.detail.value
       },
       bindEntryDateChange(e) {
         this.travelInfo.entry_date = e.detail.value
@@ -92,19 +87,18 @@
         this.travelInfo.departure_date = e.detail.value
       },
       bindByChange(e) {
-        this.byindex = e.detail.value
-        this.otherInfo.by = this.byindex
-        this.entryPoints = this.allPoints[this.byindex]
+        this.otherInfo.by = e.detail.value
 
         this.entryPointIndex = 0
-        this.otherInfo.entry_point = this.entryPoints[this.entryPointIndex]
+        this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
       },
       bindEntryPointChange(e) {
         this.entryPointIndex = e.detail.value
-        this.otherInfo.entry_point = this.entryPoints[this.entryPointIndex]
+        this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
       }
     }
     submit() {
+      this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
       this.travelInfo.other_info = this.otherInfo
       console.log('travelInfo to save:')
       console.log(this.travelInfo)
@@ -121,10 +115,22 @@
     onLoad(option) {
       this.travelInfo.to_country = 'ke'
       this.travelInfo.passport_id = option.passport_id
-      this.travelInfo.purpose = this.purposeIndex
-      this.otherInfo.by = this.byindex
-      this.entryPoints = this.allPoints[this.byindex]
-      this.otherInfo.entry_point = this.entryPoints[this.entryPointIndex]
+      this.travelInfo.purpose = 0
+      this.otherInfo.by = 0
+      wepy.request({
+        url: 'https://fan.blockai.me/get_entrypoint.php?country=' + this.travelInfo.to_country,
+        method: 'GET',
+        header: {
+          'content-type': 'application/json; charset=UTF-8'
+        }
+      }).then(res => {
+        console.log(res)
+        var entries = JSON.parse(res.data[0].data)
+        entries.forEach(element => {
+          this.allPoints.push(element.data)
+        })
+        this.$apply()
+      })
     }
   }
 </script>

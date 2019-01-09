@@ -9,14 +9,14 @@
  },
  
  {
- by:'Road', data: [{name_cn: '布西亚', name: 'Busia'},{name_cn: '伊塞巴尼亚', name: 'Isebania'},{name_cn: '', name: 'Liboi'},{name_cn: '', name: 'Loitokitok'},
- {name_cn: '', name: 'Lungalunga'},{name_cn: '', name: 'Malaba'},{name_cn: '', name: 'Mandera'},{name_cn: '', name: 'Moyale'},
- {name_cn: '', name: 'Nadapal'},{name_cn: '', name: 'Namanga'},{name_cn: '', name: 'Taveta'}]
+ by:'Road', data: [{name_cn: '布西亚', name: 'Busia'},{name_cn: '伊塞巴尼亚', name: 'Isebania'},{name_cn: 'Liboi', name: 'Liboi'},{name_cn: 'Loitokitok', name: 'Loitokitok'},
+ {name_cn: 'Lungalunga', name: 'Lungalunga'},{name_cn: 'Malaba', name: 'Malaba'},{name_cn: 'Mandera', name: 'Mandera'},{name_cn: 'Moyale', name: 'Moyale'},
+ {name_cn: 'Nadapal', name: 'Nadapal'},{name_cn: 'Namanga', name: 'Namanga'},{name_cn: 'Taveta', name: 'Taveta'}]
  },
  
  {
- by:'Ship', data: [{name_cn: '启林迪尼', name: 'Kilindini'},{name_cn: '基苏木', name: 'Kisumu'},{name_cn: '', name: 'Kuinga'},{name_cn: '拉穆', name: 'Lamu'},
- {name_cn: '马林迪', name: 'Malindi'},{name_cn: '姆比塔点', name: 'Mbita Point'},{name_cn: '', name: 'Muhuru Bay'},{name_cn: '老港', name: 'Old Port'},
+ by:'Ship', data: [{name_cn: '启林迪尼', name: 'Kilindini'},{name_cn: '基苏木', name: 'Kisumu'},{name_cn: 'Kuinga', name: 'Kuinga'},{name_cn: '拉穆', name: 'Lamu'},
+ {name_cn: '马林迪', name: 'Malindi'},{name_cn: '姆比塔点', name: 'Mbita Point'},{name_cn: 'Muhuru Bay', name: 'Muhuru Bay'},{name_cn: '老港', name: 'Old Port'},
  {name_cn: '希莫尼', name: 'Shimoni'},{name_cn: '万加', name: 'Vanga'}]
  }
  ]

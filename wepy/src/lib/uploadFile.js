@@ -13,8 +13,8 @@ const UploadFile = function (filePath, targetPath, successcb, failcb) {
     const policyBase64 = getPolicyBase64();
     const signature = getSignature(policyBase64);
 
-    console.log('signature=', signature);
-    console.log('aliyunFileKey=', aliyunFileKey);
+    // console.log('signature=', signature);
+    // console.log('aliyunFileKey=', aliyunFileKey);
 
     wx.uploadFile({
         url: aliyunServerURL,

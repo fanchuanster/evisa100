@@ -3,10 +3,9 @@
  $mysqli = new mysqli("localhost", "root", "root", "evisa");
  $mysqli->query("set NAMES 'utf8'");
  $mysqli->query("SET CHARACTER SET utf8");
-
-var_dump($entrypoint);
  
  $input = file_get_contents("php://input");
+ var_dump($input);
  $entrypoint = json_decode($input);
 
  if ($entrypoint->id) {

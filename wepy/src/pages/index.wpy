@@ -276,10 +276,8 @@
       },
       communicate () {
         console.log(this.$name + ' tap')
-
         this.$invoke('counter2', 'minus', 45, 6)
         this.$invoke('counter1', 'plus', 45, 6)
-
         this.$broadcast('index-broadcast', 1, 3, 4)
       },
       request () {
@@ -310,6 +308,7 @@
     }
 
     onLoad() {
+      console.log('onload of index')
       let self = this
       this.$parent.getOpenid().then(function(openid) {
         wepy.request({url: 'https://fan.blockai.me/get_passports.php?openid=' + openid, method: 'GET'}).then(function(res) {

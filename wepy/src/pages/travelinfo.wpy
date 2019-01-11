@@ -103,7 +103,7 @@
       console.log('travelInfo to save:')
       console.log(this.travelInfo)
       wepy.request({
-        url: 'https://fan.blockai.me/submit_application.php',
+        url: 'https://php.evisa100.com/submit_application.php',
         method: 'POST',
         data: this.travelInfo,
         header: {
@@ -118,7 +118,7 @@
       this.travelInfo.purpose = 0
       this.otherInfo.by = 0
       wepy.request({
-        url: 'https://fan.blockai.me/get_entrypoint.php?country=' + this.travelInfo.to_country,
+        url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,
         method: 'GET',
         header: {
           'content-type': 'application/json; charset=UTF-8'

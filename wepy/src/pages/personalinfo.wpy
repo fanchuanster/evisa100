@@ -92,7 +92,7 @@
       console.log('saving passport:')
       console.log(this.passport)
       wepy.request({
-        url: 'https://fan.blockai.me/save_passport.php',
+        url: 'https://php.evisa100.com/save_passport.php',
         method: 'POST',
         data: this.passport,
         header: {

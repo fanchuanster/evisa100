@@ -1,0 +1,115 @@
+<style lang="less">
+</style>
+<template>
+  <view class="container">
+    <panel>
+      <view class="title" slot="title">旅行历史记录</view>
+      <view>
+        <label class="checkbox">
+          <checkbox checked="{{beenOtherCountryInLast3Months}}" />
+          过去三个月内是否去过其他国家?
+        </label>
+      </view>
+      <view wx:if="{{beenOtherCountryInLast3Months}}">
+        <text class="fieldLabel">去过的国家</text>
+        <input value="{{travelInfo.data.been_country}}" bindinput="oninputName" type="text"/>
+        <picker mode="date" value="{{travelInfo.data.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{now()}}" @change="bindEntryDateChange">
+          <view class="picker">
+            入境日期: {{travelInfo.data.been_country_entry_date}}
+          </view>
+        </picker>
+        <picker mode="date" value="{{travelInfo.data.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{now()}}" @change="bindDepartureDateChange">
+          <view class="picker">
+            离境日期: {{travelInfo.data.been_country_departure_date}}
+          </view>
+        </picker>
+      </view>
+      <view class="nav" bindtap='submit'>
+        <button>提交</button>
+      </view>
+    </panel>
+    <toast />
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import Panel from '@/components/panel'
+  import Toast from 'wepy-com-toast'
+
+  export default class TravelHistory extends wepy.page {
+    config = {
+      navigationBarTitleText: '旅行历史记录'
+    }
+    components = {
+      panel: Panel,
+      toast: Toast
+    }
+    mixins = []
+    data = {
+      beenOtherCountryInLast3Months: false,
+      travelInfo: {}
+    }
+    computed = {
+      now () {
+        return +new Date()
+      }
+      threeMonthAgo() {
+        let n = now()
+        n.setMonth(n.getMonth() - 3)
+        rerurn n
+      }
+    }
+
+    methods = {
+      bindPurposeChange(e) {
+        this.travelInfo.purpose = e.detail.value
+      },
+      bindEntryDateChange(e) {
+        this.travelInfo.data.been_country_entry_date = e.detail.value
+      },
+      bindDepartureDateChange(e) {
+        this.travelInfo.data.been_country_departure_date = e.detail.value
+      },
+      bindByChange(e) {
+        this.otherInfo.by = e.detail.value
+
+        this.entryPointIndex = 0
+        this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
+      },
+      bindEntryPointChange(e) {
+        this.entryPointIndex = e.detail.value
+        this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
+      }
+    }
+    submit() {
+      this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
+      this.travelInfo.other_info = this.otherInfo
+      console.log('travelInfo to save:')
+      console.log(this.travelInfo)
+      wepy.request({
+        url: 'https://php.evisa100.com/submit_application.php',
+        method: 'POST',
+        data: this.travelInfo,
+        header: {
+          'content-type': 'application/json; charset=UTF-8'
+        }
+      }).then(res => {
+        console.log(res)
+        let promise = this.$invoke('toast', 'show', {
+          title: '提交成功',
+          img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
+        })
+        promise.then((d) => {
+          console.log('toast done')
+          wepy.navigateTo({
+            url: './index'
+          })
+        })
+      })
+    }
+
+    onLoad(option) {
+      this.travelInfo = wepy.getStorageSync('travelInfo')
+    }
+  }
+</script>

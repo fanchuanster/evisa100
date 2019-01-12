@@ -102,10 +102,10 @@
         console.log(res)
         if (res.data.id) {
           this.passport.id = res.data.id
-          wepy.navigateTo({
-            url: './travelInfo?passport_id=' + this.passport.id
-          })
         }
+        wepy.navigateTo({
+          url: './travelInfo?passport_id=' + this.passport.id
+        })
       })
     }
 

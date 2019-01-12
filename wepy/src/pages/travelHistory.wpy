@@ -5,22 +5,23 @@
     <panel>
       <view class="title" slot="title">旅行历史记录</view>
       <view>
-        <label class="checkbox">
-          <checkbox checked="{{beenOtherCountryInLast3Months}}" />
-          过去三个月内是否去过其他国家?
-        </label>
+        <checkbox-group bindchange="checkboxChange">
+          <label class="checkbox">
+            <checkbox value='everbeenOtherCountry' checked="{{beenOtherCountryInLast3Months}}" />
+            过去三个月内是否去过其他国家?
+          </label>
+        </checkbox-group>
       </view>
       <view wx:if="{{beenOtherCountryInLast3Months}}">
-        <text class="fieldLabel">去过的国家</text>
-        <input value="{{travelInfo.data.been_country}}" bindinput="oninputName" type="text"/>
-        <picker mode="date" value="{{travelInfo.data.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{now()}}" @change="bindEntryDateChange">
+        <input placeholder="国家名称" value="{{travelInfo.data.been_country}}" bindinput="oninputCountry" type="text"/>
+        <picker mode="date" value="{{travelInfo.data.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bindEntryDateChange">
           <view class="picker">
-            入境: {{travelInfo.data.been_country_entry_date}}
+            入境: {{travelInfo.other_info.been_country_entry_date}}
           </view>
         </picker>
-        <picker mode="date" value="{{travelInfo.data.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{now()}}" @change="bindDepartureDateChange">
+        <picker mode="date" value="{{travelInfo.data.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bindDepartureDateChange">
           <view class="picker">
-            离境: {{travelInfo.data.been_country_departure_date}}
+            离境: {{travelInfo.other_info.been_country_departure_date}}
           </view>
         </picker>
       </view>
@@ -49,35 +50,28 @@
       travelInfo: {}
     }
     computed = {
-      now () {
-        return +new Date()
+      today() {
+        return new Date()
       },
       threeMonthAgo() {
-        let n = +new Date()
+        let n = new Date()
         n.setMonth(n.getMonth() - 3)
         return n
       }
     }
 
     methods = {
-      bindPurposeChange(e) {
-        this.travelInfo.purpose = e.detail.value
+      checkboxChange(e) {
+        this.beenOtherCountryInLast3Months = e.detail.value
+      },
+      oninputCountry(e) {
+        this.travelInfo.other_info.been_country = e.detail.value
       },
       bindEntryDateChange(e) {
-        this.travelInfo.data.been_country_entry_date = e.detail.value
+        this.travelInfo.other_info.been_country_entry_date = e.detail.value
       },
       bindDepartureDateChange(e) {
-        this.travelInfo.data.been_country_departure_date = e.detail.value
-      },
-      bindByChange(e) {
-        this.otherInfo.by = e.detail.value
-
-        this.entryPointIndex = 0
-        this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
-      },
-      bindEntryPointChange(e) {
-        this.entryPointIndex = e.detail.value
-        this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
+        this.travelInfo.other_info.been_country_departure_date = e.detail.value
       }
     }
     submit() {
@@ -109,6 +103,8 @@
 
     onLoad(option) {
       this.travelInfo = wepy.getStorageSync('travelInfo')
+      console.log('OnLoad: travelInfo')
+      console.log(this.travelInfo)
     }
   }
 </script>

@@ -14,7 +14,7 @@
       </view>
       <view>
         <text class="fieldLabel">入境日期</text>
-        <picker mode="date" value="{{travelInfo.entry_date}}" start="2019-01-11" end="2019-09-01" @change="bindEntryDateChange">
+        <picker mode="date" value="{{travelInfo.entry_date}}" start="{{today()}}}" end="{{tenDaysLater()}}" @change="bindEntryDateChange">
           <view class="picker">
             {{travelInfo.entry_date}}
           </view>
@@ -22,7 +22,7 @@
       </view>
       <view>
         <text class="fieldLabel">离境日期</text>
-        <picker mode="date" value="{{travelInfo.departure_date}}" start="2019-01-11" end="2019-09-01" @change="bindDepartureDateChange">
+        <picker mode="date" value="{{travelInfo.departure_date}}" start="{{today()}}}" end="{{tenDaysLater()}}" @change="bindDepartureDateChange">
           <view class="picker">
             {{travelInfo.departure_date}}
           </view>
@@ -71,8 +71,13 @@
       otherInfo: {}
     }
     computed = {
-      now () {
-        return +new Date()
+      today () {
+        return new Date()
+      },
+      tenDaysLater() {
+        let n = new Date()
+        n.setDay(n.getDay() + 120)
+        return n
       }
     }
 

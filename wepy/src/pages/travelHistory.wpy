@@ -15,12 +15,12 @@
         <input value="{{travelInfo.data.been_country}}" bindinput="oninputName" type="text"/>
         <picker mode="date" value="{{travelInfo.data.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{now()}}" @change="bindEntryDateChange">
           <view class="picker">
-            入境日期: {{travelInfo.data.been_country_entry_date}}
+            入境: {{travelInfo.data.been_country_entry_date}}
           </view>
         </picker>
         <picker mode="date" value="{{travelInfo.data.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{now()}}" @change="bindDepartureDateChange">
           <view class="picker">
-            离境日期: {{travelInfo.data.been_country_departure_date}}
+            离境: {{travelInfo.data.been_country_departure_date}}
           </view>
         </picker>
       </view>
@@ -44,7 +44,6 @@
       panel: Panel,
       toast: Toast
     }
-    mixins = []
     data = {
       beenOtherCountryInLast3Months: false,
       travelInfo: {}
@@ -52,11 +51,11 @@
     computed = {
       now () {
         return +new Date()
-      }
+      },
       threeMonthAgo() {
-        let n = now()
+        let n = +new Date()
         n.setMonth(n.getMonth() - 3)
-        rerurn n
+        return n
       }
     }
 

@@ -110,6 +110,7 @@
     }
 
     onLoad(option) {
+      console.log('Onload of personalInfo')
       this.passport = wepy.getStorageSync('passport')
       if (!this.passport.data.region) {
         this.passport.data.region = ['上海市', '上海市', '全部'] // default.

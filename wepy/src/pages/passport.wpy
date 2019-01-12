@@ -134,7 +134,7 @@
         if (!this.passportImagePath) {
           wepy.setStorageSync('passport', this.passport)
           wepy.navigateTo({
-            url: './personalinfo'
+            url: './personalInfo'
           })
           return
         }
@@ -147,7 +147,7 @@
             that.passport.image_file = photoFileName
             wepy.setStorageSync('passport', that.passport)
             wepy.navigateTo({
-              url: './personalinfo'
+              url: './personalInfo'
             })
           },
           function(err) {

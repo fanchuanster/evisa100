@@ -24,9 +24,9 @@ namespace EVisa100.Automations
         {
             const string initPage = "https://accounts.ecitizen.go.ke/login";
 
-            var options = new FirefoxOptions();
-            //options.AddArgument("no-sandbox");
-            IWebDriver driver = new FirefoxDriver("./", options, TimeSpan.FromMinutes(3));
+            var options = new ChromeOptions();
+            options.AddArgument("no-sandbox");
+            IWebDriver driver = new ChromeDriver("./", options, TimeSpan.FromMinutes(3));
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
                 driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(100);
@@ -39,12 +39,10 @@ namespace EVisa100.Automations
                 var pwd = driver.FindElement(By.Id("auth_pwd"));
                 pwd.SendKeys("passw0rd");
                 pwd.Submit();
-                
-                IWebElement getServiceBtn = driver.FindElement(By.CssSelector("#bloglist > div:nth-child(2) > div > div.panel-heading > div.pull-right.text-left"));
-                wait.Until(d => getServiceBtn.Displayed && getServiceBtn.Enabled);
-                System.Threading.Thread.Sleep(2000);
-                getServiceBtn.Click();
 
+                System.Threading.Thread.Sleep(3000);
+                var btn = driver.FindElement(By.CssSelector("div.col-xs-6:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)"));
+                btn.Click();
                 System.Threading.Thread.Sleep(2000);
                 driver.FindElement(By.LinkText("Make Applicaiton")).Click();
 
@@ -183,7 +181,7 @@ namespace EVisa100.Automations
                 var arrivingby = new SelectElement(driver.FindElement(By.CssSelector(@"#element_52")));
                 arrivingby.SelectByText(application.By);
 
-                // point of entry - #element_46
+                // point of entry - #element_46 todo:
                 var entryPoint = new SelectElement(driver.FindElement(By.CssSelector(@"#element_46")));
                 entryPoint.SelectByText("Jomo", true);
 

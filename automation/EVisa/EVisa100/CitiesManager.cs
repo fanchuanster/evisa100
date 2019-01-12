@@ -23,7 +23,7 @@ namespace EVisa100
         }
         public static string GetCityPinyin(string name_cn)
         {
-            var city = cities.Find(c => c.name == name_cn);
+            var city = cities.Find(c => name_cn.Contains(c.name));
             if (city == null) return string.Empty;
 
             return city.pinyin;

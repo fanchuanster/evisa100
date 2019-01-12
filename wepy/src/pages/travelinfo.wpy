@@ -44,8 +44,8 @@
         </view>
         </picker>
       </view>
-      <view class="nav" bindtap='submit'>
-        <button>提交</button>
+      <view class="nav" bindtap='next'>
+        <button>下一步</button>
       </view>
     </panel>
   </view>
@@ -97,19 +97,15 @@
         this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
       }
     }
-    submit() {
+    next() {
       this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
       this.travelInfo.other_info = this.otherInfo
       console.log('travelInfo to save:')
       console.log(this.travelInfo)
-      wepy.request({
-        url: 'https://php.evisa100.com/submit_application.php',
-        method: 'POST',
-        data: this.travelInfo,
-        header: {
-          'content-type': 'application/json; charset=UTF-8'
-        }
-      }).then(res => { console.log(res) })
+      wepy.setStorageSync('travelInfo', this.travelInfo)
+      wepy.navigateTo({
+        url: './travelHistory'
+      })
     }
 
     onLoad(option) {

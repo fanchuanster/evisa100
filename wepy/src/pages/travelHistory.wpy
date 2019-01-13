@@ -13,13 +13,13 @@
         </checkbox-group>
       </view>
       <view wx:if="{{beenOtherCountryInLast3Months}}">
-        <input placeholder="国家名称" value="{{travelInfo.data.been_country}}" bindinput="oninputCountry" type="text"/>
-        <picker mode="date" value="{{travelInfo.data.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bindEntryDateChange">
+        <input placeholder="国家名称" value="{{travelInfo.other_info.been_country}}" bindinput="oninputCountry" type="text"/>
+        <picker mode="date" value="{{travelInfo.other_info.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bindEntryDateChange">
           <view class="picker">
             入境: {{travelInfo.other_info.been_country_entry_date}}
           </view>
         </picker>
-        <picker mode="date" value="{{travelInfo.data.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bindDepartureDateChange">
+        <picker mode="date" value="{{travelInfo.other_info.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bindDepartureDateChange">
           <view class="picker">
             离境: {{travelInfo.other_info.been_country_departure_date}}
           </view>
@@ -75,8 +75,6 @@
       }
     }
     submit() {
-      this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
-      this.travelInfo.other_info = this.otherInfo
       console.log('travelInfo to save:')
       console.log(this.travelInfo)
       wepy.request({

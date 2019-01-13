@@ -154,9 +154,9 @@ namespace EVisa100.Automations
                 // #submit_primary continue button
                 driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
 
-                // reason travel - #element_65 todo: index to name
+                // reason travel
                 var reasontravel = new SelectElement(driver.FindElement(By.CssSelector(@"#element_65")));
-                reasontravel.SelectByText("Tourism");
+                reasontravel.SelectByText(application.purpose.ToString());
                 // entry date: #element_27_1 - mm; #element_27_2 - dd; #element_27_3 - yyyy
                 var entryMM = driver.FindElement(By.CssSelector(@"#element_27_1"));
                 entryMM.SendKeys(application.entry_date.Month.ToString());
@@ -181,9 +181,9 @@ namespace EVisa100.Automations
                 var arrivingby = new SelectElement(driver.FindElement(By.CssSelector(@"#element_52")));
                 arrivingby.SelectByText(application.By);
 
-                // point of entry - #element_46 todo:
+                // point of entry
                 var entryPoint = new SelectElement(driver.FindElement(By.CssSelector(@"#element_46")));
-                entryPoint.SelectByText("Jomo", true);
+                entryPoint.SelectByText(application.EntryPoint, true);
 
                 // #submit_primary continue button
                 driver.FindElement(By.CssSelector(@"#submit_primary")).Click();

@@ -124,6 +124,14 @@ namespace EVisa100.DataStructure
                 return by.ToString();
             }
         }
+        public string EntryPoint
+        {
+            get
+            {
+                var npoints = other_info["entry_point"] as Dictionary<string, object>;
+                return npoints["name"].ToString();
+            }
+        }
     }
 
     public class ResponseData<T>

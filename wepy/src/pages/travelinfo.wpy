@@ -14,7 +14,7 @@
       </view>
       <view>
         <text class="fieldLabel">入境日期</text>
-        <picker mode="date" value="{{travelInfo.entry_date}}" start="{{today()}}}" end="{{tenDaysLater()}}" @change="bindEntryDateChange">
+        <picker mode="date" value="{{travelInfo.entry_date}}"  @change="bindEntryDateChange">
           <view class="picker">
             {{travelInfo.entry_date}}
           </view>
@@ -22,7 +22,7 @@
       </view>
       <view>
         <text class="fieldLabel">离境日期</text>
-        <picker mode="date" value="{{travelInfo.departure_date}}" start="{{today()}}}" end="{{tenDaysLater()}}" @change="bindDepartureDateChange">
+        <picker mode="date" value="{{travelInfo.departure_date}}" @change="bindDepartureDateChange">
           <view class="picker">
             {{travelInfo.departure_date}}
           </view>
@@ -74,10 +74,18 @@
       today () {
         return new Date()
       },
-      tenDaysLater() {
+      fourMonthsLater() {
         let n = new Date()
-        n.setDay(n.getDay() + 120)
-        return n
+        n.setDate(n.getDate() + 120)
+        return n.toString()
+      },
+      dayAfterEntryDate() {
+        if (!this.travelInfo.entry_date) {
+          return new Date()
+        }
+        let entryDate = new Date(this.travelInfo.entry_date)
+        entryDate.setDate(entryDate.getDate() + 1)
+        return entryDate.toString()
       }
     }
 

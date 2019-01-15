@@ -51,7 +51,8 @@ export default class extends wepy.app {
       'pages/passport',
       'pages/personalInfo',
       'pages/travelInfo',
-      'pages/travelHistory'
+      'pages/travelHistory',
+      'pages/ke'
     ],
     window: {
       backgroundTextStyle: 'light',

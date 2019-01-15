@@ -1,19 +1,4 @@
 <style lang="less">
-  .userinfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .userinfo-avatar {
-    width: 80rpx;
-    height: 80rpx;
-    border-radius: 50%;
-  }
-
-  .userinfo-nickname {
-    color: #aaa;
-  }
 </style>
 <template>
   <view class="container">
@@ -27,43 +12,23 @@
       <button @tap="newPassport" size="mini">  +  </button>
     </panel>
 
+    <repeat for="{{continents}}" item="item" key="item.continent.name_short">
+      <panel>
+        <view class="title" slot="title">{{item.continent.name_cn}}</view>
+        <block wx:for-items="{{item.countries}}" wx:for-item="country" wx:key="name_short">
+          <text id="{{country.name_short}}" @tap="tabCountryName">{{country.name_cn}}</text>: {{country.name}}
+        </block>
+      </panel>
+    </repeat>
+
     <!-- <panel>
-      <view class="title" slot="title">测数据绑定</view>
-
-      <text class="info">{{normalTitle}}</text>
-      <text class="info">{{setTimeoutTitle}}</text>
-      <text class="info">{{mixin}}</text>
-      <text class="info">{{mynum}}</text>
-      <text class="info">{{now}}</text>
-      <text class="info">{{num}}</text>
-      <text class="info">{{asyncNum}}</text>
-      <text class="info">{{sumNum}}</text>
-      <button @tap="plus('a')" size="mini">  +  </button>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">其它测试</view>
-      <button @tap="toast" size="mini">三方组件</button>
-      <button @tap="communicate" size="mini">组件通信</button>
-      <button @tap="tap" size="mini">混合TAP事件</button>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">测试并发网络请求</view>
-      <view>返回结果: <text>{{netrst}}</text></view>
-      <button @tap="request" size="mini"> 点我发起10个请求 </button>
-    </panel>
-
     <panel>
       <view class="title" slot="title">测试组件</view>
-
       <text class="testcounter">计数组件1: </text>
       <view class="counterview">
         <counter1 @index-emit.user="counterEmit" />
       </view>
-
       <text class="testcounter">计数组件2: </text>
-
       <view class="counterview">
         <counter2 :num.sync="mynum"></counter2>
       </view>
@@ -87,86 +52,33 @@
 
 <script>
   import wepy from 'wepy'
-  import { connect } from 'wepy-redux'
-  import Panel from '@/components/panel' // alias example
-  import Counter from 'counter' // alias example
-  import List from '../components/list' // aliasFields example
-  import moduleA from 'module-a' // aliasFields ignore module example
-  import Group from '../components/group'
+  import Panel from '@/components/panel'
   import Toast from 'wepy-com-toast'
-  // import testMixin from '../mixins/test'
-
-  console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
-
-  @connect({
-    num (state) {
-      return state.counter.num
-    },
-    asyncNum (state) {
-      return state.counter.asyncNum
-    },
-    sumNum (state) {
-      return state.counter.num + state.counter.asyncNum
-    }
-  })
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '添加护照'
+      navigationBarTitleText: '在线签证'
     }
     components = {
       panel: Panel,
-      counter1: Counter,
-      counter2: Counter,
-      list: List,
-      group: Group,
       toast: Toast
     }
 
     data = {
-      mynum: 20,
-      userInfo: {
-        nickName: '加载中...'
-      },
       passports: null,
-      normalTitle: '原始标题',
-      setTimeoutTitle: '标题4秒后会被修改',
-      count: 0,
-      netrst: '',
-      groupList: [
+      continents: [
         {
-          id: 1,
-          name: '点击改变',
-          list: [
-            {
-              childid: '1.1',
-              childname: '子项，点我改变'
-            }, {
-              childid: '1.2',
-              childname: '子项，点我改变'
-            }, {
-              childid: '1.3',
-              childname: '子项，点我改变'
-            }
-          ]
+          continent: { name: 'Africa', name_cn: '非洲' },
+          countries: [{ name: 'Kenya', name_cn: '肯尼亚', name_short: 'ke' }]
         },
         {
-          id: 3,
-          name: '点击改变',
-          list: [
-            {
-              childid: '3.1',
-              childname: '子项，点我改变'
-            }
-          ]
+          continent: { name: 'Asia', name_cn: '亚洲' },
+          countries: [{ name: 'Thailand', name_cn: '泰国', name_short: 'tl' }]
         }
       ]
     }
 
     computed = {
-      now () {
-        return +new Date()
-      }
     }
 
     dateFromString (str) {
@@ -186,16 +98,10 @@
     }
 
     methods = {
-      plus () {
-        this.mynum++
-      },
-      toast () {
-        let promise = this.$invoke('toast', 'show', {
-          title: '自定义标题',
-          img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
-        })
-        promise.then((d) => {
-          console.log('toast done')
+      tabCountryName (e) {
+        console.log(e)
+        wepy.navigateTo({
+          url: './' + e.target.id
         })
       },
       tap (e) {
@@ -305,6 +211,7 @@
 
     onLoad() {
       console.log('onload of index')
+      console.log(this.continents)
       let self = this
       this.$parent.getOpenid().then(function(openid) {
         wepy.request({url: 'https://php.evisa100.com/get_passports.php?openid=' + openid, method: 'GET'}).then(function(res) {

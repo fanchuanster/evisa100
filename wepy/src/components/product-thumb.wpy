@@ -1,0 +1,38 @@
+<style lang="less">
+  .thumb {
+    width: 100%;
+    text-align: left;
+    font-size: 10px;
+    display:flex;
+    flex-direction:column;
+
+    .title {
+      padding-left: 20rpx;
+      font-size: 14px;
+    }
+  }
+</style>
+<template>
+  <view class="thumb">
+    <image style="height: 150px" src="http://evisa.oss-cn-shanghai.aliyuncs.com/country/{{country}}/1.jpg"></image>
+    <text class="title">{{title}}</text>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class ProductThumb extends wepy.component {
+    props = {
+      title: String,
+      country: String
+    }
+    data = {
+      src: ''
+    }
+
+    onLoad () {
+      console.log(this.title)
+      console.log(this.country)
+    }
+  }
+</script>

@@ -2,20 +2,86 @@
   .thumb {
     width: 100%;
     text-align: left;
-    font-size: 10px;
+    font-size: 11px;
     display:flex;
     flex-direction:column;
 
-    .title {
-      padding-left: 20rpx;
-      font-size: 14px;
+    .text-alignment {
+      margin-left: 20rpx;
+      margin-right: 20rpx;
+      margin-top: 20rpx;
     }
+    .title {
+      font-size: 14px;
+      .text-alignment();
+    }
+
+    .subdetails {
+      display:flex;
+      flex-direction: row;
+      justify-content: space-between;
+      color: gray;
+      .text-alignment();
+      .price {
+        color:orangered;
+      }      
+    }
+    .times-details {
+      display: flex;
+      justify-content: space-evenly;
+      flex-direction: row;
+      margin-top:20rpx;
+      .highlighted {
+        color:black;
+        font-size: 14px;
+      }
+      .not-highlighted {
+        color: gray;
+        font-size: 11px
+      }
+      .time-details {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    .navigator-hover {
+      color: blue;
+    }
+    .navigator {
+      background: green;
+      border-radius: 10px;
+      text-align:center;
+      padding:15rpx;
+      margin-top:20rpx;
+    }
+  }
+  div.hr {
+    background:lightgray;
+    margin-left: 15rpx;
+    margin-right: 15rpx;
+    height:4rpx;
+    margin-top: 20rpx;
   }
 </style>
 <template>
   <view class="thumb">
     <image style="height: 150px" src="http://evisa.oss-cn-shanghai.aliyuncs.com/country/{{country}}/1.jpg"></image>
     <text class="title">{{title}}</text>
+    <view class="subdetails">
+      <text>办理{{daysTakes}}工作日</text>
+      <text class="price">{{price}}</text>
+    </view>
+    <div class="hr"/>
+    <view class="times-details">
+      <block wx:for-items="{{times}}" wx:for-item="time" wx:key="key">
+        <view class="time-details">
+          <text class="highlighted">{{time.value}}</text>
+          <text class="not-highlighted">{{time.key}}</text>
+        </view>
+      </block>
+    </view>
+    <navigator class="navigator" hover-class="navigator-hover"
+        url="../index" open-type="navigate">开始办理</navigator>
   </view>
 </template>
 <script>
@@ -24,10 +90,10 @@
   export default class ProductThumb extends wepy.component {
     props = {
       title: String,
-      country: String
-    }
-    data = {
-      src: ''
+      country: String,
+      daysTakes: String,
+      price: String,
+      times: {}
     }
 
     onLoad () {

@@ -5,21 +5,22 @@
     text-align: left;
     font-size: 12px;
     padding-top: 20rpx;
-    padding-left: 50rpx;
     padding-bottom: 20rpx;
     border: 1px solid #ccc;
 
     .title {
       padding-bottom: 20rpx;
+      padding-left: 15rpx;
       font-size: 14px;
       font-weight: bold;
     }
     .info {
-      padding: 15rpx;
+      padding-left: 15rpx;
     }
     .fieldLabel {
-      font-size: 10px;
-      font-weight: lighter
+      font-size: 20px;
+      font-weight: lighter;
+      color: red;
     }
     .testcounter {
       margin-top: 15rpx;

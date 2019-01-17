@@ -1,8 +1,18 @@
 <style lang="less">
+.country_item_container {
+  display:flex;
+  justify-content: left;
+  // flex-direction: row;
+  flex-flow: row wrap;
+  padding-left: 15rpx;
+  .country_item {
+    margin-right: 15rpx;
+  }
+}
 </style>
 <template>
   <view class="container">
-    <panel>
+    <!-- <panel>
       <view class="title" slot="title">护照</view>
       <block wx:for-items="{{passports}}" wx:for-index="index" wx:for-item="item" wx:key="id">
         <view @tap="tap" id="{{item.id}}" class="mylist">
@@ -10,14 +20,16 @@
         </view>
       </block>
       <button @tap="newPassport" size="mini">  +  </button>
-    </panel>
+    </panel> -->
 
     <repeat for="{{continents}}" item="item" key="item.continent.name_short">
       <panel>
         <view class="title" slot="title">{{item.continent.name_cn}}</view>
-        <block wx:for-items="{{item.countries}}" wx:for-item="country" wx:key="name_short">
-          <text id="{{country.name_short}}" @tap="tabCountryName">{{country.name_cn}}</text>: {{country.name}}
-        </block>
+        <view class="country_item_container">
+          <block wx:for-items="{{item.countries}}" wx:for-item="country" wx:key="name_short">
+            <text class="country_item" id="{{item.continent.name}}/{{country.name_short}}" @tap="tabCountryName">{{country.name_cn}}</text>
+          </block>
+        </view>
       </panel>
     </repeat>
 
@@ -39,11 +51,6 @@
       <repeat for="" index="index" item="item" key="key">
         <group :grouplist="item" :indexa="index"></group>
       </repeat>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">测试列表</view>
-      <list></list>
     </panel> -->
 
     <toast />
@@ -68,11 +75,12 @@
       passports: null,
       continents: [
         {
-          continent: { name: 'Africa', name_cn: '非洲' },
-          countries: [{ name: 'Kenya', name_cn: '肯尼亚', name_short: 'ke' }]
+          continent: { name: 'africa', name_cn: '非洲' },
+          countries: [{ name: 'Kenya', name_cn: '肯尼亚', name_short: 'ke' },
+          { name: 'Kenya', name_cn: '肯尼亚', name_short: 'ke' }]
         },
         {
-          continent: { name: 'Asia', name_cn: '亚洲' },
+          continent: { name: 'asia', name_cn: '亚洲' },
           countries: [{ name: 'Thailand', name_cn: '泰国', name_short: 'tl' }]
         }
       ]
@@ -212,17 +220,17 @@
     onLoad() {
       console.log('onload of index')
       console.log(this.continents)
-      let self = this
-      this.$parent.getOpenid().then(function(openid) {
-        wepy.request({url: 'https://php.evisa100.com/get_passports.php?openid=' + openid, method: 'GET'}).then(function(res) {
-          self.passports = res.data
-          console.log(self.passports[0])
-          self.passports.forEach(element => {
-            element.data = JSON.parse(element.data)
-          })
-          self.$apply()
-        })
-      })
+      // let self = this
+      // this.$parent.getOpenid().then(function(openid) {
+      //   wepy.request({url: 'https://php.evisa100.com/get_passports.php?openid=' + openid, method: 'GET'}).then(function(res) {
+      //     self.passports = res.data
+      //     console.log(self.passports[0])
+      //     self.passports.forEach(element => {
+      //       element.data = JSON.parse(element.data)
+      //     })
+      //     self.$apply()
+      //   })
+      // })
     }
   }
 </script>

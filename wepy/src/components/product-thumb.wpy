@@ -81,7 +81,7 @@
       </block>
     </view>
     <navigator class="navigator" hover-class="navigator-hover"
-        url="../certificates" open-type="navigate">开始办理</navigator>
+        url="../upload_certificates" open-type="navigate">开始办理</navigator>
   </view>
 </template>
 <script>

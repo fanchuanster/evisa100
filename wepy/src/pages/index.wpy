@@ -56,7 +56,6 @@
     <toast />
   </view>
 </template>
-
 <script>
   import wepy from 'wepy'
   import Panel from '@/components/panel'

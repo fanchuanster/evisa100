@@ -42,7 +42,7 @@
       {
         name: 'photo',
         data: {
-          title: '上传照片', url: './passport'
+          title: '上传个人照片', url: './passport'
         }
       }]
     }

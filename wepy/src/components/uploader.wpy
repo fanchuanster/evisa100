@@ -1,0 +1,46 @@
+<style lang="less">
+  .navbar {
+    width: 100%;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    padding:15rpx;
+    margin-top:20rpx;
+    border: 1px solid #ddd;
+    text-align: left;
+    vertical-align:middle;
+  }
+</style>
+<template>
+  <view class="navbar" @tap="navigate">
+    <navigator url="{{url}}" open-type="navigate">{{title}}</navigator>
+    <text wx:if="{{uploaded}}">Y</text>
+    <text wx:else>></text>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Uploader extends wepy.component {
+    props = {
+      title: String,
+      url: String,
+      uploaded: {
+        type: Boolean,
+        default: false,
+        twoWay: true
+      }
+    }
+    methods = {
+      navigate() {
+        console.log(this.url)
+        wepy.navigateTo({
+          url: this.url
+        })
+      }
+    }
+    onLoad () {
+      console.log(this.url)
+    }
+  }
+</script>

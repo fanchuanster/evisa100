@@ -65,7 +65,7 @@
 </style>
 <template>
   <view class="thumb">
-    <image style="height: 150px" src="http://evisa.oss-cn-shanghai.aliyuncs.com/country/{{country}}/1.jpg"></image>
+    <image style="height: 150px" src="{{imageSrc}}"></image>
     <text class="title">{{title}}</text>
     <view class="subdetails">
       <text>办理{{daysTakes}}工作日</text>
@@ -81,7 +81,7 @@
       </block>
     </view>
     <navigator class="navigator" hover-class="navigator-hover"
-        url="../upload_certificates" open-type="navigate">开始办理</navigator>
+        url="../pictures" open-type="navigate">开始办理</navigator>
   </view>
 </template>
 <script>
@@ -96,9 +96,15 @@
       times: {}
     }
 
+    data = {
+      imageSrc: ''
+    }
+
     onLoad () {
       console.log(this.title)
       console.log(this.country)
+      this.imageSrc = 'http://evisa.oss-cn-shanghai.aliyuncs.com/country/' + this.country + '/1.jpg'
+      this.$apply()
     }
   }
 </script>

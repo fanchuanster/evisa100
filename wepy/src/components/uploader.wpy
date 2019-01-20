@@ -5,17 +5,15 @@
     flex-direction:row;
     justify-content: space-between;
     padding:15rpx;
-    margin-top:20rpx;
-    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     text-align: left;
-    vertical-align:middle;
+    background:silver;
   }
 </style>
 <template>
-  <view class="navbar" @tap="navigate">
-    <navigator url="{{url}}" open-type="navigate">{{title}}</navigator>
-    <text wx:if="{{uploaded}}">Y</text>
-    <text wx:else>></text>
+  <view class="navbar" @tap="tap">
+    <text>{{title}}</text>
+    <text>></text>
   </view>
 </template>
 <script>
@@ -25,21 +23,19 @@
     props = {
       title: String,
       url: String,
-      uploaded: {
+      syncUploaded: {
         type: Boolean,
         default: false,
         twoWay: true
       }
     }
     methods = {
-      navigate() {
-        console.log(this.url)
-        wepy.navigateTo({
-          url: this.url
-        })
+      tap() {
+        this.$emit('uploadFn', 100)
       }
     }
     onLoad () {
+      console.log(this.title)
       console.log(this.url)
     }
   }

@@ -78,7 +78,6 @@
 <script>
   import wepy from 'wepy'
   import Panel from '@/components/panel' // alias example
-  import UploadFile from '../lib/uploadFile.js'
 
   export default class Passport extends wepy.page {
     config = {
@@ -129,32 +128,14 @@
       radioChange(e) {
         console.log('radio发生change事件，携带value值为：', e.detail.value)
         this.passport.data.sex = e.detail.value
-      },
-      next() {
-        if (!this.passportImagePath) {
-          wepy.setStorageSync('passport', this.passport)
-          wepy.navigateTo({
-            url: './personalInfo'
-          })
-          return
-        }
-
-        let that = this
-        var photoFileName = 'passport/' + this.passport.passport_no + '.' + this.passportImagePath.split('.').pop()
-        UploadFile(this.passportImagePath, photoFileName,
-          function(res) {
-            console.log(res)
-            that.passport.image_file = photoFileName
-            wepy.setStorageSync('passport', that.passport)
-            wepy.navigateTo({
-              url: './personalInfo'
-            })
-          },
-          function(err) {
-            console.log('uploading failed ')
-            console.log(err)
-          }
-        )
+      }
+    }
+    next() {
+      if (!this.passportImagePath) {
+        wepy.setStorageSync('passport', this.passport)
+        wepy.navigateTo({
+          url: './personalInfo'
+        })
       }
     }
 

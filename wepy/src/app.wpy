@@ -52,7 +52,7 @@ export default class extends wepy.app {
       'pages/personalInfo',
       'pages/travelInfo',
       'pages/travelHistory',
-      'pages/upload_certificates',
+      'pages/pictures',
       'pages/africa/ke'
     ],
     window: {

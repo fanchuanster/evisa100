@@ -4,11 +4,13 @@
     display: flex;
     flex-direction:row;
     justify-content: space-between;
-    padding:15rpx;
+    padding-top:15rpx;
+    padding-bottom:15rpx;
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #ddd;
     text-align: left;
-    margin-top: 20rpx;
+    margin-top: 30rpx;
+    font-size:14px;
   }
 </style>
 <template>
@@ -28,9 +30,8 @@
       <text wx:if="{{photoUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
-    <view class="nav" bindtap='next'>
-      <button>下一步</button>
-    </view>
+    <navigator class="primary-button"
+        url="./fillform" open-type="navigate">下一步</navigator>
 </view>
 </template>
 <script>
@@ -51,18 +52,14 @@
     data = {
       passportUploaded: false,
       photoUploaded: false,
-      name: 'name1'
+      passport: null
     }
     computed = {
     }
 
     methods = {
     }
-    next() {
-      wepy.navigateTo({
-        url: './fillform'
-      })
-    }
+
     async uploadPassport() {
       console.log('new a passport')
       let openid = await this.$parent.getOpenid()
@@ -117,13 +114,13 @@
             passport.data.issue_date = Util.dateFromString(passport.data.issue_date)
             passport.data.expiry_date = Util.dateFromString(passport.data.expiry_date)
             passport.data.sex = passport.data.sex.replace(/\W/g, '')
-            passport.data.image_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
-            var passportFileName = passport.data.image_file
-            UploadFile(imagePath, passportFileName,
+            passport.data.passport_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
+
+            UploadFile(imagePath, passport.data.passport_file,
               function(res) {
                 console.log(res)
-                passport.data.image_file = passportFileName
-                wepy.setStorageSync('passport', that.passport)
+                wepy.setStorageSync('passport', passport)
+                that.passport = passport
                 that.passportUploaded = true
                 that.$apply()
               },
@@ -152,10 +149,11 @@
         success: function(res) {
           // var photoFileName = 'photo/' + that.passport.passport_no + '.' + imagePath.split('.').pop()
           var photoFileName = 'photo/' + 'myphoto.' + imagePath.split('.').pop()
+          that.passport.data.photo_file = photoFileName
           UploadFile(imagePath, photoFileName,
             function(res) {
               console.log(res)
-              // passport.data.photo_file = photoFileName
+              wepy.setStorageSync('passport', that.passport)
               that.photoUploaded = true
               that.$apply()
             },

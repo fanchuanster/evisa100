@@ -4,6 +4,9 @@
   font-weight: lighter;
   color: gray;
 }
+input {
+  border-bottom: 1px solid #ddd;
+}
 </style>
 <template>
   <view class="container">
@@ -12,7 +15,42 @@
       <Step title="填写表格" content=""></Step>
       <Step title="确认提交" content=""></Step>
     </Steps>
-    <i-collapse simple style="width:100%;margin-top:100rpx">
+    <i-collapse simple style="width:100%;margin-top:30rpx">
+      <i-collapse-item title="基本信息">
+        <view slot="content">
+          <view>
+            <text class="fieldLabel">国籍</text>
+            <input placeholder="国籍" value="{{passport.data.nationality}}" bindinput="oninputNationality" type="text"/>
+          </view>
+          <view>
+            <text class="fieldLabel">姓名</text>
+            <input placeholder="姓名" value="{{passport.data.name_cn}}" bindinput="oninputNamecn" type="text"/>
+          </view>
+          <view>
+            <text class="fieldLabel">姓名(拼)</text>
+            <input placeholder="姓名(拼音)" value="{{passport.data.name}}" bindinput="oninputName" type="text"/>
+          </view>
+          <view>
+            <text class="fieldLabel">性别</text>
+            <radio-group class="radio-group" bindchange="radioChange">
+              <label class="radio"><radio value="M" checked="{{passport.data.sex == 'M'}}"/>男</label>
+              <label class="radio"><radio value="F" checked="{{item.checked}}"/>女</label>
+            </radio-group>
+          </view>
+          <view>
+            <text class="fieldLabel">出生日期</text>
+            <picker mode="date" value="{{passport.data.birth_date}}" start="1960-01-01" end="2018-09-01" @change="bindBirthChange">
+              <view class="picker">
+                {{passport.data.birth_date}}
+              </view>
+            </picker>
+          </view>
+          <view>
+            <text class="fieldLabel">职业</text>
+            <input placeholder="比如 软件工程师" value="{{passport.data.occupation}}" bindinput="oninputOccupation" type="text"/>
+        </view>
+        </view>
+      </i-collapse-item>
       <i-collapse-item title="护照信息" name="name1">
         <view slot="content">
           <view>
@@ -43,47 +81,10 @@
               </view>
             </picker>
           </view>
-          <view>
-            <text class="fieldLabel">国籍</text>
-            <input placeholder="国籍" value="{{passport.data.nationality}}" bindinput="oninputNationality" type="text"/>
-          </view>
-          <view>
-            <text class="fieldLabel">姓名</text>
-            <input placeholder="姓名" value="{{passport.data.name_cn}}" bindinput="oninputNamecn" type="text"/>
-          </view>
-          <view>
-            <text class="fieldLabel">姓名(拼)</text>
-            <input placeholder="姓名(拼音)" value="{{passport.data.name}}" bindinput="oninputName" type="text"/>
-          </view>
-          <view>
-            <text class="fieldLabel">性别</text>
-            <radio-group class="radio-group" bindchange="radioChange">
-            <label class="radio">
-              <radio value="M" checked="{{passport.data.sex == 'M'}}" />
-              男
-            </label>
-            <label class="radio">
-              <radio value="F" checked="{{item.checked}}" />
-              女
-            </label>
-          </radio-group>
-          </view>
-          <view>
-            <text class="fieldLabel">出生日期</text>
-            <picker mode="date" value="{{passport.data.birth_date}}" start="1960-01-01" end="2018-09-01" @change="bindBirthChange">
-              <view class="picker">
-                {{passport.data.birth_date}}
-              </view>
-            </picker>
-          </view>
         </view>
       </i-collapse-item>
-      <i-collapse-item title="个人其他信息">
+      <i-collapse-item title="家庭信息">
         <view slot="content">
-        <view>
-          <text class="fieldLabel">个人职业</text>
-          <input placeholder="比如 软件工程师" value="{{passport.data.occupation}}" bindinput="oninputOccupation" type="text"/>
-        </view>
         <view>
           <text class="fieldLabel">父亲名字(拼音)</text>
           <input placeholder="比如 Zhang, Mingqiang" value="{{passport.data.father_name}}" bindinput="oninputFatherName" type="text"/>
@@ -156,10 +157,6 @@
           </view>
           </picker>
         </view>
-        </view>
-      </i-collapse-item>
-      <i-collapse-item title="旅行历史记录">
-        <view slot="content">
         <view>
           <checkbox-group bindchange="checkboxChange">
             <label class="checkbox">
@@ -211,7 +208,6 @@
     mixins = []
     data = {
       passport: null,
-      passportImagePath: '',
       customItem: '全部',
       travelInfo: {},
       allPoints: [],
@@ -382,10 +378,9 @@
 
     onLoad(option) {
       this.passport = wepy.getStorageSync('passport')
-      this.passportImagePath = option.imagePath
 
       this.travelInfo.to_country = 'ke'
-      this.travelInfo.passport_id = option.passport_id
+      // this.travelInfo.passport_id = option.passport_id
       this.travelInfo.purpose = 0
       this.otherInfo.by = 0
       wepy.request({

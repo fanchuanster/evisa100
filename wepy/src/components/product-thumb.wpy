@@ -44,16 +44,6 @@
         flex-direction: column;
       }
     }
-    .navigator-hover {
-      color: blue;
-    }
-    .navigator {
-      background: green;
-      border-radius: 10px;
-      text-align:center;
-      padding:15rpx;
-      margin-top:20rpx;
-    }
   }
   div.hr {
     background:lightgray;
@@ -80,7 +70,7 @@
         </view>
       </block>
     </view>
-    <navigator class="navigator" hover-class="navigator-hover"
+    <navigator class="primary-button"
         url="../pictures" open-type="navigate">开始办理</navigator>
   </view>
 </template>

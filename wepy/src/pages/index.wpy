@@ -2,7 +2,6 @@
 .country_item_container {
   display:flex;
   justify-content: left;
-  // flex-direction: row;
   flex-flow: row wrap;
   padding-left: 15rpx;
   .country_item {

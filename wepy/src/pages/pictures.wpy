@@ -13,7 +13,7 @@
 </style>
 <template>
   <view class="container">
-    <Steps current="{{current}}" status="error">
+    <Steps current="0" status="error">
       <Step title="上传资料" content=""></Step>
       <Step title="填写表格" content=""></Step>
       <Step title="确认提交" content=""></Step>
@@ -28,11 +28,13 @@
       <text wx:if="{{photoUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
-  </view>
+    <view class="nav" bindtap='next'>
+      <button>下一步</button>
+    </view>
+</view>
 </template>
 <script>
   import wepy from 'wepy'
-  import Panel from '@/components/panel'
   import Util from '../lib/util.js'
   import UploadFile from '../lib/uploadFile.js'
   
@@ -40,18 +42,16 @@
     config = {
       navigationBarTitleText: '提交资料',
       usingComponents: {
-        ibutton: '../iview/button/index',
-        Step: '../iview/step/index',
-        Steps: '../iview/steps/index'
+        'Step': '../resources/iview/step/index',
+        'Steps': '../resources/iview/steps/index'
       }
     }
     components = {
-      panel: Panel
     }
     data = {
-      current: 0,
       passportUploaded: false,
-      photoUploaded: false
+      photoUploaded: false,
+      name: 'name1'
     }
     computed = {
     }
@@ -59,11 +59,9 @@
     methods = {
     }
     next() {
-      if (this.current === 2) {
-        this.current = 0
-      } else {
-        this.current += 1
-      }
+      wepy.navigateTo({
+        url: './fillform'
+      })
     }
     async uploadPassport() {
       console.log('new a passport')

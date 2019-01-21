@@ -1,5 +1,0 @@
-<view class="uploader">
-    <view class="uploader-text" bindtap="doUploadPhoto">
-      <text>个人拍照</text>
-    </view>
-  </view>

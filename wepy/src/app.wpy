@@ -48,10 +48,7 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
-      'pages/passport',
-      'pages/personalInfo',
-      'pages/travelInfo',
-      'pages/travelHistory',
+      'pages/fillform',
       'pages/pictures',
       'pages/africa/ke'
     ],

@@ -14,21 +14,6 @@
       font-size: 14px;
       font-weight: bold;
     }
-    .info {
-      padding-left: 15rpx;
-    }
-    .fieldLabel {
-      font-size: 20px;
-      font-weight: lighter;
-      color: red;
-    }
-    .testcounter {
-      margin-top: 15rpx;
-      position: absolute;
-    }
-    .counterview {
-      margin-left: 120rpx;
-    }
   }
 </style>
 <template>

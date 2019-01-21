@@ -1,0 +1,407 @@
+<style lang="less">
+.fieldLabel {
+  font-size: 11px;
+  font-weight: lighter;
+  color: gray;
+}
+</style>
+<template>
+  <view class="container">
+    <Steps current="1">
+      <Step title="上传资料" content=""></Step>
+      <Step title="填写表格" content=""></Step>
+      <Step title="确认提交" content=""></Step>
+    </Steps>
+    <i-collapse simple style="width:100%;margin-top:100rpx">
+      <i-collapse-item title="护照信息" name="name1">
+        <view slot="content">
+          <view>
+            <text class="fieldLabel">护照号码</text>
+            <input placeholder="护照号码" value="{{passport.passport_no}}" bindinput="oninputPassport" type="text"/>
+          </view>
+          <view>
+            <text class="fieldLabel">颁发机构(英)</text>
+            <input placeholder="颁发机构" name="authority" value="{{passport.data.authority}}" bindinput="oninputAuthority" type="text"/>
+          </view>
+          <view>
+            <text class="fieldLabel">颁发地</text>
+            <input placeholder="颁发地" value="{{passport.data.issue_place}}" bindinput="oninputIssuePlace" type="text"/>
+          </view>
+          <view>
+            <text class="fieldLabel">颁发日期</text>
+            <picker mode="date" value="{{passport.data.issue_date}}" start="1980-01-01" end="2019-09-01" @change="bindDateChange">
+              <view class="picker">
+                {{passport.data.issue_date}}
+              </view>
+            </picker>
+          </view>
+          <view>
+            <text class="fieldLabel">有效期至</text>
+            <picker mode="date" value="{{passport.data.expiry_date}}" start="1980-01-01" end="2019-09-01" @change="bindExpiryChange">
+              <view class="picker">
+                {{passport.data.expiry_date}}
+              </view>
+            </picker>
+          </view>
+          <view>
+            <text class="fieldLabel">国籍</text>
+            <input placeholder="国籍" value="{{passport.data.nationality}}" bindinput="oninputNationality" type="text"/>
+          </view>
+          <view>
+            <text class="fieldLabel">姓名</text>
+            <input placeholder="姓名" value="{{passport.data.name_cn}}" bindinput="oninputNamecn" type="text"/>
+          </view>
+          <view>
+            <text class="fieldLabel">姓名(拼)</text>
+            <input placeholder="姓名(拼音)" value="{{passport.data.name}}" bindinput="oninputName" type="text"/>
+          </view>
+          <view>
+            <text class="fieldLabel">性别</text>
+            <radio-group class="radio-group" bindchange="radioChange">
+            <label class="radio">
+              <radio value="M" checked="{{passport.data.sex == 'M'}}" />
+              男
+            </label>
+            <label class="radio">
+              <radio value="F" checked="{{item.checked}}" />
+              女
+            </label>
+          </radio-group>
+          </view>
+          <view>
+            <text class="fieldLabel">出生日期</text>
+            <picker mode="date" value="{{passport.data.birth_date}}" start="1960-01-01" end="2018-09-01" @change="bindBirthChange">
+              <view class="picker">
+                {{passport.data.birth_date}}
+              </view>
+            </picker>
+          </view>
+        </view>
+      </i-collapse-item>
+      <i-collapse-item title="个人其他信息">
+        <view slot="content">
+        <view>
+          <text class="fieldLabel">个人职业</text>
+          <input placeholder="比如 软件工程师" value="{{passport.data.occupation}}" bindinput="oninputOccupation" type="text"/>
+        </view>
+        <view>
+          <text class="fieldLabel">父亲名字(拼音)</text>
+          <input placeholder="比如 Zhang, Mingqiang" value="{{passport.data.father_name}}" bindinput="oninputFatherName" type="text"/>
+        </view>
+        <view>
+          <text class="fieldLabel">母亲名字(拼音)</text>
+          <input placeholder="比如 Chen, Xiuyun" value="{{passport.data.mother_name}}" bindinput="oninputMotherName" type="text"/>
+        </view>
+        <view>
+          <text class="fieldLabel">所在城市</text>
+          <picker mode="region" value="{{passport.data.region}}" @change="bindRegionChange" custom-item="{{customItem}}">
+            <view class="picker">
+              当前选择：{{passport.data.region}}
+            </view>
+          </picker>
+        </view>
+        <view>
+          <text class="fieldLabel">居住地址</text>
+          <input placeholder="" value="{{passport.data.address}}" bindinput="oninputAddress" type="text"/>
+        </view>
+        <view>
+          <text class="fieldLabel">电话号码</text>
+          <input value="{{passport.data.phone}}" bindinput="oninputPhone" type="number"/>
+        </view>
+        <view>
+          <text class="fieldLabel">电子邮件</text>
+          <input placeholder="比如 zhangyun1989@163.com" value="{{passport.data.email}}" bindinput="oninputEmail" type="text"/>
+        </view>
+        </view>
+      </i-collapse-item>
+      <i-collapse-item title="旅行信息">
+        <view slot="content">
+        <view>
+          <text class="fieldLabel">旅行目的</text>
+          <picker bindchange="bindPurposeChange" value="{{travelInfo.purpose}}" range="{{purposes}}">
+          <view class="picker">
+            {{purposes[travelInfo.purpose]}}
+          </view>
+          </picker>
+        </view>
+        <view>
+          <text class="fieldLabel">入境日期</text>
+          <picker mode="date" value="{{travelInfo.entry_date}}"  @change="bindEntryDateChange">
+            <view class="picker">
+              {{travelInfo.entry_date}}
+            </view>
+          </picker>
+        </view>
+        <view>
+          <text class="fieldLabel">离境日期</text>
+          <picker mode="date" value="{{travelInfo.departure_date}}" @change="bindDepartureDateChange">
+            <view class="picker">
+              {{travelInfo.departure_date}}
+            </view>
+          </picker>
+        </view>
+        <view>
+          <text class="fieldLabel">旅行方式</text>
+          <picker bindchange="bindByChange" value="{{otherInfo.by}}" range="{{by}}">
+          <view class="picker">
+            {{by[otherInfo.by]}}
+          </view>
+          </picker>
+        </view>
+        <view>
+          <text class="fieldLabel">入境点</text>
+          <picker bindchange="bindEntryPointChange" value="{{entryPointIndex}}" range="{{allPoints[otherInfo.by]}}" range-key="name_cn">
+          <view class="picker">
+            {{allPoints[otherInfo.by][entryPointIndex].name_cn}}
+          </view>
+          </picker>
+        </view>
+        </view>
+      </i-collapse-item>
+      <i-collapse-item title="旅行历史记录">
+        <view slot="content">
+        <view>
+          <checkbox-group bindchange="checkboxChange">
+            <label class="checkbox">
+              <checkbox value='everbeenOtherCountry' checked="{{beenOtherCountryInLast3Months}}" />
+              过去三个月内是否去过其他国家?
+            </label>
+          </checkbox-group>
+        </view>
+        <view wx:if="{{beenOtherCountryInLast3Months}}">
+          <input placeholder="国家名称" value="{{travelInfo.other_info.been_country}}" bindinput="oninputCountry" type="text"/>
+          <picker mode="date" value="{{travelInfo.other_info.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3EntryDateChange">
+            <view class="picker">
+              入境: {{travelInfo.other_info.been_country_entry_date}}
+            </view>
+          </picker>
+          <picker mode="date" value="{{travelInfo.other_info.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3DepartureDateChange">
+            <view class="picker">
+              离境: {{travelInfo.other_info.been_country_departure_date}}
+            </view>
+          </picker>
+        </view>
+        </view>
+      </i-collapse-item>
+    </i-collapse>
+    <view class="nav" bindtap='submit'>
+      <button>确认并提交</button>
+    </view>
+    <toast />
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import Toast from 'wepy-com-toast'
+
+  export default class FillForm extends wepy.page {
+    config = {
+      navigationBarTitleText: '填表',
+      usingComponents: {
+        'i-collapse': '../resources/iview/collapse/index',
+        'i-collapse-item': '../resources/iview/collapse-item/index',
+        panel: '../resources/iview/panel/index',
+        Step: '../resources/iview/step/index',
+        Steps: '../resources/iview/steps/index'
+      }
+    }
+    components = {
+      toast: Toast
+    }
+    mixins = []
+    data = {
+      passport: null,
+      passportImagePath: '',
+      customItem: '全部',
+      travelInfo: {},
+      allPoints: [],
+      purposes: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居', '其他'],
+      by: ['飞机', '陆路', '水路'],
+      entryPointIndex: 0,
+      otherInfo: {}
+    }
+    computed = {
+      now () {
+        return +new Date()
+      },
+      today () {
+        return new Date()
+      },
+      fourMonthsLater() {
+        let n = new Date()
+        n.setDate(n.getDate() + 120)
+        return n.toString()
+      },
+      dayAfterEntryDate() {
+        if (!this.travelInfo.entry_date) {
+          return new Date()
+        }
+        let entryDate = new Date(this.travelInfo.entry_date)
+        entryDate.setDate(entryDate.getDate() + 1)
+        return entryDate.toString()
+      }
+    }
+
+    methods = {
+      oninputPassport(e) {
+        this.passport.passport_no = e.detail.value
+      },
+      oninputAuthority(e) {
+        this.passport.authority = e.detail.value
+      },
+      oninputIssuePlace(e) {
+        this.passport.issue_place = e.detail.value
+      },
+      oninputNamecn(e) {
+        this.passport.name_cn = e.detail.value
+      },
+      oninputName(e) {
+        this.passport.name = e.detail.value
+      },
+      oninputNationality(e) {
+        this.passport.nationality = e.detail.value
+      },
+      bindDateChange(e) {
+        this.passport.data.issue_date = e.detail.value
+      },
+      bindExpiryChange(e) {
+        this.passport.data.expiry_date = e.detail.value
+      },
+      bindBirthChange(e) {
+        this.passport.data.birth_date = e.detail.value
+      },
+      radioChange(e) {
+        console.log('radio发生change事件，携带value值为：', e.detail.value)
+        this.passport.data.sex = e.detail.value
+      },
+      oninputOccupation(e) {
+        this.passport.data.occupation = e.detail.value
+      },
+      oninputFatherName(e) {
+        this.passport.data.father_name = e.detail.value
+      },
+      oninputMotherName(e) {
+        this.passport.data.mother_name = e.detail.value
+      },
+      bindRegionChange(e) {
+        this.passport.data.region = e.detail.value
+      },
+      oninputAddress(e) {
+        this.passport.data.address = e.detail.value
+      },
+      oninputPhone(e) {
+        this.passport.data.phone = e.detail.value
+      },
+      oninputEmail(e) {
+        this.passport.data.email = e.detail.value
+      },
+      bindPurposeChange(e) {
+        this.travelInfo.purpose = e.detail.value
+      },
+      bindEntryDateChange(e) {
+        this.travelInfo.entry_date = e.detail.value
+      },
+      bindDepartureDateChange(e) {
+        this.travelInfo.departure_date = e.detail.value
+      },
+      bindByChange(e) {
+        this.otherInfo.by = e.detail.value
+
+        this.entryPointIndex = 0
+        this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
+      },
+      bindEntryPointChange(e) {
+        this.entryPointIndex = e.detail.value
+        this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
+      },
+      checkboxChange(e) {
+        this.beenOtherCountryInLast3Months = e.detail.value
+      },
+      oninputCountry(e) {
+        this.travelInfo.other_info.been_country = e.detail.value
+      },
+      bind3EntryDateChange(e) {
+        this.travelInfo.other_info.been_country_entry_date = e.detail.value
+      },
+      bind3DepartureDateChange(e) {
+        this.travelInfo.other_info.been_country_departure_date = e.detail.value
+      }
+    }
+    submit() {
+      if (!this.passportImagePath) {
+        wepy.setStorageSync('passport', this.passport)
+        wepy.navigateTo({
+          url: './personalInfo'
+        })
+      }
+      console.log('saving passport:')
+      console.log(this.passport)
+      wepy.request({
+        url: 'https://php.evisa100.com/save_passport.php',
+        method: 'POST',
+        data: this.passport,
+        header: {
+          'content-type': 'application/json; charset=UTF-8'
+        }
+      }).then(res => {
+        console.log(res)
+        if (res.data.id) {
+          this.passport.id = res.data.id
+        }
+        wepy.navigateTo({
+          url: './travelInfo?passport_id=' + this.passport.id
+        })
+      })
+
+      this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
+      this.travelInfo.other_info = this.otherInfo
+
+      console.log('travelInfo to save:')
+      console.log(this.travelInfo)
+      wepy.request({
+        url: 'https://php.evisa100.com/submit_application.php',
+        method: 'POST',
+        data: this.travelInfo,
+        header: {
+          'content-type': 'application/json; charset=UTF-8'
+        }
+      }).then(res => {
+        console.log(res)
+        let promise = this.$invoke('toast', 'show', {
+          title: '提交成功',
+          img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
+        })
+        promise.then((d) => {
+          console.log('toast done')
+          wepy.navigateTo({
+            url: './index'
+          })
+        })
+      })
+    }
+
+    onLoad(option) {
+      this.passport = wepy.getStorageSync('passport')
+      this.passportImagePath = option.imagePath
+
+      this.travelInfo.to_country = 'ke'
+      this.travelInfo.passport_id = option.passport_id
+      this.travelInfo.purpose = 0
+      this.otherInfo.by = 0
+      wepy.request({
+        url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,
+        method: 'GET',
+        header: {
+          'content-type': 'application/json; charset=UTF-8'
+        }
+      }).then(res => {
+        console.log(res)
+        var entries = JSON.parse(res.data[0].data)
+        entries.forEach(element => {
+          this.allPoints.push(element.data)
+        })
+        this.$apply()
+      })
+    }
+  }
+</script>

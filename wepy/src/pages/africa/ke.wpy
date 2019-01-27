@@ -2,31 +2,26 @@
 </style>
 <template>
   <view class="container">
-    <productThumb title="肯尼亚旅游签证-电子签[全国]" country="ke" daysTakes="1-5" price="¥469" :times="times"></productThumb>
+    <productThumb title="肯尼亚签证-电子签[全国]" country="ke" daysTakes="1-5" price="¥469" :times="times"></productThumb>
   </view>
 </template>
 <script>
   import wepy from 'wepy'
   import ProductThumb from '@/components/product-thumb' // alias example
 
-  export default class PersonalInfo extends wepy.page {
+  export default class KE extends wepy.page {
     config = {
-      navigationBarTitleText: '护照信息'
+      navigationBarTitleText: '肯尼亚签证'
     }
     components = {
       productThumb: ProductThumb
     }
     mixins = []
     data = {
-      passport: null,
-      customItem: '全部',
       times: [{ key: '有效期限', value: '3个月' },
       { key: '最长停留', value: '30天' },
       { key: '入境次数', value: '1次' }]
     }
-    computed = {
-    }
-
     methods = {
     }
   }

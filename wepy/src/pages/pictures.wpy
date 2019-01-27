@@ -21,17 +21,22 @@
       <Step title="确认提交" content=""></Step>
     </Steps>
     <view class="uploader" @tap="uploadPassport">
-      <text>上传护照拍照</text>
+      <text>护照个人信息页</text>
       <text wx:if="{{passportUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
     <view class="uploader" @tap="uploadPhoto">
-      <text>上传个人照片</text>
+      <text>个人照片</text>
       <text wx:if="{{photoUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
+    <view class="uploader" @tap="uploadIDFront">
+      <text>身份证正面</text>
+      <text wx:if="{{idFrontUploaded}}">完成</text>
+      <text wx:else>></text>
+    </view>
     <navigator class="primary-button"
-        url="./fillform" open-type="navigate">下一步</navigator>
+        url="./fillform" open-type="redirectTo">下一步</navigator>
 </view>
 </template>
 <script>
@@ -50,14 +55,30 @@
     components = {
     }
     data = {
-      passportUploaded: false,
-      photoUploaded: false,
       passport: null
     }
     computed = {
+      passportUploaded() {
+        return this.passport != null
+      },
+      photoUploaded() {
+        return this.passportUploaded && this.passport.data.photo_file != null
+      },
+      idFrontUploaded() {
+        return this.passportUploaded && this.passport.data.id_front_file != null
+      }
     }
 
     methods = {
+    }
+    splitCnEnName(data, prop) {
+      if (data[prop]) {
+        var places = data[prop].split('/', 2)
+        if (places.length === 2) {
+          data[prop + '_cn'] = places[0]
+          data[prop] = places[1]
+        }
+      }
     }
 
     async uploadPassport() {
@@ -76,66 +97,66 @@
         encoding: 'base64',
         success: function(res) {
           console.log('ocr sending...')
-          wepy.request({
-            url: 'https://ocrdiy.market.alicloudapi.com/api/predict/ocr_sdt',
-            method: 'POST',
-            data: {
-              image: res.data,
-              configure: { template_id: 'e132cad9-55e9-417f-9111-c82d3105ed501545292863' }
+          // wepy.request({
+          //   url: 'https://ocrdiy.market.alicloudapi.com/api/predict/ocr_sdt',
+          //   method: 'POST',
+          //   data: {
+          //     image: res.data,
+          //     configure: { template_id: 'e132cad9-55e9-417f-9111-c82d3105ed501545292863' }
+          //   },
+          //   header: {
+          //     'content-type': 'application/json; charset=UTF-8',
+          //     Authorization: 'APPCODE 391037852026434fa5c6e3780ef61220'
+          //   }
+          // }).then(function(res) {
+          var objstr = '{"config_str":{"template_id":"e132cad9-55e9-417f-9111-c82d3105ed501545292863"},"items":{"authority":"MPS Exit&Entry Administration","authority_cn":"公安部出入境管理局","birth_date":"25","birth_place":"湖北/HUBEI","country_code":"CHN","expiry_date":"062月/FEB2024","issue_date":"07 2月/FEB 2014","issue_place":"上海/SHANGHAI","name":"DONG,WEN","name_cn":"董文","nationality":"中国/CHINESE","passport_no":"E06279103","sex":"男/M","type":"P"},"request_id":"20181221174315_5bfa13c25816d99985e25694c498dc52","success":true}'
+          var data = JSON.parse(objstr)
+          if (!data.success) {
+            let promise = that.$invoke('toast', 'show', {
+              title: '解析失败,请重传图片',
+              img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
+            })
+            promise.then((d) => {
+              console.log('toast done')
+              console.log(d)
+            })
+            return
+          }
+
+          var passport = {
+            openid: openid,
+            passport_no: data.items.passport_no
+          }
+          console.log(passport)
+          delete data.items.passport_no
+          passport.data = data.items
+          passport.data.birth_date = Util.dateFromString(passport.data.birth_date)
+          passport.data.issue_date = Util.dateFromString(passport.data.issue_date)
+          passport.data.expiry_date = Util.dateFromString(passport.data.expiry_date)
+          passport.data.sex = passport.data.sex.replace(/\W/g, '')
+          that.splitCnEnName(passport.data, 'birth_place')
+          that.splitCnEnName(passport.data, 'issue_place')
+          that.splitCnEnName(passport.data, 'nationality')
+          passport.data.passport_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
+
+          UploadFile(imagePath, passport.data.passport_file,
+            function(res) {
+              that.passport = passport
+              that.$apply()
             },
-            header: {
-              'content-type': 'application/json; charset=UTF-8',
-              Authorization: 'APPCODE 391037852026434fa5c6e3780ef61220'
+            function(err) {
+              console.log('uploading failed')
+              console.log(err)
             }
-          }).then(function(res) {
-            // var objstr = '{"config_str":{"template_id":"e132cad9-55e9-417f-9111-c82d3105ed501545292863"},"items":{"authority":"MPS Exit&Entry Administration","authority_cn":"公安部出入境管理局","birth_date":"25","birth_place":"湖北/HUBEI","country_code":"CHN","expiry_date":"062月/FEB2024","issue_date":"07 2月/FEB 2014","issue_place":"上海/SHANGHAI","name":"DONG,WEN","name_cn":"董文","nationality":"中国/CHINESE","passport_no":"E06279103","sex":"男/M","type":"P"},"request_id":"20181221174315_5bfa13c25816d99985e25694c498dc52","success":true}'
-            // res.data = JSON.parse(objstr)
-            console.log(res)
-            if (res.statusCode !== 200) {
-              let promise = that.$invoke('toast', 'show', {
-                title: '解析失败,请重传图片',
-                img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
-              })
-              promise.then((d) => {
-                console.log('toast done')
-                console.log(d)
-              })
-              return
-            }
-
-            var passport = {
-              openid: openid,
-              passport_no: res.data.items.passport_no
-            }
-            console.log(passport)
-            delete res.data.items.passport_no
-            passport.data = res.data.items
-            passport.data.birth_date = Util.dateFromString(passport.data.birth_date)
-            passport.data.issue_date = Util.dateFromString(passport.data.issue_date)
-            passport.data.expiry_date = Util.dateFromString(passport.data.expiry_date)
-            passport.data.sex = passport.data.sex.replace(/\W/g, '')
-            passport.data.passport_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
-
-            UploadFile(imagePath, passport.data.passport_file,
-              function(res) {
-                console.log(res)
-                wepy.setStorageSync('passport', passport)
-                that.passport = passport
-                that.passportUploaded = true
-                that.$apply()
-              },
-              function(err) {
-                console.log('uploading failed')
-                console.log(err)
-              }
-            )
-          })
+          )
+          // })
         }
       })
     }
     async uploadPhoto() {
       console.log('uploadPhoto')
       let that = this
+      let openid = await this.$parent.getOpenid()
       let res = await wepy.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'],
@@ -147,12 +168,40 @@
         filePath: imagePath,
         encoding: 'base64',
         success: function(res) {
-          // var photoFileName = 'photo/' + that.passport.passport_no + '.' + imagePath.split('.').pop()
-          var photoFileName = 'photo/' + 'myphoto.' + imagePath.split('.').pop()
-          that.passport.data.photo_file = photoFileName
+          var photoFileName = 'photo/' + openid + '_' + that.passport ? that.passport.passport_no : Date.now() + '_photo.' + imagePath.split('.').pop()
           UploadFile(imagePath, photoFileName,
             function(res) {
-              console.log(res)
+              that.passport.data.photo_file = photoFileName
+              that.$apply()
+            },
+            function(err) {
+              console.log('uploading photo failed')
+              console.log(err)
+            }
+          )
+        }
+      })
+    }
+
+    async uploadIDFront() {
+      console.log('uploadIDFront')
+      let that = this
+      let openid = await this.$parent.getOpenid()
+      let res = await wepy.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera']
+      })
+
+      const imagePath = res.tempFilePaths[0]
+      wx.getFileSystemManager().readFile({
+        filePath: imagePath,
+        encoding: 'base64',
+        success: function(res) {
+          var photoFileName = 'photo/' + openid + '_' + that.passport ? that.passport.passport_no : Date.now() + '_idfront.' + imagePath.split('.').pop()
+          that.passport.data.id_front_file = photoFileName
+          UploadFile(imagePath, photoFileName,
+            function(res) {
               wepy.setStorageSync('passport', that.passport)
               that.photoUploaded = true
               that.$apply()
@@ -166,11 +215,9 @@
       })
     }
 
-    onShow() {
-      console.log('passportUploaded')
-      console.log(this.passportUploaded)
-      console.log('photoUploaded')
-      console.log(this.photoUploaded)
+    onUnload() {
+      console.log('onUnload - setStorageSync(passport)')
+      wepy.setStorageSync('passport', this.passport)
     }
 
     onLoad() {

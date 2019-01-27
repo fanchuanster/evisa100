@@ -91,8 +91,8 @@ namespace EVisa100.Automations
                 var drpBirthCountry = new SelectElement(driver.FindElement(By.CssSelector(@"#element_13")));
                 drpBirthCountry.SelectByText("China");
 
-                var occupation = driver.FindElement(By.CssSelector(@"#element_11"));
-                occupation.SendKeys(application.Passport.data["occupation"] as string);
+                var job = driver.FindElement(By.CssSelector(@"#element_11"));
+                job.SendKeys(application.Passport.data["job"] as string);
 
                 var fatherName = driver.FindElement(By.CssSelector(@"#element_7"));
                 fatherName.SendKeys(application.Passport.data["father_name"] as string);

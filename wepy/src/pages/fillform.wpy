@@ -20,15 +20,15 @@ input {
         <view slot="content">
           <view>
             <text class="fieldLabel">国籍</text>
-            <input placeholder="国籍" value="{{passport.data.nationality}}" bindinput="oninputNationality" type="text"/>
+            <input placeholder="国籍" value="{{passport.data.nationality_cn}}" bindinput="oninputNationality" type="text"/>
           </view>
           <view>
             <text class="fieldLabel">姓名</text>
-            <input placeholder="姓名" value="{{passport.data.name_cn}}" bindinput="oninputNamecn" type="text"/>
+            <input value="{{passport.data.name_cn}}" bindinput="oninputNamecn" type="text"/>
           </view>
           <view>
-            <text class="fieldLabel">姓名(拼)</text>
-            <input placeholder="姓名(拼音)" value="{{passport.data.name}}" bindinput="oninputName" type="text"/>
+            <text class="fieldLabel">姓名(拼音)</text>
+            <input value="{{passport.data.name}}" bindinput="oninputName" type="text"/>
           </view>
           <view>
             <text class="fieldLabel">性别</text>
@@ -39,31 +39,55 @@ input {
           </view>
           <view>
             <text class="fieldLabel">出生日期</text>
-            <picker mode="date" value="{{passport.data.birth_date}}" start="1960-01-01" end="2018-09-01" @change="bindBirthChange">
-              <view class="picker">
-                {{passport.data.birth_date}}
-              </view>
+            <picker mode="date" value="{{passport.data.birth_date}}" start="1940-01-01" end="2018-09-01" @change="bindBirthChange">
+              <view class="picker">{{passport.data.birth_date}}</view>
             </picker>
           </view>
           <view>
+            <text class="fieldLabel">出生地</text>
+            <input value="{{passport.data.birth_place_cn}}" bindinput="oninputName" type="text"/>
+          </view>
+          <view>
+            <text class="fieldLabel">出生地(拼音)</text>
+            <input value="{{passport.data.birth_place}}" bindinput="oninputName" type="text"/>
+          </view>
+          <view>
             <text class="fieldLabel">职业</text>
-            <input placeholder="比如 软件工程师" value="{{passport.data.occupation}}" bindinput="oninputOccupation" type="text"/>
-        </view>
+            <picker mode="selector" range="{{jobs}}" @change="onJobTypeChange">
+              <view class="picker">
+                {{jobs[passport.data.job_type]}}
+              </view>
+            </picker>
+          </view>
+          <view wx:if="{{passport.data.job_type == 2}}">
+            <text class="fieldLabel">单位名称</text>
+            <input  value="{{passport.data.job_comp}}" bindinput="onJobCompChange" type="text"/>
+            <text class="fieldLabel">职位名称</text>
+            <input value="{{passport.data.job_title}}" bindinput="onJobTitleChange" type="text"/>
+          </view>
+          <view wx:if="{{passport.data.job_type == 0}}">
+            <text class="fieldLabel">学校名称</text>
+            <input  value="{{passport.data.job_comp}}" bindinput="onJobCompChange" type="text"/>
+          </view>
+          <view wx:if="{{passport.data.job_type == 4}}">
+            <text class="fieldLabel">职业描述</text>
+            <input placeholder="当前职业的具体描述" value="{{passport.data.job_title}}" bindinput="onJobTitleChange" type="text"/>
+          </view>
         </view>
       </i-collapse-item>
-      <i-collapse-item title="护照信息" name="name1">
+      <i-collapse-item title="护照信息">
         <view slot="content">
           <view>
             <text class="fieldLabel">护照号码</text>
             <input placeholder="护照号码" value="{{passport.passport_no}}" bindinput="oninputPassport" type="text"/>
           </view>
           <view>
-            <text class="fieldLabel">颁发机构(英)</text>
-            <input placeholder="颁发机构" name="authority" value="{{passport.data.authority}}" bindinput="oninputAuthority" type="text"/>
+            <text class="fieldLabel">颁发机构(英文)</text>
+            <input placeholder="确保与护照一致" name="authority" value="{{passport.data.authority}}" bindinput="oninputAuthority" type="text"/>
           </view>
           <view>
             <text class="fieldLabel">颁发地</text>
-            <input placeholder="颁发地" value="{{passport.data.issue_place}}" bindinput="oninputIssuePlace" type="text"/>
+            <input placeholder="颁发地" value="{{passport.data.issue_place_cn}}" bindinput="oninputIssuePlace" type="text"/>
           </view>
           <view>
             <text class="fieldLabel">颁发日期</text>
@@ -86,19 +110,25 @@ input {
       <i-collapse-item title="家庭信息">
         <view slot="content">
         <view>
-          <text class="fieldLabel">父亲名字(拼音)</text>
-          <input placeholder="比如 Zhang, Mingqiang" value="{{passport.data.father_name}}" bindinput="oninputFatherName" type="text"/>
+          <text class="fieldLabel">父亲的姓(拼音)</text>
+          <input value="{{passport.data.father_name_sur}}" bindinput="oninputFatherSurName" type="text"/>
         </view>
         <view>
-          <text class="fieldLabel">母亲名字(拼音)</text>
-          <input placeholder="比如 Chen, Xiuyun" value="{{passport.data.mother_name}}" bindinput="oninputMotherName" type="text"/>
+          <text class="fieldLabel">父亲的名(拼音)</text>
+          <input value="{{passport.data.father_name_given}}" bindinput="oninputFatherGivenName" type="text"/>
         </view>
         <view>
-          <text class="fieldLabel">所在城市</text>
+          <text class="fieldLabel">母亲的姓(拼音)</text>
+          <input value="{{passport.data.father_name_sur}}" bindinput="oninputMotherSurName" type="text"/>
+        </view>
+        <view>
+          <text class="fieldLabel">母亲的名(拼音)</text>
+          <input value="{{passport.data.father_name_given}}" bindinput="oninputMotherGivenName" type="text"/>
+        </view>
+        <view>
+          <text class="fieldLabel">常住城市</text>
           <picker mode="region" value="{{passport.data.region}}" @change="bindRegionChange" custom-item="{{customItem}}">
-            <view class="picker">
-              当前选择：{{passport.data.region}}
-            </view>
+            <view class="picker">{{passport.data.region}}</view>
           </picker>
         </view>
         <view>
@@ -161,7 +191,7 @@ input {
           <checkbox-group bindchange="checkboxChange">
             <label class="checkbox">
               <checkbox value='everbeenOtherCountry' checked="{{beenOtherCountryInLast3Months}}" />
-              过去三个月内是否去过其他国家?
+              最近三个月内是否去过其他国家?
             </label>
           </checkbox-group>
         </view>
@@ -169,12 +199,12 @@ input {
           <input placeholder="国家名称" value="{{travelInfo.other_info.been_country}}" bindinput="oninputCountry" type="text"/>
           <picker mode="date" value="{{travelInfo.other_info.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3EntryDateChange">
             <view class="picker">
-              入境: {{travelInfo.other_info.been_country_entry_date}}
+              入境日期: {{travelInfo.other_info.been_country_entry_date}}
             </view>
           </picker>
           <picker mode="date" value="{{travelInfo.other_info.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3DepartureDateChange">
             <view class="picker">
-              离境: {{travelInfo.other_info.been_country_departure_date}}
+              离境日期: {{travelInfo.other_info.been_country_departure_date}}
             </view>
           </picker>
         </view>
@@ -197,9 +227,9 @@ input {
       usingComponents: {
         'i-collapse': '../resources/iview/collapse/index',
         'i-collapse-item': '../resources/iview/collapse-item/index',
-        panel: '../resources/iview/panel/index',
         Step: '../resources/iview/step/index',
-        Steps: '../resources/iview/steps/index'
+        Steps: '../resources/iview/steps/index',
+        'vant-picker': '../resources/vant-weapp/picker/index'
       }
     }
     components = {
@@ -214,7 +244,9 @@ input {
       purposes: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居', '其他'],
       by: ['飞机', '陆路', '水路'],
       entryPointIndex: 0,
-      otherInfo: {}
+      otherInfo: {},
+      jobs: ['学生', '无业', '在职', '退休', '其他'],
+      jobTitles: ['工程师', '设计师', '经理', '会计', '其他']
     }
     computed = {
       now () {
@@ -270,14 +302,27 @@ input {
         console.log('radio发生change事件，携带value值为：', e.detail.value)
         this.passport.data.sex = e.detail.value
       },
-      oninputOccupation(e) {
-        this.passport.data.occupation = e.detail.value
+      onJobTypeChange(e) {
+        this.passport.data.job_type = e.detail.value
+        console.log(this.passport.data.job_type)
       },
-      oninputFatherName(e) {
-        this.passport.data.father_name = e.detail.value
+      onJobCompChange(e) {
+        this.passport.data.job_comp = e.detail.value
       },
-      oninputMotherName(e) {
-        this.passport.data.mother_name = e.detail.value
+      onJobTitleChange(e) {
+        this.passport.data.job_title = e.detail.value
+      },
+      oninputFatherSurName(e) {
+        this.passport.data.father_name_sur = e.detail.value
+      },
+      oninputFatherGivenName(e) {
+        this.passport.data.father_name_given = e.detail.value
+      },
+      oninputMotherSurName(e) {
+        this.passport.data.mother_name_sur = e.detail.value
+      },
+      oninputMotherGivenName(e) {
+        this.passport.data.mother_name_given = e.detail.value
       },
       bindRegionChange(e) {
         this.passport.data.region = e.detail.value
@@ -301,6 +346,7 @@ input {
         this.travelInfo.departure_date = e.detail.value
       },
       bindByChange(e) {
+        console.log('value is ' + e.detail.value)
         this.otherInfo.by = e.detail.value
 
         this.entryPointIndex = 0
@@ -377,6 +423,7 @@ input {
     }
 
     onLoad(option) {
+      console.log('onLoad')
       this.passport = wepy.getStorageSync('passport')
 
       this.travelInfo.to_country = 'ke'

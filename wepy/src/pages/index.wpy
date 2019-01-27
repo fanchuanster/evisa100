@@ -26,7 +26,7 @@
         <view class="title" slot="title">{{item.continent.name_cn}}</view>
         <view class="country_item_container">
           <block wx:for-items="{{item.countries}}" wx:for-item="country" wx:key="name_short">
-            <text class="country_item" id="{{item.continent.name}}/{{country.name_short}}" @tap="tabCountryName">{{country.name_cn}}</text>
+            <text class="country_item" id="{{item.continent.name}}/{{country.name_short}}" @tap="tapCountryName">{{country.name_cn}}</text>
           </block>
         </view>
       </panel>
@@ -88,7 +88,7 @@
     }
 
     methods = {
-      tabCountryName (e) {
+      tapCountryName (e) {
         console.log(e)
         wepy.navigateTo({
           url: './' + e.target.id

@@ -71,15 +71,6 @@
 
     methods = {
     }
-    splitCnEnName(data, prop) {
-      if (data[prop]) {
-        var places = data[prop].split('/', 2)
-        if (places.length === 2) {
-          data[prop + '_cn'] = places[0]
-          data[prop] = places[1]
-        }
-      }
-    }
 
     async uploadPassport() {
       console.log('new a passport')
@@ -134,9 +125,9 @@
           passport.data.issue_date = Util.dateFromString(passport.data.issue_date)
           passport.data.expiry_date = Util.dateFromString(passport.data.expiry_date)
           passport.data.sex = passport.data.sex.replace(/\W/g, '')
-          that.splitCnEnName(passport.data, 'birth_place')
-          that.splitCnEnName(passport.data, 'issue_place')
-          that.splitCnEnName(passport.data, 'nationality')
+          Util.splitCnEnName(passport.data, 'birth_place')
+          Util.splitCnEnName(passport.data, 'issue_place')
+          Util.splitCnEnName(passport.data, 'nationality')
           passport.data.passport_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
 
           UploadFile(imagePath, passport.data.passport_file,
@@ -199,11 +190,9 @@
         encoding: 'base64',
         success: function(res) {
           var photoFileName = 'photo/' + openid + '_' + that.passport ? that.passport.passport_no : Date.now() + '_idfront.' + imagePath.split('.').pop()
-          that.passport.data.id_front_file = photoFileName
           UploadFile(imagePath, photoFileName,
             function(res) {
-              wepy.setStorageSync('passport', that.passport)
-              that.photoUploaded = true
+              that.passport.data.id_front_file = photoFileName
               that.$apply()
             },
             function(err) {
@@ -221,6 +210,7 @@
     }
 
     onLoad() {
+      this.passport = wepy.getStorageSync('passport')
     }
   }
 </script>

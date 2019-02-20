@@ -21,6 +21,16 @@ Util.dateFromString = function(str) {
 	}
 };
 
+Util.splitCnEnName = function(data, prop) {
+	if (data[prop]) {
+	  var places = data[prop].split('/', 2)
+	  if (places.length === 2) {
+		data[prop + '_cn'] = places[0]
+		data[prop] = places[1]
+	  }
+	}
+  };
+
 })();
 
 module.exports = Util;

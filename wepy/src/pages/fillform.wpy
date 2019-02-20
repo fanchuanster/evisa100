@@ -87,7 +87,11 @@ input {
           </view>
           <view>
             <text class="fieldLabel">颁发地</text>
-            <input placeholder="颁发地" value="{{passport.data.issue_place_cn}}" bindinput="oninputIssuePlace" type="text"/>
+            <input placeholder="颁发地" value="{{passport.data.issue_place_cn}}" bindinput="oninputIssuePlaceCn" type="text"/>
+          </view>
+          <view>
+            <text class="fieldLabel">颁发地(拼音)</text>
+            <input placeholder="颁发地" value="{{passport.data.issue_place}}" bindinput="oninputIssuePlace" type="text"/>
           </view>
           <view>
             <text class="fieldLabel">颁发日期</text>
@@ -99,7 +103,7 @@ input {
           </view>
           <view>
             <text class="fieldLabel">有效期至</text>
-            <picker mode="date" value="{{passport.data.expiry_date}}" start="1980-01-01" end="2019-09-01" @change="bindExpiryChange">
+            <picker mode="date" value="{{passport.data.expiry_date}}" start="2019-01-01" end="2039-09-01" @change="bindExpiryChange">
               <view class="picker">
                 {{passport.data.expiry_date}}
               </view>
@@ -119,11 +123,11 @@ input {
         </view>
         <view>
           <text class="fieldLabel">母亲的姓(拼音)</text>
-          <input value="{{passport.data.father_name_sur}}" bindinput="oninputMotherSurName" type="text"/>
+          <input value="{{passport.data.mother_name_sur}}" bindinput="oninputMotherSurName" type="text"/>
         </view>
         <view>
           <text class="fieldLabel">母亲的名(拼音)</text>
-          <input value="{{passport.data.father_name_given}}" bindinput="oninputMotherGivenName" type="text"/>
+          <input value="{{passport.data.mother_name_given}}" bindinput="oninputMotherGivenName" type="text"/>
         </view>
         <view>
           <text class="fieldLabel">常住城市</text>
@@ -173,38 +177,38 @@ input {
         </view>
         <view>
           <text class="fieldLabel">旅行方式</text>
-          <picker bindchange="bindByChange" value="{{otherInfo.by}}" range="{{by}}">
+          <picker bindchange="bindByChange" value="{{travelInfo.by}}" range="{{by}}">
           <view class="picker">
-            {{by[otherInfo.by]}}
+            {{by[travelInfo.by]}}
           </view>
           </picker>
         </view>
         <view>
           <text class="fieldLabel">入境点</text>
-          <picker bindchange="bindEntryPointChange" value="{{entryPointIndex}}" range="{{allPoints[otherInfo.by]}}" range-key="name_cn">
+          <picker bindchange="bindEntryPointChange" range="{{allPoints[travelInfo.by]}}" range-key="name_cn">
           <view class="picker">
-            {{allPoints[otherInfo.by][entryPointIndex].name_cn}}
+            {{travelInfo.entry_point.name_cn}}
           </view>
           </picker>
         </view>
         <view>
           <checkbox-group bindchange="checkboxChange">
             <label class="checkbox">
-              <checkbox value='everbeenOtherCountry' checked="{{beenOtherCountryInLast3Months}}" />
+              <checkbox value='everbeenOtherCountry' checked="{{travelInfo.beenOtherCountry}}" />
               最近三个月内是否去过其他国家?
             </label>
           </checkbox-group>
         </view>
-        <view wx:if="{{beenOtherCountryInLast3Months}}">
-          <input placeholder="国家名称" value="{{travelInfo.other_info.been_country}}" bindinput="oninputCountry" type="text"/>
-          <picker mode="date" value="{{travelInfo.other_info.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3EntryDateChange">
+        <view wx:if="{{travelInfo.beenOtherCountry}}">
+          <input placeholder="国家名称" value="{{travelInfo.travel_info.been_country}}" bindinput="oninputCountry" type="text"/>
+          <picker mode="date" value="{{travelInfo.travel_info.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3EntryDateChange">
             <view class="picker">
-              入境日期: {{travelInfo.other_info.been_country_entry_date}}
+              入境日期: {{travelInfo.travel_info.been_country_entry_date}}
             </view>
           </picker>
-          <picker mode="date" value="{{travelInfo.other_info.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3DepartureDateChange">
+          <picker mode="date" value="{{travelInfo.travel_info.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3DepartureDateChange">
             <view class="picker">
-              离境日期: {{travelInfo.other_info.been_country_departure_date}}
+              离境日期: {{travelInfo.travel_info.been_country_departure_date}}
             </view>
           </picker>
         </view>
@@ -243,10 +247,7 @@ input {
       allPoints: [],
       purposes: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居', '其他'],
       by: ['飞机', '陆路', '水路'],
-      entryPointIndex: 0,
-      otherInfo: {},
-      jobs: ['学生', '无业', '在职', '退休', '其他'],
-      jobTitles: ['工程师', '设计师', '经理', '会计', '其他']
+      jobs: ['学生', '无业', '在职', '退休', '其他']
     }
     computed = {
       now () {
@@ -276,6 +277,9 @@ input {
       },
       oninputAuthority(e) {
         this.passport.authority = e.detail.value
+      },
+      oninputIssuePlaceCn(e) {
+        this.passport.issue_place_cn = e.detail.value
       },
       oninputIssuePlace(e) {
         this.passport.issue_place = e.detail.value
@@ -347,26 +351,24 @@ input {
       },
       bindByChange(e) {
         console.log('value is ' + e.detail.value)
-        this.otherInfo.by = e.detail.value
+        this.travelInfo.by = e.detail.value
 
-        this.entryPointIndex = 0
-        this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
+        this.travelInfo.entry_point = this.allPoints[this.travelInfo.by][0]
       },
       bindEntryPointChange(e) {
-        this.entryPointIndex = e.detail.value
-        this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
+        this.travelInfo.entry_point = this.allPoints[this.travelInfo.by][e.detail.value]
       },
       checkboxChange(e) {
-        this.beenOtherCountryInLast3Months = e.detail.value
+        this.travelInfo.been_other_country = e.detail.value
       },
       oninputCountry(e) {
-        this.travelInfo.other_info.been_country = e.detail.value
+        this.travelInfo.been_country = e.detail.value
       },
       bind3EntryDateChange(e) {
-        this.travelInfo.other_info.been_country_entry_date = e.detail.value
+        this.travelInfo.been_country_entry_date = e.detail.value
       },
       bind3DepartureDateChange(e) {
-        this.travelInfo.other_info.been_country_departure_date = e.detail.value
+        this.travelInfo.been_country_departure_date = e.detail.value
       }
     }
     submit() {
@@ -395,8 +397,7 @@ input {
         })
       })
 
-      this.otherInfo.entry_point = this.allPoints[this.otherInfo.by][this.entryPointIndex]
-      this.travelInfo.other_info = this.otherInfo
+      this.travelInfo.entry_point = this.allPoints[this.travelInfo.by][this.entryPointIndex]
 
       console.log('travelInfo to save:')
       console.log(this.travelInfo)
@@ -425,11 +426,11 @@ input {
     onLoad(option) {
       console.log('onLoad')
       this.passport = wepy.getStorageSync('passport')
+      if (this.passport.data['travel_info']) {
+        this.travelInfo = this.passport.data['travel_info']
+      }
 
       this.travelInfo.to_country = 'ke'
-      // this.travelInfo.passport_id = option.passport_id
-      this.travelInfo.purpose = 0
-      this.otherInfo.by = 0
       wepy.request({
         url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,
         method: 'GET',
@@ -444,6 +445,14 @@ input {
         })
         this.$apply()
       })
+    }
+    onUnload() {
+      console.log('onUnload')
+      this.passport.data['travel_info'] = this.travelInfo
+      wepy.setStorageSync('passport', this.passport)
+    }
+    onHide() {
+      console.log('onHide')
     }
   }
 </script>

@@ -194,21 +194,21 @@ input {
         <view>
           <checkbox-group bindchange="checkboxChange">
             <label class="checkbox">
-              <checkbox value='everbeenOtherCountry' checked="{{travelInfo.beenOtherCountry}}" />
+              <checkbox value='everbeenOtherCountry' checked="{{travelInfo.been_other_country}}" />
               最近三个月内是否去过其他国家?
             </label>
           </checkbox-group>
         </view>
-        <view wx:if="{{travelInfo.beenOtherCountry}}">
+        <view wx:if="{{travelInfo.been_other_country}}">
           <input placeholder="国家名称" value="{{travelInfo.travel_info.been_country}}" bindinput="oninputCountry" type="text"/>
-          <picker mode="date" value="{{travelInfo.travel_info.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3EntryDateChange">
+          <picker mode="date" value="{{travelInfo.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3EntryDateChange">
             <view class="picker">
-              入境日期: {{travelInfo.travel_info.been_country_entry_date}}
+              入境日期: {{travelInfo.been_country_entry_date}}
             </view>
           </picker>
-          <picker mode="date" value="{{travelInfo.travel_info.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3DepartureDateChange">
+          <picker mode="date" value="{{travelInfo.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3DepartureDateChange">
             <view class="picker">
-              离境日期: {{travelInfo.travel_info.been_country_departure_date}}
+              离境日期: {{travelInfo.been_country_departure_date}}
             </view>
           </picker>
         </view>

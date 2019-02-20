@@ -131,7 +131,7 @@ input {
         </view>
         <view>
           <text class="fieldLabel">常住城市</text>
-          <picker mode="region" value="{{passport.data.region}}" @change="bindRegionChange" custom-item="{{customItem}}">
+          <picker mode="region" value="{{passport.data.region}}" @change="bindRegionChange" custom-item="全部">
             <view class="picker">{{passport.data.region[0]}}，{{passport.data.region[1]}}，{{passport.data.region[2]}}</view>
           </picker>
         </view>
@@ -191,11 +191,34 @@ input {
           </view>
           </picker>
         </view>
+        <checkbox-group bindchange="checkboxChangeReturnDomicile">
+          <label class="checkbox">
+            <checkbox value='return_to_domicile' checked="{{travelInfo.return_to_domicile}}" />
+            旅行结束后你是否会回到自己的国家?
+          </label>
+        </checkbox-group>
+        </view>
+      </i-collapse-item>
+
+      <i-collapse-item title="历史旅行记录">
+        <view slot="content">
         <view>
           <checkbox-group bindchange="checkboxChange">
             <label class="checkbox">
-              <checkbox value='everbeenOtherCountry' checked="{{travelInfo.been_other_country}}" />
+              <checkbox value='been_other_country' checked="{{travelInfo.been_other_country}}" />
               最近三个月内是否去过其他国家?
+            </label>
+            <label class="checkbox">
+              <checkbox value='ever_been_to' checked="{{travelInfo.ever_been_to}}" />
+              以前有没有来过此行的目的地国家?
+            </label>
+            <label class="checkbox">
+              <checkbox value='ever_denied' checked="{{travelInfo.ever_denied}}" />
+              之前有过被此行的目的国家拒绝入境的经历吗?
+            </label>
+            <label class="checkbox">
+              <checkbox value='ever_denied_by_others' checked="{{travelInfo.ever_denied_by_others}}" />
+              之前有过被其他国家拒绝入境的经历吗?
             </label>
           </checkbox-group>
         </view>
@@ -214,6 +237,7 @@ input {
         </view>
         </view>
       </i-collapse-item>
+
     </i-collapse>
     <view class="nav" bindtap='submit'>
       <button>确认并提交</button>
@@ -242,7 +266,6 @@ input {
     mixins = []
     data = {
       passport: null,
-      customItem: '全部',
       travelInfo: {},
       allPoints: [],
       purposes: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居', '其他'],
@@ -358,8 +381,14 @@ input {
       bindEntryPointChange(e) {
         this.travelInfo.entry_point = this.allPoints[this.travelInfo.by][e.detail.value]
       },
+      checkboxChangeReturnDomicile(e) {
+        this.travelInfo.return_to_domicile = e.detail.value
+      },
       checkboxChange(e) {
-        this.travelInfo.been_other_country = e.detail.value
+        this.travelInfo.been_other_country = e.detail.value.includes('been_other_country')
+        this.travelInfo.ever_been_to = e.detail.value.includes('ever_been_to')
+        this.travelInfo.ever_denied = e.detail.value.includes('ever_denied')
+        this.travelInfo.ever_denied_by_others = e.detail.value.includes('ever_denied_by_others')
       },
       oninputCountry(e) {
         this.travelInfo.been_country = e.detail.value
@@ -372,12 +401,6 @@ input {
       }
     }
     submit() {
-      if (!this.passportImagePath) {
-        wepy.setStorageSync('passport', this.passport)
-        wepy.navigateTo({
-          url: './personalInfo'
-        })
-      }
       console.log('saving passport:')
       console.log(this.passport)
       wepy.request({
@@ -392,9 +415,7 @@ input {
         if (res.data.id) {
           this.passport.id = res.data.id
         }
-        wepy.navigateTo({
-          url: './travelInfo?passport_id=' + this.passport.id
-        })
+        this.travelInfo.passport_id = this.passport.id
       })
 
       console.log('travelInfo to save:')
@@ -414,9 +435,6 @@ input {
         })
         promise.then((d) => {
           console.log('toast done')
-          wepy.navigateTo({
-            url: './index'
-          })
         })
       })
     }
@@ -424,8 +442,15 @@ input {
     onLoad(option) {
       console.log('onLoad')
       this.passport = wepy.getStorageSync('passport')
-      if (this.passport.data['travel_info']) {
-        this.travelInfo = this.passport.data['travel_info']
+      var travelInfo = wepy.getStorageSync('travelInfo')
+      if (travelInfo) {
+        this.travelInfo = travelInfo
+      } else {
+        this.travelInfo.return_to_domicile = true
+        this.travelInfo.been_other_country = false
+        this.travelInfo.ever_been_to = false
+        this.travelInfo.ever_denied = false
+        this.travelInfo.ever_denied_by_others = false
       }
 
       if (!this.passport.data.region) {
@@ -450,8 +475,8 @@ input {
     }
     onUnload() {
       console.log('onUnload')
-      this.passport.data['travel_info'] = this.travelInfo
       wepy.setStorageSync('passport', this.passport)
+      wepy.setStorageSync('travelInfo', this.travelInfo)
     }
     onHide() {
       console.log('onHide')

@@ -132,7 +132,7 @@ input {
         <view>
           <text class="fieldLabel">常住城市</text>
           <picker mode="region" value="{{passport.data.region}}" @change="bindRegionChange" custom-item="{{customItem}}">
-            <view class="picker">{{passport.data.region}}</view>
+            <view class="picker">{{passport.data.region[0]}}，{{passport.data.region[1]}}，{{passport.data.region[2]}}</view>
           </picker>
         </view>
         <view>
@@ -397,8 +397,6 @@ input {
         })
       })
 
-      this.travelInfo.entry_point = this.allPoints[this.travelInfo.by][this.entryPointIndex]
-
       console.log('travelInfo to save:')
       console.log(this.travelInfo)
       wepy.request({
@@ -428,6 +426,10 @@ input {
       this.passport = wepy.getStorageSync('passport')
       if (this.passport.data['travel_info']) {
         this.travelInfo = this.passport.data['travel_info']
+      }
+
+      if (!this.passport.data.region) {
+        this.passport.data.region = []
       }
 
       this.travelInfo.to_country = 'ke'

@@ -34,7 +34,7 @@ input {
             <text class="fieldLabel">性别</text>
             <radio-group class="radio-group" bindchange="radioChange">
               <label class="radio"><radio value="M" checked="{{passport.data.sex == 'M'}}"/>男</label>
-              <label class="radio"><radio value="F" checked="{{item.checked}}"/>女</label>
+              <label class="radio"><radio value="F" checked="{{passport.data.sex != 'M'}}"/>女</label>
             </radio-group>
           </view>
           <view>
@@ -132,7 +132,7 @@ input {
         <view>
           <text class="fieldLabel">常住城市</text>
           <picker mode="region" value="{{passport.data.region}}" @change="bindRegionChange" custom-item="全部">
-            <view class="picker">{{passport.data.region[0]}}，{{passport.data.region[1]}}，{{passport.data.region[2]}}</view>
+            <view class="picker">{{passport.data.region[0]}} {{passport.data.region[1]}} {{passport.data.region[2]}}</view>
           </picker>
         </view>
         <view>
@@ -177,23 +177,23 @@ input {
         </view>
         <view>
           <text class="fieldLabel">旅行方式</text>
-          <picker bindchange="bindByChange" value="{{travelInfo.by}}" range="{{by}}">
+          <picker bindchange="bindByChange" value="{{travelInfo.data.by}}" range="{{by}}">
           <view class="picker">
-            {{by[travelInfo.by]}}
+            {{by[travelInfo.data.by]}}
           </view>
           </picker>
         </view>
         <view>
           <text class="fieldLabel">入境点</text>
-          <picker bindchange="bindEntryPointChange" range="{{allPoints[travelInfo.by]}}" range-key="name_cn">
+          <picker bindchange="bindEntryPointChange" range="{{allPoints[travelInfo.data.by]}}" range-key="name_cn">
           <view class="picker">
-            {{travelInfo.entry_point.name_cn}}
+            {{travelInfo.data.entry_point.name_cn}}
           </view>
           </picker>
         </view>
         <checkbox-group bindchange="checkboxChangeReturnDomicile">
-          <label class="checkbox">
-            <checkbox value='return_to_domicile' checked="{{travelInfo.return_to_domicile}}" />
+          <label>
+            <checkbox value='return_to_domicile' checked="{{travelInfo.data.return_to_domicile}}" />
             旅行结束后你是否会回到自己的国家?
           </label>
         </checkbox-group>
@@ -204,34 +204,34 @@ input {
         <view slot="content">
         <view>
           <checkbox-group bindchange="checkboxChange">
-            <label class="checkbox">
-              <checkbox value='been_other_country' checked="{{travelInfo.been_other_country}}" />
+            <label>
+              <checkbox value='been_other_country' checked="{{travelInfo.data.been_other_country}}" />
               最近三个月内是否去过其他国家?
             </label>
-            <label class="checkbox">
-              <checkbox value='ever_been_to' checked="{{travelInfo.ever_been_to}}" />
+            <label>
+              <checkbox value='ever_been_to' checked="{{travelInfo.data.ever_been_to}}" />
               以前有没有来过此行的目的地国家?
             </label>
-            <label class="checkbox">
-              <checkbox value='ever_denied' checked="{{travelInfo.ever_denied}}" />
-              之前有过被此行的目的国家拒绝入境的经历吗?
+            <label>
+              <checkbox value='ever_denied' checked="{{travelInfo.data.ever_denied}}" />
+              之前有被此行的目的国家拒绝入境的经历吗?
             </label>
-            <label class="checkbox">
-              <checkbox value='ever_denied_by_others' checked="{{travelInfo.ever_denied_by_others}}" />
-              之前有过被其他国家拒绝入境的经历吗?
+            <label>
+              <checkbox value='ever_denied_by_others' checked="{{travelInfo.data.ever_denied_by_others}}" />
+              之前有被其他国家拒绝入境的经历吗?
             </label>
           </checkbox-group>
         </view>
-        <view wx:if="{{travelInfo.been_other_country}}">
-          <input placeholder="国家名称" value="{{travelInfo.travel_info.been_country}}" bindinput="oninputCountry" type="text"/>
-          <picker mode="date" value="{{travelInfo.been_country_entry_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3EntryDateChange">
+        <view wx:if="{{travelInfo.data.been_other_country}}">
+          <input placeholder="国家名称" value="{{travelInfo.data.been_other_country_name}}" bindinput="oninputCountry" type="text"/>
+          <picker mode="date" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3EntryDateChange">
             <view class="picker">
-              入境日期: {{travelInfo.been_country_entry_date}}
+              入境日期: {{travelInfo.data.been_other_country_date}}
             </view>
           </picker>
-          <picker mode="date" value="{{travelInfo.been_country_departure_date}}" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3DepartureDateChange">
+          <picker mode="date" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3DepartureDateChange">
             <view class="picker">
-              离境日期: {{travelInfo.been_country_departure_date}}
+              离境日期: {{travelInfo.data.been_other_country_departure_date}}
             </view>
           </picker>
         </view>
@@ -299,22 +299,22 @@ input {
         this.passport.passport_no = e.detail.value
       },
       oninputAuthority(e) {
-        this.passport.authority = e.detail.value
+        this.passport.data.authority = e.detail.value
       },
       oninputIssuePlaceCn(e) {
-        this.passport.issue_place_cn = e.detail.value
+        this.passport.data.issue_place_cn = e.detail.value
       },
       oninputIssuePlace(e) {
-        this.passport.issue_place = e.detail.value
+        this.passport.data.issue_place = e.detail.value
       },
       oninputNamecn(e) {
-        this.passport.name_cn = e.detail.value
+        this.passport.data.name_cn = e.detail.value
       },
       oninputName(e) {
-        this.passport.name = e.detail.value
+        this.passport.data.name = e.detail.value
       },
       oninputNationality(e) {
-        this.passport.nationality = e.detail.value
+        this.passport.data.nationality = e.detail.value
       },
       bindDateChange(e) {
         this.passport.data.issue_date = e.detail.value
@@ -326,12 +326,10 @@ input {
         this.passport.data.birth_date = e.detail.value
       },
       radioChange(e) {
-        console.log('radio发生change事件，携带value值为：', e.detail.value)
         this.passport.data.sex = e.detail.value
       },
       onJobTypeChange(e) {
         this.passport.data.job_type = e.detail.value
-        console.log(this.passport.data.job_type)
       },
       onJobCompChange(e) {
         this.passport.data.job_comp = e.detail.value
@@ -373,31 +371,29 @@ input {
         this.travelInfo.departure_date = e.detail.value
       },
       bindByChange(e) {
-        console.log('value is ' + e.detail.value)
-        this.travelInfo.by = e.detail.value
-
-        this.travelInfo.entry_point = this.allPoints[this.travelInfo.by][0]
+        this.travelInfo.data.by = e.detail.value
+        this.travelInfo.data.entry_point = this.allPoints[this.travelInfo.by][0]
       },
       bindEntryPointChange(e) {
-        this.travelInfo.entry_point = this.allPoints[this.travelInfo.by][e.detail.value]
+        this.travelInfo.data.entry_point = this.allPoints[this.travelInfo.by][e.detail.value]
       },
       checkboxChangeReturnDomicile(e) {
-        this.travelInfo.return_to_domicile = e.detail.value
+        this.travelInfo.data.return_to_domicile = e.detail.value.includes('return_to_domicile')
       },
       checkboxChange(e) {
-        this.travelInfo.been_other_country = e.detail.value.includes('been_other_country')
-        this.travelInfo.ever_been_to = e.detail.value.includes('ever_been_to')
-        this.travelInfo.ever_denied = e.detail.value.includes('ever_denied')
-        this.travelInfo.ever_denied_by_others = e.detail.value.includes('ever_denied_by_others')
+        this.travelInfo.data.been_other_country = e.detail.value.includes('been_other_country')
+        this.travelInfo.data.ever_been_to = e.detail.value.includes('ever_been_to')
+        this.travelInfo.data.ever_denied = e.detail.value.includes('ever_denied')
+        this.travelInfo.data.ever_denied_by_others = e.detail.value.includes('ever_denied_by_others')
       },
       oninputCountry(e) {
-        this.travelInfo.been_country = e.detail.value
+        this.travelInfo.data.been_other_country_name = e.detail.value
       },
       bind3EntryDateChange(e) {
-        this.travelInfo.been_country_entry_date = e.detail.value
+        this.travelInfo.data.been_other_country_date = e.detail.value
       },
       bind3DepartureDateChange(e) {
-        this.travelInfo.been_country_departure_date = e.detail.value
+        this.travelInfo.data.been_other_country_departure_date = e.detail.value
       }
     }
     submit() {
@@ -436,6 +432,8 @@ input {
         promise.then((d) => {
           console.log('toast done')
         })
+
+        // reset passport and travelInfo.
       })
     }
 
@@ -445,12 +443,14 @@ input {
       var travelInfo = wepy.getStorageSync('travelInfo')
       if (travelInfo) {
         this.travelInfo = travelInfo
-      } else {
-        this.travelInfo.return_to_domicile = true
-        this.travelInfo.been_other_country = false
-        this.travelInfo.ever_been_to = false
-        this.travelInfo.ever_denied = false
-        this.travelInfo.ever_denied_by_others = false
+      }
+      if (!this.travelInfo.data) {
+        this.travelInfo.data = {}
+        this.travelInfo.data.return_to_domicile = true
+        this.travelInfo.data.been_other_country = false
+        this.travelInfo.data.ever_been_to = false
+        this.travelInfo.data.ever_denied = false
+        this.travelInfo.data.ever_denied_by_others = false
       }
 
       if (!this.passport.data.region) {

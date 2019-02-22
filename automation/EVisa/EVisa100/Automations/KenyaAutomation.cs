@@ -92,13 +92,13 @@ namespace EVisa100.Automations
                 drpBirthCountry.SelectByText("China");
 
                 var job = driver.FindElement(By.CssSelector(@"#element_11"));
-                job.SendKeys(application.Passport.data["job"] as string);
+                job.SendKeys(application.Passport.JobTitle);
 
                 var fatherName = driver.FindElement(By.CssSelector(@"#element_7"));
-                fatherName.SendKeys(application.Passport.data["father_name"] as string);
+                fatherName.SendKeys(application.Passport.FatherName);
 
                 var motherName = driver.FindElement(By.CssSelector(@"#element_55"));
-                motherName.SendKeys(application.Passport.data["mother_name"] as string);
+                motherName.SendKeys(application.Passport.MotherName);
 
                 driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
 
@@ -113,7 +113,7 @@ namespace EVisa100.Automations
 
                 // #element_15 - physical address in the residence country.
                 var address = driver.FindElement(By.CssSelector(@"#element_15"));
-                address.SendKeys(application.Passport.data["address"] as string);
+                address.SendKeys(application.Passport.Address as string);
 
                 // #element_16 - phone number in residence country
                 var phoneNumber = driver.FindElement(By.CssSelector(@"#element_16"));

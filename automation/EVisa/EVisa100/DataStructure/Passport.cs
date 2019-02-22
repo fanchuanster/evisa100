@@ -15,7 +15,53 @@ namespace EVisa100.DataStructure
         public string openid;
         public string passport_no;
         public Dictionary<string, object> data;
+        
+        public string JobTitle
+        {
+            get
+            {
+                if (data.ContainsKey("job_title"))
+                    return data["job_title"] as string;
 
+                return data["job_title_cn"] as string;
+            }
+        }
+        public string Address
+        {
+            get
+            {
+                if (data.ContainsKey("address"))
+                    return data["address"] as string;
+                
+                return data["address_cn"] as string;
+            }
+        }
+        public string FatherName
+        {
+            get
+            {
+                if (data.ContainsKey("father_name_sur"))
+                {
+                    var sur = data["father_name_sur"] as string;
+                    if (sur != null) return sur + ", " + data["father_name_given"] as string;
+                }
+
+                return data["father_name_sur_cn"] as string + ", " + data["father_name_given_cn"] as string;
+            }
+        }
+        public string MotherName
+        {
+            get
+            {
+                if (data.ContainsKey("mother_name_sur"))
+                {
+                    var sur = data["mother_name_sur"] as string;
+                    return sur + ", " + data["mother_name_given"] as string;
+                }
+
+                return data["mother_name_sur_cn"] as string + ", " + data["mother_name_given_cn"] as string;
+            }
+        }
         public string SurName
         {
             get
@@ -114,21 +160,21 @@ namespace EVisa100.DataStructure
         public Purpose purpose;
         public DateTime entry_date;
         public DateTime departure_date;
-        public Dictionary<string, object> other_info;
+        public Dictionary<string, object> data;
 
         public string By
         {
             get
             {
-                var by = (TransportationBy)(int)other_info["by"];
-                return by.ToString();
+                var by = Convert.ToInt32(data["by"].ToString());
+                return ((TransportationBy)by).ToString();
             }
         }
         public string EntryPoint
         {
             get
             {
-                var npoints = other_info["entry_point"] as Dictionary<string, object>;
+                var npoints = data["entry_point"] as Dictionary<string, object>;
                 return npoints["name"].ToString();
             }
         }

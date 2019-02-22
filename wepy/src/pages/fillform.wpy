@@ -61,17 +61,17 @@ input {
           </view>
           <view wx:if="{{passport.data.job_type == 2}}">
             <text class="fieldLabel">单位名称</text>
-            <input  value="{{passport.data.job_comp}}" bindinput="onJobCompChange" type="text"/>
+            <input  value="{{passport.data.job_comp_cn}}" bindinput="onJobCompChange" type="text"/>
             <text class="fieldLabel">职位名称</text>
-            <input value="{{passport.data.job_title}}" bindinput="onJobTitleChange" type="text"/>
+            <input value="{{passport.data.job_title_cn}}" bindinput="onJobTitleChange" type="text"/>
           </view>
           <view wx:if="{{passport.data.job_type == 0}}">
             <text class="fieldLabel">学校名称</text>
-            <input  value="{{passport.data.job_comp}}" bindinput="onJobCompChange" type="text"/>
+            <input  value="{{passport.data.job_comp_cn}}" bindinput="onJobCompChange" type="text"/>
           </view>
           <view wx:if="{{passport.data.job_type == 4}}">
             <text class="fieldLabel">职业描述</text>
-            <input placeholder="当前职业的具体描述" value="{{passport.data.job_title}}" bindinput="onJobTitleChange" type="text"/>
+            <input placeholder="当前职业的具体描述" value="{{passport.data.job_title_cn}}" bindinput="onJobTitleChange" type="text"/>
           </view>
         </view>
       </i-collapse-item>
@@ -115,19 +115,19 @@ input {
         <view slot="content">
         <view>
           <text class="fieldLabel">父亲的姓(拼音)</text>
-          <input value="{{passport.data.father_name_sur}}" bindinput="oninputFatherSurName" type="text"/>
+          <input value="{{passport.data.father_name_sur_cn}}" bindinput="oninputFatherSurName" type="text"/>
         </view>
         <view>
           <text class="fieldLabel">父亲的名(拼音)</text>
-          <input value="{{passport.data.father_name_given}}" bindinput="oninputFatherGivenName" type="text"/>
+          <input value="{{passport.data.father_name_given_cn}}" bindinput="oninputFatherGivenName" type="text"/>
         </view>
         <view>
           <text class="fieldLabel">母亲的姓(拼音)</text>
-          <input value="{{passport.data.mother_name_sur}}" bindinput="oninputMotherSurName" type="text"/>
+          <input value="{{passport.data.mother_name_sur_cn}}" bindinput="oninputMotherSurName" type="text"/>
         </view>
         <view>
           <text class="fieldLabel">母亲的名(拼音)</text>
-          <input value="{{passport.data.mother_name_given}}" bindinput="oninputMotherGivenName" type="text"/>
+          <input value="{{passport.data.mother_name_given_cn}}" bindinput="oninputMotherGivenName" type="text"/>
         </view>
         <view>
           <text class="fieldLabel">常住城市</text>
@@ -137,7 +137,7 @@ input {
         </view>
         <view>
           <text class="fieldLabel">居住地址</text>
-          <input placeholder="" value="{{passport.data.address}}" bindinput="oninputAddress" type="text"/>
+          <input placeholder="" value="{{passport.data.address_cn}}" bindinput="oninputAddress" type="text"/>
         </view>
         <view>
           <text class="fieldLabel">电话号码</text>
@@ -332,28 +332,29 @@ input {
         this.passport.data.job_type = e.detail.value
       },
       onJobCompChange(e) {
-        this.passport.data.job_comp = e.detail.value
+        this.passport.data.job_comp_cn = e.detail.value
       },
       onJobTitleChange(e) {
-        this.passport.data.job_title = e.detail.value
+        this.passport.data.job_title_cn = e.detail.value
+        console.log(this.passport.data.job_title_cn)
       },
       oninputFatherSurName(e) {
-        this.passport.data.father_name_sur = e.detail.value
+        this.passport.data.father_name_sur_cn = e.detail.value
       },
       oninputFatherGivenName(e) {
-        this.passport.data.father_name_given = e.detail.value
+        this.passport.data.father_name_given_cn = e.detail.value
       },
       oninputMotherSurName(e) {
-        this.passport.data.mother_name_sur = e.detail.value
+        this.passport.data.mother_name_sur_cn = e.detail.value
       },
       oninputMotherGivenName(e) {
-        this.passport.data.mother_name_given = e.detail.value
+        this.passport.data.mother_name_given_cn = e.detail.value
       },
       bindRegionChange(e) {
         this.passport.data.region = e.detail.value
       },
       oninputAddress(e) {
-        this.passport.data.address = e.detail.value
+        this.passport.data.address_cn = e.detail.value
       },
       oninputPhone(e) {
         this.passport.data.phone = e.detail.value
@@ -450,10 +451,6 @@ input {
         this.travelInfo.data.ever_been_to = false
         this.travelInfo.data.ever_denied = false
         this.travelInfo.data.ever_denied_by_others = false
-      }
-
-      if (!this.passport.data.region) {
-        this.passport.data.region = []
       }
 
       this.travelInfo.to_country = 'ke'

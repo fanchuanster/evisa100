@@ -113,7 +113,7 @@ namespace EVisa100.Automations
 
                 // #element_15 - physical address in the residence country.
                 var address = driver.FindElement(By.CssSelector(@"#element_15"));
-                address.SendKeys(application.Passport.Address as string);
+                address.SendKeys(application.Passport.Address);
 
                 // #element_16 - phone number in residence country
                 var phoneNumber = driver.FindElement(By.CssSelector(@"#element_16"));
@@ -194,16 +194,17 @@ namespace EVisa100.Automations
                 driver.FindElement(By.CssSelector(@"#element_33")).SendKeys("None");
                 // will return yes or no - #element_35
                 var willReturn = new SelectElement(driver.FindElement(By.CssSelector(@"#element_35")));
-                willReturn.SelectByText("Yes");
+                var willRetur = application.data["return_to_domicile"] as bool?;
+                willReturn.SelectByText(willRetur == true ? "Yes" : "No");
                 // ever denied by Kenya
                 var deniedKy = new SelectElement(driver.FindElement(By.CssSelector(@"#element_36")));
-                deniedKy.SelectByText("No");
+                deniedKy.SelectByText((application.data["ever_denied"] as bool ?) == false ? "No" : "Yes");
                 // ever denied by other - #element_40
                 var deniedOther = new SelectElement(driver.FindElement(By.CssSelector(@"#element_40")));
-                deniedOther.SelectByText("No");
+                deniedOther.SelectByText((application.data["ever_denied_by_others"] as bool?) == false ? "No" : "Yes");
                 // convicted - #element_41
                 var convicted = new SelectElement(driver.FindElement(By.CssSelector(@"#element_41")));
-                convicted.SelectByText("No");
+                convicted.SelectByText((application.data["ever_convicted"] as bool?) == false ? "No" : "Yes");
 
                 // #submit_primary continue button
                 driver.FindElement(By.CssSelector(@"#submit_primary")).Click();

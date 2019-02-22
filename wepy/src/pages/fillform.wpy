@@ -220,6 +220,10 @@ input {
               <checkbox value='ever_denied_by_others' checked="{{travelInfo.data.ever_denied_by_others}}" />
               之前有被其他国家拒绝入境的经历吗?
             </label>
+            <label>
+              <checkbox value='ever_convicted' checked="{{travelInfo.data.ever_convicted}}" />
+              之前有被其他国家拒绝入境的经历吗?
+            </label>
           </checkbox-group>
         </view>
         <view wx:if="{{travelInfo.data.been_other_country}}">
@@ -386,6 +390,7 @@ input {
         this.travelInfo.data.ever_been_to = e.detail.value.includes('ever_been_to')
         this.travelInfo.data.ever_denied = e.detail.value.includes('ever_denied')
         this.travelInfo.data.ever_denied_by_others = e.detail.value.includes('ever_denied_by_others')
+        this.travelInfo.data.ever_convicted = e.detail.value.includes('ever_convicted')        
       },
       oninputCountry(e) {
         this.travelInfo.data.been_other_country_name = e.detail.value
@@ -440,6 +445,10 @@ input {
     onLoad(option) {
       console.log('onLoad')
       this.passport = wepy.getStorageSync('passport')
+      if (!this.passport.data.region) {
+        this.passport.data.region = []
+      }
+
       var travelInfo = wepy.getStorageSync('travelInfo')
       if (travelInfo) {
         this.travelInfo = travelInfo
@@ -451,6 +460,7 @@ input {
         this.travelInfo.data.ever_been_to = false
         this.travelInfo.data.ever_denied = false
         this.travelInfo.data.ever_denied_by_others = false
+        this.travelInfo.data.ever_convicted = false
       }
 
       this.travelInfo.to_country = 'ke'

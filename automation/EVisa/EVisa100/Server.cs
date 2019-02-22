@@ -56,7 +56,7 @@ namespace EVisa100
                 var e = application.EntryPoint;
                 application.Passport = GetPassport(application.passport_id);
 
-                return application;                
+                return application;
             }
             catch (WebException ex)
             {

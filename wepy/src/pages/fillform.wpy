@@ -390,7 +390,7 @@ input {
         this.travelInfo.data.ever_been_to = e.detail.value.includes('ever_been_to')
         this.travelInfo.data.ever_denied = e.detail.value.includes('ever_denied')
         this.travelInfo.data.ever_denied_by_others = e.detail.value.includes('ever_denied_by_others')
-        this.travelInfo.data.ever_convicted = e.detail.value.includes('ever_convicted')        
+        this.travelInfo.data.ever_convicted = e.detail.value.includes('ever_convicted')
       },
       oninputCountry(e) {
         this.travelInfo.data.been_other_country_name = e.detail.value

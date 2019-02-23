@@ -1,0 +1,28 @@
+<style lang="less">
+</style>
+<template>
+  <view class="container">
+    <productThumb title="泰国签证-电子签[全国]" country="tl" daysTakes="1-5" price="¥369" :times="times"></productThumb>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import ProductThumb from '@/components/product-thumb' // alias example
+
+  export default class TL extends wepy.page {
+    config = {
+      navigationBarTitleText: '泰国签证'
+    }
+    components = {
+      productThumb: ProductThumb
+    }
+    mixins = []
+    data = {
+      times: [{ key: '有效期限', value: '3个月' },
+      { key: '最长停留', value: '30天' },
+      { key: '入境次数', value: '1次' }]
+    }
+    methods = {
+    }
+  }
+</script>

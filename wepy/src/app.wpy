@@ -59,7 +59,8 @@ export default class extends wepy.app {
       'pages/index',
       'pages/fillform',
       'pages/pictures',
-      'pages/africa/ke'
+      'pages/africa/ke',
+      'pages/asia/tl'
     ],
     window: {
       backgroundTextStyle: 'light',

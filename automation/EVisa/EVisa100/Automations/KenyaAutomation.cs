@@ -204,22 +204,34 @@ namespace EVisa100.Automations
                 deniedOther.SelectByText((application.data["ever_denied_by_others"] as bool?) == false ? "No" : "Yes");
                 // convicted - #element_41
                 var convicted = new SelectElement(driver.FindElement(By.CssSelector(@"#element_41")));
-                convicted.SelectByText((application.data["ever_convicted"] as bool?) == false ? "No" : "Yes");
+                convicted.SelectByText((application.data.ContainsKey("ever_convicted") && (application.data["ever_convicted"] as bool?) == true) ? "Yes" : "No");
 
                 // #submit_primary continue button
                 driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
 
                 // passportUploadBtn - #element_43
                 var passportUploadBtn = driver.FindElement(By.CssSelector(@"#element_43"));
-                passportUploadBtn.SendKeys(@"C:\Users\donwen.CORPDOM\Pictures\Saved Pictures\IMG_20181204_195050.jpg");
+
+                var passportFile = Constants.OssHost + (application.Passport.data["passport_file"] as string);
+                var photoFile = Constants.OssHost + (application.Passport.data["photo_file"] as string);
+                var idFrontFile = Constants.OssHost + (application.Passport.data["id_front_file"] as string);
+                var temp = Path.GetTempPath();
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(passportFile, temp + "passport.jpg");
+                    client.DownloadFile(photoFile, temp + "photo.jpg");
+                    client.DownloadFile(idFrontFile, temp + "idfront.jpg");
+                }
+
+                passportUploadBtn.SendKeys(temp + "passport.jpg");
 
                 // additional - #element_42
                 var additionalfile = driver.FindElement(By.CssSelector(@"#element_42"));
-                additionalfile.SendKeys(@"C:\Users\donwen.CORPDOM\Pictures\Saved Pictures\IMG_20181204_195050.jpg");
+                additionalfile.SendKeys(temp + "idfront.jpg");
 
                 // photo - #element_44
                 var photofile = driver.FindElement(By.CssSelector(@"#element_44"));
-                photofile.SendKeys(@"C:\Users\donwen.CORPDOM\Pictures\Saved Pictures\IMG_20181204_195050.jpg");
+                photofile.SendKeys(temp + "photo.jpg");
 
                 // agree truth - #element_50_1
                 driver.FindElement(By.CssSelector(@"#element_50_1")).Click();
@@ -227,7 +239,6 @@ namespace EVisa100.Automations
                 // submit button - #submit_primary
                 driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
             }
-
         }
 
         bool IAutomation.Run(Application application)

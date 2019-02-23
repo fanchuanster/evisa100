@@ -61,6 +61,7 @@
     <Compile Include="Automations\IAutomation.cs" />
     <Compile Include="Automations\KenyaAutomation.cs" />
     <Compile Include="CitiesManager.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="DataStructure\Enums.cs" />
     <Compile Include="DataStructure\Passport.cs" />
     <Compile Include="Program.cs" />

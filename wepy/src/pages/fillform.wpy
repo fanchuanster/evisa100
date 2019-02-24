@@ -243,8 +243,8 @@ input {
       </i-collapse-item>
 
     </i-collapse>
-    <view class="primary-button" bindtap='submit'>
-      <button>确认并提交</button>
+    <view>
+      <button type="primary" bindtap="submit">确认并提交</button>
     </view>
   </view>
 </template>

@@ -35,14 +35,13 @@
       <text wx:if="{{idFrontUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
-    <navigator class="primary-button"
-        url="./fillform" open-type="redirectTo">下一步</navigator>
-    <toast />
+    <view>
+      <button type="primary" disabled="{{(!this.passportUploaded || !this.photoUploaded || !this.idFrontUploaded)}}" bindtap="next">下一步</button>
+    </view>
 </view>
 </template>
 <script>
   import wepy from 'wepy'
-  import Toast from 'wepy-com-toast'
   import Util from '../lib/util.js'
   import UploadFile from '../lib/uploadFile.js'
   
@@ -55,7 +54,6 @@
       }
     }
     components = {
-      toast: Toast
     }
     data = {
       passport: null,
@@ -63,7 +61,7 @@
     }
     computed = {
       passportUploaded() {
-        return this.passport != null
+        return !!this.passport
       },
       photoUploaded() {
         return this.passportUploaded && this.passport.data.photo_file != null
@@ -74,6 +72,12 @@
     }
 
     methods = {
+    }
+
+    next() {
+      wepy.navigateTo({
+        url: './fillform'
+      })
     }
 
     async uploadPassport() {
@@ -114,12 +118,9 @@
                 wepy.hideLoading()
                 console.log(res)
                 if (!res.data.success) {
-                  let promise = that.$invoke('toast', 'show', {
-                    title: '解析失败,请重传图片',
-                    img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
-                  })
-                  promise.then((d) => {
-                    console.log('toast done')
+                  wepy.showToast({
+                    title: '解析失败, 请重传图片',
+                    duration: 2000
                   })
                   return
                 }
@@ -257,7 +258,6 @@
       let that = this
       this.$parent.getOpenid().then(res => {
         that.openid = res
-        console.log(that.openid)
       })
       this.passport = wepy.getStorageSync('passport')
     }

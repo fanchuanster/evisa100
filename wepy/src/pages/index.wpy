@@ -11,16 +11,6 @@
 </style>
 <template>
   <view class="container">
-    <!-- <panel>
-      <view class="title" slot="title">护照</view>
-      <block wx:for-items="{{passports}}" wx:for-index="index" wx:for-item="item" wx:key="id">
-        <view @tap="tap" id="{{item.id}}" class="mylist">
-          <text>{{item.data.name}}</text>: {{item.passport_no}}
-        </view>
-      </block>
-      <button @tap="newPassport" size="mini">  +  </button>
-    </panel> -->
-
     <repeat for="{{continents}}" item="item" key="item.continent.name_short">
       <panel>
         <view class="title" slot="title">{{item.continent.name_cn}}</view>
@@ -136,20 +126,10 @@
       }
     }
 
-    onLoad() {
-      console.log('onload of index')
-      console.log(this.continents)
-      // let self = this
-      // this.$parent.getOpenid().then(function(openid) {
-      //   wepy.request({url: 'https://php.evisa100.com/get_passports.php?openid=' + openid, method: 'GET'}).then(function(res) {
-      //     self.passports = res.data
-      //     console.log(self.passports[0])
-      //     self.passports.forEach(element => {
-      //       element.data = JSON.parse(element.data)
-      //     })
-      //     self.$apply()
-      //   })
-      // })
+    onLoad(e) {
+      if (e.submitted) {
+        wepy.clearStorageSync()
+      }
     }
   }
 </script>

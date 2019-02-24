@@ -39,7 +39,7 @@ input {
           </view>
           <view>
             <text class="fieldLabel">出生日期</text>
-            <picker mode="date" value="{{passport.data.birth_date}}" start="1940-01-01" end="2018-09-01" @change="bindBirthChange">
+            <picker mode="date" value="{{passport.data.birth_date}}" end="{{today}}" @change="bindBirthChange">
               <view class="picker">{{passport.data.birth_date}}</view>
             </picker>
           </view>
@@ -131,7 +131,7 @@ input {
         </view>
         <view>
           <text class="fieldLabel">常住城市</text>
-          <picker mode="region" value="{{passport.data.region}}" @change="bindRegionChange" custom-item="全部">
+          <picker mode="region" @change="bindRegionChange" custom-item="全部">
             <view class="picker">{{passport.data.region[0]}} {{passport.data.region[1]}} {{passport.data.region[2]}}</view>
           </picker>
         </view>
@@ -161,7 +161,7 @@ input {
         </view>
         <view>
           <text class="fieldLabel">入境日期</text>
-          <picker mode="date" value="{{travelInfo.entry_date}}"  @change="bindEntryDateChange">
+          <picker mode="date" value="{{travelInfo.entry_date}}"  @change="bindEntryDateChange" start="{{today}}">
             <view class="picker">
               {{travelInfo.entry_date}}
             </view>
@@ -169,7 +169,7 @@ input {
         </view>
         <view>
           <text class="fieldLabel">离境日期</text>
-          <picker mode="date" value="{{travelInfo.departure_date}}" @change="bindDepartureDateChange">
+          <picker mode="date" value="{{travelInfo.departure_date}}" @change="bindDepartureDateChange" start="{{departureDateStart}}">
             <view class="picker">
               {{travelInfo.departure_date}}
             </view>
@@ -177,7 +177,7 @@ input {
         </view>
         <view>
           <text class="fieldLabel">旅行方式</text>
-          <picker bindchange="bindByChange" value="{{travelInfo.data.by}}" range="{{by}}">
+          <picker bindchange="bindByChange" range="{{by}}">
           <view class="picker">
             {{by[travelInfo.data.by]}}
           </view>
@@ -214,15 +214,15 @@ input {
             </label>
             <label>
               <checkbox value='ever_denied' checked="{{travelInfo.data.ever_denied}}" />
-              之前有被此行的目的国家拒绝入境的经历吗?
+              有被此行的目的国家拒绝入境的经历吗?
             </label>
             <label>
               <checkbox value='ever_denied_by_others' checked="{{travelInfo.data.ever_denied_by_others}}" />
-              之前有被其他国家拒绝入境的经历吗?
+              有被其他国家拒绝入境的经历吗?
             </label>
             <label>
               <checkbox value='ever_convicted' checked="{{travelInfo.data.ever_convicted}}" />
-              之前有被其他国家拒绝入境的经历吗?
+              有犯罪记录吗?
             </label>
           </checkbox-group>
         </view>
@@ -243,15 +243,13 @@ input {
       </i-collapse-item>
 
     </i-collapse>
-    <view class="nav" bindtap='submit'>
+    <view class="primary-button" bindtap='submit'>
       <button>确认并提交</button>
     </view>
-    <toast />
   </view>
 </template>
 <script>
   import wepy from 'wepy'
-  import Toast from 'wepy-com-toast'
 
   export default class FillForm extends wepy.page {
     config = {
@@ -265,7 +263,6 @@ input {
       }
     }
     components = {
-      toast: Toast
     }
     mixins = []
     data = {
@@ -277,11 +274,14 @@ input {
       jobs: ['学生', '无业', '在职', '退休', '其他']
     }
     computed = {
-      now () {
-        return +new Date()
+      today() {
+        return new Date().toJSON().slice(0, 10).replace(/-/g, '/')
       },
-      today () {
-        return new Date()
+      departureDateStart() {
+        if (this.travelInfo.entry_date) {
+          return this.travelInfo.entry_date
+        }
+        return this.today
       },
       fourMonthsLater() {
         let n = new Date()
@@ -340,7 +340,6 @@ input {
       },
       onJobTitleChange(e) {
         this.passport.data.job_title_cn = e.detail.value
-        console.log(this.passport.data.job_title_cn)
       },
       oninputFatherSurName(e) {
         this.passport.data.father_name_sur_cn = e.detail.value
@@ -355,6 +354,7 @@ input {
         this.passport.data.mother_name_given_cn = e.detail.value
       },
       bindRegionChange(e) {
+        console.log(e.detail.value)
         this.passport.data.region = e.detail.value
       },
       oninputAddress(e) {
@@ -377,10 +377,10 @@ input {
       },
       bindByChange(e) {
         this.travelInfo.data.by = e.detail.value
-        this.travelInfo.data.entry_point = this.allPoints[this.travelInfo.by][0]
+        this.travelInfo.data.entry_point = this.allPoints[this.travelInfo.data.by][0]
       },
       bindEntryPointChange(e) {
-        this.travelInfo.data.entry_point = this.allPoints[this.travelInfo.by][e.detail.value]
+        this.travelInfo.data.entry_point = this.allPoints[this.travelInfo.data.by][e.detail.value]
       },
       checkboxChangeReturnDomicile(e) {
         this.travelInfo.data.return_to_domicile = e.detail.value.includes('return_to_domicile')
@@ -418,7 +418,7 @@ input {
           this.passport.id = res.data.id
         }
         this.travelInfo.passport_id = this.passport.id
-        console.log('travelInfo to save:')
+        console.log('saving travelInfo:')
         console.log(this.travelInfo)
         wepy.request({
           url: 'https://php.evisa100.com/submit_application.php',
@@ -429,26 +429,18 @@ input {
           }
         }).then(res => {
           console.log(res)
-          let promise = this.$invoke('toast', 'show', {
-            title: '提交成功',
-            img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
+          wepy.showToast({
+            title: '提交成功'
           })
-          promise.then((d) => {
-            console.log('toast done')
+          wepy.navigateTo({
+            url: './index?submitted=true'
           })
-
-          // reset passport and travelInfo.
         })
       })
     }
 
     onLoad(option) {
-      console.log('onLoad')
       this.passport = wepy.getStorageSync('passport')
-      if (!this.passport.data.region) {
-        this.passport.data.region = []
-      }
-
       var travelInfo = wepy.getStorageSync('travelInfo')
       if (travelInfo) {
         this.travelInfo = travelInfo
@@ -462,8 +454,8 @@ input {
         this.travelInfo.data.ever_denied_by_others = false
         this.travelInfo.data.ever_convicted = false
       }
-
       this.travelInfo.to_country = 'ke'
+
       wepy.request({
         url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,
         method: 'GET',
@@ -480,12 +472,8 @@ input {
       })
     }
     onUnload() {
-      console.log('onUnload')
       wepy.setStorageSync('passport', this.passport)
       wepy.setStorageSync('travelInfo', this.travelInfo)
-    }
-    onHide() {
-      console.log('onHide')
     }
   }
 </script>

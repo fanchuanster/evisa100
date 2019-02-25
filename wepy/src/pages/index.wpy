@@ -77,22 +77,13 @@
     computed = {
     }
 
+    tapCountryName (e) {
+      wepy.navigateTo({
+        url: './' + e.target.id
+      })
+    }
+
     methods = {
-      tapCountryName (e) {
-        console.log(e)
-        wepy.navigateTo({
-          url: './' + e.target.id
-        })
-      },
-      tap (e) {
-        let passport = this.passports.find(function(element) {
-          return element.id === e.target.id
-        })
-        wepy.setStorageSync('passport', passport)
-        wepy.navigateTo({
-          url: './passport'
-        })
-      },
       communicate () {
         console.log(this.$name + ' tap')
         this.$invoke('counter2', 'minus', 45, 6)
@@ -114,13 +105,6 @@
         }
       },
       counterEmit (...args) {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-      }
-    }
-
-    events = {
-      'index-emit': (...args) => {
         let $event = args[args.length - 1]
         console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
       }

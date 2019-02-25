@@ -60,7 +60,9 @@ export default class extends wepy.app {
       'pages/fillform',
       'pages/pictures',
       'pages/africa/ke',
-      'pages/asia/tl'
+      'pages/asia/tl',
+      'pages/uploadPassport',
+      'pages/uploadPassportCamera'
     ],
     window: {
       backgroundTextStyle: 'light',

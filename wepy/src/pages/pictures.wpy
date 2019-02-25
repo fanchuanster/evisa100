@@ -15,10 +15,10 @@
 </style>
 <template>
   <view class="container">
-    <Steps current="0" status="error">
-      <Step title="上传资料" content=""></Step>
-      <Step title="填写表格" content=""></Step>
-      <Step title="确认提交" content=""></Step>
+    <Steps current="0">
+      <Step title="资料上传" content=""></Step>
+      <Step title="申请表填写" content=""></Step>
+      <Step title="确认订单" content=""></Step>
     </Steps>
     <view class="uploader" @tap="uploadPassport">
       <text>护照个人信息页</text>
@@ -42,7 +42,6 @@
 </template>
 <script>
   import wepy from 'wepy'
-  import Util from '../lib/util.js'
   import UploadFile from '../lib/uploadFile.js'
   
   export default class Pictures extends wepy.page {
@@ -79,87 +78,9 @@
         url: './fillform'
       })
     }
-
-    async uploadPassport() {
-      wepy.showLoading({
-        title: '加载中',
-        mask: true
-      })
-      let that = this
-      wx.chooseImage({
-        count: 1,
-        sizeType: ['original', 'compressed'],
-        sourceType: ['album', 'camera'],
-        complete(res) {
-          wepy.hideLoading()
-        },
-        success(res) {
-          const imagePath = res.tempFilePaths[0]
-          wx.getFileSystemManager().readFile({
-            filePath: imagePath,
-            encoding: 'base64',
-            success: function(res) {
-              wepy.showLoading({
-                title: '解析中',
-                mask: true
-              })
-              wepy.request({
-                url: 'https://ocrdiy.market.alicloudapi.com/api/predict/ocr_sdt',
-                method: 'POST',
-                data: {
-                  image: res.data,
-                  configure: { template_id: 'e132cad9-55e9-417f-9111-c82d3105ed501545292863' }
-                },
-                header: {
-                  'content-type': 'application/json; charset=UTF-8',
-                  Authorization: 'APPCODE 391037852026434fa5c6e3780ef61220'
-                }
-              }).then(function(res) {
-                wepy.hideLoading()
-                console.log(res)
-                if (!res.data.success) {
-                  wepy.showToast({
-                    title: '解析失败, 请重传图片',
-                    duration: 2000
-                  })
-                  return
-                }
-
-                var passport = {
-                  openid: that.openid,
-                  passport_no: res.data.items.passport_no
-                }
-                console.log(passport)
-                delete res.data.items.passport_no
-                passport.data = res.data.items
-                passport.data.birth_date = Util.dateFromString(passport.data.birth_date)
-                passport.data.issue_date = Util.dateFromString(passport.data.issue_date)
-                passport.data.expiry_date = Util.dateFromString(passport.data.expiry_date)
-                passport.data.sex = passport.data.sex.replace(/\W/g, '')
-                Util.splitCnEnName(passport.data, 'birth_place')
-                Util.splitCnEnName(passport.data, 'issue_place')
-                Util.splitCnEnName(passport.data, 'nationality')
-                passport.data.passport_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
-
-                wepy.showLoading({
-                  title: '上传中',
-                  mask: true
-                })
-                UploadFile(imagePath, passport.data.passport_file,
-                  function(res) {
-                    wepy.hideLoading()
-                    that.passport = passport
-                    that.$apply()
-                  },
-                  function(err) {
-                    wepy.hideLoading()
-                    console.log(err)
-                  }
-                )
-              })
-            }
-          })
-        }
+    uploadPassport() {
+      wepy.navigateTo({
+        url: './uploadPassport'
       })
     }
     async uploadPhoto() {

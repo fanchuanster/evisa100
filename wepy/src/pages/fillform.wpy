@@ -11,9 +11,9 @@ input {
 <template>
   <view class="container">
     <Steps current="1">
-      <Step title="上传资料" content=""></Step>
-      <Step title="填写表格" content=""></Step>
-      <Step title="确认提交" content=""></Step>
+      <Step title="资料上传" content=""></Step>
+      <Step title="申请表填写" content=""></Step>
+      <Step title="确认订单" content=""></Step>
     </Steps>
     <i-collapse simple style="width:100%;margin-top:30rpx">
       <i-collapse-item title="基本信息">

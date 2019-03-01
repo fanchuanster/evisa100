@@ -63,6 +63,8 @@ export default class extends wepy.app {
       'pages/asia/tl',
       'pages/uploadPassport',
       'pages/uploadPassportCamera'
+      // 'pages/uploadPhoto',
+      // 'pages/uploadPhotoCamera'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -84,7 +86,6 @@ export default class extends wepy.app {
   }
 
   onLaunch() {
-    this.testAsync()
   }
 
   async testAsync () {

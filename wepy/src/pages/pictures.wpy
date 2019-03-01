@@ -56,7 +56,7 @@
     }
     data = {
       passport: null,
-      openid: null
+      openid: ''
     }
     computed = {
       passportUploaded() {
@@ -80,7 +80,7 @@
     }
     uploadPassport() {
       wepy.navigateTo({
-        url: './uploadPassport'
+        url: './uploadPassport?'
       })
     }
     async uploadPhoto() {
@@ -105,8 +105,7 @@
                 title: '上传中',
                 mask: true
               })
-              let openid = that.openid
-              var photoFileName = 'photo/' + openid + '_' + (that.passport ? that.passport.passport_no : Date.now()) + '_photo.' + imagePath.split('.').pop()
+              var photoFileName = 'photo/' + (that.passport ? that.passport.passport_no : Date.now()) + '_photo.' + imagePath.split('.').pop()
               UploadFile(imagePath, photoFileName,
                 function(res) {
                   wepy.hideLoading()
@@ -127,7 +126,7 @@
       })
     }
 
-    async uploadIDFront() {
+    uploadIDFront() {
       wepy.showLoading({
         title: '加载中',
         mask: true
@@ -147,8 +146,7 @@
                 title: '上传中',
                 mask: true
               })
-              let openid = that.openid
-              var photoFileName = 'photo/' + openid + '_' + (that.passport ? that.passport.passport_no : Date.now()) + '_id_front.' + imagePath.split('.').pop()
+              var photoFileName = 'photo/' + (that.passport ? that.passport.passport_no : Date.now()) + '_id_front.' + imagePath.split('.').pop()
               UploadFile(imagePath, photoFileName,
                 function(res) {
                   wepy.hideLoading()
@@ -164,22 +162,16 @@
           })
         },
         complete: function(res) {
-          console.log('call hideLoading in complete')
           wepy.hideLoading()
         }
       })
     }
 
     onUnload() {
-      console.log('onUnload - setStorageSync(passport)')
       wepy.setStorageSync('passport', this.passport)
     }
 
-    onLoad() {
-      let that = this
-      this.$parent.getOpenid().then(res => {
-        that.openid = res
-      })
+    async onLoad() {
       this.passport = wepy.getStorageSync('passport')
     }
   }

@@ -38,7 +38,7 @@ page{
 </style>
 <template>
   <view class="container">
-    <camera wx:if="{{!photo}}" class="view"
+    <camera wx:if="{{!passport_file}}" class="view"
       device-position="back"
       flash="auto"
       binderror="error">
@@ -47,12 +47,12 @@ page{
           <image mode="aspectFit" class="head_photo" src="../resources/images/head.png"></image>
         </cover-view>
         <cover-view class="bottom_toolbar" @tap="takePhoto">
-          <cover-image class="imgbtn" src="../resources/images/camera-5-128.ico" />
+          <cover-image class="imgbtn" src="../resources/images/camera.ico" />
         </cover-view>
       </cover-view>
     </camera>
     <view wx:else class="view">
-      <image class="view" src="{{photo}}"/>
+      <image class="view" src="{{passport_file}}"/>
       <view class="bottom_toolbar">
         <view class="play" @tap="uncheck">
           <image class="imgbtn" src="../resources/images/uncheck.png" />
@@ -74,25 +74,25 @@ page{
     components = {
     }
     data = {
-      photo: null
+      passport_file: null
     }
 
     methods = {
     }
     check() {
       wepy.redirectTo({
-        url: './pictures?passport_file=' + this.photo
+        url: './uploadPassport?passport_file=' + this.passport_file
       })
     }
     uncheck() {
-      this.photo = null
+      this.passport_file = null
     }
     takePhoto() {
       const ctx = wx.createCameraContext()
       ctx.takePhoto({
         quality: 'high',
         success: (res) => {
-          this.photo = res.tempImagePath
+          this.passport_file = res.tempImagePath
           this.$apply()
         }
       })

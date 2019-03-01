@@ -1,8 +1,16 @@
 <style lang="less">
+.toolbar_top {
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+}
 </style>
 <template>
   <view class="container">
-    <image mode="aspectFit" style="height:200rpx" @tap="takePhoto" src="../resources/images/camera-5-128.ico"/>
+    <view class="toolbar_top">
+      <image mode="aspectFit" style="height:200rpx" @tap="addPhoto" src="../resources/images/add_from_album.png"/>
+      <image mode="aspectFit" style="height:200rpx" @tap="takePhoto" src="../resources/images/camera.ico"/>
+    </view>
     <panel>
       <view class="title" slot="title">资料要求</view>
       <view class="container">
@@ -39,7 +47,7 @@
         url: './uploadPassportCamera'
       })
     }
-    async uploadPassport() {
+    addPhoto() {
       wepy.showLoading({
         title: '加载中',
         mask: true
@@ -48,80 +56,99 @@
       wx.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'],
-        sourceType: ['album', 'camera'],
+        sourceType: ['album'],
         complete(res) {
           wepy.hideLoading()
         },
         success(res) {
           const imagePath = res.tempFilePaths[0]
-          wx.getFileSystemManager().readFile({
-            filePath: imagePath,
-            encoding: 'base64',
-            success: function(res) {
-              wepy.showLoading({
-                title: '解析中',
-                mask: true
-              })
-              wepy.request({
-                url: 'https://ocrdiy.market.alicloudapi.com/api/predict/ocr_sdt',
-                method: 'POST',
-                data: {
-                  image: res.data,
-                  configure: { template_id: 'e132cad9-55e9-417f-9111-c82d3105ed501545292863' }
-                },
-                header: {
-                  'content-type': 'application/json; charset=UTF-8',
-                  Authorization: 'APPCODE 391037852026434fa5c6e3780ef61220'
-                }
-              }).then(function(res) {
-                wepy.hideLoading()
-                console.log(res)
-                if (!res.data.success) {
-                  wepy.showToast({
-                    title: '解析失败, 请重传图片',
-                    duration: 2000
-                  })
-                  return
-                }
-
-                var passport = {
-                  openid: that.openid,
-                  passport_no: res.data.items.passport_no
-                }
-                console.log(passport)
-                delete res.data.items.passport_no
-                passport.data = res.data.items
-                passport.data.birth_date = Util.dateFromString(passport.data.birth_date)
-                passport.data.issue_date = Util.dateFromString(passport.data.issue_date)
-                passport.data.expiry_date = Util.dateFromString(passport.data.expiry_date)
-                passport.data.sex = passport.data.sex.replace(/\W/g, '')
-                Util.splitCnEnName(passport.data, 'birth_place')
-                Util.splitCnEnName(passport.data, 'issue_place')
-                Util.splitCnEnName(passport.data, 'nationality')
-                passport.data.passport_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
-
-                wepy.showLoading({
-                  title: '上传中',
-                  mask: true
-                })
-                UploadFile(imagePath, passport.data.passport_file,
-                  function(res) {
-                    wepy.hideLoading()
-                    that.passport = passport
-                    that.$apply()
-                  },
-                  function(err) {
-                    wepy.hideLoading()
-                    console.log(err)
-                  }
-                )
-              })
+          that.uploadPassport(imagePath, function(res) {
+            if (res) {
+              wepy.setStorageSync('passport', that.passport)
+              wepy.navigateBack()
             }
           })
         }
       })
     }
-    onLoad() {
+    async uploadPassport(imagePath, complete) {
+      let that = this
+      wx.getFileSystemManager().readFile({
+        filePath: imagePath,
+        encoding: 'base64',
+        success: function(res) {
+          wepy.showLoading({
+            title: '解析中',
+            mask: true
+          })
+          wepy.request({
+            url: 'https://ocrdiy.market.alicloudapi.com/api/predict/ocr_sdt',
+            method: 'POST',
+            data: {
+              image: res.data,
+              configure: { template_id: 'e132cad9-55e9-417f-9111-c82d3105ed501545292863' }
+            },
+            header: {
+              'content-type': 'application/json; charset=UTF-8',
+              Authorization: 'APPCODE 391037852026434fa5c6e3780ef61220'
+            }
+          }).then(function(res) {
+            wepy.hideLoading()
+            console.log(res)
+            if (!res.data.success) {
+              wepy.showToast({
+                title: '解析失败, 请重选图片',
+                duration: 2000
+              })
+              complete(0)
+              return
+            }
+            var passport = {
+              passport_no: res.data.items.passport_no
+            }
+            console.log(passport)
+            delete res.data.items.passport_no
+            passport.data = res.data.items
+            passport.data.birth_date = Util.dateFromString(passport.data.birth_date)
+            passport.data.issue_date = Util.dateFromString(passport.data.issue_date)
+            passport.data.expiry_date = Util.dateFromString(passport.data.expiry_date)
+            passport.data.sex = passport.data.sex.replace(/\W/g, '')
+            Util.splitCnEnName(passport.data, 'birth_place')
+            Util.splitCnEnName(passport.data, 'issue_place')
+            Util.splitCnEnName(passport.data, 'nationality')
+            passport.data.passport_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
+
+            wepy.showLoading({
+              title: '上传中',
+              mask: true
+            })
+            UploadFile(imagePath, passport.data.passport_file,
+              function(res) {
+                wepy.hideLoading()
+                that.passport = passport
+                that.$apply()
+                complete(1)
+              },
+              function(err) {
+                wepy.hideLoading()
+                console.log(err)
+                complete(0)
+              }
+            )
+          })
+        }
+      })
+    }
+    onLoad(res) {
+      if (res.passport_file) {
+        console.log('passportFile:' + res.passport_file)
+        this.uploadPassport(res.passport_file, function(res) {
+          if (res) {
+            wepy.setStorageSync('passport', this.passport)
+            wepy.navigateBack()
+          }
+        })
+      }
     }
   }
 </script>

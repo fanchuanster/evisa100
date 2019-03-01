@@ -28,6 +28,13 @@ page{
   display: flex;
   flex-direction: row;
 }
+.head_photo {
+  position: absolute;
+  top: -100rpx;
+  left: 220rpx;
+  width: 320rpx;
+  transform: rotate(90deg);
+}
 </style>
 <template>
   <view class="container">
@@ -35,8 +42,11 @@ page{
       device-position="back"
       flash="auto"
       binderror="error">
-      <cover-view class="bottom_toolbar">
-        <cover-view class="play" @tap="takePhoto">
+      <cover-view class="view">
+        <cover-view>
+          <image mode="aspectFit" class="head_photo" src="../resources/images/head.png"></image>
+        </cover-view>
+        <cover-view class="bottom_toolbar" @tap="takePhoto">
           <cover-image class="imgbtn" src="../resources/images/camera-5-128.ico" />
         </cover-view>
       </cover-view>

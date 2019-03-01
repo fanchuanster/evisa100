@@ -40,7 +40,11 @@
   padding:15rpx;
   margin-top:20rpx;
 }
-
+.toolbar_top {
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+}
 </style>
 
 <script>
@@ -62,9 +66,8 @@ export default class extends wepy.app {
       'pages/africa/ke',
       'pages/asia/tl',
       'pages/uploadPassport',
-      'pages/uploadPassportCamera'
-      // 'pages/uploadPhoto',
-      // 'pages/uploadPhotoCamera'
+      'pages/uploadPassportCamera',
+      'pages/uploadPhoto'
     ],
     window: {
       backgroundTextStyle: 'light',

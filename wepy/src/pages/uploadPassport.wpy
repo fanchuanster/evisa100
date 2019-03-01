@@ -1,9 +1,4 @@
 <style lang="less">
-.toolbar_top {
-  display:flex;
-  flex-direction: row;
-  justify-content: center;
-}
 </style>
 <template>
   <view class="container">

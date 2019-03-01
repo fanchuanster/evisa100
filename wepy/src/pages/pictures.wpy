@@ -80,52 +80,14 @@
     }
     uploadPassport() {
       wepy.navigateTo({
-        url: './uploadPassport?'
+        url: './uploadPassport'
       })
     }
-    async uploadPhoto() {
-      wepy.showLoading({
-        title: '加载中',
-        mask: true
-      })
-
-      let that = this
-      wx.chooseImage({
-        count: 1,
-        sizeType: ['original', 'compressed'],
-        sourceType: ['album', 'camera'],
-        success: function(res) {
-          console.log('success')
-          const imagePath = res.tempFilePaths[0]
-          wx.getFileSystemManager().readFile({
-            filePath: imagePath,
-            encoding: 'base64',
-            success: function(res) {
-              wepy.showLoading({
-                title: '上传中',
-                mask: true
-              })
-              var photoFileName = 'photo/' + (that.passport ? that.passport.passport_no : Date.now()) + '_photo.' + imagePath.split('.').pop()
-              UploadFile(imagePath, photoFileName,
-                function(res) {
-                  wepy.hideLoading()
-                  that.passport.data.photo_file = photoFileName
-                  that.$apply()
-                },
-                function(err) {
-                  wepy.hideLoading()
-                  console.log(err)
-                }
-              )
-            }
-          })
-        },
-        complete: function(res) {
-          wepy.hideLoading()
-        }
+    uploadPhoto() {
+      wepy.navigateTo({
+        url: './uploadPhoto'
       })
     }
-
     uploadIDFront() {
       wepy.showLoading({
         title: '加载中',
@@ -166,13 +128,17 @@
         }
       })
     }
-
     onUnload() {
       wepy.setStorageSync('passport', this.passport)
     }
 
-    async onLoad() {
+    async onLoad(res) {
+      console.log('pictures.onLoad')
+    }
+    onShow(res) {
+      console.log('pictures.onShow')
       this.passport = wepy.getStorageSync('passport')
+      console.log(this.passport)
     }
   }
 </script>

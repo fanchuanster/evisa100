@@ -62,16 +62,12 @@
         success: function(res) {
           console.log('success')
           const imagePath = res.tempFilePaths[0]
-          wepy.showLoading({
-            title: '制作中',
-            mask: true
-          })
           wx.getFileSystemManager().readFile({
             filePath: imagePath,
             encoding: 'base64',
             success: function(res) {
               wepy.showLoading({
-                title: '解析中',
+                title: '制作中',
                 mask: true
               })
               wepy.request({
@@ -86,13 +82,26 @@
                 header: {
                   'content-type': 'application/json; charset=UTF-8',
                   Authorization: 'APPCODE 391037852026434fa5c6e3780ef61220'
+                },
+                complete: function(res) {
+                  console.log('request.complete')
+                  wepy.hideLoading()
                 }
               }).then(function(res) {
                 console.log(res)
-                wepy.hideLoading()
                 if (res.data.status === 0) {
                   that.passport.data.photo_file = res.data.data.result
                   that.$apply()
+                  wepy.setStorageSync('passport', that.passport)
+                  wepy.showToast({
+                    title: '制作成功',
+                    icon: 'success',
+                    duration: 3000
+                  })
+                  setTimeout(function () {
+                    console.log('wepy.navigateBack')
+                    wepy.navigateBack()
+                  }, 3000)
                 } else {
                   wepy.showToast({
                     title: res.data.errmsg,

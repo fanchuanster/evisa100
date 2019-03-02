@@ -430,7 +430,8 @@ input {
         }).then(res => {
           console.log(res)
           wepy.showToast({
-            title: '提交成功'
+            title: '提交成功',
+            icon: 'success'
           })
           wepy.navigateTo({
             url: './index?submitted=true'
@@ -447,6 +448,7 @@ input {
       }
       if (!this.travelInfo.data) {
         this.travelInfo.data = {}
+        // default values.
         this.travelInfo.data.return_to_domicile = true
         this.travelInfo.data.been_other_country = false
         this.travelInfo.data.ever_been_to = false

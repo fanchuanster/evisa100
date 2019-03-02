@@ -20,7 +20,7 @@
       <Step title="申请表填写" content=""></Step>
       <Step title="确认订单" content=""></Step>
     </Steps>
-    <view class="uploader" @tap="uploadPassport">
+    <view wx:if="{{ !!fields.passport_file }}" class="uploader" @tap="uploadPassport">
       <text>护照个人信息页</text>
       <text wx:if="{{passportUploaded}}">完成</text>
       <text wx:else>></text>
@@ -43,6 +43,7 @@
 <script>
   import wepy from 'wepy'
   import UploadFile from '../lib/uploadFile.js'
+  import testMixin from '../mixins/test'
   
   export default class Pictures extends wepy.page {
     config = {
@@ -56,8 +57,10 @@
     }
     data = {
       passport: null,
-      openid: ''
+      country: null,
+      fields: []
     }
+    mixins = [testMixin]
     computed = {
       passportUploaded() {
         return !!this.passport
@@ -68,9 +71,6 @@
       idFrontUploaded() {
         return this.passportUploaded && this.passport.data.id_front_file != null
       }
-    }
-
-    methods = {
     }
 
     next() {
@@ -114,6 +114,7 @@
                   wepy.hideLoading()
                   that.passport.data.id_front_file = photoFileName
                   that.$apply()
+                  wepy.setStorageSync('passport', that.passport)
                 },
                 function(err) {
                   wepy.hideLoading()
@@ -128,15 +129,17 @@
         }
       })
     }
-    onUnload() {
-      wepy.setStorageSync('passport', this.passport)
-    }
-
-    onLoad(res) {
-    }
     onShow(res) {
       this.passport = wepy.getStorageSync('passport')
       console.log(this.passport)
+    }
+    onLoad(res) {
+      if (res.country) {
+        this.country = res.country
+        this.fields = this.getFieldNames(res.country)
+        console.log(this.fields)
+        console.log(this.fields.passport_file)
+      }
     }
   }
 </script>

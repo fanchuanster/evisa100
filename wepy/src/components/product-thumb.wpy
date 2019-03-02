@@ -70,8 +70,9 @@
         </view>
       </block>
     </view>
-    <navigator class="primary-button"
-        url="../pictures" open-type="navigate">开始办理</navigator>
+    <view>
+      <button type="primary" @tap="next">开始办理</button>
+    </view>
   </view>
 </template>
 <script>
@@ -88,6 +89,11 @@
 
     data = {
       imageSrc: ''
+    }
+    methods = {
+      next() {
+        wepy.navigateTo({url: '../pictures?country=' + this.country})
+      }
     }
 
     onLoad () {

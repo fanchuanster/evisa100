@@ -97,15 +97,5 @@ page{
         }
       })
     }
-    onShow() {
-      console.log('onShow')
-      console.log(this.passport_file)
-      this.passport_file = null
-    }
-    onLoad() {
-      console.log('onLoad')
-      console.log(this.passport_file)
-      this.passport_file = null
-    }
   }
 </script>

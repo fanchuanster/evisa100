@@ -4,7 +4,7 @@
 		"urlCheck": true,
 		"es6": false,
 		"postcss": false,
-		"minified": false,
+		"minified": true,
 		"newFeature": true,
 		"autoAudits": false
 	},
@@ -12,5 +12,6 @@
 	"appid": "wx18e03ddea0cde133",
 	"projectname": "evisa100",
 	"miniprogramRoot": "dist/",
+	"libVersion": "2.4.4",
 	"condition": {}
 }

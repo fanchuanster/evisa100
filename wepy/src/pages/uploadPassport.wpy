@@ -4,7 +4,7 @@
   <view class="container">
     <view class="toolbar_top">
       <image mode="aspectFit" style="height:200rpx" @tap="addPhoto" src="../resources/images/add_from_album.png"/>
-      <image mode="aspectFit" style="height:200rpx" @tap="takePhoto" src="../resources/images/camera.ico"/>
+      <image mode="aspectFit" style="height:200rpx" @tap="takePhoto" src="../resources/images/camera.png"/>
     </view>
     <panel>
       <view class="title" slot="title">资料要求</view>
@@ -89,13 +89,11 @@
             }
           }).then(function(res) {
             wepy.hideLoading()
-            console.log(res)
             if (!res.data.success) {
               wepy.showToast({
-                title: '解析失败, 请重选图片',
+                title: '解析失败,请重试',
                 duration: 2000
               })
-              complete(0)
               return
             }
             var passport = {
@@ -127,7 +125,6 @@
               function(err) {
                 wepy.hideLoading()
                 console.log(err)
-                complete(0)
               }
             )
           })

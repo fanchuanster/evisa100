@@ -4,7 +4,7 @@
   <view class="container">
     <view class="toolbar_top">
       <image mode="aspectFit" style="height:200rpx" src="../resources/images/head_real_example.jpg"/>
-      <image mode="aspectFit" style="height:200rpx" @tap="uploadPhoto" src="../resources/images/camera.ico"/>
+      <image mode="aspectFit" style="height:200rpx" @tap="uploadPhoto" src="../resources/images/camera.png"/>
     </view>
     <panel>
       <view class="title" slot="title">资料要求</view>
@@ -23,7 +23,7 @@
   import Panel from '@/components/panel'
   import UploadFile from '../lib/uploadFile.js'
 
-  export default class UploadPassport extends wepy.page {
+  export default class UploadPhoto extends wepy.page {
     config = {
       navigationBarTitleText: '拍照'
     }

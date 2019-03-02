@@ -30,9 +30,10 @@ page{
 }
 .head_photo {
   position: absolute;
-  top: -100rpx;
-  left: 220rpx;
+  top: 10rpx;
+  left: 215rpx;
   width: 320rpx;
+  height: 320rpx;
   transform: rotate(90deg);
 }
 </style>
@@ -43,11 +44,11 @@ page{
       flash="auto"
       binderror="error">
       <cover-view class="view">
-        <cover-view>
-          <image mode="aspectFit" class="head_photo" src="../resources/images/head.png"></image>
+        <cover-view class="view">
+          <cover-image class="head_photo" src="../resources/images/head.png"/>
         </cover-view>
         <cover-view class="bottom_toolbar" @tap="takePhoto">
-          <cover-image class="imgbtn" src="../resources/images/camera.ico" />
+          <cover-image class="imgbtn" src="../resources/images/camera.png" />
         </cover-view>
       </cover-view>
     </camera>
@@ -97,7 +98,14 @@ page{
         }
       })
     }
+    onShow() {
+      console.log('onShow')
+      console.log(this.passport_file)
+    }
     onLoad() {
+      console.log('onLoad')
+      console.log(this.passport_file)
+      this.passport_file = null
     }
   }
 </script>

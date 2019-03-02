@@ -94,6 +94,7 @@
                 title: '解析失败,请重试',
                 duration: 2000
               })
+              complete(0)
               return
             }
             var passport = {
@@ -125,22 +126,27 @@
               function(err) {
                 wepy.hideLoading()
                 console.log(err)
+                complete(0)
               }
             )
           })
         }
       })
     }
-    onLoad(res) {
-      if (res.passport_file) {
-        console.log('passportFile:' + res.passport_file)
-        this.uploadPassport(res.passport_file, function(res) {
+    onShow() {
+      var passportFile = wepy.getStorageSync('passport_file')
+      if (passportFile) {
+        console.log('passportFile:' + passportFile)
+        this.uploadPassport(passportFile, function(res) {
+          wepy.removeStorage({key: 'passport_file'})
           if (res) {
             wepy.setStorageSync('passport', this.passport)
             wepy.navigateBack()
           }
         })
       }
+    }
+    onLoad() {
     }
   }
 </script>

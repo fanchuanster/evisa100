@@ -81,9 +81,8 @@ page{
     methods = {
     }
     check() {
-      wepy.redirectTo({
-        url: './uploadPassport?passport_file=' + this.passport_file
-      })
+      wepy.setStorageSync('passport_file', this.passport_file)
+      wepy.navigateBack()
     }
     uncheck() {
       this.passport_file = null
@@ -101,6 +100,7 @@ page{
     onShow() {
       console.log('onShow')
       console.log(this.passport_file)
+      this.passport_file = null
     }
     onLoad() {
       console.log('onLoad')

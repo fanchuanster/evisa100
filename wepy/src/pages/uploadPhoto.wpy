@@ -3,7 +3,7 @@
 <template>
   <view class="container">
     <view class="toolbar_top">
-      <image mode="aspectFit" style="height:300rpx" src="../resources/images/head_real_example.jpg"/>
+      <image mode="aspectFit" style="height:300rpx" src="{{imgsrc}}"/>
       <image mode="aspectFit" style="height:200rpx;margin-top:100rpx" @tap="uploadPhoto" src="../resources/images/camera.png"/>
     </view>
     <panel>
@@ -22,7 +22,7 @@
 <script>
   import wepy from 'wepy'
   import Panel from '@/components/panel'
-  import UploadFile from '../lib/uploadFile.js'
+  // import UploadFile from '../lib/uploadFile.js'
 
   export default class UploadPhoto extends wepy.page {
     config = {
@@ -35,49 +35,74 @@
     data = {
       passport: null
     }
-
     methods = {
+    }
+    computed = {
+      imgsrc() {
+        if (this.passport && this.passport.data.photo_file) {
+          return this.passport.data.photo_file
+        } else {
+          return '../resources/images/head_real_example.jpg'
+        }
+      }
     }
     async uploadPhoto() {
       wepy.showLoading({
         title: '加载中',
         mask: true
       })
-
       let that = this
       wx.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'],
         sourceType: ['album', 'camera'],
+        complete: function(res) {
+          wepy.hideLoading()
+        },
         success: function(res) {
           console.log('success')
           const imagePath = res.tempFilePaths[0]
+          wepy.showLoading({
+            title: '制作中',
+            mask: true
+          })
           wx.getFileSystemManager().readFile({
             filePath: imagePath,
             encoding: 'base64',
             success: function(res) {
               wepy.showLoading({
-                title: '上传中',
+                title: '解析中',
                 mask: true
               })
-              var photoFileName = 'photo/' + (that.passport.passport_no ? that.passport.passport_no : Date.now()) + '_photo.' + imagePath.split('.').pop()
-              UploadFile(imagePath, photoFileName,
-                function(res) {
-                  wepy.hideLoading()
-                  that.passport.data.photo_file = photoFileName
-                  wepy.setStorageSync('passport', that.passport)
-                  wepy.navigateBack()
+              wepy.request({
+                url: 'https://alidphoto.aisegment.com/idphoto/make',
+                method: 'POST',
+                data: {
+                  type: 'jpg',
+                  spec: '37',
+                  photo: res.data,
+                  bk: 'white'
                 },
-                function(err) {
-                  wepy.hideLoading()
-                  console.log(err)
+                header: {
+                  'content-type': 'application/json; charset=UTF-8',
+                  Authorization: 'APPCODE 391037852026434fa5c6e3780ef61220'
                 }
-              )
+              }).then(function(res) {
+                console.log(res)
+                wepy.hideLoading()
+                if (res.data.status === 0) {
+                  that.passport.data.photo_file = res.data.data.result
+                  that.$apply()
+                } else {
+                  wepy.showToast({
+                    title: res.data.errmsg,
+                    icon: 'none',
+                    duration: 2000
+                  })
+                }
+              })
             }
           })
-        },
-        complete: function(res) {
-          wepy.hideLoading()
         }
       })
     }

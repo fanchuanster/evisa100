@@ -132,11 +132,9 @@
       wepy.setStorageSync('passport', this.passport)
     }
 
-    async onLoad(res) {
-      console.log('pictures.onLoad')
+    onLoad(res) {
     }
     onShow(res) {
-      console.log('pictures.onShow')
       this.passport = wepy.getStorageSync('passport')
       console.log(this.passport)
     }

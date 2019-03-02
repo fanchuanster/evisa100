@@ -26,16 +26,10 @@
 
   export default class UploadPassport extends wepy.page {
     config = {
-      navigationBarTitleText: '拍照'
+      navigationBarTitleText: '拍照护照个人信息页'
     }
     components = {
       panel: Panel
-    }
-
-    data = {
-    }
-
-    methods = {
     }
     takePhoto() {
       wepy.navigateTo({
@@ -66,7 +60,7 @@
         }
       })
     }
-    async uploadPassport(imagePath, complete) {
+    uploadPassport(imagePath, complete) {
       let that = this
       wx.getFileSystemManager().readFile({
         filePath: imagePath,
@@ -92,6 +86,7 @@
             if (!res.data.success) {
               wepy.showToast({
                 title: '解析失败,请重试',
+                icon: 'none',
                 duration: 2000
               })
               complete(0)

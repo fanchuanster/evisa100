@@ -457,8 +457,6 @@ input {
     }
 
     onLoad(option) {
-      this.travelInfo.to_country = option.country
-      this.fields = this.getFieldNames(this.travelInfo.to_country)
       this.passport = wepy.getStorageSync('passport')
       var travelInfo = wepy.getStorageSync('travelInfo')
       if (travelInfo) {
@@ -474,6 +472,8 @@ input {
         this.travelInfo.data.ever_denied_by_others = false
         this.travelInfo.data.ever_convicted = false
       }
+      this.travelInfo.to_country = option.country
+      this.fields = this.getFieldNames(this.travelInfo.to_country)
 
       wepy.request({
         url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,

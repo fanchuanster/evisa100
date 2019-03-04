@@ -7,11 +7,6 @@
   .country_item {
     margin-right: 15rpx;
   }
-.tabbar {
-  position: relative !important;
-  display:flex;
-  flex-direction: row;
-}
 }
 </style>
 <template>
@@ -26,31 +21,10 @@
         </view>
       </panel>
     </repeat>
-
-    <!-- <panel>
-    <panel>
-      <view class="title" slot="title">测试组件</view>
-      <text class="testcounter">计数组件1: </text>
-      <view class="counterview">
-        <counter1 @index-emit.user="counterEmit" />
-      </view>
-      <text class="testcounter">计数组件2: </text>
-      <view class="counterview">
-        <counter2 :num.sync="mynum"></counter2>
-      </view>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">测试组件Repeat</view>
-      <repeat for="" index="index" item="item" key="key">
-        <group :grouplist="item" :indexa="index"></group>
-      </repeat>
-    </panel> -->
-
-    <i-tab-bar current="{{ current }}" fixed="true" color="#f759ab" @change="handleChange">
-      <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="Home"></i-tab-bar-item>
-      <i-tab-bar-item key="mine" icon="mine" current-icon="mine_fill" dot title="My"></i-tab-bar-item>
-    </i-tab-bar>
+    <!-- <i-tab-bar current="{{ current }}" fixed="true" color="#f759ab" @change="handleChange">
+      <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="签证"></i-tab-bar-item>
+      <i-tab-bar-item key="mine" icon="mine" current-icon="mine_fill" dot title="我的"></i-tab-bar-item>
+    </i-tab-bar> -->
   </view>
 </template>
 <script>

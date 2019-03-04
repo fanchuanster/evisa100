@@ -271,8 +271,7 @@ input {
         'i-collapse': '../resources/iview/collapse/index',
         'i-collapse-item': '../resources/iview/collapse-item/index',
         Step: '../resources/iview/step/index',
-        Steps: '../resources/iview/steps/index',
-        'vant-picker': '../resources/vant-weapp/picker/index'
+        Steps: '../resources/iview/steps/index'
       }
     }
     components = {

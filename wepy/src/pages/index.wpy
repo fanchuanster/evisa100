@@ -7,6 +7,11 @@
   .country_item {
     margin-right: 15rpx;
   }
+.tabbar {
+  position: relative !important;
+  display:flex;
+  flex-direction: row;
+}
 }
 </style>
 <template>
@@ -42,21 +47,26 @@
       </repeat>
     </panel> -->
 
-    <toast />
+    <i-tab-bar current="{{ current }}" fixed="true" color="#f759ab" @change="handleChange">
+      <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="Home"></i-tab-bar-item>
+      <i-tab-bar-item key="mine" icon="mine" current-icon="mine_fill" dot title="My"></i-tab-bar-item>
+    </i-tab-bar>
   </view>
 </template>
 <script>
   import wepy from 'wepy'
   import Panel from '@/components/panel'
-  import Toast from 'wepy-com-toast'
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '在线签证'
+      navigationBarTitleText: '在线签证',
+      usingComponents: {
+        'i-tab-bar': '../resources/iview/tab-bar/index',
+        'i-tab-bar-item': '../resources/iview/tab-bar-item/index'
+      }
     }
     components = {
-      panel: Panel,
-      toast: Toast
+      panel: Panel
     }
 
     data = {
@@ -70,12 +80,12 @@
           continent: { name: 'asia', name_cn: '亚洲' },
           countries: [{ name: 'Thailand', name_cn: '泰国', name_short: 'tl' }]
         }
-      ]
+      ],
+      current: 'homepage'
     }
 
     computed = {
     }
-
     tapCountryName (e) {
       wepy.navigateTo({
         url: './' + e.target.id
@@ -83,6 +93,9 @@
     }
 
     methods = {
+      handleChange(event) {
+        this.current = event.detail.key
+      },
       communicate () {
         console.log(this.$name + ' tap')
         this.$invoke('counter2', 'minus', 45, 6)

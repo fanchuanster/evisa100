@@ -11,16 +11,10 @@
 	
   $condition = '';
   if (isset($_get['status'])) {
-	  $condition .= 'current_status=' . $_get['status'];
+	  $querystr .= ' WHERE current_status=' . $_get['status'];
   }
   if (isset($_GET['count'])) {
-	  if ($condition != '') {
-		$condition .= ' AND';
-	  }
-	  $condition .= ' LIMIT ' . $_GET['count'];
-  }
-  if ($condition != '') {
-	  $querystr .= ' WHERE ' . $condition;
+	  $querystr .= ' LIMIT ' . $_GET['count'];
   }
   var_dump($querystr);
     

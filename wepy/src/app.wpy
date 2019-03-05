@@ -68,7 +68,8 @@ export default class extends wepy.app {
       'pages/uploadPassport',
       'pages/uploadPassportCamera',
       'pages/uploadPhoto',
-      'pages/mine'
+      'pages/mine',
+      'pages/myOrders'
     ],
     tabBar: {
       color: '#AEADAD',

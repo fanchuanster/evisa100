@@ -13,13 +13,13 @@
   if (isset($_get['status'])) {
 	  $condition .= ' current_status=' . $_get['status'];
   }
-  // if (isset($_GET['count'])) {
-    // $condition .= ' LIMIT ' . $_GET['count'];
-  // }
+  if (isset($_GET['count'])) {
+	  $condition .= ' LIMIT ' . $_GET['count'];
+  }
   if ($condition != '') {
 	  $querystr .= ' WHERE ' . $condition;
   }
-  // var_dump($querystr);
+  var_dump($querystr);
     
   $result = $mysqli->query($querystr);
   

@@ -32,7 +32,7 @@ namespace EVisa100
         }
         static void Main(string[] args)
         {
-            test();
+            //test();
 
             var server = new Server();
 

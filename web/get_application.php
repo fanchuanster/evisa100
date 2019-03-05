@@ -18,12 +18,12 @@
   }
   var_dump($querystr);
     
-  // $result = $mysqli->query($querystr);
+  $result = $mysqli->query($querystr);
   
-  // $records = array();
-  // while ($row = $result->fetch_assoc()) {
-	  // $records[] = $row;
-  // }
+  $records = array();
+  while ($row = $result->fetch_assoc()) {
+	  $records[] = $row;
+  }
 
-  // print((json_encode($records)));
+  print((json_encode($records)));
 ?>

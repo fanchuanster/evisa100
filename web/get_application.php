@@ -10,13 +10,12 @@
 			" FROM application";
 	
   $condition = '';
-  if (isset($_get['status'])) {
-	  $querystr .= ' WHERE current_status=' . $_get['status'];
+  if (isset($_GET['status'])) {
+	  $querystr .= ' WHERE current_status=' . $_GET['status'];
   }
   if (isset($_GET['count'])) {
 	  $querystr .= ' LIMIT ' . $_GET['count'];
   }
-  var_dump($querystr);
     
   $result = $mysqli->query($querystr);
   

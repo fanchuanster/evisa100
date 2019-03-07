@@ -66,7 +66,11 @@ input {
             </view>
             <view wx:if="{{!!fields.job_title_cn}}">
               <text class="fieldLabel">职位名称</text>
-              <input value="{{passport.data.job_title_cn}}" bindinput="onJobTitleChange" type="text"/>
+              <input value="{{passport.data.job_title_cn}}" bindinput="onJobTitleChangeCn" type="text"/>
+            </view>
+            <view wx:if="{{!!fields.job_title}}">
+              <text class="fieldLabel">职位名称(英文)</text>
+              <input placeholder="选填可空" value="{{passport.data.job_title}}" bindinput="onJobTitleChange" type="text"/>
             </view>
           </view>
           <view wx:if="{{passport.data.job_type == 0}}">
@@ -144,8 +148,12 @@ input {
           </picker>
         </view>
         <view wx:if="{{!!fields.address_cn}}">
-          <text class="fieldLabel">居住地址</text>
-          <input placeholder="" value="{{passport.data.address_cn}}" bindinput="oninputAddress" type="text"/>
+          <text class="fieldLabel">详细地址</text>
+          <input placeholder="" value="{{passport.data.address_cn}}" bindinput="oninputAddressCn" type="text"/>
+        </view>
+        <view wx:if="{{!!fields.address}}">
+          <text class="fieldLabel">详细地址(英文)</text>
+          <input placeholder="选填可空" value="{{passport.data.address}}" bindinput="oninputAddress" type="text"/>
         </view>
         <view wx:if="{{!!fields.phone}}">
           <text class="fieldLabel">电话号码</text>
@@ -351,8 +359,11 @@ input {
       onJobCompChange(e) {
         this.passport.data.job_comp_cn = e.detail.value
       },
-      onJobTitleChange(e) {
+      onJobTitleChangeCn(e) {
         this.passport.data.job_title_cn = e.detail.value
+      },
+      onJobTitleChange(e) {
+        this.passport.data.job_title = e.detail.value
       },
       oninputFatherSurName(e) {
         this.passport.data.father_name_sur = e.detail.value
@@ -370,8 +381,11 @@ input {
         console.log(e.detail.value)
         this.passport.data.region = e.detail.value
       },
-      oninputAddress(e) {
+      oninputAddressCn(e) {
         this.passport.data.address_cn = e.detail.value
+      },
+      oninputAddress(e) {
+        this.passport.data.address = e.detail.value
       },
       oninputPhone(e) {
         this.passport.data.phone = e.detail.value

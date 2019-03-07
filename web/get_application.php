@@ -8,9 +8,11 @@
  
   $querystr = "SELECT 'id', id, 'passport_id', passport_id,'to_country', to_country, 'purpose', purpose, 'entry_date', entry_date, 'departure_date', departure_date, 'data', data".
 			" FROM application";
-	
-  $condition = '';
-  if (isset($_GET['status'])) {
+
+  if (isset($_GET['id'])) {
+	  $querystr .= ' WHERE id=' . $_GET['id'];
+  }
+  else if (isset($_GET['status'])) {
 	  $querystr .= ' WHERE current_status=' . $_GET['status'];
   }
   if (isset($_GET['count'])) {

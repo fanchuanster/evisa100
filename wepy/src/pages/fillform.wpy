@@ -456,6 +456,30 @@ input {
     }
 
     onLoad(option) {
+      if (option.id) {
+        wepy.request({
+          url: 'https://fan.blockai.me/get_application.php?id=' + option.id,
+          method: 'GET',
+          header: {
+            'content-type': 'application/json; charset=UTF-8'
+          }
+        }).then(res => {
+          console.log(res)
+          this.travelInfo = res.data[0]
+          this.$apply()
+          wepy.request({
+            url: 'https://fan.blockai.me/get_passports.php?id=' + this.travelInfo.passport_id,
+            method: 'GET',
+            header: {
+              'content-type': 'application/json; charset=UTF-8'
+            }
+          }).then(res => {
+            console.log(res)
+            this.passport = res.data[0]
+            this.$apply()
+          })
+        })
+      }
       this.passport = wepy.getStorageSync('passport')
       var travelInfo = wepy.getStorageSync('travelInfo')
       if (travelInfo) {

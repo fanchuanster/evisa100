@@ -155,7 +155,7 @@ namespace EVisa100.DataStructure
         [NonSerialized]
         public Passport Passport;
 
-        public int current_status;
+        public int status;
         public string to_country;
         public Purpose purpose;
         public DateTime entry_date;

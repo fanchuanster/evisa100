@@ -4,7 +4,7 @@ created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated DATETIME 
 PRIMARY KEY(id)) CHARACTER SET = utf8;
 
 create table application (
-id int(11) AUTO_INCREMENT, passport_id int(11), current_status int default 0, 
+id int(11) AUTO_INCREMENT, passport_id int(11), status int default 0, 
 to_country varchar(10), visa_type varchar(10), purpose int, entry_date DATE, departure_date DATE, 
 data varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
 created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -456,6 +456,7 @@ input {
     }
 
     onLoad(option) {
+      let that = this
       if (option.id) {
         wepy.request({
           url: 'https://fan.blockai.me/get_application.php?id=' + option.id,
@@ -465,8 +466,12 @@ input {
           }
         }).then(res => {
           console.log(res)
-          this.travelInfo = res.data[0]
-          this.$apply()
+          that.travelInfo = res.data[0]
+          that.travelInfo.data = JSON.parse(res.data[0].data)
+          that.fields = this.getFieldNames(this.travelInfo.to_country)
+          console.log('travelInfo:')
+          console.log(that.travelInfo)
+          that.$apply()
           wepy.request({
             url: 'https://fan.blockai.me/get_passports.php?id=' + this.travelInfo.passport_id,
             method: 'GET',
@@ -475,43 +480,47 @@ input {
             }
           }).then(res => {
             console.log(res)
-            this.passport = res.data[0]
-            this.$apply()
+            that.passport = res.data[0]
+            that.passport.data = JSON.parse(res.data[0].data)
+            that.$apply()
+            console.log('passport:')
+            console.log(that.passport)
           })
         })
-      }
-      this.passport = wepy.getStorageSync('passport')
-      var travelInfo = wepy.getStorageSync('travelInfo')
-      if (travelInfo) {
-        this.travelInfo = travelInfo
-      }
-      if (!this.travelInfo.data) {
-        this.travelInfo.data = {}
-        // default values.
-        this.travelInfo.data.return_to_domicile = true
-        this.travelInfo.data.been_other_country = false
-        this.travelInfo.data.ever_been_to = false
-        this.travelInfo.data.ever_denied = false
-        this.travelInfo.data.ever_denied_by_others = false
-        this.travelInfo.data.ever_convicted = false
-      }
-      this.travelInfo.to_country = option.country
-      this.fields = this.getFieldNames(this.travelInfo.to_country)
-
-      wepy.request({
-        url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,
-        method: 'GET',
-        header: {
-          'content-type': 'application/json; charset=UTF-8'
+      } else {
+        this.passport = wepy.getStorageSync('passport')
+        var travelInfo = wepy.getStorageSync('travelInfo')
+        if (travelInfo) {
+          this.travelInfo = travelInfo
         }
-      }).then(res => {
-        console.log(res)
-        var entries = JSON.parse(res.data[0].data)
-        entries.forEach(element => {
-          this.allPoints.push(element.data)
-        })
-        this.$apply()
-      })
+        if (!this.travelInfo.data) {
+          this.travelInfo.data = {}
+          // default values.
+          this.travelInfo.data.return_to_domicile = true
+          this.travelInfo.data.been_other_country = false
+          this.travelInfo.data.ever_been_to = false
+          this.travelInfo.data.ever_denied = false
+          this.travelInfo.data.ever_denied_by_others = false
+          this.travelInfo.data.ever_convicted = false
+        }
+        this.travelInfo.to_country = option.country
+        this.fields = this.getFieldNames(this.travelInfo.to_country)
+      }
+
+      // wepy.request({
+      //   url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,
+      //   method: 'GET',
+      //   header: {
+      //     'content-type': 'application/json; charset=UTF-8'
+      //   }
+      // }).then(res => {
+      //   console.log(res)
+      //   var entries = JSON.parse(res.data[0].data)
+      //   entries.forEach(element => {
+      //     this.allPoints.push(element.data)
+      //   })
+      //   this.$apply()
+      // })
     }
     onUnload() {
       wepy.setStorageSync('passport', this.passport)

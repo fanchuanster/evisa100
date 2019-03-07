@@ -1,0 +1,55 @@
+<style lang="less">
+</style>
+<template>
+  <view class="container">
+    <repeat for="{{orders}}" item="item" key="item.id">
+      <view class="title" id="{{item.id}}" @tap="tapOrder">{{item.id}} {{item.to_country}}</view>
+    </repeat>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import Panel from '@/components/panel'
+
+  export default class MyOrders extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的订单',
+      usingComponents: {
+        'i-tabs': '../resources/iview/tabs/index',
+        'i-tab': '../resources/iview/tab/index'
+      }
+    }
+    components = {
+      panel: Panel
+    }
+
+    data = {
+      orders: []
+    }
+
+    computed = {
+    }
+
+    methods = {
+      tapOrder(e) {
+        console.log(e)
+        console.log('tapOrder')
+        wepy.navigateTo({url: './fillform?id=' + e.target.id})
+      }
+    }
+
+    onLoad(e) {
+      wepy.request({
+        url: 'https://fan.blockai.me/get_application.php?status=0&count=1',
+        method: 'GET',
+        header: {
+          'content-type': 'application/json; charset=UTF-8'
+        }
+      }).then(res => {
+        console.log(res)
+        this.orders = res.data
+        this.$apply()
+      })
+    }
+  }
+</script>

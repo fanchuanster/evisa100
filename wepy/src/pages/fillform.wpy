@@ -462,8 +462,11 @@ input {
             title: '提交成功',
             icon: 'success'
           })
-          wepy.navigateTo({
-            url: './index?submitted=true'
+          // wepy.clearStorageSync()
+          // this.passport = null
+          // this.travelInfo = null
+          wepy.switchTab({
+            url: './index'
           })
         })
       })
@@ -485,6 +488,20 @@ input {
           that.fields = this.getFieldNames(this.travelInfo.to_country)
           console.log('travelInfo:')
           console.log(that.travelInfo)
+          wepy.request({
+            url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,
+            method: 'GET',
+            header: {
+              'content-type': 'application/json; charset=UTF-8'
+            }
+          }).then(res => {
+            console.log(res)
+            var entries = JSON.parse(res.data[0].data)
+            entries.forEach(element => {
+              this.allPoints.push(element.data)
+            })
+            that.$apply()
+          })
           that.$apply()
           wepy.request({
             url: 'https://php.evisa100.com/get_passports.php?id=' + this.travelInfo.passport_id,
@@ -519,22 +536,21 @@ input {
         }
         this.travelInfo.to_country = option.country
         this.fields = this.getFieldNames(this.travelInfo.to_country)
+        wepy.request({
+          url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,
+          method: 'GET',
+          header: {
+            'content-type': 'application/json; charset=UTF-8'
+          }
+        }).then(res => {
+          console.log(res)
+          var entries = JSON.parse(res.data[0].data)
+          entries.forEach(element => {
+            this.allPoints.push(element.data)
+          })
+          this.$apply()
+        })
       }
-
-      // wepy.request({
-      //   url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,
-      //   method: 'GET',
-      //   header: {
-      //     'content-type': 'application/json; charset=UTF-8'
-      //   }
-      // }).then(res => {
-      //   console.log(res)
-      //   var entries = JSON.parse(res.data[0].data)
-      //   entries.forEach(element => {
-      //     this.allPoints.push(element.data)
-      //   })
-      //   this.$apply()
-      // })
     }
     onUnload() {
       wepy.setStorageSync('passport', this.passport)

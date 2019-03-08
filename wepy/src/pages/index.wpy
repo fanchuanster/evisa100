@@ -97,9 +97,6 @@
     }
 
     onLoad(e) {
-      if (e.submitted) {
-        wepy.clearStorageSync()
-      }
     }
   }
 </script>

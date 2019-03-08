@@ -34,7 +34,7 @@
 	  $querystr .= ' LIMIT ' . $_GET['count'];
   }
   
-  var_dump($querystr);
+  // var_dump($querystr);
     
   $result = $mysqli->query($querystr);
   

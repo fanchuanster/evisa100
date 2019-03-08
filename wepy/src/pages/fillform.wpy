@@ -121,6 +121,9 @@ input {
               </view>
             </picker>
           </view>
+          <view wx:if="{{!!fields.passport_file}}">
+            <image @tap="previewPassport" data-list="{{ [passportFileUrl] }}" src="{{passportFileUrl}}"/>
+          </view>
         </view>
       </i-collapse-item>
       <i-collapse-item title="家庭信息">
@@ -274,6 +277,7 @@ input {
 <script>
   import wepy from 'wepy'
   import testMixin from '../mixins/test'
+  const env = require('../lib/config.js')
 
   export default class FillForm extends wepy.page {
     config = {
@@ -323,6 +327,12 @@ input {
       },
       isAdmin() {
         return this.openid === 'opini5GNX-N6JKq6aqutfPHCxUDc'
+      },
+      passportFileUrl() {
+        if (!this.passport) {
+          return ''
+        }
+        return env.uploadImageUrl + '/' + this.passport.data.passport_file
       }
     }
 
@@ -437,6 +447,15 @@ input {
       bind3DepartureDateChange(e) {
         this.travelInfo.data.been_other_country_departure_date = e.detail.value
       }
+    }
+    previewPassport(event) {
+      console.log(event)
+      var src = event.currentTarget.dataset.src
+      var imgList = event.currentTarget.dataset.list
+      wx.previewImage({
+        current: src,
+        urls: imgList
+      })
     }
     submit() {
       console.log('saving passport:')

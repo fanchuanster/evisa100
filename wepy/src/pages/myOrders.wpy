@@ -33,8 +33,6 @@
 
     methods = {
       tapOrder(e) {
-        console.log(e)
-        console.log('tapOrder')
         wepy.navigateTo({url: './fillform?id=' + e.target.id + '&openid=' + this.openid})
       }
     }

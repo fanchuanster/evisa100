@@ -470,12 +470,14 @@ input {
             title: '提交成功',
             icon: 'success'
           })
-          // wepy.clearStorageSync()
-          // this.passport = null
-          // this.travelInfo = null
-          // wepy.switchTab({
-          //   url: './index'
-          // })
+          wepy.clearStorageSync()
+          this.passport = null
+          this.travelInfo = null
+          setTimeout(function () {
+            wepy.switchTab({
+              url: './index'
+            })
+          }, 3000)
         })
       })
     }

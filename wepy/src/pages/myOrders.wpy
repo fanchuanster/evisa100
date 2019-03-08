@@ -24,7 +24,8 @@
     }
 
     data = {
-      orders: []
+      orders: [],
+      openid: ''
     }
 
     computed = {
@@ -34,13 +35,13 @@
       tapOrder(e) {
         console.log(e)
         console.log('tapOrder')
-        wepy.navigateTo({url: './fillform?id=' + e.target.id})
+        wepy.navigateTo({url: './fillform?id=' + e.target.id + '&openid=' + this.openid})
       }
     }
 
     onLoad(e) {
       this.$parent.getOpenid().then((openid) => {
-        console.log(openid)
+        this.openid = openid
         wepy.request({
           url: 'https://php.evisa100.com/get_application.php?status=0&count=1&openid=' + openid,
           method: 'GET',

@@ -264,7 +264,10 @@ input {
 
     </i-collapse>
     <view>
-      <button type="primary" bindtap="submit">确认并提交</button>
+      <button type="primary" @tap="submit">
+        <text wx:if="{{isAdmin}}">审核并提交</text>
+        <text wx:else>确认并提交</text>
+      </button>
     </view>
   </view>
 </template>
@@ -292,7 +295,8 @@ input {
       allPoints: [],
       purposes: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居', '其他'],
       by: ['飞机', '陆路', '水路'],
-      jobs: ['学生', '无业', '在职', '退休', '其他']
+      jobs: ['学生', '无业', '在职', '退休', '其他'],
+      openid: ''
     }
     computed = {
       today() {
@@ -316,6 +320,9 @@ input {
         let entryDate = new Date(this.travelInfo.entry_date)
         entryDate.setDate(entryDate.getDate() + 1)
         return entryDate.toString()
+      },
+      isAdmin() {
+        return this.openid === 'opini5GNX-N6JKq6aqutfPHCxUDc'
       }
     }
 
@@ -446,6 +453,7 @@ input {
         if (res.data.id) {
           this.passport.id = res.data.id
         }
+        this.travelInfo.status = this.isAdmin ? 1 : 0
         this.travelInfo.passport_id = this.passport.id
         console.log('saving travelInfo:')
         console.log(this.travelInfo)
@@ -473,6 +481,7 @@ input {
     }
 
     onLoad(option) {
+      this.openid = option.openid
       let that = this
       if (option.id) {
         wepy.request({

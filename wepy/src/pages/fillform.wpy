@@ -85,6 +85,12 @@ input {
               <input placeholder="当前职业的具体描述" value="{{passport.data.job_title_cn}}" bindinput="onJobTitleChange" type="text"/>
             </view>
           </view>
+          <view wx:if="{{!!filesUrls}}">
+            <text class="fieldLabel">图片资料</text>
+            <view wx:for="{{filesUrls}}" wx:for-item="url" wx:key="*this">
+              <image src="{{url}}" @tap="previewImages"></image>
+            </view>
+          </view>
         </view>
       </i-collapse-item>
       <i-collapse-item title="护照信息">
@@ -122,7 +128,7 @@ input {
             </picker>
           </view>
           <view wx:if="{{!!fields.passport_file}}">
-            <image @tap="previewPassport" data-list="{{ [passportFileUrl] }}" src="{{passportFileUrl}}"/>
+            <image @tap="previewPassport" data-list="{{ [passportFile] }}" src="{{passportFile}}"/>
           </view>
         </view>
       </i-collapse-item>
@@ -328,11 +334,34 @@ input {
       isAdmin() {
         return this.openid === 'opini5GNX-N6JKq6aqutfPHCxUDc'
       },
-      passportFileUrl() {
+      passportFile() {
         if (!this.passport) {
           return ''
         }
         return env.uploadImageUrl + '/' + this.passport.data.passport_file
+      },
+      photoFile() {
+        if (!this.passport || !this.passport.data.photo_file) {
+          return ''
+        }
+        return this.passport.data.photo_file
+      },
+      idFrontFile() {
+        if (!this.passport || !this.passport.data.id_front_file) {
+          return ''
+        }
+        return env.uploadImageUrl + '/' + this.passport.data.id_front_file
+      },
+      filesUrls() {
+        var files = []
+        if (this.idFrontFile) {
+          files.push(this.idFrontFile)
+        }
+        if (this.photoFile) {
+          files.push(this.photoFile)
+        }
+        files.push(this.passportFile)
+        return files
       }
     }
 
@@ -452,6 +481,15 @@ input {
       console.log(event)
       var src = event.currentTarget.dataset.src
       var imgList = event.currentTarget.dataset.list
+      wx.previewImage({
+        current: src,
+        urls: imgList
+      })
+    }
+    previewImages(event) {
+      console.log(event)
+      var src = event.currentTarget.dataset.src
+      var imgList = this.filesUrls
       wx.previewImage({
         current: src,
         urls: imgList

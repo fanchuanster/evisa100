@@ -14,13 +14,13 @@
 	// update it.
 	$updatestr = "update application set ".
 	"passport_id=".$travelInfo->passport_id.",".
-	"status=".$travelInfo->status.",'".
-	"to_country'='".$travelInfo->to_country."','".
-	"purpose'='".$travelInfo->purpose."','".
-	"data'='".addslashes($data)."','".
-	"entry_date'=CAST('".$travelInfo->entry_date."' AS DATE),'".
-	"departure_date'=CAST('".$travelInfo->departure_date."' AS DATE)".
-	" WHERE id='".$travelInfo->id."'";
+	"status=".$travelInfo->status.",".
+	"to_country='".$travelInfo->to_country."',".
+	"purpose='".$travelInfo->purpose."',".
+	"data='".addslashes($data)."',".
+	"entry_date=CAST('".$travelInfo->entry_date."' AS DATE),".
+	"departure_date=CAST('".$travelInfo->departure_date."' AS DATE)".
+	" WHERE id=".$travelInfo->id;
         
 	var_dump($updatestr);
 

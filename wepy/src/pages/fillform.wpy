@@ -495,7 +495,10 @@ input {
         urls: imgList
       })
     }
-    submit() {
+    async submit() {
+      this.openid = await this.$parent.getOpenid()
+      this.passport.openid = this.openid
+
       console.log('saving passport:')
       console.log(this.passport)
       wepy.request({
@@ -540,7 +543,9 @@ input {
     }
 
     onLoad(option) {
-      this.openid = option.openid
+      if (option.openid) {
+        this.openid = option.openid
+      }
       let that = this
       if (option.id) {
         wepy.request({

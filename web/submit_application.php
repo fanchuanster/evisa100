@@ -13,7 +13,8 @@
  if ($travelInfo->id) {
 	// update it.
 	$updatestr = "update application set ".
-	"passport_id=".$travelInfo->passport_id.",'".
+	"passport_id=".$travelInfo->passport_id.",".
+	"status=".$travelInfo->status.",'".
 	"to_country'='".$travelInfo->to_country."','".
 	"purpose'='".$travelInfo->purpose."','".
 	"data'='".addslashes($data)."','".
@@ -26,8 +27,9 @@
 	$mysqli->query($updatestr);
  } else {
 	 // insert it.
-	$insertStr = "insert into application(passport_id, to_country, purpose, entry_date, departure_date, data) ".
-	"values(".$travelInfo->passport_id.",'".
+	$insertStr = "insert into application(passport_id, status, to_country, purpose, entry_date, departure_date, data) ".
+	"values(".$travelInfo->passport_id.",".
+	$travelInfo->status.",'".
 	$travelInfo->to_country."','".
 	$travelInfo->purpose."',".
 	"CAST('".$travelInfo->entry_date."' AS DATE),".

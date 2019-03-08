@@ -8,16 +8,25 @@
  
   $querystr = "SELECT 'id', id, 'passport_id', passport_id, 'status', status, 'to_country', to_country, 'purpose', purpose, 'entry_date', entry_date, 'departure_date', departure_date, 'data', data".
 			" FROM application";
-
+  
+  $condition = '';
   if (isset($_GET['id'])) {
-	  $querystr .= ' WHERE id=' . $_GET['id'];
+	  $condition .= 'id=' . $_GET['id'];
   }
-  else if (isset($_GET['status'])) {
-	  $querystr .= ' WHERE status=' . $_GET['status'];
+  if (isset($_GET['status'])) {
+	  $condition .= 'status=' . $_GET['status'];
+  }
+  
+  // for my openid, gets all.
+  if (isset($_GET['openid']) && $_GET['openid'] != 'opini5GNX-N6JKq6aqutfPHCxUDc') {
+	  $condition .= 'openid=' . $_GET['openid'];
+  }
+  if (!empty($condition)) {
+    $querystr .= ' WHERE ' . $condition;
   }
   if (isset($_GET['count'])) {
 	  $querystr .= ' LIMIT ' . $_GET['count'];
-  }
+  } 
     
   $result = $mysqli->query($querystr);
   

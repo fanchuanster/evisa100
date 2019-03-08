@@ -94,7 +94,7 @@ export default class extends wepy.app {
 
   globalData = {
     userInfo: null,
-    openid: ''
+    openid: '' // mine: opini5GNX-N6JKq6aqutfPHCxUDc
   }
 
   constructor () {

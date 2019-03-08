@@ -39,16 +39,19 @@
     }
 
     onLoad(e) {
-      wepy.request({
-        url: 'https://php.evisa100.com/get_application.php?status=0&count=1',
-        method: 'GET',
-        header: {
-          'content-type': 'application/json; charset=UTF-8'
-        }
-      }).then(res => {
-        console.log(res)
-        this.orders = res.data
-        this.$apply()
+      this.$parent.getOpenid().then((openid) => {
+        console.log(openid)
+        wepy.request({
+          url: 'https://php.evisa100.com/get_application.php?status=0&count=1&openid=' + openid,
+          method: 'GET',
+          header: {
+            'content-type': 'application/json; charset=UTF-8'
+          }
+        }).then(res => {
+          console.log(res)
+          this.orders = res.data
+          this.$apply()
+        })
       })
     }
   }

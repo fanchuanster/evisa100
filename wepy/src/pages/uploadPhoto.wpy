@@ -3,7 +3,7 @@
 <template>
   <view class="container">
     <view class="toolbar_top">
-      <image mode="aspectFit" style="height:300rpx" src="{{imgsrc}}"/>
+      <image mode="aspectFit" style="height:300rpx" @tap="previewPhoto" data-list="{{ [imgsrc] }}" src="{{imgsrc}}"/>
       <image mode="aspectFit" style="height:200rpx;margin-top:100rpx" @tap="uploadPhoto" src="../resources/images/camera.png"/>
     </view>
     <panel>
@@ -45,6 +45,15 @@
           return '../resources/images/head_real_example.jpg'
         }
       }
+    }
+    previewPhoto(event) {
+      console.log(event)
+      var src = event.currentTarget.dataset.src
+      var imgList = event.currentTarget.dataset.list
+      wx.previewImage({
+        current: src,
+        urls: imgList
+      })
     }
     async uploadPhoto() {
       wepy.showLoading({

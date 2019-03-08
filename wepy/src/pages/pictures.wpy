@@ -113,8 +113,8 @@
                 function(res) {
                   wepy.hideLoading()
                   that.passport.data.id_front_file = photoFileName
-                  that.$apply()
                   wepy.setStorageSync('passport', that.passport)
+                  that.$apply()
                 },
                 function(err) {
                   wepy.hideLoading()

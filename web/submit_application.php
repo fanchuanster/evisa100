@@ -8,7 +8,7 @@
  $travelInfo = json_decode($input);
  $data = json_encode($travelInfo->data);
  
- $data = str_replace("\u", "\\u", $data);
+ // $data = str_replace("\u", "\\u", $data);
  
  if ($travelInfo->id) {
 	// update it.

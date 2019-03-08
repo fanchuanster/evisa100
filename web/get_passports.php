@@ -14,7 +14,7 @@
 	  $querystr .= "openid='".$_GET['openid']."'";
   }
   
-  //var_dump($querystr);
+  var_dump($querystr);
   
   $result = $mysqli->query($querystr);
   

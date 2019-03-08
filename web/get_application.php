@@ -14,19 +14,27 @@
 	  $condition .= 'id=' . $_GET['id'];
   }
   if (isset($_GET['status'])) {
-	  $condition .= 'status=' . $_GET['status'];
+	  if (!empty($condition)) {
+		  $condition .= ' AND';
+	  }
+	  $condition .= ' status=' . $_GET['status'];
   }
   
   // for my openid, gets all.
   if (isset($_GET['openid']) && $_GET['openid'] != 'opini5GNX-N6JKq6aqutfPHCxUDc') {
-	  $condition .= "openid='" . $_GET['openid'] . "'";
+	  if (!empty($condition)) {
+		  $condition .= ' AND';
+	  }
+	  $condition .= " openid='" . $_GET['openid'] . "'";
   }
   if (!empty($condition)) {
     $querystr .= ' WHERE ' . $condition;
   }
   if (isset($_GET['count'])) {
 	  $querystr .= ' LIMIT ' . $_GET['count'];
-  } 
+  }
+  
+  var_dump($querystr);
     
   $result = $mysqli->query($querystr);
   

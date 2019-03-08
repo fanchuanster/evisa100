@@ -465,9 +465,9 @@ input {
           // wepy.clearStorageSync()
           // this.passport = null
           // this.travelInfo = null
-          wepy.switchTab({
-            url: './index'
-          })
+          // wepy.switchTab({
+          //   url: './index'
+          // })
         })
       })
     }

@@ -27,9 +27,8 @@
 	$mysqli->query($updatestr);
  } else {
 	 // insert it.
-	$insertStr = "insert into application(passport_id, status, to_country, purpose, entry_date, departure_date, data) ".
-	"values(".$travelInfo->passport_id.",".
-	$travelInfo->status.",'".
+	$insertStr = "insert into application(passport_id, to_country, purpose, entry_date, departure_date, data) ".
+	"values(".$travelInfo->passport_id.",'".
 	$travelInfo->to_country."','".
 	$travelInfo->purpose."',".
 	"CAST('".$travelInfo->entry_date."' AS DATE),".

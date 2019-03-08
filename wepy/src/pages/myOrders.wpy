@@ -40,7 +40,7 @@
 
     onLoad(e) {
       wepy.request({
-        url: 'https://fan.blockai.me/get_application.php?status=0&count=1',
+        url: 'https://php.evisa100.com/get_application.php?status=0&count=1',
         method: 'GET',
         header: {
           'content-type': 'application/json; charset=UTF-8'

@@ -473,7 +473,7 @@ input {
       let that = this
       if (option.id) {
         wepy.request({
-          url: 'https://fan.blockai.me/get_application.php?id=' + option.id,
+          url: 'https://php.evisa100.com/get_application.php?id=' + option.id,
           method: 'GET',
           header: {
             'content-type': 'application/json; charset=UTF-8'
@@ -487,7 +487,7 @@ input {
           console.log(that.travelInfo)
           that.$apply()
           wepy.request({
-            url: 'https://fan.blockai.me/get_passports.php?id=' + this.travelInfo.passport_id,
+            url: 'https://php.evisa100.com/get_passports.php?id=' + this.travelInfo.passport_id,
             method: 'GET',
             header: {
               'content-type': 'application/json; charset=UTF-8'

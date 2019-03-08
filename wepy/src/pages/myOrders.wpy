@@ -41,7 +41,7 @@
       this.$parent.getOpenid().then((openid) => {
         this.openid = openid
         wepy.request({
-          url: 'https://php.evisa100.com/get_application.php?status=0&count=1&openid=' + openid,
+          url: 'https://php.evisa100.com/get_application.php?status=3&count=1&openid=' + openid,
           method: 'GET',
           header: {
             'content-type': 'application/json; charset=UTF-8'

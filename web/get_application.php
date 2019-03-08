@@ -17,7 +17,7 @@
 	  if (!empty($condition)) {
 		  $condition .= ' AND';
 	  }
-	  $condition .= ' status=' . $_GET['status'];
+	  $condition .= ' status&' . $_GET['status'] . '>0';
   }
   
   // for my openid, gets all.

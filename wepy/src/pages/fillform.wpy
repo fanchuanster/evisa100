@@ -510,7 +510,7 @@ input {
         if (res.data.id) {
           this.passport.id = res.data.id
         }
-        this.travelInfo.status = this.isAdmin ? 1 : 0
+        this.travelInfo.status = this.isAdmin ? 2 : 1
         this.travelInfo.passport_id = this.passport.id
         console.log('saving travelInfo:')
         console.log(this.travelInfo)

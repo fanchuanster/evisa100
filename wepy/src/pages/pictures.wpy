@@ -57,7 +57,7 @@
     }
     data = {
       passport: null,
-      country: null,
+      country: '',
       fields: []
     }
     mixins = [testMixin]
@@ -137,8 +137,6 @@
       if (res.country) {
         this.country = res.country
         this.fields = this.getFieldNames(res.country)
-        console.log(this.fields)
-        console.log(this.fields.passport_file)
       }
     }
   }

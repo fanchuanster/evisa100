@@ -28,6 +28,9 @@
     config = {
       navigationBarTitleText: '拍照护照个人信息页'
     }
+    data = {
+      passport: null
+    }
     components = {
       panel: Panel
     }
@@ -101,7 +104,9 @@
             passport.data.birth_date = Util.dateFromString(passport.data.birth_date)
             passport.data.issue_date = Util.dateFromString(passport.data.issue_date)
             passport.data.expiry_date = Util.dateFromString(passport.data.expiry_date)
-            passport.data.sex = passport.data.sex.replace(/\W/g, '')
+            if (passport.data.sex) {
+              passport.data.sex = passport.data.sex.replace(/\W/g, '')
+            }
             Util.splitCnEnName(passport.data, 'birth_place')
             Util.splitCnEnName(passport.data, 'issue_place')
             Util.splitCnEnName(passport.data, 'nationality')
@@ -115,7 +120,6 @@
               function(res) {
                 wepy.hideLoading()
                 that.passport = passport
-                that.$apply()
                 complete(1)
               },
               function(err) {
@@ -131,11 +135,12 @@
     onShow() {
       var passportFile = wepy.getStorageSync('passport_file')
       if (passportFile) {
+        wepy.removeStorage({key: 'passport_file'})
         console.log('passportFile:' + passportFile)
+        let that = this
         this.uploadPassport(passportFile, function(res) {
-          wepy.removeStorage({key: 'passport_file'})
           if (res) {
-            wepy.setStorageSync('passport', this.passport)
+            wepy.setStorageSync('passport', that.passport)
             wepy.navigateBack()
           }
         })

@@ -47,6 +47,7 @@
       }
     }
     previewPhoto(event) {
+      // Not able to preview local image.
       console.log(event)
       var src = event.currentTarget.dataset.src
       var imgList = event.currentTarget.dataset.list
@@ -69,7 +70,6 @@
           wepy.hideLoading()
         },
         success: function(res) {
-          console.log('success')
           const imagePath = res.tempFilePaths[0]
           wx.getFileSystemManager().readFile({
             filePath: imagePath,
@@ -91,36 +91,28 @@
                 header: {
                   'content-type': 'application/json; charset=UTF-8',
                   Authorization: 'APPCODE 391037852026434fa5c6e3780ef61220'
-                },
-                complete: function(res) {
-                  console.log('request.complete')
-                  wepy.hideLoading()
-                },
-                fail: function(res) {
-                  console.log('fail:')
-                  console.log(res)
-                },
-                success: function(res) {
-                  if (res.data.status === 0) {
-                    that.passport.data.photo_file = res.data.data.result
-                    that.$apply()
-                    wepy.setStorageSync('passport', that.passport)
-                    wepy.showToast({
-                      title: '制作成功',
-                      icon: 'success',
-                      duration: 3000
-                    })
-                    setTimeout(function () {
-                      console.log('wepy.navigateBack')
-                      wepy.navigateBack()
-                    }, 3000)
-                  } else {
-                    wepy.showToast({
-                      title: res.data.errmsg,
-                      icon: 'none',
-                      duration: 2000
-                    })
-                  }
+                }
+              }).then(res => {
+                console.log(res)
+                if (res.data.status === 0) {
+                  that.passport.data.photo_file = res.data.data.result
+                  that.$apply()
+                  wepy.setStorageSync('passport', that.passport)
+                  wepy.showToast({
+                    title: '制作成功',
+                    icon: 'success',
+                    duration: 3000
+                  })
+                  setTimeout(function () {
+                    console.log('wepy.navigateBack')
+                    wepy.navigateBack()
+                  }, 3000)
+                } else {
+                  wepy.showToast({
+                    title: res.data.errmsg,
+                    icon: 'none',
+                    duration: 2000
+                  })
                 }
               })
             }

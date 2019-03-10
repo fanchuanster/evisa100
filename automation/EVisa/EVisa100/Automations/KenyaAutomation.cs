@@ -213,7 +213,7 @@ namespace EVisa100.Automations
                 var passportUploadBtn = driver.FindElement(By.CssSelector(@"#element_43"));
 
                 var passportFile = Constants.OssHost + (application.Passport.data["passport_file"] as string);
-                var photoFile = Constants.OssHost + (application.Passport.data["photo_file"] as string);
+                var photoFile = (application.Passport.data["photo_file"] as string);
                 var idFrontFile = Constants.OssHost + (application.Passport.data["id_front_file"] as string);
                 var temp = Path.GetTempPath();
                 using (var client = new WebClient())

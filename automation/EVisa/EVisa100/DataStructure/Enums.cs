@@ -19,4 +19,13 @@ namespace EVisa100.Enums
         Settlement,
         Others
     }
+
+    public enum JobType
+    {
+        Student = 0,
+        Unemployed,
+        Employed,
+        Retired,
+        Others
+    }
 }

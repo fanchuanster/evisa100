@@ -20,9 +20,11 @@ namespace EVisa100.DataStructure
         {
             get
             {
+                var jobType = (JobType)Convert.ToInt32(data["job_type"]);
+                if (jobType != JobType.Employed) return jobType.ToString();
+
                 if (data.ContainsKey("job_title"))
                     return data["job_title"] as string;
-
                 return data["job_title_cn"] as string;
             }
         }

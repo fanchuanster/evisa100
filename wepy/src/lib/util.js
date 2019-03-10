@@ -6,6 +6,9 @@ const Util = {};
 
 // Crypto utilities
 Util.dateFromString = function(str) {
+	if (!str) {
+		return str
+	}
 	str = str.replace(/\D/g, '')
 	if (str.length < 6) {
 		return str

@@ -35,7 +35,7 @@ namespace EVisa100
         }
         public Application GetApplication()
         {
-            var url = "https://fan.blockai.me/get_application.php?status=0&count=1";
+            var url = "https://fan.blockai.me/get_application.php?status=1&count=1";
 
             var httpRequest = (HttpWebRequest)WebRequest.Create(url);
             httpRequest.Method = "GET";
@@ -53,8 +53,9 @@ namespace EVisa100
                 response = response.Replace("\"{", "{").Replace("}\"", "}").Replace("\\\"", "\"").StripSlashes();
 
                 var application = JsonSerializer.Deserialize<Application[]>(response)[0];
-                var e = application.EntryPoint;
                 application.Passport = GetPassport(application.passport_id);
+
+                var job = application.Passport.JobTitle;
 
                 return application;
             }

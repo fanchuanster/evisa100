@@ -4,6 +4,9 @@
   font-weight: lighter;
   color: gray;
 }
+view {
+  margin-top: 20rpx;
+}
 input {
   border-bottom: 1px solid #ddd;
 }
@@ -38,9 +41,8 @@ input {
             </radio-group>
           </view>
           <view wx:if="{{ !!fields.birth_date }}">
-            <text class="fieldLabel">出生日期</text>
             <picker mode="date" value="{{passport.data.birth_date}}" end="{{today}}" @change="bindBirthChange">
-              <view class="picker">{{passport.data.birth_date}}</view>
+              <text class="fieldLabel">出生日期 </text>{{passport.data.birth_date}}
             </picker>
           </view>
           <view wx:if="{{ !!fields.birth_place_cn }}">
@@ -51,11 +53,10 @@ input {
             <text class="fieldLabel">出生地(拼音)</text>
             <input value="{{passport.data.birth_place}}" bindinput="oninputName" type="text"/>
           </view>
-          <view wx:if="{{ !!fields.job_type }}">
-            <text class="fieldLabel">职业</text>
-            <picker mode="selector" range="{{jobs}}" @change="onJobTypeChange">
+          <view>
+            <picker mode="selector" value="{{passport.data.job_type}}" range="{{jobs}}" @change="onJobTypeChange">
               <view class="picker">
-                {{jobs[passport.data.job_type]}}
+                <text class="fieldLabel">职业 </text>{{jobs[passport.data.job_type]}}
               </view>
             </picker>
           </view>
@@ -112,18 +113,16 @@ input {
             <input placeholder="颁发地" value="{{passport.data.issue_place}}" bindinput="oninputIssuePlace" type="text"/>
           </view>
           <view wx:if="{{!!fields.issue_date}}">
-            <text class="fieldLabel">颁发日期</text>
             <picker mode="date" value="{{passport.data.issue_date}}" start="1980-01-01" end="2019-09-01" @change="bindDateChange">
               <view class="picker">
-                {{passport.data.issue_date}}
+                <text class="fieldLabel">颁发日期 </text> {{passport.data.issue_date}}
               </view>
             </picker>
           </view>
           <view wx:if="{{!!fields.expiry_date}}">
-            <text class="fieldLabel">有效期至</text>
             <picker mode="date" value="{{passport.data.expiry_date}}" start="2019-01-01" end="2039-09-01" @change="bindExpiryChange">
               <view class="picker">
-                {{passport.data.expiry_date}}
+                <text class="fieldLabel">有效期至 </text>{{passport.data.expiry_date}}
               </view>
             </picker>
           </view>
@@ -151,9 +150,8 @@ input {
           <input value="{{passport.data.mother_name_given}}" bindinput="oninputMotherGivenName" type="text"/>
         </view>
         <view wx:if="{{!!fields.region}}">
-          <text class="fieldLabel">常住城市</text>
           <picker mode="region" @change="bindRegionChange" custom-item="全部">
-            <view class="picker">{{passport.data.region[0]}} {{passport.data.region[1]}} {{passport.data.region[2]}}</view>
+            <text class="fieldLabel">常住城市 </text><view class="picker">{{passport.data.region[0]}} {{passport.data.region[1]}} {{passport.data.region[2]}}</view>
           </picker>
         </view>
         <view wx:if="{{!!fields.address_cn}}">
@@ -177,42 +175,37 @@ input {
       <i-collapse-item title="旅行信息">
         <view slot="content">
         <view wx:if="{{!!fields.purpose}}">
-          <text class="fieldLabel">旅行目的</text>
           <picker bindchange="bindPurposeChange" value="{{travelInfo.purpose}}" range="{{purposes}}">
-          <view class="picker">
-            {{purposes[travelInfo.purpose]}}
-          </view>
+            <view class="picker">
+              <text class="fieldLabel">旅行目的 </text>{{purposes[travelInfo.purpose]}}
+            </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.entry_date}}">
-          <text class="fieldLabel">入境日期</text>
           <picker mode="date" value="{{travelInfo.entry_date}}"  @change="bindEntryDateChange" start="{{today}}">
             <view class="picker">
-              {{travelInfo.entry_date}}
+              <text class="fieldLabel">入境日期 </text>{{travelInfo.entry_date}}
             </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.departure_date}}">
-          <text class="fieldLabel">离境日期</text>
           <picker mode="date" value="{{travelInfo.departure_date}}" @change="bindDepartureDateChange" start="{{departureDateStart}}">
             <view class="picker">
-              {{travelInfo.departure_date}}
+              <text class="fieldLabel">离境日期 </text>{{travelInfo.departure_date}}
             </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.by}}">
-          <text class="fieldLabel">旅行方式</text>
           <picker bindchange="bindByChange" range="{{by}}">
           <view class="picker">
-            {{by[travelInfo.data.by]}}
+            <text class="fieldLabel">旅行方式 </text>{{by[travelInfo.data.by]}}
           </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.entry_point}}">
-          <text class="fieldLabel">入境点</text>
           <picker bindchange="bindEntryPointChange" range="{{allPoints[travelInfo.data.by]}}" range-key="name_cn">
           <view class="picker">
-            {{travelInfo.data.entry_point.name_cn}}
+            <text class="fieldLabel">入境点   </text>{{travelInfo.data.entry_point.name_cn}}
           </view>
           </picker>
         </view>
@@ -399,6 +392,8 @@ input {
         this.passport.data.sex = e.detail.value
       },
       onJobTypeChange(e) {
+        console.log('onJobTypeChange')
+        console.log(e)
         this.passport.data.job_type = e.detail.value
       },
       onJobCompChange(e) {

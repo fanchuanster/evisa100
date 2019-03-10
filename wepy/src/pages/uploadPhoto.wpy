@@ -42,7 +42,7 @@
         if (this.passport && this.passport.data.photo_file) {
           return this.passport.data.photo_file
         } else {
-          return '../resources/images/head_real_example.jpg'
+          return '../resources/images/tingting_head_real_example.jpg'
         }
       }
     }

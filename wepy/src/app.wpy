@@ -8,7 +8,7 @@
   font-size: 11px;
 }
 .picker{
-  padding: 5px;
+  padding: 0 5px;
   background-color: #FFFFFF;
 }
 .radio-group {

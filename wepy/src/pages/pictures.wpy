@@ -36,7 +36,7 @@
       <text wx:else>></text>
     </view>
     <view>
-      <button type="primary" disabled="{{(!passportUploaded || !idFrontUploaded)}}" bindtap="next">下一步</button>
+      <button type="primary" disabled="{{(!passportUploaded || !photoUploaded || !idFrontUploaded)}}" bindtap="next">下一步</button>
     </view>
 </view>
 </template>

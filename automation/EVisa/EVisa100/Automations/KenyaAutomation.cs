@@ -213,8 +213,11 @@ namespace EVisa100.Automations
                 var passportUploadBtn = driver.FindElement(By.CssSelector(@"#element_43"));
 
                 var passportFile = Constants.OssHost + (application.Passport.data["passport_file"] as string);
+                passportFile = passportFile.Replace("\\", "");
                 var photoFile = (application.Passport.data["photo_file"] as string);
+                photoFile = photoFile.Replace("\\", "");
                 var idFrontFile = Constants.OssHost + (application.Passport.data["id_front_file"] as string);
+                idFrontFile = idFrontFile.Replace("\\", "");
                 var temp = Path.GetTempPath();
                 using (var client = new WebClient())
                 {
@@ -238,6 +241,7 @@ namespace EVisa100.Automations
 
                 // submit button - #submit_primary
                 driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
+                driver.FindElement(By.CssSelector(@"#review_submit")).Click();
             }
         }
 

@@ -360,7 +360,6 @@ input {
         if (this.photoFile) {
           files.push(this.photoFile)
         }
-        files.push(this.passportFile)
         return files
       }
     }

@@ -35,7 +35,7 @@ namespace EVisa100
         }
         public Application GetApplication()
         {
-            var url = "https://fan.blockai.me/get_application.php?status=1&count=1";
+            var url = "https://fan.blockai.me/get_application.php?status=2&count=1";
 
             var httpRequest = (HttpWebRequest)WebRequest.Create(url);
             httpRequest.Method = "GET";

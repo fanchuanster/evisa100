@@ -42,7 +42,7 @@ input {
           </view>
           <view wx:if="{{ !!fields.birth_date }}">
             <picker mode="date" value="{{passport.data.birth_date}}" end="{{today}}" @change="bindBirthChange">
-              <text class="fieldLabel">出生日期 </text>{{passport.data.birth_date}}
+              <text class="fieldLabel">出生日期 </text><text>{{birthDate}}</text>
             </picker>
           </view>
           <view wx:if="{{ !!fields.birth_place_cn }}">
@@ -56,7 +56,7 @@ input {
           <view>
             <picker mode="selector" value="{{passport.data.job_type}}" range="{{jobs}}" @change="onJobTypeChange">
               <view class="picker">
-                <text class="fieldLabel">职业 </text>{{jobs[passport.data.job_type]}}
+                <text class="fieldLabel">职业 </text>{{jobTypeDisplay}}
               </view>
             </picker>
           </view>
@@ -115,14 +115,14 @@ input {
           <view wx:if="{{!!fields.issue_date}}">
             <picker mode="date" value="{{passport.data.issue_date}}" start="1980-01-01" end="2019-09-01" @change="bindDateChange">
               <view class="picker">
-                <text class="fieldLabel">颁发日期 </text> {{passport.data.issue_date}}
+                <text class="fieldLabel">颁发日期 </text> {{issueDate}}
               </view>
             </picker>
           </view>
           <view wx:if="{{!!fields.expiry_date}}">
             <picker mode="date" value="{{passport.data.expiry_date}}" start="2019-01-01" end="2039-09-01" @change="bindExpiryChange">
               <view class="picker">
-                <text class="fieldLabel">有效期至 </text>{{passport.data.expiry_date}}
+                <text class="fieldLabel">有效期至 </text>{{expiryDate}}
               </view>
             </picker>
           </view>
@@ -151,7 +151,7 @@ input {
         </view>
         <view wx:if="{{!!fields.region}}">
           <picker mode="region" @change="bindRegionChange" custom-item="全部">
-            <text class="fieldLabel">常住城市 </text><view class="picker">{{passport.data.region[0]}} {{passport.data.region[1]}} {{passport.data.region[2]}}</view>
+            <text class="fieldLabel">常住城市 </text><view class="picker">{{regionDisplay}}</view>
           </picker>
         </view>
         <view wx:if="{{!!fields.address_cn}}">
@@ -177,35 +177,35 @@ input {
         <view wx:if="{{!!fields.purpose}}">
           <picker bindchange="bindPurposeChange" value="{{travelInfo.purpose}}" range="{{purposes}}">
             <view class="picker">
-              <text class="fieldLabel">旅行目的 </text>{{purposes[travelInfo.purpose]}}
+              <text class="fieldLabel">旅行目的 </text>{{purposeDisplay}}
             </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.entry_date}}">
           <picker mode="date" value="{{travelInfo.entry_date}}"  @change="bindEntryDateChange" start="{{today}}">
             <view class="picker">
-              <text class="fieldLabel">入境日期 </text>{{travelInfo.entry_date}}
+              <text class="fieldLabel">入境日期 </text>{{entryDate}}
             </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.departure_date}}">
           <picker mode="date" value="{{travelInfo.departure_date}}" @change="bindDepartureDateChange" start="{{departureDateStart}}">
             <view class="picker">
-              <text class="fieldLabel">离境日期 </text>{{travelInfo.departure_date}}
+              <text class="fieldLabel">离境日期 </text>{{departureDate}}
             </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.by}}">
           <picker bindchange="bindByChange" range="{{by}}">
           <view class="picker">
-            <text class="fieldLabel">旅行方式 </text>{{by[travelInfo.data.by]}}
+            <text class="fieldLabel">旅行方式 </text>{{byDisplay}}
           </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.entry_point}}">
           <picker bindchange="bindEntryPointChange" range="{{allPoints[travelInfo.data.by]}}" range-key="name_cn">
           <view class="picker">
-            <text class="fieldLabel">入境点   </text>{{travelInfo.data.entry_point.name_cn}}
+            <text class="fieldLabel">入境点   </text>{{entryPointDisplay}}
           </view>
           </picker>
         </view>
@@ -302,6 +302,66 @@ input {
       openid: ''
     }
     computed = {
+      birthDate() {
+        if (this.passport) {
+          return this.passport.data.birth_date
+        }
+        return ''
+      },
+      issueDate() {
+        if (this.passport) {
+          return this.passport.data.issue_date
+        }
+        return ''
+      },
+      expiryDate() {
+        if (this.passport) {
+          return this.passport.data.expiry_date
+        }
+        return ''
+      },
+      jobTypeDisplay() {
+        if (this.passport && this.passport.data.job_type) {
+          return this.jobs[this.passport.data.job_type]
+        }
+        return ''
+      },
+      regionDisplay() {
+        if (this.passport && this.passport.data.region) {
+          return this.passport.data.region[0] + ' ' + this.passport.data.region[1] + ' ' + this.passport.data.region[2]
+        }
+        return ''
+      },
+      purposeDisplay() {
+        if (this.travelInfo.purpose) {
+          return this.purposes[this.travelInfo.purpose]
+        }
+        return ''
+      },
+      entryDate() {
+        if (this.travelInfo.data) {
+          return this.travelInfo.entry_date
+        }
+        return ''
+      },
+      departureDate() {
+        if (this.travelInfo.data) {
+          return this.travelInfo.departure_date
+        }
+        return ''
+      },
+      byDisplay() {
+        if (this.travelInfo.data && this.travelInfo.data.by) {
+          return this.by[this.travelInfo.data.by]
+        }
+        return ''
+      },
+      entryPointDisplay() {
+        if (this.travelInfo.data && this.travelInfo.data.entry_point) {
+          return this.travelInfo.data.entry_point.name_cn
+        }
+        return ''
+      },
       today() {
         return new Date().toJSON().slice(0, 10).replace(/-/g, '/')
       },
@@ -386,6 +446,7 @@ input {
         this.passport.data.expiry_date = e.detail.value
       },
       bindBirthChange(e) {
+        this.birth_date = e.detail.value
         this.passport.data.birth_date = e.detail.value
       },
       radioChange(e) {
@@ -537,6 +598,8 @@ input {
     }
 
     onLoad(option) {
+      console.log('onload:')
+      console.log(this.by)
       if (option.openid) {
         this.openid = option.openid
       }
@@ -618,6 +681,7 @@ input {
           this.$apply()
         })
       }
+      console.log('onload done')
     }
     onUnload() {
       wepy.setStorageSync('passport', this.passport)

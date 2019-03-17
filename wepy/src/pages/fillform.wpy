@@ -641,8 +641,8 @@ input {
             entries.forEach(element => {
               this.allPoints.push(element.data)
             })
+            that.$apply()
           })
-          that.$apply()
           wepy.request({
             url: 'https://php.evisa100.com/get_passports.php?id=' + this.travelInfo.passport_id,
             method: 'GET',

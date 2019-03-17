@@ -242,11 +242,27 @@ input {
               </picker>
             </view>
           </view>
-          <checkbox-group bindchange="checkboxChange">
-            <label wx:if="{{!!fields.ever_been_to}}">
-              <checkbox value='ever_been_to' checked="{{travelInfo.data.ever_been_to}}" />
-              以前有没有来过此行的目的地国家?
-            </label>
+          <view wx:if="{{!!fields.ever_been_to}}">
+            <checkbox-group bindchange="checkboxChangeEverBeenTo" class="container">
+              <label>
+                <checkbox value='ever_been_to' checked="{{travelInfo.data.ever_been_to}}" />
+                以前有没有来过此行的目的地国家?
+              </label>
+            </checkbox-group>
+            <view wx:if="{{travelInfo.data.ever_been_to}}">
+              <picker mode="date" end="{{today()}}" @change="bindEverEntryDateChange">
+                <view class="picker">
+                  入境日期: {{travelInfo.data.ever_been_to_date}}
+                </view>
+              </picker>
+              <picker mode="date" end="{{today()}}" @change="bindEverDepartureDateChange">
+                <view class="picker">
+                  离境日期: {{travelInfo.data.ever_been_to_departure_date}}
+                </view>
+              </picker>
+            </view>
+          </view>
+          <checkbox-group bindchange="checkboxChange" class="container">
             <label wx:if="{{!!fields.ever_denied}}">
               <checkbox value='ever_denied' checked="{{travelInfo.data.ever_denied}}" />
               有被此行的目的国家拒绝入境的经历吗?
@@ -370,19 +386,6 @@ input {
           return this.travelInfo.entry_date
         }
         return this.today
-      },
-      fourMonthsLater() {
-        let n = new Date()
-        n.setDate(n.getDate() + 120)
-        return n.toString()
-      },
-      dayAfterEntryDate() {
-        if (!this.travelInfo.entry_date) {
-          return new Date()
-        }
-        let entryDate = new Date(this.travelInfo.entry_date)
-        entryDate.setDate(entryDate.getDate() + 1)
-        return entryDate.toString()
       },
       isAdmin() {
         return this.openid === 'opini5GNX-N6JKq6aqutfPHCxUDc'
@@ -516,6 +519,9 @@ input {
       checkboxChangeBeenOtherCountry(e) {
         this.travelInfo.data.been_other_country = e.detail.value.includes('been_other_country')
       },
+      checkboxChangeEverBeenTo(e) {
+        this.travelInfo.data.ever_been_to = e.detail.value.includes('ever_been_to')
+      },
       checkboxChange(e) {
         this.travelInfo.data.ever_been_to = e.detail.value.includes('ever_been_to')
         this.travelInfo.data.ever_denied = e.detail.value.includes('ever_denied')
@@ -530,6 +536,12 @@ input {
       },
       bind3DepartureDateChange(e) {
         this.travelInfo.data.been_other_country_departure_date = e.detail.value
+      },
+      bindEverEntryDateChange(e) {
+        this.travelInfo.data.ever_been_to_date = e.detail.value
+      },
+      bindEverDepartureDateChange(e) {
+        this.travelInfo.data.ever_been_to_departure_date = e.detail.value
       }
     }
     previewPassport(event) {
@@ -598,8 +610,6 @@ input {
     }
 
     onLoad(option) {
-      console.log('onload:')
-      console.log(this.by)
       if (option.openid) {
         this.openid = option.openid
       }
@@ -630,7 +640,6 @@ input {
             entries.forEach(element => {
               this.allPoints.push(element.data)
             })
-            that.$apply()
           })
           that.$apply()
           wepy.request({
@@ -681,7 +690,6 @@ input {
           this.$apply()
         })
       }
-      console.log('onload done')
     }
     onUnload() {
       wepy.setStorageSync('passport', this.passport)

@@ -12,7 +12,7 @@
   
   $condition = '';
   if (isset($_GET['id'])) {
-	  $condition .= 'id=' . $_GET['id'];
+	  $condition .= 'application.id=' . $_GET['id'];
   }
   if (isset($_GET['status'])) {
 	  if (!empty($condition)) {
@@ -35,7 +35,7 @@
 	  $querystr .= ' LIMIT ' . $_GET['count'];
   }
   
-  var_dump($querystr);
+  // var_dump($querystr);
     
   $result = $mysqli->query($querystr);
   

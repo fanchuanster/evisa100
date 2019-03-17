@@ -6,8 +6,9 @@
   
   // $owner = $_GET['owner'];
  
-  $querystr = "SELECT 'id', id, 'passport_id', passport_id, 'status', status, 'to_country', to_country, 'purpose', purpose, 'entry_date', entry_date, 'departure_date', departure_date, 'data', data".
-			" FROM application";
+  $querystr = "SELECT 'id', id, 'passport_id', passport_id, 'status', status, 'to_country', to_country, 'purpose', purpose, 'entry_date', entry_date, 'departure_date', departure_date, 'data', data"
+  ." 'passport_no', passport_no, 'passport_data', passport.data"
+  ." FROM application INNER JOIN passport ON application.passport_id=passport.id";
   
   $condition = '';
   if (isset($_GET['id'])) {
@@ -34,7 +35,7 @@
 	  $querystr .= ' LIMIT ' . $_GET['count'];
   }
   
-  // var_dump($querystr);
+  var_dump($querystr);
     
   $result = $mysqli->query($querystr);
   

@@ -556,6 +556,7 @@ input {
     previewImages(event) {
       console.log(event)
       var src = event.currentTarget.dataset.src
+      console.log(src)
       var imgList = this.filesUrls
       wx.previewImage({
         current: src,

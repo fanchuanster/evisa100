@@ -3,7 +3,7 @@
 <template>
   <view class="container">
     <repeat for="{{orders}}" item="item" key="item.id">
-      <view class="title" id="{{item.id}}" @tap="tapOrder">{{item.id}} {{item.to_country}}</view>
+      <view class="title" id="{{item.id}}" @tap="tapOrder">{{item.id}} {{item.to_country}} {{item.passport_no}}</view>
     </repeat>
   </view>
 </template>

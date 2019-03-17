@@ -6,7 +6,7 @@
   
   // $owner = $_GET['owner'];
  
-  $querystr = "SELECT 'id', id, 'passport_id', passport_id, 'status', status, 'to_country', to_country, 'purpose', purpose, 'entry_date', entry_date, 'departure_date', departure_date, 'data', data"
+  $querystr = "SELECT 'id', application.id, 'passport_id', passport_id, 'status', status, 'to_country', to_country, 'purpose', purpose, 'entry_date', entry_date, 'departure_date', departure_date, 'data', application.data"
   ." 'passport_no', passport_no, 'passport_data', passport.data"
   ." FROM application INNER JOIN passport ON application.passport_id=passport.id";
   

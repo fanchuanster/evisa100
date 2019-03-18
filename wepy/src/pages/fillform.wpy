@@ -175,21 +175,21 @@ input {
       <i-collapse-item title="旅行信息">
         <view slot="content">
         <view wx:if="{{!!fields.purpose}}">
-          <picker bindchange="bindPurposeChange" value="{{travelInfo.purpose}}" range="{{purposes}}">
+          <picker bindchange="bindPurposeChange" value="{{application.purpose}}" range="{{purposes}}">
             <view class="picker">
               <text class="fieldLabel">旅行目的 </text>{{purposeDisplay}}
             </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.entry_date}}">
-          <picker mode="date" value="{{travelInfo.entry_date}}"  @change="bindEntryDateChange" start="{{today}}">
+          <picker mode="date" value="{{application.entry_date}}"  @change="bindEntryDateChange" start="{{today}}">
             <view class="picker">
               <text class="fieldLabel">入境日期 </text>{{entryDate}}
             </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.departure_date}}">
-          <picker mode="date" value="{{travelInfo.departure_date}}" @change="bindDepartureDateChange" start="{{departureDateStart}}">
+          <picker mode="date" value="{{application.departure_date}}" @change="bindDepartureDateChange" start="{{departureDateStart}}">
             <view class="picker">
               <text class="fieldLabel">离境日期 </text>{{departureDate}}
             </view>
@@ -203,7 +203,7 @@ input {
           </picker>
         </view>
         <view wx:if="{{!!fields.entry_point}}">
-          <picker bindchange="bindEntryPointChange" range="{{allPoints[travelInfo.data.by]}}" range-key="name_cn">
+          <picker bindchange="bindEntryPointChange" range="{{allPoints[application.data.by]}}" range-key="name_cn">
           <view class="picker">
             <text class="fieldLabel">入境点   </text>{{entryPointDisplay}}
           </view>
@@ -211,7 +211,7 @@ input {
         </view>
         <checkbox-group wx:if="{{!!fields.return_to_domicile}}" bindchange="checkboxChangeReturnDomicile">
           <label>
-            <checkbox value='return_to_domicile' checked="{{travelInfo.data.return_to_domicile}}" />
+            <checkbox value='return_to_domicile' checked="{{application.data.return_to_domicile}}" />
             旅行结束后你是否会回到自己的国家?
           </label>
         </checkbox-group>
@@ -224,20 +224,20 @@ input {
           <view wx:if="{{!!fields.been_other_country}}">
             <checkbox-group bindchange="checkboxChangeBeenOtherCountry">
               <label>
-                <checkbox value='been_other_country' checked="{{travelInfo.data.been_other_country}}" />
+                <checkbox value='been_other_country' checked="{{application.data.been_other_country}}" />
                 最近三个月内是否去过其他国家?
               </label>
             </checkbox-group>
-            <view wx:if="{{travelInfo.data.been_other_country}}">
-              <input placeholder="国家名称" value="{{travelInfo.data.been_other_country_name}}" bindinput="oninputCountry" type="text"/>
+            <view wx:if="{{application.data.been_other_country}}">
+              <input placeholder="国家名称" value="{{application.data.been_other_country_name}}" bindinput="oninputCountry" type="text"/>
               <picker mode="date" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3EntryDateChange">
                 <view class="picker">
-                  入境日期: {{travelInfo.data.been_other_country_date}}
+                  入境日期: {{application.data.been_other_country_date}}
                 </view>
               </picker>
               <picker mode="date" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3DepartureDateChange">
                 <view class="picker">
-                  离境日期: {{travelInfo.data.been_other_country_departure_date}}
+                  离境日期: {{application.data.been_other_country_departure_date}}
                 </view>
               </picker>
             </view>
@@ -245,34 +245,34 @@ input {
           <view wx:if="{{!!fields.ever_been_to}}">
             <checkbox-group bindchange="checkboxChangeEverBeenTo" class="container">
               <label>
-                <checkbox value='ever_been_to' checked="{{travelInfo.data.ever_been_to}}" />
+                <checkbox value='ever_been_to' checked="{{application.data.ever_been_to}}" />
                 以前有没有来过此行的目的地国家?
               </label>
             </checkbox-group>
-            <view wx:if="{{travelInfo.data.ever_been_to}}">
+            <view wx:if="{{application.data.ever_been_to}}">
               <picker mode="date" end="{{today()}}" @change="bindEverEntryDateChange">
                 <view class="picker">
-                  入境日期: {{travelInfo.data.ever_been_to_date}}
+                  入境日期: {{application.data.ever_been_to_date}}
                 </view>
               </picker>
               <picker mode="date" end="{{today()}}" @change="bindEverDepartureDateChange">
                 <view class="picker">
-                  离境日期: {{travelInfo.data.ever_been_to_departure_date}}
+                  离境日期: {{application.data.ever_been_to_departure_date}}
                 </view>
               </picker>
             </view>
           </view>
           <checkbox-group bindchange="checkboxChange" class="container">
             <label wx:if="{{!!fields.ever_denied}}">
-              <checkbox value='ever_denied' checked="{{travelInfo.data.ever_denied}}" />
+              <checkbox value='ever_denied' checked="{{application.data.ever_denied}}" />
               有被此行的目的国家拒绝入境的经历吗?
             </label>
             <label wx:if="{{!!fields.ever_denied_by_others}}">
-              <checkbox value='ever_denied_by_others' checked="{{travelInfo.data.ever_denied_by_others}}" />
+              <checkbox value='ever_denied_by_others' checked="{{application.data.ever_denied_by_others}}" />
               有被其他国家拒绝入境的经历吗?
             </label>
             <label wx:if="{{!!fields.ever_convicted}}">
-              <checkbox value='ever_convicted' checked="{{travelInfo.data.ever_convicted}}" />
+              <checkbox value='ever_convicted' checked="{{application.data.ever_convicted}}" />
               有犯罪记录吗?
             </label>
           </checkbox-group>
@@ -310,7 +310,7 @@ input {
     data = {
       fields: [],
       passport: null,
-      travelInfo: {},
+      application: {},
       allPoints: [],
       purposes: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居', '其他'],
       by: ['飞机', '陆路', '水路'],
@@ -349,32 +349,32 @@ input {
         return ''
       },
       purposeDisplay() {
-        if (this.travelInfo.purpose) {
-          return this.purposes[this.travelInfo.purpose]
+        if (this.application.purpose) {
+          return this.purposes[this.application.purpose]
         }
         return ''
       },
       entryDate() {
-        if (this.travelInfo.data) {
-          return this.travelInfo.entry_date
+        if (this.application.data) {
+          return this.application.entry_date
         }
         return ''
       },
       departureDate() {
-        if (this.travelInfo.data) {
-          return this.travelInfo.departure_date
+        if (this.application.data) {
+          return this.application.departure_date
         }
         return ''
       },
       byDisplay() {
-        if (this.travelInfo.data && this.travelInfo.data.by) {
-          return this.by[this.travelInfo.data.by]
+        if (this.application.data && this.application.data.by) {
+          return this.by[this.application.data.by]
         }
         return ''
       },
       entryPointDisplay() {
-        if (this.travelInfo.data && this.travelInfo.data.entry_point) {
-          return this.travelInfo.data.entry_point.name_cn
+        if (this.application.data && this.application.data.entry_point) {
+          return this.application.data.entry_point.name_cn
         }
         return ''
       },
@@ -382,8 +382,8 @@ input {
         return new Date().toJSON().slice(0, 10).replace(/-/g, '/')
       },
       departureDateStart() {
-        if (this.travelInfo.entry_date) {
-          return this.travelInfo.entry_date
+        if (this.application.entry_date) {
+          return this.application.entry_date
         }
         return this.today
       },
@@ -498,50 +498,50 @@ input {
         this.passport.data.email = e.detail.value
       },
       bindPurposeChange(e) {
-        this.travelInfo.purpose = e.detail.value
+        this.application.purpose = e.detail.value
       },
       bindEntryDateChange(e) {
-        this.travelInfo.entry_date = e.detail.value
+        this.application.entry_date = e.detail.value
       },
       bindDepartureDateChange(e) {
-        this.travelInfo.departure_date = e.detail.value
+        this.application.departure_date = e.detail.value
       },
       bindByChange(e) {
-        this.travelInfo.data.by = e.detail.value
-        this.travelInfo.data.entry_point = this.allPoints[this.travelInfo.data.by][0]
+        this.application.data.by = e.detail.value
+        this.application.data.entry_point = this.allPoints[this.application.data.by][0]
       },
       bindEntryPointChange(e) {
-        this.travelInfo.data.entry_point = this.allPoints[this.travelInfo.data.by][e.detail.value]
+        this.application.data.entry_point = this.allPoints[this.application.data.by][e.detail.value]
       },
       checkboxChangeReturnDomicile(e) {
-        this.travelInfo.data.return_to_domicile = e.detail.value.includes('return_to_domicile')
+        this.application.data.return_to_domicile = e.detail.value.includes('return_to_domicile')
       },
       checkboxChangeBeenOtherCountry(e) {
-        this.travelInfo.data.been_other_country = e.detail.value.includes('been_other_country')
+        this.application.data.been_other_country = e.detail.value.includes('been_other_country')
       },
       checkboxChangeEverBeenTo(e) {
-        this.travelInfo.data.ever_been_to = e.detail.value.includes('ever_been_to')
+        this.application.data.ever_been_to = e.detail.value.includes('ever_been_to')
       },
       checkboxChange(e) {
-        this.travelInfo.data.ever_been_to = e.detail.value.includes('ever_been_to')
-        this.travelInfo.data.ever_denied = e.detail.value.includes('ever_denied')
-        this.travelInfo.data.ever_denied_by_others = e.detail.value.includes('ever_denied_by_others')
-        this.travelInfo.data.ever_convicted = e.detail.value.includes('ever_convicted')
+        this.application.data.ever_been_to = e.detail.value.includes('ever_been_to')
+        this.application.data.ever_denied = e.detail.value.includes('ever_denied')
+        this.application.data.ever_denied_by_others = e.detail.value.includes('ever_denied_by_others')
+        this.application.data.ever_convicted = e.detail.value.includes('ever_convicted')
       },
       oninputCountry(e) {
-        this.travelInfo.data.been_other_country_name = e.detail.value
+        this.application.data.been_other_country_name = e.detail.value
       },
       bind3EntryDateChange(e) {
-        this.travelInfo.data.been_other_country_date = e.detail.value
+        this.application.data.been_other_country_date = e.detail.value
       },
       bind3DepartureDateChange(e) {
-        this.travelInfo.data.been_other_country_departure_date = e.detail.value
+        this.application.data.been_other_country_departure_date = e.detail.value
       },
       bindEverEntryDateChange(e) {
-        this.travelInfo.data.ever_been_to_date = e.detail.value
+        this.application.data.ever_been_to_date = e.detail.value
       },
       bindEverDepartureDateChange(e) {
-        this.travelInfo.data.ever_been_to_departure_date = e.detail.value
+        this.application.data.ever_been_to_departure_date = e.detail.value
       }
     }
     previewPassport(event) {
@@ -581,14 +581,14 @@ input {
         if (res.data.id) {
           this.passport.id = res.data.id
         }
-        this.travelInfo.status = this.isAdmin ? 2 : 1
-        this.travelInfo.passport_id = this.passport.id
-        console.log('saving travelInfo:')
-        console.log(this.travelInfo)
+        this.application.status = this.isAdmin ? 2 : 1
+        this.application.passport_id = this.passport.id
+        console.log('saving application:')
+        console.log(this.application)
         wepy.request({
           url: 'https://php.evisa100.com/submit_application.php',
           method: 'POST',
-          data: this.travelInfo,
+          data: this.application,
           header: {
             'content-type': 'application/json; charset=UTF-8'
           }
@@ -600,7 +600,7 @@ input {
           })
           wepy.clearStorageSync()
           this.passport = null
-          this.travelInfo = null
+          this.application = null
           setTimeout(function () {
             wepy.switchTab({
               url: './index'
@@ -623,20 +623,18 @@ input {
             'content-type': 'application/json; charset=UTF-8'
           }
         }).then(res => {
-          console.log(res)
-          that.travelInfo = res.data[0]
-          that.travelInfo.data = JSON.parse(res.data[0].data)
-          that.fields = this.getFieldNames(this.travelInfo.to_country)
-          console.log('travelInfo:')
-          console.log(that.travelInfo)
+          that.application = res.data[0]
+          that.application.data = JSON.parse(res.data[0].data)
+          that.fields = this.getFieldNames(this.application.to_country)
+          console.log('application:')
+          console.log(that.application)
           wepy.request({
-            url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,
+            url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.application.to_country,
             method: 'GET',
             header: {
               'content-type': 'application/json; charset=UTF-8'
             }
           }).then(res => {
-            console.log(res)
             var entries = JSON.parse(res.data[0].data)
             entries.forEach(element => {
               this.allPoints.push(element.data)
@@ -644,13 +642,12 @@ input {
             that.$apply()
           })
           wepy.request({
-            url: 'https://php.evisa100.com/get_passports.php?id=' + this.travelInfo.passport_id,
+            url: 'https://php.evisa100.com/get_passports.php?id=' + this.application.passport_id,
             method: 'GET',
             header: {
               'content-type': 'application/json; charset=UTF-8'
             }
           }).then(res => {
-            console.log(res)
             that.passport = res.data[0]
             that.passport.data = JSON.parse(res.data[0].data)
             that.$apply()
@@ -660,24 +657,24 @@ input {
         })
       } else {
         this.passport = wepy.getStorageSync('passport')
-        var travelInfo = wepy.getStorageSync('travelInfo')
-        if (travelInfo) {
-          this.travelInfo = travelInfo
+        var application = wepy.getStorageSync('application')
+        if (application) {
+          this.application = application
         }
-        if (!this.travelInfo.data) {
-          this.travelInfo.data = {}
+        if (!this.application.data) {
+          this.application.data = {}
           // default values.
-          this.travelInfo.data.return_to_domicile = true
-          this.travelInfo.data.been_other_country = false
-          this.travelInfo.data.ever_been_to = false
-          this.travelInfo.data.ever_denied = false
-          this.travelInfo.data.ever_denied_by_others = false
-          this.travelInfo.data.ever_convicted = false
+          this.application.data.return_to_domicile = true
+          this.application.data.been_other_country = false
+          this.application.data.ever_been_to = false
+          this.application.data.ever_denied = false
+          this.application.data.ever_denied_by_others = false
+          this.application.data.ever_convicted = false
         }
-        this.travelInfo.to_country = option.country
-        this.fields = this.getFieldNames(this.travelInfo.to_country)
+        this.application.to_country = option.country
+        this.fields = this.getFieldNames(this.application.to_country)
         wepy.request({
-          url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.travelInfo.to_country,
+          url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.application.to_country,
           method: 'GET',
           header: {
             'content-type': 'application/json; charset=UTF-8'
@@ -694,7 +691,7 @@ input {
     }
     onUnload() {
       wepy.setStorageSync('passport', this.passport)
-      wepy.setStorageSync('travelInfo', this.travelInfo)
+      wepy.setStorageSync('application', this.application)
     }
   }
 </script>

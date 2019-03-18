@@ -64,6 +64,7 @@ export default class extends wepy.app {
       'pages/fillform',
       'pages/pictures',
       'pages/africa/ke',
+      'pages/africa/tz',
       'pages/asia/tl',
       'pages/uploadPassport',
       'pages/uploadPassportCamera',
@@ -127,6 +128,8 @@ export default class extends wepy.app {
       return this.globalData.openid
     }
     let res = await wepy.login()
+    console.log('getOpenid:')
+    console.log(res)
     let code = res.code
     res = await wepy.request({url: 'https://php.evisa100.com/get_openid.php?appid=wxfbf619bf7439a9f2&secret=be95d2bf901e0ad805b964dcd048ab0b&js_code=' + code + '&grant_type=authorization_code',
       method: 'GET'

@@ -84,7 +84,8 @@
       country: String,
       daysTakes: String,
       price: String,
-      times: {}
+      times: {},
+      data: string
     }
 
     data = {
@@ -92,11 +93,11 @@
     }
     methods = {
       next() {
-        wepy.navigateTo({url: '../pictures?country=' + this.country})
+        wepy.navigateTo({url: '../pictures?country=' + this.country + '&data=' + this.data})
       }
     }
 
-    onLoad () {
+    onLoad(e) {
       console.log(this.title)
       console.log(this.country)
       this.imageSrc = 'http://evisa.oss-cn-shanghai.aliyuncs.com/country/' + this.country + '/1.jpg'

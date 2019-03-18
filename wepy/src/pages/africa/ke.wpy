@@ -2,7 +2,7 @@
 </style>
 <template>
   <view class="container">
-    <productThumb title="肯尼亚签证-电子签[全国]" country="ke" daysTakes="1-5" price="¥469" :times="times"></productThumb>
+    <productThumb title="肯尼亚签证-电子签[全国]" country="ke" daysTakes="1-5" price="¥469" data="" :times="times"></productThumb>
   </view>
 </template>
 <script>
@@ -16,11 +16,51 @@
     components = {
       productThumb: ProductThumb
     }
-    mixins = []
+    computed = {
+
+    }
     data = {
       times: [{ key: '有效期限', value: '3个月' },
       { key: '最长停留', value: '30天' },
-      { key: '入境次数', value: '1次' }]
+      { key: '入境次数', value: '1次' }],
+      data: [
+        {by: 'Air',
+          data: [
+          { name_cn: '埃尔多雷特国际机场', name: 'Eldoret International Airport' },
+          { name_cn: '加里萨机场', name: 'Garisa Airstrip' },
+          { name_cn: '乔莫·肯雅塔国际机场', name: 'Jomo Kenyatta Airport, Nairobi' },
+          { name_cn: '基苏木机场', name: 'Kisumu Airport' },
+          { name_cn: '拉木机场', name: 'Lamu Airport' },
+          { name_cn: '洛基基奥机场', name: 'Lokichogio Airport' },
+          { name_cn: '马林迪机场', name: 'Malindi Airport' },
+          { name_cn: '蒙巴萨莫伊机场', name: 'Moi Airport Mombasa' },
+          { name_cn: '瓦吉尔国际机场', name: 'Wajir International Airport' },
+          { name_cn: '内罗毕威尔逊机场', name: 'Wilson Airport, Nairobi' }]},
+        {by: 'Road',
+          data: [
+          { name_cn: '布西亚', name: 'Busia' },
+          { name_cn: '伊塞巴尼亚', name: 'Isebania' },
+          { name_cn: 'Liboi', name: 'Liboi' },
+          { name_cn: 'Loitokitok', name: 'Loitokitok' },
+          { name_cn: 'Lungalunga', name: 'Lungalunga' },
+          { name_cn: 'Malaba', name: 'Malaba' },
+          { name_cn: 'Mandera', name: 'Mandera' },
+          { name_cn: 'Moyale', name: 'Moyale' },
+          { name_cn: 'Nadapal', name: 'Nadapal' },
+          { name_cn: 'Namanga', name: 'Namanga' },
+          { name_cn: 'Taveta', name: 'Taveta' }]},
+        {by: 'Ship',
+          data: [
+          { name_cn: '启林迪尼', name: 'Kilindini' },
+          { name_cn: '基苏木', name: 'Kisumu' },
+          { name_cn: 'Kuinga', name: 'Kuinga' },
+          { name_cn: '拉穆', name: 'Lamu' },
+          { name_cn: '马林迪', name: 'Malindi' },
+          { name_cn: '姆比塔点', name: 'Mbita Point' },
+          { name_cn: 'Muhuru Bay', name: 'Muhuru Bay' },
+          { name_cn: '老港', name: 'Old Port' },
+          { name_cn: '希莫尼', name: 'Shimoni' },
+          { name_cn: '万加', name: 'Vanga' }]}]
     }
     methods = {
     }

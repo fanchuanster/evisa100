@@ -48,7 +48,8 @@
       continents: [
         {
           continent: { name: 'africa', name_cn: '非洲' },
-          countries: [{ name: 'Kenya', name_cn: '肯尼亚', name_short: 'ke' }]
+          countries: [{ name: 'Kenya', name_cn: '肯尼亚', name_short: 'ke' },
+          { name: 'tanzania', name_cn: '坦桑尼亚', name_short: 'tz' }]
         },
         {
           continent: { name: 'asia', name_cn: '亚洲' },

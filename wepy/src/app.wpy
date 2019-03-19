@@ -131,7 +131,7 @@ export default class extends wepy.app {
     console.log('getOpenid:')
     console.log(res)
     let code = res.code
-    res = await wepy.request({url: 'https://php.evisa100.com/get_openid.php?appid=wxfbf619bf7439a9f2&secret=be95d2bf901e0ad805b964dcd048ab0b&js_code=' + code + '&grant_type=authorization_code',
+    res = await wepy.request({url: 'https://php.evisa100.com/get_openid.php?appid=wx18e03ddea0cde133&secret=7284f8c5142288f86c77ea016a9bf2b3&js_code=' + code + '&grant_type=authorization_code',
       method: 'GET'
     })
     that.globalData.openid = res.data

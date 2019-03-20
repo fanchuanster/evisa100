@@ -152,7 +152,7 @@ input {
           <text class="fieldLabel">父亲的姓</text>
           <input value="{{passport.data.father_name_sur_cn}}" bindinput="oninputFatherSurNameCn" type="text"/>
         </view>
-        <view wx:if="{{!!fields.father_name}}">
+        <view wx:if="{{!!fields.father_name_cn}}">
           <text class="fieldLabel">父亲的名</text>
           <input value="{{passport.data.father_name_given_cn}}" bindinput="oninputFatherGivenNameCn" type="text"/>
         </view>
@@ -233,7 +233,7 @@ input {
           </picker>
         </view>
         <view wx:if="{{!!fields.entry_point}}">
-          <picker bindchange="bindEntryPointChange" range="{{allPoints[application.data.by]}}" range-key="name_cn">
+          <picker bindchange="bindEntryPointChange" range="{{entrypoints[application.data.by]}}" range-key="name_cn">
           <view class="picker">
             <text class="fieldLabel">入境点   </text>{{entryPointDisplay}}
           </view>
@@ -321,7 +321,6 @@ input {
 </template>
 <script>
   import wepy from 'wepy'
-  import testMixin from '../mixins/test'
   const env = require('../lib/config.js')
 
   export default class FillForm extends wepy.page {
@@ -336,12 +335,11 @@ input {
     }
     components = {
     }
-    mixins = [testMixin]
     data = {
       fields: [],
       passport: null,
       application: {},
-      allPoints: [],
+      entrypoints: [],
       purposes: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居', '其他'],
       maritalStatuses: ['单身', '结婚', '离婚', '丧偶'],
       by: ['飞机', '陆路', '水路'],
@@ -446,10 +444,10 @@ input {
         return this.passport.data.photo_file
       },
       idFrontFile() {
-        if (!this.passport || !this.passport.data.id_front_file) {
+        if (!this.passport || !this.passport.data.other_file) {
           return ''
         }
-        return env.uploadImageUrl + '/' + this.passport.data.id_front_file
+        return env.uploadImageUrl + '/' + this.passport.data.other_file
       },
       filesUrls() {
         var files = []
@@ -564,10 +562,10 @@ input {
       },
       bindByChange(e) {
         this.application.data.by = e.detail.value
-        this.application.data.entry_point = this.allPoints[this.application.data.by][0]
+        this.application.data.entry_point = this.entrypoints[this.application.data.by][0]
       },
       bindEntryPointChange(e) {
-        this.application.data.entry_point = this.allPoints[this.application.data.by][e.detail.value]
+        this.application.data.entry_point = this.entrypoints[this.application.data.by][e.detail.value]
       },
       checkboxChangeReturnDomicile(e) {
         this.application.data.return_to_domicile = e.detail.value.includes('return_to_domicile')
@@ -653,7 +651,7 @@ input {
             title: '提交成功',
             icon: 'success'
           })
-          wepy.clearStorageSync()
+          // wepy.clearStorageSync()
           this.passport = null
           this.application = null
           setTimeout(function () {
@@ -680,22 +678,11 @@ input {
         }).then(res => {
           that.application = res.data[0]
           that.application.data = JSON.parse(res.data[0].data)
-          that.fields = this.getFieldNames(this.application.to_country)
+          that.fields = env.getFields(this.application.to_country)
+          this.entrypoints = env.getEntryPoints(this.application.to_country)
           console.log('application:')
           console.log(that.application)
-          wepy.request({
-            url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.application.to_country,
-            method: 'GET',
-            header: {
-              'content-type': 'application/json; charset=UTF-8'
-            }
-          }).then(res => {
-            var entries = JSON.parse(res.data[0].data)
-            entries.forEach(element => {
-              this.allPoints.push(element.data)
-            })
-            that.$apply()
-          })
+
           wepy.request({
             url: 'https://php.evisa100.com/get_passports.php?id=' + this.application.passport_id,
             method: 'GET',
@@ -727,21 +714,9 @@ input {
           this.application.data.ever_convicted = false
         }
         this.application.to_country = option.country
-        this.fields = this.getFieldNames(this.application.to_country)
-        wepy.request({
-          url: 'https://php.evisa100.com/get_entrypoint.php?country=' + this.application.to_country,
-          method: 'GET',
-          header: {
-            'content-type': 'application/json; charset=UTF-8'
-          }
-        }).then(res => {
-          console.log(res)
-          var entries = JSON.parse(res.data[0].data)
-          entries.forEach(element => {
-            this.allPoints.push(element.data)
-          })
-          this.$apply()
-        })
+        this.fields = env.getFields(this.application.to_country)
+        this.entrypoints = env.getEntryPoints(this.application.to_country)
+        console.log(this.entrypoints)
       }
     }
     onUnload() {

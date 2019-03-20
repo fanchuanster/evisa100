@@ -30,20 +30,20 @@
       <text wx:if="{{photoUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
-    <view class="uploader" @tap="uploadIDFront" wx:if="{{ !!fields.id_front_file }}" >
-      <text>身份证正面</text>
-      <text wx:if="{{idFrontUploaded}}">完成</text>
+    <view class="uploader" @tap="uploadOtherFile" wx:if="{{ !!fields.other_file }}" >
+      <text>其他文件</text>
+      <text wx:if="{{otherFileUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
     <view>
-      <button type="primary" disabled="{{(!passportUploaded || !photoUploaded || !idFrontUploaded)}}" bindtap="next">下一步</button>
+      <button type="primary" disabled="{{(!passportUploaded || !photoUploaded || !otherFileUploaded)}}" bindtap="next">下一步</button>
     </view>
 </view>
 </template>
 <script>
   import wepy from 'wepy'
   import UploadFile from '../lib/uploadFile.js'
-  import testMixin from '../mixins/test'
+  import Config from '../lib/config.js'
   
   export default class Pictures extends wepy.page {
     config = {
@@ -60,7 +60,6 @@
       country: '',
       fields: []
     }
-    mixins = [testMixin]
     computed = {
       passportUploaded() {
         return !!this.passport
@@ -68,8 +67,8 @@
       photoUploaded() {
         return this.passportUploaded && this.passport.data.photo_file != null
       },
-      idFrontUploaded() {
-        return this.passportUploaded && this.passport.data.id_front_file != null
+      otherFileUploaded() {
+        return this.passportUploaded && this.passport.data.other_file != null
       }
     }
 
@@ -88,7 +87,7 @@
         url: './uploadPhoto'
       })
     }
-    uploadIDFront() {
+    uploadOtherFile() {
       wepy.showLoading({
         title: '加载中',
         mask: true
@@ -108,11 +107,11 @@
                 title: '上传中',
                 mask: true
               })
-              var photoFileName = 'photo/' + (that.passport ? that.passport.passport_no : Date.now()) + '_id_front.' + imagePath.split('.').pop()
+              var photoFileName = 'photo/' + (that.passport ? that.passport.passport_no : Date.now()) + '_other.' + imagePath.split('.').pop()
               UploadFile(imagePath, photoFileName,
                 function(res) {
                   wepy.hideLoading()
-                  that.passport.data.id_front_file = photoFileName
+                  that.passport.data.other_file = photoFileName
                   wepy.setStorageSync('passport', that.passport)
                   that.$apply()
                 },
@@ -136,7 +135,7 @@
     onLoad(res) {
       if (res.country) {
         this.country = res.country
-        this.fields = this.getFieldNames(res.country)
+        this.fields = Config.getFields(this.country)
       }
     }
   }

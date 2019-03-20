@@ -7,7 +7,7 @@
 </template>
 <script>
   import wepy from 'wepy'
-  import ProductThumb from '@/components/product-thumb' // alias example
+  import ProductThumb from '@/components/product-thumb'
 
   export default class TL extends wepy.page {
     config = {

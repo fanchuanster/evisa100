@@ -81,11 +81,10 @@
   export default class ProductThumb extends wepy.component {
     props = {
       title: String,
-      country: String,
       daysTakes: String,
-      price: String,
       times: {},
-      data: string
+      country: String,
+      price: String
     }
 
     data = {
@@ -93,13 +92,11 @@
     }
     methods = {
       next() {
-        wepy.navigateTo({url: '../pictures?country=' + this.country + '&data=' + this.data})
+        wepy.navigateTo({url: '../pictures?&country=' + this.country})
       }
     }
 
     onLoad(e) {
-      console.log(this.title)
-      console.log(this.country)
       this.imageSrc = 'http://evisa.oss-cn-shanghai.aliyuncs.com/country/' + this.country + '/1.jpg'
       this.$apply()
     }

@@ -49,7 +49,8 @@
         {
           continent: { name: 'africa', name_cn: '非洲' },
           countries: [{ name: 'Kenya', name_cn: '肯尼亚', name_short: 'ke' },
-          { name: 'tanzania', name_cn: '坦桑尼亚', name_short: 'tz' }]
+          { name: 'tanzania', name_cn: '坦桑尼亚', name_short: 'tz' },
+          { name: 'zambia', name_cn: '赞比亚', name_short: 'zm' }]
         },
         {
           continent: { name: 'asia', name_cn: '亚洲' },

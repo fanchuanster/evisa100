@@ -16,11 +16,6 @@
     components = {
       productThumb: ProductThumb
     }
-    computed = {
-      infoString() {
-        return JSON.stringify(this.info)
-      }
-    }
     data = {
       times: [{ key: '有效期限', value: '3个月' },
       { key: '最长停留', value: '30天' },

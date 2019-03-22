@@ -2,7 +2,7 @@
 </style>
 <template>
   <view class="container">
-    <productThumb title="泰国签证-电子签[全国]" country="tl" daysTakes="1-5" price="¥369" :times="times"></productThumb>
+    <productThumb title="泰国签证-电子签" country="tl" daysTakes="1-5" price="¥369" :times="times"></productThumb>
   </view>
 </template>
 <script>

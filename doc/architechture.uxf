@@ -4,95 +4,101 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>380</x>
-      <y>450</y>
+      <x>420</x>
+      <y>70</y>
       <w>100</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>passport</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>680</x>
-      <y>600</y>
-      <w>190</w>
       <h>150</h>
     </coordinates>
-    <panel_attributes>application
-+status
-+to
-+entry_date
-+exit_date
-+entry_point
-+transportation_by
-</panel_attributes>
+    <panel_attributes>passport
++id
++passport_no
++openid
++name
++name_cn
++data
++last_updated</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
-    <coordinates>
-      <x>390</x>
-      <y>600</y>
-      <w>100</w>
-      <h>220</h>
-    </coordinates>
-    <panel_attributes>applicant
-+phone
-+address
-+email
-+occupation
-+father_name
-+mother_name
-+otherinfo
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
     <coordinates>
       <x>410</x>
-      <y>470</y>
-      <w>30</w>
-      <h>150</h>
+      <y>290</y>
+      <w>140</w>
+      <h>130</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>480</x>
-      <y>630</y>
-      <w>220</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;200.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>180</x>
-      <y>630</y>
-      <w>100</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>user
-+openid</panel_attributes>
+    <panel_attributes>application
++id
++status
++entry_date
++departure_date
++data
++last_updated
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>270</x>
-      <y>630</y>
-      <w>140</w>
-      <h>40</h>
+      <x>450</x>
+      <y>210</y>
+      <w>30</w>
+      <h>100</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=0..n</panel_attributes>
-    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>790</x>
+      <y>80</y>
+      <w>100</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>shop
++id
++name
++logo
++data</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>790</x>
+      <y>260</y>
+      <w>100</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>product
++id
++parent_id
++country
++purpose
++data</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>830</x>
+      <y>160</y>
+      <w>30</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>290</y>
+      <w>270</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>250.0;10.0;10.0;70.0</additional_attributes>
   </element>
 </diagram>

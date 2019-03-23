@@ -14,7 +14,7 @@ PRIMARY KEY (id)) CHARACTER SET = utf8;
 
 create table product (
 id int(11) AUTO_INCREMENT, 
-shop_id int(11),
+store_id int(11),
 country_id int(11),
 status int default 1,
 purpose int default 0,
@@ -30,9 +30,10 @@ name_short varchar(10),
 continent varchar(30),
 PRIMARY KEY (id)) CHARACTER SET = utf8;
 
-create table shop (
+create table store (
 id int(11) AUTO_INCREMENT,
 name varchar(30),
+status int,
 data varchar(1024),
 last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (id)) CHARACTER SET = utf8;

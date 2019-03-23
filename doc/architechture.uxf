@@ -73,9 +73,7 @@
     </coordinates>
     <panel_attributes>product
 +id
-+parent_id
 +status
-+country
 +purpose
 +data</panel_attributes>
     <additional_attributes/>
@@ -101,5 +99,32 @@
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>250.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1070</x>
+      <y>260</y>
+      <w>100</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>country
++id
++name
++name_cn
++name_short
++continent</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>880</x>
+      <y>310</y>
+      <w>210</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>190.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>

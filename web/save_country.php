@@ -5,20 +5,23 @@
  $mysqli->query("SET CHARACTER SET utf8");
  
  $input = file_get_contents("php://input");
- $country = json_decode($input);
+ $data = json_decode($input);
+ 
+ var_dump($data)
 
  if ($country->id) {
 
  } else {
 	 // insert it.
-	$insertStr = "insert into country(name, name_short, continent, name_cn) ".
-	"values('".$country->name."','".$country->name_short."','".$country->continent."','".
-	addslashes(json_encode($country->name_cn))."')";
+	 foreach ($data as &$country) {
+		$insertStr = "insert into country(name, name_short, continent, name_cn) ".
+		"values('".$country->name."','".$country->name_short."','".$country->continent."','".
+		addslashes(json_encode($country->name_cn))."')";
+		
+		$mysqli->query($insertStr);
+	}
 	
-	$mysqli->query($insertStr);
 	
-	// return inserted id to client.
-	print('{"id":'.$mysqli->insert_id.'}');
  }
 
 ?>

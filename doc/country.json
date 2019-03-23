@@ -1,0 +1,6 @@
+﻿{
+ data:[{ name: 'Kenya', name_cn: '肯尼亚', name_short: 'ke', continent: 'africa' },
+          { name: 'tanzania', name_cn: '坦桑尼亚', name_short: 'tz', continent: 'africa' },
+          { name: 'zambia', name_cn: '赞比亚', name_short: 'zm', continent: 'africa' },
+		  { name: 'Thailand', name_cn: '泰国', name_short: 'tl', continent: 'asia']
+}

@@ -69,11 +69,12 @@
       <x>790</x>
       <y>260</y>
       <w>100</w>
-      <h>110</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>product
 +id
 +parent_id
++status
 +country
 +purpose
 +data</panel_attributes>

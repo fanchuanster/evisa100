@@ -27,11 +27,11 @@ input {
           </view>
           <view wx:if="{{ !!fields.name_cn }}">
             <text class="fieldLabel">姓名</text>
-            <input value="{{passport.data.name_cn}}" bindinput="oninputNamecn" type="text"/>
+            <input value="{{passport.name_cn}}" bindinput="oninputNamecn" type="text"/>
           </view>
           <view wx:if="{{ !!fields.name }}">
             <text class="fieldLabel">姓名(拼音)</text>
-            <input value="{{passport.data.name}}" bindinput="oninputName" type="text"/>
+            <input value="{{passport.name}}" bindinput="oninputName" type="text"/>
           </view>
           <view wx:if="{{ !!fields.sex }}">
             <text class="fieldLabel">性别</text>
@@ -475,10 +475,10 @@ input {
         this.passport.data.issue_place = e.detail.value
       },
       oninputNamecn(e) {
-        this.passport.data.name_cn = e.detail.value
+        this.passport.name_cn = e.detail.value
       },
       oninputName(e) {
-        this.passport.data.name = e.detail.value
+        this.passport.name = e.detail.value
       },
       oninputNationality(e) {
         this.passport.data.nationality = e.detail.value
@@ -651,7 +651,7 @@ input {
             title: '提交成功',
             icon: 'success'
           })
-          // wepy.clearStorageSync()
+          wepy.clearStorageSync()
           this.passport = null
           this.application = null
           setTimeout(function () {
@@ -716,7 +716,6 @@ input {
         this.application.to_country = option.country
         this.fields = env.getFields(this.application.to_country)
         this.entrypoints = env.getEntryPoints(this.application.to_country)
-        console.log(this.entrypoints)
       }
     }
     onUnload() {

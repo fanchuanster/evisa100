@@ -15,11 +15,9 @@
 	$updatestr = "update application set ".
 	"passport_id=".$travelInfo->passport_id.",".
 	"status=".$travelInfo->status.",".
-	"to_country='".$travelInfo->to_country."',".
-	"purpose=".$travelInfo->purpose.",".
-	"data='".addslashes($data)."',".
 	"entry_date=CAST('".$travelInfo->entry_date."' AS DATE),".
 	"departure_date=CAST('".$travelInfo->departure_date."' AS DATE)".
+	"data='".addslashes($data)."',".
 	" WHERE id=".$travelInfo->id;
         
 	// var_dump($updatestr);
@@ -27,10 +25,8 @@
 	$mysqli->query($updatestr);
  } else {
 	 // insert it.
-	$insertStr = "insert into application(passport_id, to_country, purpose, entry_date, departure_date, data) ".
-	"values(".$travelInfo->passport_id.",'".
-	$travelInfo->to_country."',".
-	$travelInfo->purpose.",".
+	$insertStr = "insert into application(passport_id, entry_date, departure_date, data) ".
+	"values(".$travelInfo->passport_id.",".
 	"CAST('".$travelInfo->entry_date."' AS DATE),".
 	"CAST('".$travelInfo->departure_date."' AS DATE),'".
 	addslashes($data)."')";

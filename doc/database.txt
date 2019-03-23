@@ -1,5 +1,6 @@
 ﻿CREATE TABLE passport (id int(11) AUTO_INCREMENT, passport_no VARCHAR(20),
-openid VARCHAR(30), name VARCHAR(30), name_cn VARCHAR(30), 
+openid VARCHAR(30), 
+name VARCHAR(30), name_cn VARCHAR(30), 
 data varchar(2048) CHARACTER SET utf8 COLLATE utf8_unicode_ci, 
 last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY(id)) CHARACTER SET = utf8;
@@ -15,6 +16,7 @@ create table product (
 id int(11) AUTO_INCREMENT, 
 shop_id int(11),
 parent_id int(11),
+status int default 1,
 country varchar(10),
 purpose int,
 data varchar(1024),

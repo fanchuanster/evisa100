@@ -4,7 +4,7 @@
   $mysqli->query("set NAMES 'utf8'");
   $mysqli->query("SET CHARACTER SET utf8");
  
-  $querystr = "SELECT 'id', id, 'passport_no', passport_no, 'openid', openid, 'data', data from passport ".
+  $querystr = "SELECT 'id', id, 'passport_no', passport_no, 'openid', openid, 'name', name, 'name_cn', name_cn, 'data', data from passport ".
 			"WHERE ";
   if (isset($_GET['id'])) {
 	  $querystr .= "id=".$_GET['id'];

@@ -11,17 +11,21 @@
  if ($passport->id) {
 	// update it.
 	$updatestr = "update passport set ".
-	"passport_no='".$passport->passport_no."',".
-	"openid='".$passport->openid."',".
-	"data='".addslashes($data)."'".
-	" WHERE id='".$passport->id."'";
+	"passport_no='" . $passport->passport_no."',".
+	"openid='" . $passport->openid."',".
+	"name='" . $passport->name."',".
+	"name_cn='" . $passport->name_cn."',".
+	"data='" . addslashes($data)."'".
+	" WHERE id='" . $passport->id."'";
 
 	$mysqli->query($updatestr);
  } else {
 	 // insert it.
-	$insertStr = "insert into passport(passport_no, openid, data) ".
+	$insertStr = "insert into passport(passport_no, openid, name, name_cn, data) ".
 	"values('".$passport->passport_no."','".
 	$passport->openid."','".
+	$passport->name."','".
+	$passport->name_cn."','".
 	addslashes($data)."')";
 	
 	$mysqli->query($insertStr);

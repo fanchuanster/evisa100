@@ -2,8 +2,11 @@
 </style>
 <template>
   <view class="container">
-    <view class="uploader" @tap="onTabMyOrders">
+    <view @tap="ToMyOrders">
       <text>我的订单</text>
+    </view>
+    <view @tap="ToMyProducts">
+      <text>我的商品</text>
     </view>
   </view>
 </template>
@@ -32,8 +35,11 @@
     }
 
     methods = {
-      onTabMyOrders() {
+      ToMyOrders() {
         wepy.navigateTo({url: './myOrders'})
+      },
+      ToMyProducts() {
+        wepy.navigateTo({url: './myProducts'})
       }
     }
 

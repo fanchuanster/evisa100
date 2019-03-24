@@ -71,7 +71,8 @@ export default class extends wepy.app {
       'pages/uploadPhoto',
       'pages/mine',
       'pages/myOrders',
-      'pages/myProducts'
+      'pages/myProducts',
+      'pages/product'
     ],
     tabBar: {
       color: '#AEADAD',

@@ -3,7 +3,7 @@
 <template>
   <view class="container">
     <view class="toolbar_top">
-      <image mode="aspectFit" style="height:200rpx" @tap="addPhoto" src="../resources/images/add_from_album.png"/>
+      <image mode="aspectFit" style="height:200rpx" @tap="addPhoto" src="../resources/images/add_button.png"/>
       <image mode="aspectFit" style="height:200rpx" @tap="takePhoto" src="../resources/images/camera.png"/>
     </view>
     <panel>

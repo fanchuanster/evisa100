@@ -3,11 +3,10 @@
   $mysqli = new mysqli("localhost", "root", "root", "evisa");
   $mysqli->query("set NAMES 'utf8'");
   $mysqli->query("SET CHARACTER SET utf8");
-  
-  // $owner = $_GET['owner'];
- 
-  $querystr = "SELECT 'id', id, 'store_id', store_id, 'country_id', country_id, 'status', status, 'data', data"
-  ." FROM product";
+   
+  $querystr = "SELECT 'id', product.id, 'store_id', store_id, 'country_id', country_id, 'status', status, 'data', data"
+  ." 'name', name, 'name_cn', name_cn, 'name_short', name_short, continent, continent"
+  ." FROM product INNER JOIN country on country.id=product.id";
   
   $condition = '';
   if (isset($_GET['id'])) {

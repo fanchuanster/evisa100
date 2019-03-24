@@ -17,7 +17,6 @@ id int(11) AUTO_INCREMENT,
 store_id int(11),
 country_id int(11),
 status int default 1,
-purpose int default 0,
 data varchar(1024),
 last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (id)) CHARACTER SET = utf8;

@@ -6,13 +6,12 @@
   
   // $owner = $_GET['owner'];
  
-  $querystr = "SELECT 'id', application.id, 'passport_id', passport_id, 'status', status, 'entry_date', entry_date, 'departure_date', departure_date, 'data', application.data"
-  .", 'passport_no', passport_no, 'passport_data', passport.data, 'name', name, 'name_cn', name_cn"
-  ." FROM application INNER JOIN passport ON application.passport_id=passport.id";
+  $querystr = "SELECT 'id', id, 'store_id', store_id, 'country_id', country_id, 'status', status, 'data', data"
+  ." FROM product";
   
   $condition = '';
   if (isset($_GET['id'])) {
-	  $condition .= 'application.id=' . $_GET['id'];
+	  $condition .= 'id=' . $_GET['id'];
   }
   if (isset($_GET['status'])) {
 	  if (!empty($condition)) {
@@ -22,11 +21,11 @@
   }
   
   // for my openid, gets all.
-  if (isset($_GET['openid']) && $_GET['openid'] != 'opini5GNX-N6JKq6aqutfPHCxUDc') {
+  if (isset($_GET['store_id'])) {
 	  if (!empty($condition)) {
 		  $condition .= ' AND';
 	  }
-	  $condition .= " openid='" . $_GET['openid'] . "'";
+	  $condition .= " store_id='" . $_GET['store_id'] . "'";
   }
   if (!empty($condition)) {
     $querystr .= ' WHERE ' . $condition;

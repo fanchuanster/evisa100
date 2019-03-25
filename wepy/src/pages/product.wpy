@@ -96,7 +96,8 @@ input {
         }
       }).then(res => {
         console.log(res)
-        this.countries = res.data
+        this.countries = (res.data)
+        this.countries[0].name_cn = JSON.parse(this.countries[0].name_cn)
         that.$apply()
       })
       let that = this

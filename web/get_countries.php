@@ -18,5 +18,5 @@
   }
   
 
-  print(((($records))));
+  print(((json_encode($records))));
 ?>

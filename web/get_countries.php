@@ -8,7 +8,7 @@
   ." 'name', name, 'name_cn', name_cn, 'name_short', name_short, continent, continent"
   ." FROM country";
     
-  var_dump($querystr);
+  // var_dump($querystr);
     
   $result = $mysqli->query($querystr);
   

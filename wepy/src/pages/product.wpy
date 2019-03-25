@@ -17,7 +17,7 @@ input {
       <i-collapse-item title="基本信息">
         <view slot="content">
           <view>
-            <picker mode="selector" value="{{countryIndex}}" range="{{countries}}" @change="onCountryChange">
+            <picker mode="selector" value="{{countryIndex}}" range="{{countries}}" range-key="name-cn" @change="onCountryChange">
               <view class="picker">
                 <text class="fieldLabel">国家 </text>{{countryTypeDisplay}}
               </view>
@@ -73,7 +73,7 @@ input {
     computed = {
       countryTypeDisplay() {
         if (this.countries) {
-          return this.countries[this.countryIndex]
+          return this.countries[this.countryIndex].name_cn
         }
 
         return ''

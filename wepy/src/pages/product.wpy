@@ -17,27 +17,13 @@ input {
       <i-collapse-item title="基本信息">
         <view slot="content">
           <view>
-            <picker mode="selector" value="{{passport.data.job_type}}" range="{{jobs}}" @change="onJobTypeChange">
+            <picker mode="selector" value="{{countryIndex}}" range="{{countries}}" @change="onCountryChange">
               <view class="picker">
-                <text class="fieldLabel">职业 </text>{{jobTypeDisplay}}
+                <text class="fieldLabel">国家 </text>{{countryTypeDisplay}}
               </view>
             </picker>
           </view>
-          <view wx:if="{{passport.data.job_type == 2}}">
-            <view wx:if="{{!!fields.job_comp_cn}}">
-              <text class="fieldLabel">单位名称</text>
-              <input  value="{{passport.data.job_comp_cn}}" bindinput="onJobCompChange" type="text"/>
-            </view>
-            <view wx:if="{{!!fields.job_title_cn}}">
-              <text class="fieldLabel">职位名称</text>
-              <input value="{{passport.data.job_title_cn}}" bindinput="onJobTitleChangeCn" type="text"/>
-            </view>
-            <view wx:if="{{!!fields.job_title}}">
-              <text class="fieldLabel">职位名称(英文)</text>
-              <input placeholder="选填可空" value="{{passport.data.job_title}}" bindinput="onJobTitleChange" type="text"/>
-            </view>
-          </view>
-          <view wx:if="{{passport.data.job_type == 0}}">
+          <!-- <view wx:if="{{passport.data.job_type == 0}}">
             <view wx:if="{{!!fields.job_comp_cn}}">
               <text class="fieldLabel">学校名称</text>
               <input  value="{{passport.data.job_comp_cn}}" bindinput="onJobCompChange" type="text"/>
@@ -54,7 +40,7 @@ input {
             <view wx:for="{{filesUrls}}" wx:for-item="url" wx:key="*this">
               <image src="{{url}}" @tap="previewImages"></image>
             </view>
-          </view>
+          </view> -->
         </view>
       </i-collapse-item>
     </i-collapse>
@@ -68,399 +54,68 @@ input {
 </template>
 <script>
   import wepy from 'wepy'
-  const env = require('../lib/config.js')
 
-  export default class FillForm extends wepy.page {
+  export default class Product extends wepy.page {
     config = {
-      navigationBarTitleText: '填表',
+      navigationBarTitleText: '商品',
       usingComponents: {
         'i-collapse': '../resources/iview/collapse/index',
-        'i-collapse-item': '../resources/iview/collapse-item/index',
-        Step: '../resources/iview/step/index',
-        Steps: '../resources/iview/steps/index'
+        'i-collapse-item': '../resources/iview/collapse-item/index'
       }
     }
     components = {
     }
     data = {
-      passport: null,
-      purposes: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居', '其他']
+      product: {},
+      countries: null,
+      countryIndex: 0
     }
     computed = {
-      maritalStatusIndex() {
-        if (this.passport && this.passport.data.marital_status) {
-          return this.passport.data.marital_status
+      countryTypeDisplay() {
+        if (this.countries) {
+          return this.countries[this.countryIndex]
         }
-        return 0
-      },
-      birthDate() {
-        if (this.passport) {
-          return this.passport.data.birth_date
-        }
+
         return ''
-      },
-      issueDate() {
-        if (this.passport) {
-          return this.passport.data.issue_date
-        }
-        return ''
-      },
-      expiryDate() {
-        if (this.passport) {
-          return this.passport.data.expiry_date
-        }
-        return ''
-      },
-      jobTypeDisplay() {
-        if (this.passport && this.passport.data.job_type) {
-          return this.jobs[this.passport.data.job_type]
-        }
-        return ''
-      },
-      regionDisplay() {
-        if (this.passport && this.passport.data.region) {
-          return this.passport.data.region[0] + ' ' + this.passport.data.region[1] + ' ' + this.passport.data.region[2]
-        }
-        return ''
-      },
-      purposeDisplay() {
-        if (this.application.purpose) {
-          return this.purposes[this.application.purpose]
-        }
-        return ''
-      },
-      entryDate() {
-        if (this.application.data) {
-          return this.application.entry_date
-        }
-        return ''
-      },
-      departureDate() {
-        if (this.application.data) {
-          return this.application.departure_date
-        }
-        return ''
-      },
-      byDisplay() {
-        if (this.application.data && this.application.data.by) {
-          return this.by[this.application.data.by]
-        }
-        return ''
-      },
-      entryPointDisplay() {
-        if (this.application.data && this.application.data.entry_point) {
-          return this.application.data.entry_point.name_cn
-        }
-        return ''
-      },
-      destinationDisplay() {
-        if (this.application.data && this.application.data.destination) {
-          return this.application.data.destination.name_cn
-        }
-        return ''
-      },
-      today() {
-        return new Date().toJSON().slice(0, 10).replace(/-/g, '/')
-      },
-      departureDateStart() {
-        if (this.application.entry_date) {
-          return this.application.entry_date
-        }
-        return this.today
-      },
-      isAdmin() {
-        return this.openid === 'opini5GNX-N6JKq6aqutfPHCxUDc'
-      },
-      passportFile() {
-        if (!this.passport) {
-          return ''
-        }
-        return env.uploadImageUrl + '/' + this.passport.data.passport_file
-      },
-      photoFile() {
-        if (!this.passport || !this.passport.data.photo_file) {
-          return ''
-        }
-        return this.passport.data.photo_file
-      },
-      idFrontFile() {
-        if (!this.passport || !this.passport.data.other_file) {
-          return ''
-        }
-        return env.uploadImageUrl + '/' + this.passport.data.other_file
-      },
-      filesUrls() {
-        var files = []
-        if (this.idFrontFile) {
-          files.push(this.idFrontFile)
-        }
-        if (this.photoFile) {
-          files.push(this.photoFile)
-        }
-        return files
       }
     }
 
     methods = {
-      oninputPassport(e) {
-        this.passport.passport_no = e.detail.value
-      },
-      oninputAuthority(e) {
-        this.passport.data.authority = e.detail.value
-      },
-      oninputIssuePlaceCn(e) {
-        this.passport.data.issue_place_cn = e.detail.value
-      },
-      oninputIssuePlace(e) {
-        this.passport.data.issue_place = e.detail.value
-      },
-      oninputNamecn(e) {
-        this.passport.name_cn = e.detail.value
-      },
-      oninputName(e) {
-        this.passport.name = e.detail.value
-      },
-      oninputNationality(e) {
-        this.passport.data.nationality = e.detail.value
-      },
-      bindDateChange(e) {
-        this.passport.data.issue_date = e.detail.value
-      },
-      bindExpiryChange(e) {
-        this.passport.data.expiry_date = e.detail.value
-      },
-      bindMaritalStatusChange(e) {
-        this.passport.data.marital_status = e.detail.value
-      },
-      bindBirthChange(e) {
-        this.birth_date = e.detail.value
-        this.passport.data.birth_date = e.detail.value
-      },
-      radioChange(e) {
-        this.passport.data.sex = e.detail.value
-      },
-      onJobTypeChange(e) {
-        this.passport.data.job_type = e.detail.value
-      },
-      onJobCompChange(e) {
-        this.passport.data.job_comp_cn = e.detail.value
-      },
-      onJobTitleChangeCn(e) {
-        this.passport.data.job_title_cn = e.detail.value
-      },
-      onJobTitleChange(e) {
-        this.passport.data.job_title = e.detail.value
-      },
-      oninputFatherSurName(e) {
-        this.passport.data.father_name_sur = e.detail.value
-      },
-      oninputFatherSurNameCn(e) {
-        this.passport.data.father_name_sur_cn = e.detail.value
-      },
-      oninputFatherGivenName(e) {
-        this.passport.data.father_name_given = e.detail.value
-      },
-      oninputFatherGivenNameCn(e) {
-        this.passport.data.father_name_given_cn = e.detail.value
-      },
-      oninputMotherSurName(e) {
-        this.passport.data.mother_name_sur = e.detail.value
-      },
-      oninputMotherSurNameCn(e) {
-        this.passport.data.mother_name_sur_cn = e.detail.value
-      },
-      oninputMotherGivenName(e) {
-        this.passport.data.mother_name_given = e.detail.value
-      },
-      oninputMotherGivenNameCn(e) {
-        this.passport.data.mother_name_given_cn = e.detail.value
-      },
-      bindRegionChange(e) {
-        console.log(e.detail.value)
-        this.passport.data.region = e.detail.value
-      },
-      oninputAddressCn(e) {
-        this.passport.data.address_cn = e.detail.value
-      },
-      oninputAddress(e) {
-        this.passport.data.address = e.detail.value
-      },
-      oninputPhone(e) {
-        this.passport.data.phone = e.detail.value
-      },
-      oninputEmail(e) {
-        this.passport.data.email = e.detail.value
-      },
-      bindPurposeChange(e) {
-        this.application.purpose = e.detail.value
-      },
-      bindEntryDateChange(e) {
-        this.application.entry_date = e.detail.value
-      },
-      bindDepartureDateChange(e) {
-        this.application.departure_date = e.detail.value
-      },
-      bindByChange(e) {
-        this.application.data.by = e.detail.value
-        this.application.data.entry_point = this.entrypoints[this.application.data.by][0]
-      },
-      bindEntryPointChange(e) {
-        this.application.data.entry_point = this.entrypoints[this.application.data.by][e.detail.value]
-      },
-      checkboxChangeReturnDomicile(e) {
-        this.application.data.return_to_domicile = e.detail.value.includes('return_to_domicile')
-      },
-      checkboxChangeBeenOtherCountry(e) {
-        this.application.data.been_other_country = e.detail.value.includes('been_other_country')
-      },
-      checkboxChangeEverBeenTo(e) {
-        this.application.data.ever_been_to = e.detail.value.includes('ever_been_to')
-      },
-      checkboxChange(e) {
-        this.application.data.ever_been_to = e.detail.value.includes('ever_been_to')
-        this.application.data.ever_denied = e.detail.value.includes('ever_denied')
-        this.application.data.ever_denied_by_others = e.detail.value.includes('ever_denied_by_others')
-        this.application.data.ever_convicted = e.detail.value.includes('ever_convicted')
-      },
-      oninputCountry(e) {
-        this.application.data.been_other_country_name = e.detail.value
-      },
-      bind3EntryDateChange(e) {
-        this.application.data.been_other_country_date = e.detail.value
-      },
-      bind3DepartureDateChange(e) {
-        this.application.data.been_other_country_departure_date = e.detail.value
-      },
-      bindEverEntryDateChange(e) {
-        this.application.data.ever_been_to_date = e.detail.value
-      },
-      bindEverDepartureDateChange(e) {
-        this.application.data.ever_been_to_departure_date = e.detail.value
+      onCountryChange(e) {
+        this.countryIndex = e.detail.value
+        this.product.country_id = this.countries[this.countryIndex].id
       }
     }
-    previewPassport(event) {
-      console.log(event)
-      var src = event.currentTarget.dataset.src
-      var imgList = event.currentTarget.dataset.list
-      wx.previewImage({
-        current: src,
-        urls: imgList
-      })
-    }
-    previewImages(event) {
-      var src = event.currentTarget.dataset.src
-      console.log(src)
-      var imgList = this.filesUrls
-      wx.previewImage({
-        current: src,
-        urls: imgList
-      })
-    }
-    async submit() {
-      this.openid = await this.$parent.getOpenid()
-      this.passport.openid = this.openid
 
-      console.log('saving passport:')
-      console.log(this.passport)
+    onLoad(option) {
       wepy.request({
-        url: 'https://php.evisa100.com/save_passport.php',
-        method: 'POST',
-        data: this.passport,
+        url: 'https://php.evisa100.com/get_countries.php?id=' + option.product_id,
+        method: 'GET',
         header: {
           'content-type': 'application/json; charset=UTF-8'
         }
       }).then(res => {
         console.log(res)
-        if (res.data.id) {
-          this.passport.id = res.data.id
-        }
-        this.application.status = this.isAdmin ? 2 : 1
-        this.application.passport_id = this.passport.id
-        console.log('saving application:')
-        console.log(this.application)
-        wepy.request({
-          url: 'https://php.evisa100.com/submit_application.php',
-          method: 'POST',
-          data: this.application,
-          header: {
-            'content-type': 'application/json; charset=UTF-8'
-          }
-        }).then(res => {
-          console.log(res)
-          wepy.showToast({
-            title: '提交成功',
-            icon: 'success'
-          })
-          wepy.clearStorageSync()
-          this.passport = null
-          this.application = null
-          setTimeout(function () {
-            wepy.switchTab({
-              url: './index'
-            })
-          }, 3000)
-        })
+        this.countries = res.data
+        that.$apply()
       })
-    }
-
-    onLoad(option) {
-      if (option.openid) {
-        this.openid = option.openid
-      }
       let that = this
-      if (option.id) {
+      if (option.store_id) {
+        this.product.store_id = option.store_id
+      }
+      if (option.product_id) {
         wepy.request({
-          url: 'https://php.evisa100.com/get_application.php?id=' + option.id,
+          url: 'https://php.evisa100.com/get_products.php?id=' + option.product_id,
           method: 'GET',
           header: {
             'content-type': 'application/json; charset=UTF-8'
           }
         }).then(res => {
-          that.application = res.data[0]
-          that.application.data = JSON.parse(res.data[0].data)
-          that.fields = env.getFields(this.application.to_country)
-          this.entrypoints = env.getEntryPoints(this.application.to_country)
-          console.log('application:')
-          console.log(that.application)
-
-          wepy.request({
-            url: 'https://php.evisa100.com/get_passports.php?id=' + this.application.passport_id,
-            method: 'GET',
-            header: {
-              'content-type': 'application/json; charset=UTF-8'
-            }
-          }).then(res => {
-            that.passport = res.data[0]
-            that.passport.data = JSON.parse(res.data[0].data)
-            that.$apply()
-            console.log('passport:')
-            console.log(that.passport)
-          })
+          console.log(res)
+          this.product = res.data[0]
+          that.$apply()
         })
-      } else {
-        this.passport = wepy.getStorageSync('passport')
-        var application = wepy.getStorageSync('application')
-        if (application) {
-          this.application = application
-        }
-        if (!this.application.data) {
-          this.application.data = {}
-          // default values.
-          this.application.data.return_to_domicile = true
-          this.application.data.been_other_country = false
-          this.application.data.ever_been_to = false
-          this.application.data.ever_denied = false
-          this.application.data.ever_denied_by_others = false
-          this.application.data.ever_convicted = false
-        }
-        this.application.to_country = option.country
-        this.fields = env.getFields(this.application.to_country)
-        this.entrypoints = env.getEntryPoints(this.application.to_country)
       }
-    }
-    onUnload() {
-      wepy.setStorageSync('passport', this.passport)
-      wepy.setStorageSync('application', this.application)
     }
   }
 </script>

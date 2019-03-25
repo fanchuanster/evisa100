@@ -17,5 +17,5 @@
 	  $records[] = $row;
   }
   
-  print(((json_encode($records))));
+  print((($records)));
 ?>

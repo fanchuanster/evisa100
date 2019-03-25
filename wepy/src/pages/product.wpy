@@ -17,30 +17,26 @@ input {
       <i-collapse-item title="基本信息">
         <view slot="content">
           <view>
-            <picker mode="selector" value="{{countryIndex}}" range="{{countries}}" range-key="name-cn" @change="onCountryChange">
+            <picker mode="selector" value="{{countryIndex}}" range="{{countries}}" range-key="name_cn" @change="onCountryChange">
               <view class="picker">
                 <text class="fieldLabel">国家 </text>{{countryTypeDisplay}}
               </view>
             </picker>
           </view>
-          <!-- <view wx:if="{{passport.data.job_type == 0}}">
-            <view wx:if="{{!!fields.job_comp_cn}}">
-              <text class="fieldLabel">学校名称</text>
-              <input  value="{{passport.data.job_comp_cn}}" bindinput="onJobCompChange" type="text"/>
-            </view>
+          <view>
+            <!-- <repeat for="{{product.items}}" item="item" key="item.id">
+              <view>
+                <input id="{{item.id}}" value="{{item.type}}" @input="onItemTypeChange" type="text"/>
+                <input id="{{item.id}}" value="{{item.price}}" @input="onItemPriceChange" type="number"/>
+              </view>
+            </repeat> -->
+            <block wx:for-items="{{lots}}" wx:for-item="item" wx:key="id">
+              <text>{{item.price}}</text>
+            </block>
           </view>
-          <view wx:if="{{passport.data.job_type == 4}}">
-            <view wx:if="{{!!fields.job_title_cn}}">
-              <text class="fieldLabel">职业描述</text>
-              <input placeholder="当前职业的具体描述" value="{{passport.data.job_title_cn}}" bindinput="onJobTitleChange" type="text"/>
-            </view>
+          <view class="container" @tap="addProductItem">
+            <image mode="aspectFit" style="height:100rpx" src="../resources/images/add_button.png"/>
           </view>
-          <view wx:if="{{!!filesUrls}}">
-            <text class="fieldLabel">图片资料</text>
-            <view wx:for="{{filesUrls}}" wx:for-item="url" wx:key="*this">
-              <image src="{{url}}" @tap="previewImages"></image>
-            </view>
-          </view> -->
         </view>
       </i-collapse-item>
     </i-collapse>
@@ -68,7 +64,11 @@ input {
     data = {
       product: {},
       countries: null,
-      countryIndex: 0
+      countryIndex: 0,
+      items: [
+        { id: 0, type: 'songq', price: 10 },
+        { id: 1, type: 'songq2', price: 11 }
+      ]
     }
     computed = {
       countryTypeDisplay() {
@@ -77,6 +77,12 @@ input {
         }
 
         return ''
+      },
+      lots() {
+        if (!this.products.items) {
+          this.products.items = []
+        }
+        return this.products.items
       }
     }
 
@@ -84,7 +90,28 @@ input {
       onCountryChange(e) {
         this.countryIndex = e.detail.value
         this.product.country_id = this.countries[this.countryIndex].id
+      },
+      onItemTypeChange(e) {
+        console.log(e)
+      },
+      addProductItem() {
+        if (!this.product.items) {
+          this.product.items = []
+        }
+        var item = { type: 'songq', price: 10 }
+        item.id = this.product.items.length
+        this.product.items.push({item})
+        console.log(this.product.items)
       }
+    }
+    addProductItem2() {
+      if (!this.product.items) {
+        this.product.items = []
+      }
+      var item = { type: 'songq', price: 10 }
+      item.id = this.product.items.length
+      this.product.items.push({item})
+      console.log(this.product.items)
     }
 
     onLoad(option) {
@@ -96,8 +123,10 @@ input {
         }
       }).then(res => {
         console.log(res)
-        this.countries = (res.data)
-        this.countries[0].name_cn = JSON.parse(this.countries[0].name_cn)
+        this.countries = res.data
+        this.countries.forEach(element => {
+          element.name_cn = JSON.parse(element.name_cn)
+        })
         that.$apply()
       })
       let that = this
@@ -117,6 +146,8 @@ input {
           that.$apply()
         })
       }
+
+      this.addProductItem2()
     }
   }
 </script>

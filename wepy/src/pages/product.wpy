@@ -24,15 +24,9 @@ input {
             </picker>
           </view>
           <view>
-            <!-- <repeat for="{{product.items}}" item="item" key="item.id">
-              <view>
-                <input id="{{item.id}}" value="{{item.type}}" @input="onItemTypeChange" type="text"/>
-                <input id="{{item.id}}" value="{{item.price}}" @input="onItemPriceChange" type="number"/>
-              </view>
-            </repeat> -->
-            <block wx:for-items="{{lots}}" wx:for-item="item" wx:key="id">
-              <text>{{item.price}}</text>
-            </block>
+            <repeat for="{{lots}}" item="item" key="item.id">
+              <productItem :type="item.type" :price="item.price" />
+            </repeat>
           </view>
           <view class="container" @tap="addProductItem">
             <image mode="aspectFit" style="height:100rpx" src="../resources/images/add_button.png"/>
@@ -50,6 +44,7 @@ input {
 </template>
 <script>
   import wepy from 'wepy'
+  import ProductItem from '@/components/product-item'
 
   export default class Product extends wepy.page {
     config = {
@@ -60,6 +55,7 @@ input {
       }
     }
     components = {
+      productItem: ProductItem
     }
     data = {
       product: {},
@@ -79,10 +75,10 @@ input {
         return ''
       },
       lots() {
-        if (!this.products.items) {
-          this.products.items = []
+        if (!this.product.items) {
+          this.product.items = []
         }
-        return this.products.items
+        return this.product.items
       }
     }
 
@@ -92,7 +88,7 @@ input {
         this.product.country_id = this.countries[this.countryIndex].id
       },
       onItemTypeChange(e) {
-        console.log(e)
+        this.product.items[0].type = e.detail.value
       },
       addProductItem() {
         if (!this.product.items) {
@@ -102,16 +98,9 @@ input {
         item.id = this.product.items.length
         this.product.items.push({item})
         console.log(this.product.items)
+
+        this.$apply()
       }
-    }
-    addProductItem2() {
-      if (!this.product.items) {
-        this.product.items = []
-      }
-      var item = { type: 'songq', price: 10 }
-      item.id = this.product.items.length
-      this.product.items.push({item})
-      console.log(this.product.items)
     }
 
     onLoad(option) {
@@ -146,8 +135,6 @@ input {
           that.$apply()
         })
       }
-
-      this.addProductItem2()
     }
   }
 </script>

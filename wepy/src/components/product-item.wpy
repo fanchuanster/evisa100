@@ -1,0 +1,92 @@
+<style lang="less">
+  .thumb {
+    width: 100%;
+    text-align: left;
+    font-size: 11px;
+    display:flex;
+    flex-direction:column;
+
+    .text-alignment {
+      margin-left: 20rpx;
+      margin-right: 20rpx;
+      margin-top: 20rpx;
+    }
+    .title {
+      font-size: 14px;
+      .text-alignment();
+    }
+
+    .subdetails {
+      display:flex;
+      flex-direction: row;
+      justify-content: space-between;
+      color: gray;
+      .text-alignment();
+      .price {
+        color:orangered;
+      }      
+    }
+    .times-details {
+      display: flex;
+      justify-content: space-evenly;
+      flex-direction: row;
+      margin-top:20rpx;
+      .highlighted {
+        color:black;
+        font-size: 14px;
+      }
+      .not-highlighted {
+        color: gray;
+        font-size: 11px
+      }
+      .time-details {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+  div.hr {
+    background:lightgray;
+    margin-left: 15rpx;
+    margin-right: 15rpx;
+    height:4rpx;
+    margin-top: 20rpx;
+  }
+</style>
+<template>
+  <view class="thumb">
+    <view>
+      <input value="{{type}}" @input="onItemTypeChange" type="text"/>
+      <input value="{{price}}" @input="onItemPriceChange" type="number"/>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class ProductItem extends wepy.component {
+    props = {
+      type: {
+        type: String,
+        default: 'nothing',
+        twoWay: true
+      }
+      price: String
+    }
+
+    data = {
+      imageSrc: ''
+    }
+    methods = {
+      onItemTypeChange(e) {
+        this.type = e.detail.value
+      },
+      onItemPriceChange(e) {
+        this.price = e.detail.value
+      }
+    }
+
+    onLoad(e) {
+    }
+  }
+</script>

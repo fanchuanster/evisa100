@@ -10,8 +10,6 @@
 	$jsondecode = json_decode($weixin);
 	
 	$array = get_object_vars($jsondecode);
-	var_dump($array);
-	
-	print($array['openid']);
 
+	print('{"data":'.json_encode($array).'}');
 ?>

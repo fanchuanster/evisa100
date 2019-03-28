@@ -18,16 +18,15 @@
 	$mysqli->query($updatestr);
  } else {
 	 // insert it.
-	$insertStr = "insert into product(store_id, country_id, status, data) ".
+	$insertStr = "insert into product(store_id, country_id, data) ".
 	"values(".$product->store_id.",".
-	$product->country_id.",".
-	$product->status.",'".
+	$product->country_id.",'".
 	addslashes($data)."')";
-	
-	$mysqli->query($insertStr);
+	var_dump($insertStr);
+	//$mysqli->query($insertStr);
 	
 	// return inserted id to client.
-	print('{"id":'.$mysqli->insert_id.'}');
+	//print('{"id":'.$mysqli->insert_id.'}');
  }
 
 ?>

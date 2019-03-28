@@ -24,7 +24,7 @@ export default class Authorize extends wepy.page {
     let res = await wepy.getSetting()
     if ((res.authSetting)['scope.userInfo']) {
       let userInfo = wepy.getStorageSync(USER_INFO)
-      if (!userInfo.nickName) {
+      if (userInfo.nickName) {
         let data  = await wepy.getUserInfo()
         if (data) {
           wepy.setStorageSync(USER_INFO, data.userInfo)

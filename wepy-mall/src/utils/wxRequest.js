@@ -16,7 +16,7 @@ const wxRequest = async(params = {}, url) => {
         url: url,
         method: params.method || 'GET',
         data: data,
-        header: { 'Content-Type': 'application/json' },
+        header: { 'Content-Type': 'application/json; charset=UTF-8' },
     });
     tip.loaded();
     return res;

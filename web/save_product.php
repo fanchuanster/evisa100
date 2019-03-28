@@ -23,10 +23,10 @@
 	$product->country_id.",'".
 	addslashes($data)."')";
 	var_dump($insertStr);
-	//$mysqli->query($insertStr);
+	$mysqli->query($insertStr);
 	
 	// return inserted id to client.
-	//print('{"id":'.$mysqli->insert_id.'}');
+	print('{"id":'.$mysqli->insert_id.'}');
  }
 
 ?>

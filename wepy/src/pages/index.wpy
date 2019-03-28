@@ -34,6 +34,7 @@
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '在线签证',
+      enablePullDownRefresh: true,
       usingComponents: {
         'i-tab-bar': '../resources/iview/tab-bar/index',
         'i-tab-bar-item': '../resources/iview/tab-bar-item/index'
@@ -69,33 +70,6 @@
     }
 
     methods = {
-      handleChange(event) {
-        this.current = event.detail.key
-      },
-      communicate () {
-        console.log(this.$name + ' tap')
-        this.$invoke('counter2', 'minus', 45, 6)
-        this.$invoke('counter1', 'plus', 45, 6)
-        this.$broadcast('index-broadcast', 1, 3, 4)
-      },
-      request () {
-        let self = this
-        let i = 10
-        let map = ['MA==', 'MQo=', 'Mg==', 'Mw==', 'NA==', 'NQ==', 'Ng==', 'Nw==', 'OA==', 'OQ==']
-        while (i--) {
-          wepy.request({
-            url: 'https://www.madcoder.cn/tests/sleep.php?time=1&t=css&c=' + map[i] + '&i=' + i,
-            success: function (d) {
-              self.netrst += d.data + '.'
-              self.$apply()
-            }
-          })
-        }
-      },
-      counterEmit (...args) {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-      }
     }
 
     onLoad(e) {

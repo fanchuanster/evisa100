@@ -3,7 +3,7 @@ import {
 } from '@/utils/wxRequest';
 
 let env = "-test" //-dev 或者 -test
-const apiMall = 'https://php.evisa100.com/'
+const apiMall = 'https://php.evisa100.com'
 
 /**
  * 获取发现好商品接口

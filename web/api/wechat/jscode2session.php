@@ -11,5 +11,5 @@
 	
 	$array = get_object_vars($jsondecode);
 
-	print('{"data":'.json_encode($array).'}');
+	print('{result: true, data:'.json_encode($array).'}');
 ?>

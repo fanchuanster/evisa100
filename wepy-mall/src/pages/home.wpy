@@ -102,8 +102,8 @@ export default class Home extends wepy.page {
   onLoad() {
     let that = this;
     this.discoverList = [];
-    that.getDiscoverList();
-    this.getAdList();
+    that.getProductsList();
+    // this.getAdList();
   }
   computed = {}
   methods = {

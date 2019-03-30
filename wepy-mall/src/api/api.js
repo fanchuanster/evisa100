@@ -11,7 +11,7 @@ const apiMall = 'https://php.evisa100.com'
  * @return {[type]}        [description]
  */
 const getDiscoverList = (params) => wxRequest(params, apiMall + '/goods/list?cateidOne=1&cateidTwo=0&price=0&sales=2');
-const getProductslist = (params) => wxRequest(params, apiMall + '/api/product/list');
+const getProductsList = (params) => wxRequest(params, apiMall + '/api/product/list');
 //微信的jscode换取sessionKey
 const wxJsCode2Session = (params) => wxRequest(params, apiMall + "/api/wechat/jscode2session.php");
 const user2session = (params) => wxRequest(params, apiMall + "/api/wechat/user2session?jsoncallback=?");
@@ -146,7 +146,7 @@ const getAdList = (params) => wxRequest(params, apiMall + '/api/adverts/list');
 export default {
   hostGoodsList,
   getDiscoverList,
-  getProductslist,
+  getProductsList,
   getHomeDisvocerList,
   getGoodsList,
   goodsDetail,

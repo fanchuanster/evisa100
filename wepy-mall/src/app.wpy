@@ -39,7 +39,8 @@ export default class extends wepy.app {
       'pages/filter',
       'pages/logistics',
       'pages/comment',
-      'pages/comment_add'
+      'pages/comment_add',
+      'pages/product/product-detail'
     ],
     window: {
       backgroundTextStyle: 'dark',
@@ -79,7 +80,12 @@ export default class extends wepy.app {
     }
   }
 
-  globalData = {}
+  globalData = {
+    sysConfig: {
+      consumer_hotline: "13641841103",
+      working_time: "8:00-21:00"
+    }
+  }
 
   constructor() {
     super()

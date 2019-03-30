@@ -3,6 +3,13 @@
 @import "./styles/icon";
 @import "./styles/style";
 
+.btn_red {
+  background: #ff5a60;
+  color: #fff;
+  border-radius: 5rpx;
+  text-align: center;
+}
+
 </style>
 <script>
 import wepy from 'wepy';

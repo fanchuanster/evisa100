@@ -1,0 +1,127 @@
+<style lang="less">
+</style>
+<template>
+  <view class="container">
+    <view class="toolbar_top">
+      <image mode="aspectFit" style="height:300rpx" @tap="previewPhoto" data-list="{{ [imgsrc] }}" src="{{imgsrc}}"/>
+      <image mode="aspectFit" style="height:200rpx;margin-top:100rpx" @tap="uploadPhoto" src="../resources/images/camera.png"/>
+    </view>
+    <panel>
+      <view class="title" slot="title">资料要求</view>
+      <view class="container">
+        <text>光线柔和而明亮</text>
+        <text>不要佩戴眼镜</text>
+        <text>正对镜头，双耳露出来</text>
+        <text>以纯白色做背景</text>
+        <text>衣服与背景颜色不要一样</text>
+      </view>
+    </panel>
+    
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import Panel from '@/components/panel'
+  // import UploadFile from '../lib/uploadFile.js'
+
+  export default class UploadPhoto extends wepy.page {
+    config = {
+      navigationBarTitleText: '拍照'
+    }
+    components = {
+      panel: Panel
+    }
+
+    data = {
+      passport: null
+    }
+    methods = {
+    }
+    computed = {
+      imgsrc() {
+        if (this.passport && this.passport.data.photo_file) {
+          return this.passport.data.photo_file
+        } else {
+          return '../resources/images/tingting_head_real_example.jpg'
+        }
+      }
+    }
+    previewPhoto(event) {
+      // Not able to preview local image.
+      console.log(event)
+      var src = event.currentTarget.dataset.src
+      var imgList = event.currentTarget.dataset.list
+      wx.previewImage({
+        current: src,
+        urls: imgList
+      })
+    }
+    async uploadPhoto() {
+      wepy.showLoading({
+        title: '加载中',
+        mask: true
+      })
+      let that = this
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        complete: function(res) {
+          wepy.hideLoading()
+        },
+        success: function(res) {
+          const imagePath = res.tempFilePaths[0]
+          wx.getFileSystemManager().readFile({
+            filePath: imagePath,
+            encoding: 'base64',
+            success: function(res) {
+              wepy.showLoading({
+                title: '制作中',
+                mask: true
+              })
+              wepy.request({
+                url: 'https://alidphoto.aisegment.com/idphoto/make',
+                method: 'POST',
+                data: {
+                  type: 'jpg',
+                  spec: '37',
+                  photo: res.data,
+                  bk: 'white'
+                },
+                header: {
+                  'content-type': 'application/json; charset=UTF-8',
+                  Authorization: 'APPCODE 391037852026434fa5c6e3780ef61220'
+                }
+              }).then(res => {
+                console.log(res)
+                if (res.data.status === 0) {
+                  that.passport.data.photo_file = res.data.data.result
+                  that.$apply()
+                  wepy.setStorageSync('passport', that.passport)
+                  wepy.showToast({
+                    title: '制作成功',
+                    icon: 'success',
+                    duration: 3000
+                  })
+                  setTimeout(function () {
+                    console.log('wepy.navigateBack')
+                    wepy.navigateBack()
+                  }, 3000)
+                } else {
+                  wepy.showToast({
+                    title: res.data.errmsg,
+                    icon: 'none',
+                    duration: 2000
+                  })
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+    onLoad(res) {
+      this.passport = wepy.getStorageSync('passport')
+    }
+  }
+</script>

@@ -1,0 +1,142 @@
+<style lang="less">
+  .uploader {
+    width: 100%;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    padding-top:15rpx;
+    padding-bottom:15rpx;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    text-align: left;
+    margin-top: 30rpx;
+    font-size:14px;
+  }
+</style>
+<template>
+  <view class="container">
+    <Steps current="0">
+      <Step title="资料上传" content=""></Step>
+      <Step title="申请表填写" content=""></Step>
+      <Step title="确认订单" content=""></Step>
+    </Steps>
+    <view class="uploader" @tap="uploadPassport" wx:if="{{ !!fields.passport_file }}">
+      <text>护照个人信息页</text>
+      <text wx:if="{{passportUploaded}}">完成</text>
+      <text wx:else>></text>
+    </view>
+    <view class="uploader" @tap="uploadPhoto" wx:if="{{ !!fields.photo_file }}" >
+      <text>个人照片</text>
+      <text wx:if="{{photoUploaded}}">完成</text>
+      <text wx:else>></text>
+    </view>
+    <view class="uploader" @tap="uploadOtherFile" wx:if="{{ !!fields.other_file }}" >
+      <text>其他文件</text>
+      <text wx:if="{{otherFileUploaded}}">完成</text>
+      <text wx:else>></text>
+    </view>
+    <view>
+      <button type="primary" disabled="{{(!passportUploaded || !photoUploaded || !otherFileUploaded)}}" bindtap="next">下一步</button>
+    </view>
+</view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import UploadFile from '../lib/uploadFile.js'
+  import Config from '../lib/config.js'
+  
+  export default class Pictures extends wepy.page {
+    config = {
+      navigationBarTitleText: '提交资料',
+      usingComponents: {
+        'Step': '../resources/iview/step/index',
+        'Steps': '../resources/iview/steps/index'
+      }
+    }
+    components = {
+    }
+    data = {
+      passport: null,
+      country: '',
+      fields: []
+    }
+    computed = {
+      passportUploaded() {
+        return !!this.passport
+      },
+      photoUploaded() {
+        return this.passportUploaded && this.passport.data.photo_file != null
+      },
+      otherFileUploaded() {
+        return this.passportUploaded && this.passport.data.other_file != null
+      }
+    }
+
+    next() {
+      wepy.navigateTo({
+        url: './fillform?country=' + this.country
+      })
+    }
+    uploadPassport() {
+      wepy.navigateTo({
+        url: './uploadPassport'
+      })
+    }
+    uploadPhoto() {
+      wepy.navigateTo({
+        url: './uploadPhoto'
+      })
+    }
+    uploadOtherFile() {
+      wepy.showLoading({
+        title: '加载中',
+        mask: true
+      })
+      let that = this
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success(res) {
+          const imagePath = res.tempFilePaths[0]
+          wx.getFileSystemManager().readFile({
+            filePath: imagePath,
+            encoding: 'base64',
+            success: function(res) {
+              wepy.showLoading({
+                title: '上传中',
+                mask: true
+              })
+              var photoFileName = 'photo/' + (that.passport ? that.passport.passport_no : Date.now()) + '_other.' + imagePath.split('.').pop()
+              UploadFile(imagePath, photoFileName,
+                function(res) {
+                  wepy.hideLoading()
+                  that.passport.data.other_file = photoFileName
+                  wepy.setStorageSync('passport', that.passport)
+                  that.$apply()
+                },
+                function(err) {
+                  wepy.hideLoading()
+                  console.log(err)
+                }
+              )
+            }
+          })
+        },
+        complete: function(res) {
+          wepy.hideLoading()
+        }
+      })
+    }
+    onShow(res) {
+      this.passport = wepy.getStorageSync('passport')
+      console.log(this.passport)
+    }
+    onLoad(res) {
+      if (res.country) {
+        this.country = res.country
+        this.fields = Config.getFields(this.country)
+      }
+    }
+  }
+</script>

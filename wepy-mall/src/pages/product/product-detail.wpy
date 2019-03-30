@@ -9,7 +9,7 @@
         <text class="visa_deatil_money_dw">￥</text>
         {{visaDetail.price}}
       </view>
-      <view class="visa_detail_money_a" id="fee_">明细</view>
+      <!-- <view class="visa_detail_money_a" id="fee_">明细</view> -->
     </view>
     <view class="visa_detail_top_time">
       <text class="visa_detail_top_time_title">办理时长</text>

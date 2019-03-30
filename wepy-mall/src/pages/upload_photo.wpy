@@ -6,30 +6,25 @@
       <image mode="aspectFit" style="height:300rpx" @tap="previewPhoto" data-list="{{ [imgsrc] }}" src="{{imgsrc}}"/>
       <image mode="aspectFit" style="height:200rpx;margin-top:100rpx" @tap="uploadPhoto" src="../resources/images/camera.png"/>
     </view>
-    <panel>
-      <view class="title" slot="title">资料要求</view>
-      <view class="container">
-        <text>光线柔和而明亮</text>
-        <text>不要佩戴眼镜</text>
-        <text>正对镜头，双耳露出来</text>
-        <text>以纯白色做背景</text>
-        <text>衣服与背景颜色不要一样</text>
-      </view>
-    </panel>
+    <view class="title" slot="title">资料要求</view>
+    <view class="container">
+      <text>光线柔和而明亮</text>
+      <text>不要佩戴眼镜</text>
+      <text>正对镜头，双耳露出来</text>
+      <text>以纯白色做背景</text>
+      <text>衣服与背景颜色不要一样</text>
+    </view>
     
   </view>
 </template>
 <script>
   import wepy from 'wepy'
-  import Panel from '@/components/panel'
-  // import UploadFile from '../lib/uploadFile.js'
 
   export default class UploadPhoto extends wepy.page {
     config = {
       navigationBarTitleText: '拍照'
     }
     components = {
-      panel: Panel
     }
 
     data = {

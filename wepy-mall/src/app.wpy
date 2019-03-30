@@ -47,7 +47,12 @@ export default class extends wepy.app {
       'pages/logistics',
       'pages/comment',
       'pages/comment_add',
-      'pages/product/product-detail'
+      'pages/product/product-detail',
+      'pages/pictures',
+      'pages/fillform',
+      'pages/upload_passport',
+      'pages/passport_camera',
+      'pages/upload_photo',
     ],
     window: {
       backgroundTextStyle: 'dark',

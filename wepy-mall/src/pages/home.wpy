@@ -20,7 +20,7 @@
       </view>
     </view>
     <block wx:for="{{list}}" wx:key="item">
-      <navigator  url="/pages/visa/visa?country_id={{item.country_id}}&area={{item.area}}&country={{item.country}}" class="widget">
+      <navigator  url="/pages/visa/visa?country_id={{item.country_id}}&area={{item.area}}&country={{item.name}}" class="widget">
         <view class="list_box">
           <image class="list_item_img" src="{{item.background_img}}" />
           <view class="list_item_word">
@@ -82,11 +82,15 @@ export default class Home extends wepy.page {
       query: {}
     });
     console.log(json)
-    if (json.data.code == 0) {
-      that.list = json.data.list;
+    if (json.statusCode == 200) {
+      that.list = json.data;
+      that.list.forEach(element => {
+        element.background_img = api.ossHost + '/country/' + element.name_short + '/1.jpg'
+      });
+      console.log(that.list)
       that.$apply();
     } else {
-      tip.error(json.data.msg);
+      tip.error(json.msg);
     }
     that.showLoading = false;
   }
@@ -100,9 +104,8 @@ export default class Home extends wepy.page {
     } else {}
   }
   onLoad() {
-    let that = this;
     this.discoverList = [];
-    that.getProductsList();
+    this.getProductsList();
     // this.getAdList();
   }
   computed = {}

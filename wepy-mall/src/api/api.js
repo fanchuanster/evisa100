@@ -4,6 +4,7 @@ import {
 
 let env = "-test" //-dev 或者 -test
 const apiMall = 'https://php.evisa100.com'
+const ossHost = "http://evisa.oss-cn-shanghai.aliyuncs.com"
 
 /**
  * 获取发现好商品接口
@@ -194,5 +195,6 @@ export default {
   getMyOrderSize,
   getPayOrderDetail,
   getAdList,
-  getSignDate
+  getSignDate,
+  ossHost
 }

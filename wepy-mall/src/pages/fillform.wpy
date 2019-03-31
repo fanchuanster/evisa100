@@ -321,7 +321,7 @@ input {
 </template>
 <script>
   import wepy from 'wepy'
-  const env = require('../lib/config.js')
+  const env = require('../utils/config.js')
 
   export default class FillForm extends wepy.page {
     config = {
@@ -435,7 +435,7 @@ input {
         if (!this.passport) {
           return ''
         }
-        return env.uploadImageUrl + '/' + this.passport.data.passport_file
+        return env.ossHost + '/' + this.passport.data.passport_file
       },
       photoFile() {
         if (!this.passport || !this.passport.data.photo_file) {
@@ -447,7 +447,7 @@ input {
         if (!this.passport || !this.passport.data.other_file) {
           return ''
         }
-        return env.uploadImageUrl + '/' + this.passport.data.other_file
+        return env.ossHost + '/' + this.passport.data.other_file
       },
       filesUrls() {
         var files = []

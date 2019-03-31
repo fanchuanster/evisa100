@@ -42,8 +42,8 @@
 </template>
 <script>
   import wepy from 'wepy'
-  import UploadFile from '../lib/uploadFile.js'
-  import Config from '../lib/config.js'
+  import UploadFile from '../utils/lib/uploadFile.js'
+  const Config = require('../utils/config.js')
   
   export default class Pictures extends wepy.page {
     config = {

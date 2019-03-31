@@ -52,7 +52,7 @@ export default class extends wepy.app {
       'pages/fillform',
       'pages/upload_passport',
       'pages/passport_camera',
-      'pages/upload_photo',
+      'pages/upload_photo'
     ],
     window: {
       backgroundTextStyle: 'dark',

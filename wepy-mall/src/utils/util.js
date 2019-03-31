@@ -119,7 +119,7 @@ function convertStarArray(score) {
   }
   return arr
 }
-dateFromString = function(str) {
+function dateFromString(str) {
 	if (!str) {
 		return str
 	}
@@ -138,7 +138,7 @@ dateFromString = function(str) {
 	}
 }
 
-splitCnEnName = function(data, prop) {
+function splitCnEnName(data, prop) {
 	if (data[prop]) {
 	  var places = data[prop].split('/', 2)
 	  if (places.length === 2) {

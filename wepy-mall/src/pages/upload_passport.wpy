@@ -18,8 +18,8 @@
 </template>
 <script>
   import wepy from 'wepy'
-  import Util from '../lib/util.js'
-  import UploadFile from '../lib/uploadFile.js'
+  import Util from '../utils/util.js'
+  import UploadFile from '../utils/lib/uploadFile.js'
 
   export default class UploadPassport extends wepy.page {
     config = {

@@ -1,4 +1,4 @@
-const env = require('./config.js');
+const env = require('../config.js');
 const Base64 = require('./Base64.js');
 
 require('./crypto/hmac.js');
@@ -8,7 +8,7 @@ const Crypto = require('./crypto/crypto.js');
 const UploadFile = function (filePath, targetPath, successcb, failcb) {
 
     const aliyunFileKey = targetPath;
-    const aliyunServerURL = env.uploadImageUrl;
+    const aliyunServerURL = env.ossHost;
     const accessid = env.accessid;
     const policyBase64 = getPolicyBase64();
     const signature = getSignature(policyBase64);

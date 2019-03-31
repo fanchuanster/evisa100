@@ -314,7 +314,7 @@ input {
     <view>
       <button type="primary" @tap="submit">
         <text wx:if="{{isAdmin}}">审核并提交</text>
-        <text wx:else>确认并提交</text>
+        <text wx:else>确定</text>
       </button>
     </view>
   </view>
@@ -429,7 +429,8 @@ input {
         return this.today
       },
       isAdmin() {
-        return this.openid === 'opini5GNX-N6JKq6aqutfPHCxUDc'
+        // return this.openid === 'opini5GNX-N6JKq6aqutfPHCxUDc'
+        return false
       },
       passportFile() {
         if (!this.passport) {
@@ -636,6 +637,7 @@ input {
         }
         this.application.status = this.isAdmin ? 2 : 1
         this.application.passport_id = this.passport.id
+        this.application.price = 419
         console.log('saving application:')
         console.log(this.application)
         wepy.request({

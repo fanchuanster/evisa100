@@ -1,6 +1,6 @@
 var config = {
   //aliyun OSS config
-  uploadImageUrl: 'https://evisa.oss-cn-shanghai.aliyuncs.com',
+  ossHost: 'https://evisa.oss-cn-shanghai.aliyuncs.com',
   accesskey: 'NyNOmcGHgyKX5vHUtn9lv7M1vCJWL3',
   accessid: 'LTAIQMDDOG5SOtsh',
   timeout: 87600, // policy valid timespan.

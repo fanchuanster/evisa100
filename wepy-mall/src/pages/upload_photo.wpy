@@ -4,7 +4,7 @@
   <view class="container">
     <view class="toolbar_top">
       <image mode="aspectFit" style="height:300rpx" @tap="previewPhoto" data-list="{{ [imgsrc] }}" src="{{imgsrc}}"/>
-      <image mode="aspectFit" style="height:200rpx;margin-top:100rpx" @tap="uploadPhoto" src="../resources/images/camera.png"/>
+      <image mode="aspectFit" style="height:200rpx;margin-top:100rpx" @tap="upload_photo" src="../resources/images/camera.png"/>
     </view>
     <view class="title" slot="title">资料要求</view>
     <view class="container">
@@ -20,7 +20,7 @@
 <script>
   import wepy from 'wepy'
 
-  export default class UploadPhoto extends wepy.page {
+  export default class upload_photo extends wepy.page {
     config = {
       navigationBarTitleText: '拍照'
     }
@@ -51,7 +51,7 @@
         urls: imgList
       })
     }
-    async uploadPhoto() {
+    async upload_photo() {
       wepy.showLoading({
         title: '加载中',
         mask: true

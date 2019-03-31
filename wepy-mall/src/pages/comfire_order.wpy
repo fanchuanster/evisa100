@@ -207,17 +207,6 @@ export default class ComfireOrder extends wepy.page {
     });
 
     if (json.data.code == 0) {
-      //补货直接提交到后台去审核
-      if (this.purchaseType==2) {//补货
-        tip.success("已提交补货申请!");
-        setTimeout(() => {
-          tip.loaded();
-          wepy.navigateTo({
-            url: "/pages/reorder"
-          })
-        }, 2000)
-        return;
-      }
       //保存成功了后进行微信支付
       const pay = await api.toPay({
         query:{

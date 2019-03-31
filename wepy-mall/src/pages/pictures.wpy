@@ -25,7 +25,7 @@
       <text wx:if="{{passportUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
-    <view class="uploader" @tap="uploadPhoto" wx:if="{{ !!fields.photo_file }}" >
+    <view class="uploader" @tap="upload_photo" wx:if="{{ !!fields.photo_file }}" >
       <text>个人照片</text>
       <text wx:if="{{photoUploaded}}">完成</text>
       <text wx:else>></text>
@@ -82,9 +82,9 @@
         url: './upload_passport'
       })
     }
-    uploadPhoto() {
+    upload_photo() {
       wepy.navigateTo({
-        url: './uploadPhoto'
+        url: './upload_photo'
       })
     }
     uploadOtherFile() {

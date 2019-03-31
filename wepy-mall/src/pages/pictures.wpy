@@ -20,7 +20,7 @@
       <Step title="申请表填写" content=""></Step>
       <Step title="确认订单" content=""></Step>
     </Steps>
-    <view class="uploader" @tap="uploadPassport" wx:if="{{ !!fields.passport_file }}">
+    <view class="uploader" @tap="upload_passport" wx:if="{{ !!fields.passport_file }}">
       <text>护照个人信息页</text>
       <text wx:if="{{passportUploaded}}">完成</text>
       <text wx:else>></text>
@@ -77,9 +77,9 @@
         url: './fillform?country=' + this.country
       })
     }
-    uploadPassport() {
+    upload_passport() {
       wepy.navigateTo({
-        url: './uploadPassport'
+        url: './upload_passport'
       })
     }
     uploadPhoto() {
@@ -134,8 +134,11 @@
     }
     onLoad(res) {
       if (res.country) {
+        console.log(res.country)
         this.country = res.country
         this.fields = Config.getFields(this.country)
+
+        console.log(this.fields)
       }
     }
   }

@@ -21,7 +21,7 @@
   import Util from '../utils/util.js'
   import UploadFile from '../utils/lib/uploadFile.js'
 
-  export default class UploadPassport extends wepy.page {
+  export default class upload_passport extends wepy.page {
     config = {
       navigationBarTitleText: '拍照护照个人信息页'
     }
@@ -32,7 +32,7 @@
     }
     takePhoto() {
       wepy.navigateTo({
-        url: './uploadPassportCamera'
+        url: './upload_passportCamera'
       })
     }
     addPhoto() {
@@ -50,7 +50,7 @@
         },
         success(res) {
           const imagePath = res.tempFilePaths[0]
-          that.uploadPassport(imagePath, function(res) {
+          that.upload_passport(imagePath, function(res) {
             if (res) {
               wepy.setStorageSync('passport', that.passport)
               wepy.navigateBack()
@@ -59,7 +59,7 @@
         }
       })
     }
-    uploadPassport(imagePath, complete) {
+    upload_passport(imagePath, complete) {
       let that = this
       wx.getFileSystemManager().readFile({
         filePath: imagePath,
@@ -138,7 +138,7 @@
         wepy.removeStorage({key: 'passport_file'})
         console.log('passportFile:' + passportFile)
         let that = this
-        this.uploadPassport(passportFile, function(res) {
+        this.upload_passport(passportFile, function(res) {
           if (res) {
             wepy.setStorageSync('passport', that.passport)
             wepy.navigateBack()

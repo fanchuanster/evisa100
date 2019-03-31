@@ -34,7 +34,7 @@
       <image src="https://visa.oss-cn-shenzhen.aliyuncs.com/icon/wxa/product/consultation.png" catchtap="callPhone"></image>
       <text catchtap="callPhone">咨询</text>
     </view>
-    <navigator class="visa_detail_bottom_btn" url="/pages/pictures?{{visaDetail.country_short_name}}">
+    <navigator class="visa_detail_bottom_btn" url="/pages/pictures?country={{visaDetail.country_name_short}}">
       <button class="visa_detail_bottom_btn btn_red">开始办理</button>
     </navigator>
   </view>

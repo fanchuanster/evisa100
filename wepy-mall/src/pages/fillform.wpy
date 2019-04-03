@@ -313,7 +313,7 @@ input {
     </i-collapse>
     <view>
       <button type="primary" @tap="submit">
-        <text wx:if="{{isAdmin}}">审核并提交</text>
+        <text wx:if="{{isAdmin}}">确定并提交</text>
         <text wx:else>确定</text>
       </button>
     </view>
@@ -653,13 +653,14 @@ input {
           }
         }).then(res => {
           console.log(res)
+          this.application.id = res.data.id
           wepy.showToast({
             title: '提交成功',
             icon: 'success'
           })
           // wepy.clearStorageSync()
-          this.passport = null
-          this.application = null
+          // this.passport = null
+          // this.application = null
           setTimeout(function () {
             wepy.switchTab({
               url: '/pages/home'

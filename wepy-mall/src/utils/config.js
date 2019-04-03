@@ -6,7 +6,7 @@ var config = {
   timeout: 87600, // policy valid timespan.
   countryFields: {
     all: {
-      passport_file:1, photo_file:1, other_file:0,
+      passport_file:1, photo_file:1, other_file:0, id_front_file:0,
       nationality_cn:1, name_cn:1, name:1, sex:1, marital_status:1, birth_date:1, birth_place_cn:1, birth_place:1,
       job_type:1, job_comp_cn:0, job_comp:0, job_title_cn:1, job_title:1,
       passport_no:1, authority:1, issue_place:1, issue_date:1, expiry_date:1,
@@ -16,7 +16,7 @@ var config = {
       ever_denied_by_other:1, ever_convicted:1, destination: 1
     },
     ke: {
-      passport_file:1, photo_file:1, other_file:1,
+      passport_file:1, photo_file:1, other_file:0, id_front_file:1,
       nationality_cn:1, name_cn:1, name:1, sex:1, birth_date:1, birth_place_cn:1, birth_place:1,
       job_type:1, job_comp_cn:0, job_comp:0, job_title_cn:1, job_title:1,
       passport_no:1, authority:1, issue_place:1, issue_date:1, expiry_date:1,

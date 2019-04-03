@@ -191,7 +191,7 @@ input {
         </view>
         <view wx:if="{{!!fields.email}}">
           <text class="fieldLabel">电子邮件</text>
-          <input placeholder="比如 zhangyun1989@163.com" value="{{passport.data.email}}" bindinput="oninputEmail" type="text"/>
+          <input placeholder="" value="{{passport.data.email}}" bindinput="oninputEmail" type="text"/>
         </view>
         </view>
       </i-collapse-item>
@@ -322,6 +322,11 @@ input {
 <script>
   import wepy from 'wepy'
   const env = require('../utils/config.js')
+  import {
+    SYSTEM_INFO,
+    USER_SPECICAL_INFO,
+    ADDRESS_ID
+  } from '@/utils/constant';
 
   export default class FillForm extends wepy.page {
     config = {
@@ -429,8 +434,7 @@ input {
         return this.today
       },
       isAdmin() {
-        // return this.openid === 'opini5GNX-N6JKq6aqutfPHCxUDc'
-        return false
+        return this.openid === 'opini5GNX-N6JKq6aqutfPHCxUDc'
       },
       passportFile() {
         if (!this.passport) {
@@ -618,7 +622,7 @@ input {
       })
     }
     async submit() {
-      this.openid = await this.$parent.getOpenid()
+      let that = this;
       this.passport.openid = this.openid
 
       console.log('saving passport:')
@@ -653,12 +657,12 @@ input {
             title: '提交成功',
             icon: 'success'
           })
-          wepy.clearStorageSync()
+          // wepy.clearStorageSync()
           this.passport = null
           this.application = null
           setTimeout(function () {
             wepy.switchTab({
-              url: './index'
+              url: '/pages/home'
             })
           }, 3000)
         })
@@ -666,9 +670,9 @@ input {
     }
 
     onLoad(option) {
-      if (option.openid) {
-        this.openid = option.openid
-      }
+      let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
+      this.openid = userSpecialInfo.openid;
+
       let that = this
       if (option.id) {
         wepy.request({

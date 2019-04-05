@@ -55,13 +55,13 @@
 <body>
 	<div align="center">
         <ul>
-            <li style="background-color:#FF7F24"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/jsapi.php">JSAPI支付</a></li>
-            <li style="background-color:#698B22"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/wx_php/example/micropay.php">刷卡支付</a></li>
-            <li style="background-color:#8B6914"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/native.php">扫码支付</a></li>
-            <li style="background-color:#CDCD00"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/orderquery.php">订单查询</a></li>
-            <li style="background-color:#CD3278"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/refund.php">订单退款</a></li>
-            <li style="background-color:#848484"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/refundquery.php">退款查询</a></li>
-            <li style="background-color:#8EE5EE"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/download.php">下载订单</a></li>
+            <li style="background-color:#FF7F24"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/wx_sdk/wxpay/jsapi.php">JSAPI支付</a></li>
+            <li style="background-color:#698B22"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/wx_sdk/wxpay/wx_php/example/micropay.php">刷卡支付</a></li>
+            <li style="background-color:#8B6914"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/wx_sdk/wxpay/native.php">扫码支付</a></li>
+            <li style="background-color:#CDCD00"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/wx_sdk/wxpay/orderquery.php">订单查询</a></li>
+            <li style="background-color:#CD3278"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/wx_sdk/wxpay/refund.php">订单退款</a></li>
+            <li style="background-color:#848484"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/wx_sdk/wxpay/refundquery.php">退款查询</a></li>
+            <li style="background-color:#8EE5EE"><a href="http://<?php echo $_SERVER['SERVER_NAME']?>/wx_sdk/wxpay/download.php">下载订单</a></li>
         </ul>
 	</div>
 </body>

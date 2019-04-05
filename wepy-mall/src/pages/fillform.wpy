@@ -272,8 +272,8 @@ input {
               </picker>
             </view>
           </view>
-          <view wx:if="{{!!fields.ever_been_to}}">
-            <checkbox-group bindchange="checkboxChangeEverBeenTo" class="container">
+          <view wx:if="{{!!fields.ever_been_to}}" class="container">
+            <checkbox-group bindchange="checkboxChangeEverBeenTo">
               <label>
                 <checkbox value='ever_been_to' checked="{{application.data.ever_been_to}}" />
                 以前有没有来过此行的目的地国家?
@@ -449,6 +449,12 @@ input {
         return this.passport.data.photo_file
       },
       idFrontFile() {
+        if (!this.passport || !this.passport.data.id_front_file) {
+          return ''
+        }
+        return env.ossHost + '/' + this.passport.data.id_front_file
+      },
+      otherFile() {
         if (!this.passport || !this.passport.data.other_file) {
           return ''
         }
@@ -461,6 +467,9 @@ input {
         }
         if (this.photoFile) {
           files.push(this.photoFile)
+        }
+        if (this.otherFile) {
+          files.push(this.otherFile)
         }
         return files
       }

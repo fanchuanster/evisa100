@@ -10,6 +10,15 @@
   text-align: center;
 }
 
+.container {
+  height: 100%;
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  text-align:left;
+  font-size: 11px;
+}
+
 </style>
 <script>
 import wepy from 'wepy';

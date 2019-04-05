@@ -32,7 +32,7 @@
     }
     takePhoto() {
       wepy.navigateTo({
-        url: './upload_passportCamera'
+        url: './passport_camera'
       })
     }
     addPhoto() {

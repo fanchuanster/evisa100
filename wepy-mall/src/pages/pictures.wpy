@@ -122,9 +122,11 @@
                 title: '上传中',
                 mask: true
               })
-              var photoFileName = 'photo/' + (that.passport ? that.passport.passport_no : Date.now()) + e.target.id + imagePath.split('.').pop()
+              var photoFileName = 'photo/' + (that.passport ? that.passport.passport_no : Date.now()) + e.target.id + "." + imagePath.split('.').pop()
+              console.log(photoFileName)
               UploadFile(imagePath, photoFileName,
                 function(res) {
+                  console.log(res)
                   wepy.hideLoading()
                   that.passport.data[e.target.id] = photoFileName
                   wepy.setStorageSync('passport', that.passport)

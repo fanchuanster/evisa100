@@ -7,6 +7,7 @@
  $input = file_get_contents("php://input");
  
  print($input);
+ print('updateOrder triggered');
  
  $json = json_decode($input);
  

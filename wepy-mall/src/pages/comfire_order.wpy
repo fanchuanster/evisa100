@@ -104,7 +104,9 @@ export default class ComfireOrder extends wepy.page {
               id: that.applicationId,
               status : 2
             }
-          });
+          }).then(res => {
+            console.log('orderupdated', that.applicationId, res);
+          })
 
           setTimeout(() => {
             //支付成功 关闭loadding 跳转到支付成功页面

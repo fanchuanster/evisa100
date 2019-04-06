@@ -87,28 +87,17 @@ export default class ComfireOrder extends wepy.page {
     let openId = userSpecialInfo.openid;
     const json = await api.preOrder({
       query: {
-        openid: openId,
-        receiverInfoId: this.address.id,
-        businessMessage: this.sellerMessage,
-        formId: formId,
-        reduceScore: this.jf_num
+        openid: openId
       }
     });
 
     console.log(json)
 
-    if (json.data.code == 0) {
-      //保存成功了后进行微信支付
-      const pay = await api.toPay({
-        query:{
-          openId: openId,
-          orderNo: json.data.tradeNo
-        }
-      });
+    if (json.data.result_code == 'SUCCESS') {
       if (pay.data.code==0) {
         //以下是微信支付
         wx.requestPayment({
-          appId: pay.data.appId,
+          appId: pay.data.appid,
           timeStamp: pay.data.timeStamp,
           nonceStr: pay.data.nonceStr,
           package: pay.data.package,

@@ -165,6 +165,7 @@ export default {
   cartDel,
   cartUpdateNum,
   preOrder,
+  updateOrder,
   refundApply,
   pointInfo,
   browseInfo,

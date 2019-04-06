@@ -5,6 +5,9 @@
  $mysqli->query("SET CHARACTER SET utf8");
  
  $input = file_get_contents("php://input");
+ 
+ print($input);
+ 
  $json = json_decode($input);
  
  // $data = str_replace("\u", "\\u", $data);
@@ -15,7 +18,7 @@
 	"status=".$json->status." ".
 	" WHERE id=".$json->id;
         
-	// var_dump($updatestr);
+	var_dump($updatestr);
 
 	$mysqli->query($updatestr);
  }

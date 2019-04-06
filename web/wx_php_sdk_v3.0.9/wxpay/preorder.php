@@ -15,15 +15,7 @@ require_once 'log.php';
 $logHandler= new CLogFileHandler("../logs/".date('Y-m-d').'.log');
 $log = Log::Init($logHandler, 15);
 
-//打印输出数组信息
-function printf_info($data)
-{
-    foreach($data as $key=>$value){
-        echo "<font color='#00ff55;'>$key</font> :  ".htmlspecialchars($value, ENT_QUOTES)." <br/>";
-    }
-}
 
-//①、获取用户openid
 try{
 
 	$tools = new JsApiPay();
@@ -33,22 +25,16 @@ try{
 	$input = new WxPayUnifiedOrder();
 	$input->SetBody("test");
 	$input->SetAttach("test");
-	$input->SetOut_trade_no("sdkphp".date("YmdHis"));
+	$input->SetOut_trade_no("evisa100".date("YmdHis"));
 	$input->SetTotal_fee("1");
 	$input->SetTime_start(date("YmdHis"));
-	// $input->SetTime_expire(date("YmdHis", time() + 1600));
 	$input->SetGoods_tag("test");
 	$input->SetNotify_url("https://php.evisa100.com/notify.php");
 	$input->SetTrade_type("JSAPI");
 	$input->SetOpenid($openId);
 	$config = new WxPayConfig();
 	$order = WxPayApi::unifiedOrder($config, $input);
-	print('GetTime_start:');
-	var_dump($input->GetTime_start());
-	print('GetTime_expire:');
-	var_dump($input->GetTime_expire());
-	print('order:');
-	var_dump($order);
+	print($order);
 } catch(Exception $e) {
 	Log::ERROR(json_encode($e));
 }

@@ -87,7 +87,7 @@ export default class ComfireOrder extends wepy.page {
     let openId = userSpecialInfo.openid;
     const json = await api.preOrder({
       query: {
-        openId: openId,
+        openid: openId,
         receiverInfoId: this.address.id,
         businessMessage: this.sellerMessage,
         formId: formId,

@@ -43,7 +43,7 @@ try{
 	$results->SetData('signType', $config->GetSignType());
 	$paySign = $results->MakeSign($config, false);
 	$results->SetData('paySign', $paySign);
-	print(json_encode($results));
+	print(json_encode($results->GetValues()));
 } catch(Exception $e) {
 	Log::ERROR(json_encode($e));
 }

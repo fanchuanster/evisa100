@@ -61,7 +61,7 @@ export default class ComfireOrder extends wepy.page {
 
   onLoad(option) {
     let that = this;
-    this.actualPrice = 419;
+    this.actualPrice = option.fee;
     this.totalPrice = 0;
     this.total_jf_num = 0;
     this.can_use_score = 0;
@@ -77,7 +77,6 @@ export default class ComfireOrder extends wepy.page {
     // that.getOrderDetailInfo();
   }
   computed = {
-
   }
 
   async goToPay(formId) {
@@ -87,53 +86,43 @@ export default class ComfireOrder extends wepy.page {
     let openId = userSpecialInfo.openid;
     const json = await api.preOrder({
       query: {
-        openid: openId
+        openid: openId,
+        fee: this.actualPrice * 100
       }
     });
 
     console.log(json)
 
-    if (true) {
-      if (true) {
-        //以下是微信支付
-        wx.requestPayment({
-          appId: json.data.appid,
-          timeStamp: json.data.timeStamp,
-          nonceStr: json.data.nonceStr,
-          package: json.data.package,
-          signType: 'MD5',
-          paySign: json.data.paySign,
-          success: function (res) {
-            console.log('pay', res)
-            setTimeout(() => {
-              //支付成功 关闭loadding 跳转到支付成功页面
-              tip.loaded();
-              wepy.navigateTo({
-                url: "/pages/pay_success?orderNo="+json.data.tradeNo
-              })
-            }, 2000)
-          },
-          fail: function (res) {
-            tip.alert('支付失败');
-            setTimeout(() => {
-              //支付成功 关闭loadding 跳转到支付成功页面
-              tip.loaded();
-              wepy.navigateTo({
-                url: "/pages/order"
-              })
-            }, 2000)
-          }
-        })
-      } else {
-        tip.alert('支付失败');
-        setTimeout(() => {
-          //支付成功 关闭loadding 跳转到支付成功页面
-          tip.loaded();
-          wepy.navigateTo({
-            url: "/pages/order"
-          })
-        }, 2000)
-      }
+    if (json.data.paySign) {
+      //以下是微信支付
+      wx.requestPayment({
+        appId: json.data.appid,
+        timeStamp: json.data.timeStamp,
+        nonceStr: json.data.nonceStr,
+        package: json.data.package,
+        signType: 'MD5',
+        paySign: json.data.paySign,
+        success: function (res) {
+          console.log('pay', res)
+          setTimeout(() => {
+            //支付成功 关闭loadding 跳转到支付成功页面
+            tip.loaded();
+            wepy.navigateTo({
+              url: "/pages/pay_success?orderNo="+json.data.tradeNo
+            })
+          }, 2000)
+        },
+        fail: function (res) {
+          tip.alert('支付失败');
+          setTimeout(() => {
+            //支付失败 关闭loadding
+            tip.loaded();
+            wepy.navigateTo({
+              url: "/pages/order"
+            })
+          }, 2000)
+        }
+      })
     } else {
       tip.error(json.data.msg)
     }

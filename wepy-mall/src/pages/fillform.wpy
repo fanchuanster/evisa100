@@ -663,21 +663,9 @@ input {
         }).then(res => {
           console.log(res)
           this.application.id = res.data.id
-          wepy.showToast({
-            title: '提交成功',
-            icon: 'success'
-          })
-          // wepy.clearStorageSync()
-          // this.passport = null
-          // this.application = null
-          setTimeout(function () {
-            // wepy.switchTab({
-            //   url: '/pages/home'
-            // })
-            wepy.navigateTo({
-              url: '/pages/comfire_order'
+          wepy.navigateTo({
+              url: '/pages/comfire_order?fee=' + that.application.price
             })
-          }, 3000)
         })
       })
     }

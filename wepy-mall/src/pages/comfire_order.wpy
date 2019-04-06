@@ -93,16 +93,16 @@ export default class ComfireOrder extends wepy.page {
 
     console.log(json)
 
-    if (json.data.result_code == 'SUCCESS') {
-      if (pay.data.code==0) {
+    if (true) {
+      if (true) {
         //以下是微信支付
         wx.requestPayment({
-          appId: pay.data.appid,
-          timeStamp: pay.data.timeStamp,
-          nonceStr: pay.data.nonceStr,
-          package: pay.data.package,
+          appId: json.data.appid,
+          timeStamp: json.data.timeStamp,
+          nonceStr: json.data.nonceStr,
+          package: json.data.package,
           signType: 'MD5',
-          paySign: pay.data.paySign,
+          paySign: json.data.paySign,
           success: function (res) {
             console.log('pay', res)
             setTimeout(() => {

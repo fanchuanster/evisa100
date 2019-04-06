@@ -214,8 +214,9 @@ export default class OrderDetail extends wepy.page {
           orderNo: tradeNo
         }
       });
-      if (pay.data.code==0) {
+      if (true) {
         //以下是微信支付
+        console.log('requestPayment:')
         wx.requestPayment({
           appId: pay.data.appId,
           timeStamp: pay.data.timeStamp,

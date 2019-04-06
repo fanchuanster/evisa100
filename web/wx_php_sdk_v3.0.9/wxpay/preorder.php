@@ -36,7 +36,7 @@ try{
 	$input->SetOut_trade_no("sdkphp".date("YmdHis"));
 	$input->SetTotal_fee("1");
 	$input->SetTime_start(date("YmdHis"));
-	$input->SetTime_expire(date("YmdHis", time() + 1600));
+	// $input->SetTime_expire(date("YmdHis", time() + 1600));
 	$input->SetGoods_tag("test");
 	$input->SetNotify_url("https://php.evisa100.com/notify.php");
 	$input->SetTrade_type("JSAPI");

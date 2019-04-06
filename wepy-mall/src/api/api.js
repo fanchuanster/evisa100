@@ -41,6 +41,9 @@ const cartUpdateNum = (params) => wxRequest(params, apiMall + '/api/mall/goodsCa
 //直接购买商品
 const preOrder = (params) => wxRequest(params, apiMall + '/preorder.php');
 
+// update order status
+const updateOrder = (params) => wxRequest(params, apiMall + '/updateOrder.php');
+
 //支付前生成订单
 const saveByCart = (params) => wxRequest(params, apiMall + '/api/mall/goodsOrder/saveByCart');
 

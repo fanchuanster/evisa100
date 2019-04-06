@@ -40,6 +40,7 @@ export default class ComfireOrder extends wepy.page {
     goodsId: "",
     //卖家留言
     sellerMessage: "",
+    applicationId: "",
 
     //是否存在默认地址
     is_exit_address: false,
@@ -62,13 +63,7 @@ export default class ComfireOrder extends wepy.page {
   onLoad(option) {
     let that = this;
     this.actualPrice = option.fee;
-    this.totalPrice = 0;
-    this.total_jf_num = 0;
-    this.can_use_score = 0;
-    this.deduScore = 0;
-    this.deduFee = 0;
-    this.jf_num = 0;
-    this.reduce_fee = 0;
+    this.applicationId = option.applicationId;
     this.operating = false;
     that.goodsId = option.goodsId==undefined?"":option.goodsId;
     this.purchaseType = option.purchasetype==undefined?"1":option.purchasetype;
@@ -104,11 +99,18 @@ export default class ComfireOrder extends wepy.page {
         paySign: json.data.paySign,
         success: function (res) {
           console.log('pay', res)
+          const json = await api.updateOrder({
+            query: {
+              id: this.applicationId.id,
+              status : 2
+            }
+          });
+
           setTimeout(() => {
             //支付成功 关闭loadding 跳转到支付成功页面
             tip.loaded();
             wepy.navigateTo({
-              url: "/pages/pay_success?orderNo="+json.data.tradeNo
+              url: "/pages/pay_success?orderNo="+json.data.tradeNo+"&fee="+this.actualPrice
             })
           }, 2000)
         },

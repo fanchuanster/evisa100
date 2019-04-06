@@ -64,7 +64,7 @@ export default class paySuccess extends wepy.page {
   onLoad(option) {
     //tip.success('支付成功,接收的参数为' + option.orderNo);
     this.orderNo = option.orderNo;
-    this.getPayOrderDetail();
+    this.totalFee = option.fee;
   }
   computed = {
 

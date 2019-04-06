@@ -664,7 +664,7 @@ input {
           console.log(res)
           this.application.id = res.data.id
           wepy.navigateTo({
-              url: '/pages/comfire_order?fee=' + that.application.price
+              url: '/pages/comfire_order?fee=' + that.application.price + "&applicationId=" + this.application.id
             })
         })
       })

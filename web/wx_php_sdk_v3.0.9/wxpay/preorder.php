@@ -27,7 +27,7 @@ try{
 	$input->SetBody("evisa100_body");
 	$input->SetAttach("evisa100_attach");
 	$input->SetOut_trade_no("evisa100".date("YmdHis"));
-	$input->SetTotal_fee("1");
+	$input->SetTotal_fee($fee);
 	$input->SetTime_start(date("YmdHis"));
 	$input->SetGoods_tag("evisa100_goods_tag");
 	$input->SetNotify_url("https://php.evisa100.com/notify.php");

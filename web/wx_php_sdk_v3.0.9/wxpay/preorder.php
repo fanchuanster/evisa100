@@ -37,7 +37,7 @@ try{
 	
 	$results = new WxPayResults();
 	$results->SetData('appId', $order->appid);
-	print(json_encode($results));
+	print(json_encode($results->GetValues()));
 } catch(Exception $e) {
 	Log::ERROR(json_encode($e));
 }

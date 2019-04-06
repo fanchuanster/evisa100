@@ -43,6 +43,7 @@ try{
 	$input->SetOpenid($openId);
 	$config = new WxPayConfig();
 	$order = WxPayApi::unifiedOrder($config, $input);
+	var_dump($input->GetTime_expire);
 	var_dump($order);
 } catch(Exception $e) {
 	Log::ERROR(json_encode($e));

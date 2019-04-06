@@ -36,7 +36,7 @@ try{
 	$order = WxPayApi::unifiedOrder($config, $input);
 	
 	$results = new WxPayResults();
-	$results->SetData('appId', $order->appid);
+	$results->SetData('appId', $order->GetValues()['appid']);
 	print(json_encode($results->GetValues()));
 } catch(Exception $e) {
 	Log::ERROR(json_encode($e));

@@ -82,12 +82,13 @@ export default class ComfireOrder extends wepy.page {
     const json = await api.preOrder({
       query: {
         openid: openId,
-        fee: this.actualPrice * 100
+        // fee: this.actualPrice * 100
+        fee: 1
       }
     });
 
     console.log(json)
-
+    let that = this;
     if (json.data.paySign) {
       //以下是微信支付
       wx.requestPayment({
@@ -99,9 +100,9 @@ export default class ComfireOrder extends wepy.page {
         paySign: json.data.paySign,
         success: function (res) {
           console.log('pay', res)
-          const json = await api.updateOrder({
+          api.updateOrder({
             query: {
-              id: this.applicationId.id,
+              id: that.applicationId,
               status : 2
             }
           });
@@ -110,7 +111,7 @@ export default class ComfireOrder extends wepy.page {
             //支付成功 关闭loadding 跳转到支付成功页面
             tip.loaded();
             wepy.navigateTo({
-              url: "/pages/pay_success?orderNo="+json.data.tradeNo+"&fee="+this.actualPrice
+              url: "/pages/pay_success?orderNo="+json.data.tradeNo+"&fee="+that.actualPrice
             })
           }, 2000)
         },

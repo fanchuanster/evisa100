@@ -82,8 +82,7 @@ export default class ComfireOrder extends wepy.page {
     const json = await api.preOrder({
       query: {
         openid: openId,
-        // fee: this.actualPrice * 100
-        fee: 1
+        fee: this.actualPrice * 100
       }
     });
 
@@ -99,7 +98,7 @@ export default class ComfireOrder extends wepy.page {
         signType: 'MD5',
         paySign: json.data.paySign,
         success: function (res) {
-          console.log('pay', res)
+          console.log('pay', res);
           api.updateOrder({
             query: {
               id: that.applicationId,

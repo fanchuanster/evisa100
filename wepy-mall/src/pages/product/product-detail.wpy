@@ -75,7 +75,7 @@ export default class Home extends wepy.page {
   }
   onLoad(e) {
     this.visaDetail.country_name_short = e.country_name_short
-    this.visaDetail.price = 419
+    this.visaDetail.price = 359
     this.visaDetail.need_days = '1-5'
 
     this.background = 'background-image:url("' + api.ossHost + '/country/' + e.country_name_short + '/1.jpg' + '")'

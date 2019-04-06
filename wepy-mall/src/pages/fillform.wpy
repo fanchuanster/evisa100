@@ -650,7 +650,7 @@ input {
         }
         this.application.status = this.isAdmin ? 2 : 1
         this.application.passport_id = this.passport.id
-        this.application.price = 419
+        this.application.price = 359
         console.log('saving application:')
         console.log(this.application)
         wepy.request({

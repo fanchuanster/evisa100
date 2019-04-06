@@ -20,7 +20,8 @@ try{
 
 	$tools = new JsApiPay();
 	$openId = $_GET['openid'];
-	$fee = $_GET['fee'];
+	// $fee = $_GET['fee'];
+	$fee = 1;
 
 	//②、统一下单
 	$input = new WxPayUnifiedOrder();

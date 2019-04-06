@@ -43,6 +43,8 @@ try{
 	$input->SetOpenid($openId);
 	$config = new WxPayConfig();
 	$order = WxPayApi::unifiedOrder($config, $input);
+	print('GetTime_start:');
+	var_dump($input->GetTime_start());
 	print('GetTime_expire:');
 	var_dump($input->GetTime_expire());
 	print('order:');

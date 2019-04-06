@@ -34,7 +34,7 @@ try{
 	$input->SetOpenid($openId);
 	$config = new WxPayConfig();
 	$order = WxPayApi::unifiedOrder($config, $input);
-	print($order);
+	print(json_encode($order));
 } catch(Exception $e) {
 	Log::ERROR(json_encode($e));
 }

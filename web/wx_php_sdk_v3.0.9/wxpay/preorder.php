@@ -37,7 +37,13 @@ try{
 	
 	$results = new WxPayResults();
 	$results->SetData('appId', $order['appid']);
-	print(json_encode($results->GetValues()));
+	$results->SetData('timeStamp', date("YmdHis"));
+	$results->SetData('nonceStr', $order['nonce_str']);
+	$results->SetData('package', 'prepay_id='.$order['prepay_id']);
+	$results->SetData('signType', $config->GetSignType());
+	$paySign = $results->MakeSign($config, false);
+	$results->SetData('paySign', $paySign);
+	print(json_encode($results));
 } catch(Exception $e) {
 	Log::ERROR(json_encode($e));
 }

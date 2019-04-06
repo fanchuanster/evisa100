@@ -91,12 +91,12 @@
               complete(0)
               return
             }
+            console.log('parse result:', res.data)
             var passport = {
               passport_no: res.data.items.passport_no,
               name: res.data.items.name,
               name_cn: res.data.items.name_cn
             }
-            console.log(passport)
             delete res.data.items.passport_no
             delete res.data.items.name
             delete res.data.items.name_cn

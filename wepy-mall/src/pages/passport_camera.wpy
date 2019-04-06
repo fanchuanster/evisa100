@@ -2,9 +2,9 @@
 page{
   height:100%;
 }
-.view{
+.camera_view{
   width: 100%;
-  height: 100%;
+  height: 85%;
   display: flex;
   flex-direction: column;
   }
@@ -32,28 +32,28 @@ page{
   position: absolute;
   top: 10rpx;
   left: 215rpx;
-  width: 320rpx;
-  height: 320rpx;
+  width: 350rpx;
+  height: 350rpx;
   transform: rotate(90deg);
 }
 </style>
 <template>
   <view class="container">
-    <camera wx:if="{{!passport_file}}" class="view"
-      device-position="back"
-      flash="auto"
-      binderror="error">
-      <cover-view class="view">
-        <cover-view class="view">
+    <view wx:if="{{!passport_file}}" class="container">
+      <camera class="camera_view"
+        device-position="back"
+        flash="auto"
+        binderror="error">
+        <cover-view>
           <cover-image class="head_photo" src="../resources/images/head.png"/>
         </cover-view>
-        <cover-view class="bottom_toolbar" @tap="takePhoto">
-          <cover-image class="imgbtn" src="../resources/images/camera.png" />
-        </cover-view>
-      </cover-view>
-    </camera>
-    <view wx:else class="view">
-      <image class="view" src="{{passport_file}}"/>
+      </camera>
+      <view class="bottom_toolbar" @tap="takePhoto">
+        <image class="imgbtn" src="../resources/images/camera.png" />
+      </view>
+    </view>
+    <view wx:else class="container">
+      <image class="camera_view" src="{{passport_file}}"/>
       <view class="bottom_toolbar">
         <view class="play" @tap="uncheck">
           <image class="imgbtn" src="../resources/images/uncheck.png" />

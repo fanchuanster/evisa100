@@ -6,13 +6,8 @@
  
  $input = file_get_contents("php://input");
  
- print($input);
- print('updateOrder triggered');
- 
  $json = json_decode($input);
- 
- // $data = str_replace("\u", "\\u", $data);
- 
+  
  if ($json->id) {
 	// update it.
 	$updatestr = "update application set ".

@@ -85,7 +85,7 @@ export default class ComfireOrder extends wepy.page {
     tip.loading("提交订单中");
     let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
     let openId = userSpecialInfo.openid;
-    const json = await api.preorder({
+    const json = await api.preOrder({
       query: {
         openId: openId,
         receiverInfoId: this.address.id,
@@ -234,13 +234,6 @@ export default class ComfireOrder extends wepy.page {
     },
     async goPay(e) {
       var fId = e.detail.formId;
-      if (!this.is_exit_address) {
-        await tip.confirm('你未设置收货地址，请设置地址');
-        wepy.navigateTo({
-          url: "/pages/address?type=order"
-        })
-        return false;
-      }
       this.goToPay(fId);
     },
     setAddress() {

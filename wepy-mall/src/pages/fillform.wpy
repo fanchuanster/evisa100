@@ -671,8 +671,11 @@ input {
           // this.passport = null
           // this.application = null
           setTimeout(function () {
-            wepy.switchTab({
-              url: '/pages/home'
+            // wepy.switchTab({
+            //   url: '/pages/home'
+            // })
+            wepy.navigateTo({
+              url: '/pages/comfire_order'
             })
           }, 3000)
         })

@@ -70,17 +70,16 @@ export default class Order extends wepy.page {
         orderStatus: that.orderStatus,
         receiveFlg : that.receiveFlg,
         page: currentPage || 1,
-        size: size || 10,
-        type: 1 //正常单
+        size: size || 10
       }
     });
-    if (json.data.code == 0) {
-      console.log("json.data.list");
-      console.log(json.data.list);
+    if (json.data == 0) {
+      console.log("json.data");
+      console.log(json.data);
       if (refresh) {
-        that.orderList = json.data.list;
+        that.orderList = json.data;
       } else {
-        that.orderList = [...that.orderList, ...json.data.list];
+        that.orderList = [...that.orderList, ...json.data.];
       }
       that.page_total = json.data.page_total;
       that.totalCount = json.data.totalCount;

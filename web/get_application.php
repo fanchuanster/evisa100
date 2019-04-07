@@ -31,8 +31,8 @@
   if (!empty($condition)) {
     $querystr .= ' WHERE ' . $condition;
   }
-  if (isset($_GET['count'])) {
-	  $querystr .= ' LIMIT ' . $_GET['count'];
+  if (isset($_GET['size'])) {
+	  $querystr .= ' LIMIT ' . $_GET['size'];
   }
   
   // var_dump($querystr);
@@ -43,6 +43,6 @@
   while ($row = $result->fetch_assoc()) {
 	  $records[] = $row;
   }
-
+  
   print((json_encode($records)));
 ?>

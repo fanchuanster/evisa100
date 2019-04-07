@@ -29,8 +29,8 @@
   if (!empty($condition)) {
     $querystr .= ' WHERE ' . $condition;
   }
-  if (isset($_GET['count'])) {
-	  $querystr .= ' LIMIT ' . $_GET['count'];
+  if (isset($_GET['size'])) {
+	  $querystr .= ' LIMIT ' . $_GET['size'];
   }
   
   // var_dump($querystr);

@@ -112,7 +112,7 @@ const searchKeywordList = (params) => wxRequest(params, apiMall + '/api/searchke
 const clearSearchKeyword = (params) => wxRequest(params, apiMall + '/api/searchkeyword/clear');
 
 //查询我的订单
-const getMyOrderList = (params) => wxRequest(params, apiMall + '/api/mall/goodsOrder/getMyOrderList');
+const getMyOrderList = (params) => wxRequest(params, apiMall + '/get_application.php');
 
 //查询我的订单数量
 const getMyOrderSize = (params) => wxRequest(params, apiMall + '/api/mall/goodsOrder/getMyOrderSize');

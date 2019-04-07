@@ -31,7 +31,7 @@ page{
 .head_photo {
   position: absolute;
   top: 10rpx;
-  left: 215rpx;
+  left: 200rpx;
   width: 350rpx;
   height: 350rpx;
   transform: rotate(90deg);

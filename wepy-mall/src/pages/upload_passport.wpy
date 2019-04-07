@@ -59,7 +59,7 @@
         }
       })
     }
-    upload_passport(imagePath, complete) {
+    async upload_passport(imagePath, complete) {
       let that = this
       wx.getFileSystemManager().readFile({
         filePath: imagePath,
@@ -70,11 +70,12 @@
             mask: true
           })
           wepy.request({
-            url: 'https://ocrdiy.market.alicloudapi.com/api/predict/ocr_sdt',
+            // url: 'https://ocrdiy.market.alicloudapi.com/api/predict/ocr_sdt',
+            url: 'https://ocrhz.market.alicloudapi.com/rest/160601/ocr/ocr_passport.json',
             method: 'POST',
             data: {
-              image: res.data,
-              configure: { template_id: 'e132cad9-55e9-417f-9111-c82d3105ed501545292863' }
+              image: res.data
+              // configure: { template_id: 'e132cad9-55e9-417f-9111-c82d3105ed501545292863' }
             },
             header: {
               'content-type': 'application/json; charset=UTF-8',
@@ -91,27 +92,26 @@
               complete(0)
               return
             }
-            console.log('parse result:', res.data)
+            console.log('parse result:', res)
             var passport = {
-              passport_no: res.data.items.passport_no,
-              name: res.data.items.name,
-              name_cn: res.data.items.name_cn
+              passport_no: res.data.passport_no,
+              name: res.data.name,
+              name_cn: res.data.name_cn
             }
-            delete res.data.items.passport_no
-            delete res.data.items.name
-            delete res.data.items.name_cn
-            passport.data = res.data.items
+            delete res.data.passport_no
+            delete res.data.name
+            delete res.data.name_cn
+            passport.data = res.data
             passport.data.birth_date = Util.dateFromString(passport.data.birth_date)
             passport.data.issue_date = Util.dateFromString(passport.data.issue_date)
             passport.data.expiry_date = Util.dateFromString(passport.data.expiry_date)
-            if (passport.data.sex) {
-              passport.data.sex = passport.data.sex.replace(/\W/g, '')
-            }
-            Util.splitCnEnName(passport.data, 'birth_place')
-            Util.splitCnEnName(passport.data, 'issue_place')
-            Util.splitCnEnName(passport.data, 'nationality')
-            passport.data.passport_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
+            passport.data.authority_cn = passport.data.authority
+            passport.data.authority = 'MPS Exit & Entry Administration'
 
+            Util.splitCnEnName(passport.data, 'birth_place_raw', 'birth_place')
+            Util.splitCnEnName(passport.data, 'issue_place_raw', 'issue_place')
+            passport.data.passport_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
+            that.passport = passport
             wepy.showLoading({
               title: '上传中',
               mask: true
@@ -119,7 +119,6 @@
             UploadFile(imagePath, passport.data.passport_file,
               function(res) {
                 wepy.hideLoading()
-                that.passport = passport
                 complete(1)
               },
               function(err) {

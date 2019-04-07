@@ -18,7 +18,11 @@
   text-align:left;
   font-size: 11px;
 }
-
+.toolbar_top {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
 </style>
 <script>
 import wepy from 'wepy';

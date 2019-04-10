@@ -14,7 +14,7 @@
   if (isset($_GET['id'])) {
 	  $condition .= 'application.id=' . $_GET['id'];
   }
-  if (isset($_GET['status'])) {
+  if (isset($_GET['status']) && !!$_GET['status']) {
 	  if (!empty($condition)) {
 		  $condition .= ' AND';
 	  }

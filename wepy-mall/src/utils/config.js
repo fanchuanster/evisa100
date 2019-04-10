@@ -4,6 +4,7 @@ var config = {
   accesskey: 'NyNOmcGHgyKX5vHUtn9lv7M1vCJWL3',
   accessid: 'LTAIQMDDOG5SOtsh',
   timeout: 87600, // policy valid timespan.
+  adminOpenid: 'opini5GNX-N6JKq6aqutfPHCxUDc',
   countryFields: {
     all: {
       passport_file:1, photo_file:1, other_file:0, id_front_file:0,

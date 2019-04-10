@@ -434,7 +434,7 @@ input {
         return this.today
       },
       isAdmin() {
-        return this.openid === 'opini5GNX-N6JKq6aqutfPHCxUDc'
+        return this.openid === env.adminOpenid
       },
       passportFile() {
         if (!this.passport) {

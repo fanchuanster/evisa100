@@ -22,7 +22,8 @@ namespace EVisa100.Automations
     {
         void Execute(Application application)
         {
-            const string initPage = "https://accounts.ecitizen.go.ke/login";
+            string url = "https://accounts.ecitizen.go.ke/login";
+            url = "https://www.ysepay.com/";
 
             var options = new ChromeOptions();
             options.AddArgument("no-sandbox");
@@ -32,7 +33,8 @@ namespace EVisa100.Automations
                 driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(100);
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
 
-                driver.Navigate().GoToUrl(initPage);
+                driver.Navigate().GoToUrl(url);
+                var p = driver.PageSource;
 
                 driver.FindElement(By.Id("auth_username")).SendKeys("fanchuanster@gmail.com");
 

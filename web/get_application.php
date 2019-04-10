@@ -22,7 +22,7 @@
   }
   
   // for my openid, gets all.
-  if (isset($_GET['openid']) && $_GET['openid'] != 'opini5GNX-N6JKq6aqutfPHCxUDc') {
+  if (isset($_GET['openid']) && !!$_GET['openid']) {
 	  if (!empty($condition)) {
 		  $condition .= ' AND';
 	  }

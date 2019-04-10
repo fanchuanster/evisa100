@@ -22,6 +22,7 @@ import OrderItem from '@/components/order_item'
 import BottomLoadMore from "../components/common/bottomLoadMore"
 import Placeholder from "../components/common/placeholder"
 import api from '@/api/api'
+import tip from '@/utils/tip';
 const env = require('../utils/config.js')
 export default class Order extends wepy.page {
   config = {
@@ -66,7 +67,7 @@ export default class Order extends wepy.page {
     const json = await api.getMyOrderList({
       query: {
         openId: openId,
-        orderStatus: that.orderStatus
+        status: that.orderStatus
       }
     });
     if (json.data == 0) {

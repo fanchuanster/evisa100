@@ -20,7 +20,7 @@
 	"data='".addslashes($data)."',".
 	" WHERE id=".$travelInfo->id;
         
-	// var_dump($updatestr);
+	var_dump($updatestr);
 
 	$mysqli->query($updatestr);
  } else {
@@ -31,7 +31,7 @@
 	"CAST('".$travelInfo->departure_date."' AS DATE),'".
 	addslashes($data)."')";
 	
-	// var_dump($insertStr);
+	var_dump($insertStr);
 	
 	$mysqli->query($insertStr);
 

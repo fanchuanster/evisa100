@@ -321,6 +321,7 @@ input {
 </template>
 <script>
   import wepy from 'wepy'
+  import api from '@/api/api'
   const env = require('../utils/config.js')
   import {
     SYSTEM_INFO,
@@ -672,40 +673,35 @@ input {
       })
     }
 
-    onLoad(option) {
+    async onLoad(option) {
       let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
       this.openid = userSpecialInfo.openid;
 
       let that = this
       if (option.id) {
-        wepy.request({
-          url: 'https://php.evisa100.com/get_application.php?id=' + option.id,
-          method: 'GET',
-          header: {
-            'content-type': 'application/json; charset=UTF-8'
+        var json = await api.getApplicationList({
+          query: {
+            id: option.id
           }
-        }).then(res => {
-          that.application = res.data[0]
-          that.application.data = JSON.parse(res.data[0].data)
-          that.fields = env.getFields(this.application.to_country)
-          this.entrypoints = env.getEntryPoints(this.application.to_country)
-          console.log('application:')
-          console.log(that.application)
+        });
+        console.log(json)
+        this.application = json.data[0];
 
-          wepy.request({
-            url: 'https://php.evisa100.com/get_passports.php?id=' + this.application.passport_id,
-            method: 'GET',
-            header: {
-              'content-type': 'application/json; charset=UTF-8'
-            }
-          }).then(res => {
-            that.passport = res.data[0]
-            that.passport.data = JSON.parse(res.data[0].data)
-            that.$apply()
-            console.log('passport:')
-            console.log(that.passport)
-          })
-        })
+        console.log('application:')
+        console.log(this.application)
+        this.fields = env.getFields(this.application.to_country)
+        this.entrypoints = env.getEntryPoints(this.application.to_country)
+
+        json = await api.getPassportList({
+          query: {
+            id: this.application.passport_id
+          }
+        });
+        console.log(json)
+        this.passport = json.data[0];
+        that.$apply()
+        console.log('passport:')
+        console.log(that.passport)
       } else {
         this.passport = wepy.getStorageSync('passport')
         var application = wepy.getStorageSync('application')
@@ -722,7 +718,9 @@ input {
           this.application.data.ever_denied_by_others = false
           this.application.data.ever_convicted = false
         }
-        this.application.to_country = option.country
+        if (option.country) {
+          this.application.to_country = option.country
+        }
         this.fields = env.getFields(this.application.to_country)
         this.entrypoints = env.getEntryPoints(this.application.to_country)
       }

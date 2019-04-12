@@ -151,11 +151,8 @@
     }
     onLoad(res) {
       if (res.country) {
-        console.log(res.country)
         this.country = res.country
         this.fields = Config.getFields(this.country)
-
-        console.log(this.fields)
       }
     }
   }

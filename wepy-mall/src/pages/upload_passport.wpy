@@ -108,8 +108,6 @@
             passport.data.authority_cn = passport.data.authority
             passport.data.authority = 'MPS Exit & Entry Administration'
 
-            Util.splitCnEnName(passport.data, 'birth_place_raw', 'birth_place')
-            Util.splitCnEnName(passport.data, 'issue_place_raw', 'issue_place')
             passport.data.passport_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
             that.passport = passport
             wepy.showLoading({

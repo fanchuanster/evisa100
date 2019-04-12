@@ -111,8 +111,26 @@ const searchKeywordList = (params) => wxRequest(params, apiMall + '/api/searchke
 //查询关键字清除
 const clearSearchKeyword = (params) => wxRequest(params, apiMall + '/api/searchkeyword/clear');
 
-//查询我的订单
-const getMyOrderList = (params) => wxRequest(params, apiMall + '/get_application.php');
+const getApplicationList = async (params) => {
+  var json = await wxRequest(params, apiMall + '/get_application.php')
+  if (json.data) {
+    json.data.forEach(element => {
+      element.name_cn = JSON.parse(element.name_cn)
+      element.data = JSON.parse(element.data)
+    })
+  }  
+  return json
+};
+
+const getPassportList = async (params) => {
+  var json = await wxRequest(params, apiMall + '/get_passports.php')
+  if (json.data) {
+    json.data.forEach(element => {
+      element.data = JSON.parse(element.data)
+    })
+  }
+  return json
+};
 
 //查询我的订单数量
 const getMyOrderSize = (params) => wxRequest(params, apiMall + '/api/mall/goodsOrder/getMyOrderSize');
@@ -183,7 +201,8 @@ export default {
   addSearchKeyword,
   searchKeywordList,
   clearSearchKeyword,
-  getMyOrderList,
+  getApplicationList,
+  getPassportList,
   saveByCart,
   toPay,
   rootCtegoryList,

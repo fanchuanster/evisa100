@@ -64,7 +64,7 @@ export default class Order extends wepy.page {
     console.log("orderStatus值" + that.orderStatus);
     let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
     let openId = userSpecialInfo.openid;
-    const json = await api.getMyOrderList({
+    const json = await api.getApplicationList({
       query: {
         openId: openId,
         orderStatus: that.orderStatus,

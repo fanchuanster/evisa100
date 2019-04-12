@@ -61,15 +61,10 @@ export default class ComfireOrder extends wepy.page {
   }
 
   onLoad(option) {
-    let that = this;
+    console.log(option)
     this.actualPrice = option.fee;
     this.applicationId = option.applicationId;
     this.operating = false;
-    that.goodsId = option.goodsId==undefined?"":option.goodsId;
-    this.purchaseType = option.purchasetype==undefined?"1":option.purchasetype;
-    /*that.list = bb.result.products;
-    console.log(bb.result.products)*/
-    // that.getOrderDetailInfo();
   }
   computed = {
   }

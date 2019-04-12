@@ -62,7 +62,7 @@ export default class Order extends wepy.page {
     console.log("orderStatus=" + that.orderStatus);
     let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
     let openId = userSpecialInfo.openid === env.adminOpenid ? '' : userSpecialInfo.openid;
-    const json = await api.getMyOrderList({
+    const json = await api.getApplicationList({
       query: {
         openId: openId,
         status: that.orderStatus
@@ -70,10 +70,6 @@ export default class Order extends wepy.page {
     });
     console.log(json)
     that.orderList = json.data;
-    that.orderList.forEach(element => {
-      element.name_cn = JSON.parse(element.name_cn)
-      element.data = JSON.parse(element.data)
-    });
     
     that.showLoading = false;
     that.$apply();

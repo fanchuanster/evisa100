@@ -31,7 +31,7 @@
 	"CAST('".$travelInfo->departure_date."' AS DATE),'".
 	addslashes($data)."')";
 	
-	var_dump($insertStr);
+	// var_dump($insertStr);
 	
 	$mysqli->query($insertStr);
 

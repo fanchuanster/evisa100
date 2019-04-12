@@ -9,6 +9,12 @@
           <view class="title">订单号：
             <text class="order_doc">{{item.id}}</text>
           </view>
+          <view class="title">姓名：
+            <text class="order_doc">{{item.name_cn}}</text>
+          </view>
+          <view class="title">护照号码：
+            <text class="order_doc">{{item.passport_no}}</text>
+          </view>
           <view class="title mt10">提交时间：
             <text class="order_doc">{{item.last_updated}}</text>
           </view>
@@ -160,7 +166,7 @@ export default class orderItem extends wepy.component {
   }
 
   onLoad() {
-    console.log("===========lzz返回数据lzz=========")
+    // console.log("===========lzz返回数据lzz=========")
     console.log(this.orderList);
   }
 }

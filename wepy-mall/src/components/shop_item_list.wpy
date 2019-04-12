@@ -105,7 +105,6 @@ export default class ShopItemList extends wepy.component {
 
   onLoad() {
     this.list=[];
-    console.log("加载list============");
     console.log(this.list)
   }
 }

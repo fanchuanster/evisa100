@@ -14,7 +14,7 @@
 	"passport_no='" . $passport->passport_no."',".
 	"openid='" . $passport->openid."',".
 	"name='" . $passport->name."',".
-	"name_cn='" . $passport->name_cn."',".
+	"name_cn='" . addslashes(json_encode($passport->name_cn))."',".
 	"data='" . addslashes($data)."'".
 	" WHERE id='" . $passport->id."'";
 
@@ -25,7 +25,7 @@
 	"values('".$passport->passport_no."','".
 	$passport->openid."','".
 	$passport->name."','".
-	$passport->name_cn."','".
+	addslashes(json_encode($passport->name_cn))."','".
 	addslashes($data)."')";
 	
 	$mysqli->query($insertStr);

@@ -70,6 +70,10 @@ export default class Order extends wepy.page {
     });
     console.log(json)
     that.orderList = json.data;
+    that.orderList.forEach(element => {
+      element.name_cn = JSON.parse(element.name_cn)
+      element.data = JSON.parse(element.data)
+    });
     
     that.showLoading = false;
     that.$apply();
@@ -114,7 +118,7 @@ export default class Order extends wepy.page {
       } else if (cur == 3) {
 
         console.log("已完成订单类型");
-        that.orderStatus = 3;
+        that.orderStatus = 4;
         that.getMyOrder();
       }
       that.$apply();

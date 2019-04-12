@@ -24,10 +24,10 @@
           <text class="defult" wx:if="{{item.status==0}}">
             <view class="order_state">待支付</view>
           </text>
-          <view class="order_state" wx:if="{{item.status==0}}">待付款</view>
-          <view class="order_state" wx:if="{{item.status==2 || item.status==1}}">待收货</view>
+          <view class="order_state" wx:if="{{item.status==1}}">待付款</view>
+          <view class="order_state" wx:if="{{item.status==2}}">待收货</view>
           <view class="order_state" wx:if="{{item.status==4}}">已完成</view>
-          <view class="order_state" wx:if="{{item.status==3}}">待评论</view>
+          <!-- <view class="order_state" wx:if="{{item.status==3}}">待评论</view> -->
         </view>
     </view>
 

@@ -44,7 +44,7 @@ page{
         device-position="back"
         flash="auto"
         binderror="error">
-        <cover-view>
+        <cover-view class="camera_view">
           <cover-image class="head_photo" src="../resources/images/head.png"/>
         </cover-view>
       </camera>

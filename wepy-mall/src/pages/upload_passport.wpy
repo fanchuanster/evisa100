@@ -101,14 +101,26 @@
             delete res.data.passport_no
             delete res.data.name
             delete res.data.name_cn
+            delete res.data.name_cn_raw
             passport.data = res.data
             passport.data.birth_date = Util.dateFromString(passport.data.birth_date)
             passport.data.issue_date = Util.dateFromString(passport.data.issue_date)
             passport.data.expiry_date = Util.dateFromString(passport.data.expiry_date)
+            passport.data.issue_place_cn = passport.data.issue_place
+            passport.data.issue_place = passport.data.issue_place_raw.replace(/[^\w ,.]/gi, '')
+            delete passport.data.issue_place_raw
+            passport.data.birth_place_cn = passport.data.birth_place
+            passport.data.birth_place = passport.data.birth_place_raw.replace(/[^\w ,.]/gi, '')
+            delete passport.data.birth_place_raw
             passport.data.authority_cn = passport.data.authority
             passport.data.authority = 'MPS Exit & Entry Administration'
 
             passport.data.passport_file = 'passport/' + passport.passport_no + '.' + imagePath.split('.').pop()
+            if (that.passport) {
+              passport.data.photo_file = that.passport.data.photo_file
+              passport.data.other_file = that.passport.data.other_file
+              passport.data.id_front_file = that.passport.data.id_front_file
+            }
             that.passport = passport
             wepy.showLoading({
               title: '上传中',
@@ -144,6 +156,10 @@
       }
     }
     onLoad() {
+      this.passport = wepy.getStorageSync('passport')
+    }
+    onUnload() {
+      wepy.setStorageSync('passport', this.passport)
     }
   }
 </script>

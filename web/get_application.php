@@ -35,7 +35,6 @@
 	  $querystr .= ' LIMIT ' . $_GET['size'];
   }
   
-  var_dump($querystr);
   $result = $mysqli->query($querystr);
   
   $records = array();

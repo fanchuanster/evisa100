@@ -689,8 +689,8 @@ input {
 
         console.log('application:')
         console.log(this.application)
-        this.fields = env.getFields(this.application.to_country)
-        this.entrypoints = env.getEntryPoints(this.application.to_country)
+        this.fields = env.getFields(this.application.data.to_country)
+        this.entrypoints = env.getEntryPoints(this.application.data.to_country)
 
         json = await api.getPassportList({
           query: {
@@ -719,10 +719,11 @@ input {
           this.application.data.ever_convicted = false
         }
         if (option.country) {
-          this.application.to_country = option.country
+          console.log('set country = ' + option.country)
+          this.application.data.to_country = option.country
         }
-        this.fields = env.getFields(this.application.to_country)
-        this.entrypoints = env.getEntryPoints(this.application.to_country)
+        this.fields = env.getFields(this.application.data.to_country)
+        this.entrypoints = env.getEntryPoints(this.application.data.to_country)
       }
     }
     onUnload() {

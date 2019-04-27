@@ -127,6 +127,7 @@ const getPassportList = async (params) => {
   if (json.data) {
     json.data.forEach(element => {
       element.data = JSON.parse(element.data)
+      element.name_cn = JSON.parse(element.name_cn)
     })
   }
   return json

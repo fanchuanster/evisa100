@@ -7,7 +7,7 @@
   // $owner = $_GET['owner'];
  
   $querystr = "SELECT 'id', application.id, 'passport_id', passport_id, 'status', status, 'entry_date', entry_date, 'departure_date', departure_date, 'data', application.data"
-  .", 'passport_no', passport_no, 'passport_data', passport.data, 'name', name, 'name_cn', name_cn, 'last_updated', application.last_updated"
+  .", 'passport_no', passport_no, 'name', name, 'name_cn', name_cn, 'last_updated', application.last_updated"
   ." FROM application INNER JOIN passport ON application.passport_id=passport.id";
   
   $condition = '';

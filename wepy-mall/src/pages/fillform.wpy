@@ -21,9 +21,9 @@ input {
     <i-collapse simple style="width:100%;margin-top:30rpx">
       <i-collapse-item title="基本信息">
         <view slot="content">
-          <view wx:if="{{ !!fields.nationality_cn }}">
+          <view wx:if="{{ !!fields.country_cn }}">
             <text class="fieldLabel">国籍</text>
-            <input placeholder="国籍" value="{{passport.data.nationality_cn}}" bindinput="oninputNationality" type="text"/>
+            <input placeholder="国籍" value="{{passport.data.country_cn}}" bindinput="oninputNationality" type="text"/>
           </view>
           <view wx:if="{{ !!fields.name_cn }}">
             <text class="fieldLabel">姓名</text>
@@ -60,7 +60,7 @@ input {
             <text class="fieldLabel">出生地(拼音)</text>
             <input value="{{passport.data.birth_place}}" bindinput="oninputName" type="text"/>
           </view>
-          <view>
+          <view wx:if="{{ !!fields.job_type }}">
             <picker mode="selector" value="{{passport.data.job_type}}" range="{{jobs}}" @change="onJobTypeChange">
               <view class="picker">
                 <text class="fieldLabel">职业 </text>{{jobTypeDisplay}}
@@ -496,7 +496,7 @@ input {
         this.passport.name = e.detail.value
       },
       oninputNationality(e) {
-        this.passport.data.nationality = e.detail.value
+        this.passport.data.country = e.detail.value
       },
       bindDateChange(e) {
         this.passport.data.issue_date = e.detail.value

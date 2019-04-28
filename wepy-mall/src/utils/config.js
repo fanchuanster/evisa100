@@ -8,7 +8,7 @@ var config = {
   countryFields: {
     all: {
       passport_file:1, photo_file:1, other_file:0, id_front_file:0,
-      nationality_cn:1, name_cn:1, name:1, sex:1, marital_status:1, birth_date:1, birth_place_cn:1, birth_place:1,
+      country_cn:1, name_cn:1, name:1, sex:1, marital_status:1, birth_date:1, birth_place_cn:1, birth_place:1,
       job_type:1, job_comp_cn:0, job_comp:0, job_title_cn:1, job_title:1,
       passport_no:1, authority:1, issue_place:1, issue_date:1, expiry_date:1,
       father_name:1, father_name_cn:1, mother_name:1, mother_name_cn:1, region:1, address_cn:1, address:1, phone:1, email:1,
@@ -18,7 +18,7 @@ var config = {
     },
     ke: {
       passport_file:1, photo_file:1, other_file:0, id_front_file:1,
-      nationality_cn:0, name_cn:1, name:1, sex:1, birth_date:1, birth_place_cn:1, birth_place:1,
+      country_cn:0, name_cn:1, name:1, sex:1, birth_date:1, birth_place_cn:1, birth_place:1,
       job_type:1, job_comp_cn:0, job_comp:0, job_title_cn:1, job_title:1,
       passport_no:1, authority:1, issue_place:1, issue_date:1, expiry_date:1,
       father_name:1, mother_name:1, region:1, address_cn:1, address:1, phone:1, email:1,
@@ -28,7 +28,7 @@ var config = {
     },
     tz: {
       passport_file:1, photo_file:1,
-      nationality_cn:0, name_cn:1, name:1, sex:1, marital_status:1, birth_date:1, birth_place_cn:1, birth_place:1,
+      country_cn:0, name_cn:1, name:1, sex:1, marital_status:1, birth_date:1, birth_place_cn:1, birth_place:1,
       job_type:1, job_comp_cn:0, job_comp:0, job_title_cn:1, job_title:1,
       passport_no:1, authority:1, issue_place:1, issue_date:1, expiry_date:1,
       father_name:1, mother_name:1, region:1, address_cn:1, address:1, phone:1, email:1,

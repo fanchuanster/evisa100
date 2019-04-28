@@ -666,7 +666,7 @@ input {
           if (res.data.id) {
             this.application.id = res.data.id
           }          
-          wepy.navigateTo({
+          wepy.redirectTo({
               url: '/pages/comfire_order?fee=' + that.application.price + "&applicationId=" + this.application.id
             })
         })

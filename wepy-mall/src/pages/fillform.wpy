@@ -649,7 +649,6 @@ input {
         if (res.data.id) {
           this.passport.id = res.data.id
         }
-        this.application.status = this.isAdmin ? 2 : 1
         this.application.passport_id = this.passport.id
         this.application.price = 359
         console.log('saving application:')
@@ -665,10 +664,15 @@ input {
           console.log(res)
           if (res.data.id) {
             this.application.id = res.data.id
-          }          
-          wepy.redirectTo({
+          }
+          if (this.application.status == 1) {
+            wepy.redirectTo({
               url: '/pages/comfire_order?fee=' + that.application.price + "&applicationId=" + this.application.id
             })
+          }
+          else {
+            wepy.navigateBack()
+          }
         })
       })
     }
@@ -684,7 +688,6 @@ input {
             id: option.id
           }
         });
-        console.log(json)
         this.application = json.data[0];
 
         console.log('application:')
@@ -697,7 +700,6 @@ input {
             id: this.application.passport_id
           }
         });
-        console.log(json)
         this.passport = json.data[0];
         that.$apply()
         console.log('passport:')

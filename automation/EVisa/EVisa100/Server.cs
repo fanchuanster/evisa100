@@ -35,7 +35,7 @@ namespace EVisa100
         }
         public Application GetApplication()
         {
-            var url = "https://fan.blockai.me/get_application.php?status=2&count=1";
+            var url = "https://php.evisa100.com/get_application.php?status=2&count=1";
 
             var httpRequest = (HttpWebRequest)WebRequest.Create(url);
             httpRequest.Method = "GET";
@@ -69,7 +69,7 @@ namespace EVisa100
 
         public Passport GetPassport(int id)
         {
-            var url = "https://fan.blockai.me/get_passports.php";
+            var url = "https://php.evisa100.com/get_passports.php";
 
             UriBuilder urlBuilder = new UriBuilder(url);
             urlBuilder.Query = $"id={id}";
@@ -103,7 +103,7 @@ namespace EVisa100
 
         void UpdateApplicationStatus(Application application)
         {
-            //var url = "https://fan.blockai.me/get_application.php";
+            //var url = "https://php.evisa100.com/get_application.php";
 
             //String bodys = string.Empty;
 

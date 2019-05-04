@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace EVisa100.Enums
 {
     public enum TransportationBy
@@ -27,5 +29,17 @@ namespace EVisa100.Enums
         Employed,
         Retired,
         Others
+    }
+
+    [Flags]
+    public enum ApplicationStatus
+    {
+        None = 0,
+        Created = 1,
+        Paid = 2,
+        Reviewed = 4,
+        Submitted = 8,
+        Succeeded = 16,
+        Failed = 32
     }
 }

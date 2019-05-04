@@ -37,7 +37,7 @@ export default class Order extends wepy.page {
   data = {
     winHeight: 0,
     totalCount: 0,
-    tabList: ["全部订单", "待支付", "待收货", "已完成"],
+    tabList: ["全部订单", "待支付", "进行中", "已完成"],
     orderList: [],
     currentPage: 1,
     is_empty: false,
@@ -95,10 +95,11 @@ export default class Order extends wepy.page {
       this.page_total = 0;
       this.orderList = [];
 
+/**
+1 created; 2 paid; 4 reviewed; 8 submitted; 16 succeeded; 32 failed
+ */
       let that = this;
       that.currentTab = cur;
-      console.log("cur");
-      console.log(cur);
       if (cur == 0) {
         console.log("所有订单类型");
         that.orderStatus = "";
@@ -109,12 +110,11 @@ export default class Order extends wepy.page {
         that.getMyOrder();
       } else if (cur == 2) {
         console.log("待收货订单类型");
-        that.orderStatus = 2;
+        that.orderStatus = 2|4|8|32;
         that.getMyOrder();
       } else if (cur == 3) {
-
         console.log("已完成订单类型");
-        that.orderStatus = 4;
+        that.orderStatus = 16;
         that.getMyOrder();
       }
       that.$apply();

@@ -198,7 +198,7 @@ input {
       <i-collapse-item title="旅行信息">
         <view slot="content">
         <view wx:if="{{!!fields.destination}}">
-        <picker bindchange="bindDestinationChange" range="{{destinations}}" range-key="name_cn">
+          <picker bindchange="bindDestinationChange" range="{{destinations}}" range-key="name_cn">
         <view class="picker">
           <text class="fieldLabel">目的地   </text>{{destinationDisplay}}
         </view>
@@ -312,10 +312,7 @@ input {
 
     </i-collapse>
     <view>
-      <button type="primary" @tap="submit">
-        <text wx:if="{{isAdmin}}">确定并提交</text>
-        <text wx:else>确定</text>
-      </button>
+      <button type="primary" @tap="submit">确定</button>
     </view>
   </view>
 </template>
@@ -669,8 +666,18 @@ input {
             wepy.redirectTo({
               url: '/pages/comfire_order?fee=' + that.application.price + "&applicationId=" + this.application.id
             })
-          }
-          else {
+          } else {
+            if (this.application.status == 2 && this.isAdmin) {
+              api.updateOrder({
+                query: {
+                  id: that.applicationId,
+                  status : 4
+                },
+                method: 'POST'
+              }).then(res => {
+                console.log('orderupdated', that.applicationId, res);
+              })
+            }
             wepy.navigateBack()
           }
         })

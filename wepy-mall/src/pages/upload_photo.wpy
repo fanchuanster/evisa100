@@ -96,12 +96,12 @@
                   wepy.showToast({
                     title: '制作成功',
                     icon: 'success',
-                    duration: 3000
+                    duration: 2000
                   })
                   setTimeout(function () {
                     console.log('wepy.navigateBack')
                     wepy.navigateBack()
-                  }, 3000)
+                  }, 2000)
                 } else {
                   wepy.showToast({
                     title: res.data.errmsg,

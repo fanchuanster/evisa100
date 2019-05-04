@@ -13,9 +13,9 @@
 	$updatestr = "update application set ".
 	"status=".$json->status." ".
 	" WHERE id=".$json->id;
-        
-	var_dump($updatestr);
 
 	$mysqli->query($updatestr);
+    
+    print('{"affected_rows":'.$mysqli->affected_rows.'}');
  }
 ?>

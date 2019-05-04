@@ -21,6 +21,8 @@
 	" WHERE id=".$application->id;
 
 	$mysqli->query($updatestr);
+    print('{"affected_rows":'.$mysqli->affected_rows.'}');
+    
  } else {
 	 // insert it.
 	$insertStr = "insert into application(passport_id, entry_date, departure_date, data) ".

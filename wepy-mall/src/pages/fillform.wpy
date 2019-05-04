@@ -670,7 +670,7 @@ input {
             if (this.application.status == 2 && this.isAdmin) {
               api.updateOrder({
                 query: {
-                  id: that.applicationId,
+                  id: this.application.id,
                   status : 4
                 },
                 method: 'POST'

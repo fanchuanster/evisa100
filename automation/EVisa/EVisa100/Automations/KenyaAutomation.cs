@@ -23,11 +23,10 @@ namespace EVisa100.Automations
         void Execute(Application application)
         {
             string url = "https://accounts.ecitizen.go.ke/login";
-            url = "https://www.ysepay.com/";
 
             var options = new ChromeOptions();
             options.AddArgument("no-sandbox");
-            IWebDriver driver = new ChromeDriver("./", options, TimeSpan.FromMinutes(3));
+            IWebDriver driver = new ChromeDriver("../", options, TimeSpan.FromMinutes(3));
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
                 driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(100);

@@ -39,7 +39,7 @@ namespace EVisa100
 
             var application = server.GetApplication();
             
-            var automation = Automations.AutomationsFactory.GetAutomation("ke");
+            var automation = Automations.AutomationsFactory.GetAutomation(application.data["to_country"].ToString());
             automation.Run(application);
         }
     }

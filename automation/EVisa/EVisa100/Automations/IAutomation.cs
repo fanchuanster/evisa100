@@ -11,4 +11,24 @@ namespace EVisa100.Automations
     {
         bool Run(Application application);
     }
+
+    public abstract class Automation : IAutomation
+    {
+        public bool Run(Application application)
+        {
+            try
+            {
+                Execute(application);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+
+            return true;
+        }
+
+        protected abstract void Execute(Application application);
+    }
 }

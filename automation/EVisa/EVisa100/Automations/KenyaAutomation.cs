@@ -18,9 +18,9 @@ using EVisa100.DataStructure;
 
 namespace EVisa100.Automations
 {
-    class KenyaAutomation : IAutomation
+    class KenyaAutomation : Automation
     {
-        void Execute(Application application)
+        protected override void Execute(Application application)
         {
             string url = "https://accounts.ecitizen.go.ke/login";
 
@@ -244,21 +244,6 @@ namespace EVisa100.Automations
                 driver.FindElement(By.CssSelector(@"#submit_primary")).Click();
                 driver.FindElement(By.CssSelector(@"#review_submit")).Click();
             }
-        }
-
-        bool IAutomation.Run(Application application)
-        {
-            try
-            {
-                Execute(application);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return false;
-            }
-
-            return true;
         }
     }
 }

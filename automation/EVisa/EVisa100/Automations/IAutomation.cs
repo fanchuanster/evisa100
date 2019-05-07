@@ -1,9 +1,7 @@
 ﻿using EVisa100.DataStructure;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EVisa100.Automations
 {
@@ -18,6 +16,8 @@ namespace EVisa100.Automations
         {
             try
             {
+                PreExecute();
+
                 Execute(application);
             }
             catch (Exception ex)
@@ -30,5 +30,17 @@ namespace EVisa100.Automations
         }
 
         protected abstract void Execute(Application application);
+
+        protected IWebDriver driver;
+        virtual protected void PreExecute()
+        {
+            var options = new ChromeOptions();
+            options.AddArgument("no-sandbox");
+            driver = new ChromeDriver("../", options, TimeSpan.FromMinutes(3));
+            {
+                driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(200);
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(40);
+            }
+        }
     }
 }

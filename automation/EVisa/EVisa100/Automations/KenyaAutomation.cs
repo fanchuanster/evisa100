@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Threading.Tasks;
-using System.Web;
-using System.Net.Http;
+﻿using System.IO;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 
 using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Firefox;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
 using EVisa100.DataStructure;
 
 namespace EVisa100.Automations
@@ -23,17 +12,9 @@ namespace EVisa100.Automations
         protected override void Execute(Application application)
         {
             string url = "https://accounts.ecitizen.go.ke/login";
-
-            var options = new ChromeOptions();
-            options.AddArgument("no-sandbox");
-            IWebDriver driver = new ChromeDriver("../", options, TimeSpan.FromMinutes(3));
+            
             {
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
-                driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(100);
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
-
                 driver.Navigate().GoToUrl(url);
-                var p = driver.PageSource;
 
                 driver.FindElement(By.Id("auth_username")).SendKeys("fanchuanster@gmail.com");
 
@@ -42,8 +23,8 @@ namespace EVisa100.Automations
                 pwd.Submit();
 
                 System.Threading.Thread.Sleep(3000);
-                var btn = driver.FindElement(By.CssSelector("div.col-xs-6:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)"));
-                btn.Click();
+                var getServiceBtn = driver.FindElement(By.CssSelector("div.col-xs-6:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)"));
+                getServiceBtn.Click();
                 System.Threading.Thread.Sleep(2000);
                 driver.FindElement(By.LinkText("Make Applicaiton")).Click();
 

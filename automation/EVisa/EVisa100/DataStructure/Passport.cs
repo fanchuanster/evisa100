@@ -14,6 +14,8 @@ namespace EVisa100.DataStructure
         public int id;
         public string openid;
         public string passport_no;
+        public string name;
+        public string name_cn;
         public Dictionary<string, object> data;
         
         public string JobTitle
@@ -68,7 +70,6 @@ namespace EVisa100.DataStructure
         {
             get
             {
-                var name = data["name"] as string;
                 var fields = name.Split(new char[] { ' ', ',', '.', '\n', '\t' });
 
                 return fields.FirstOrDefault();
@@ -79,7 +80,6 @@ namespace EVisa100.DataStructure
         {
             get
             {
-                var name = data["name"] as string;
                 var fields = name.Split(new char[] { ' ', ',', '.', '\n', '\t' });
 
                 return fields.LastOrDefault();

@@ -91,7 +91,6 @@ namespace EVisa100.Automations
             var drpResidence = new SelectElement(driver.FindElement(By.CssSelector(@"#element_14")));
             drpResidence.SelectByText("China");
 
-
             // #element_15 - physical address in the residence country.
             var address = driver.FindElement(By.CssSelector(@"#element_15"));
             address.SendKeys(application.Passport.Address);

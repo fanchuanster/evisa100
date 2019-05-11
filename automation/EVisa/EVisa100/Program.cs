@@ -32,8 +32,6 @@ namespace EVisa100
         }
         static void Main(string[] args)
         {
-            test();
-
             var server = new Server();
 
             var application = server.GetApplication();

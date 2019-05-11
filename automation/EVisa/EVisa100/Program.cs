@@ -25,7 +25,6 @@ namespace EVisa100
             //var url = "http://evisa.oss-cn-shanghai.aliyuncs.com/passport/E06279103.jpg";
             var url = "http://evisa.oss-cn-shanghai.aliyuncs.com/photo/opini5GNX-N6JKq6aqutfPHCxUDc_E06279103_photo.jpg";
             //var url2 = "http://evisa.oss-cn-shanghai.aliyuncs.com/photo/opini5GNX-N6JKq6aqutfPHCxUDc_E06279103_id_front.jpg";
-            url = "https://www.ysepay.com/";
             using (var client = new WebClient())
             {
                 client.DownloadFile(url, temp + "passport1.jpg");

@@ -2,6 +2,11 @@
 	{ name: 'Kenya', name_cn: '肯尼亚', name_short: 'ke', continent: 'africa' },
     { name: 'tanzania', name_cn: '坦桑尼亚', name_short: 'tz', continent: 'africa' },
     { name: 'zambia', name_cn: '赞比亚', name_short: 'zm', continent: 'africa' },
-	{ name: 'Thailand', name_cn: '泰国', name_short: 'tl', continent: 'asia'}
+	{ name: 'Thailand', name_cn: '泰国', name_short: 'tl', continent: 'asia'},
+	{ name: 'Japan', name_cn: '日本', name_short: 'jp', continent: 'asia'},
+	{ name: 'Cambodia', name_cn: '柬埔寨', name_short: 'khm', continent: 'asia'},
+	{ name: 'Vietnam', name_cn: '越南', name_short: 'vnm', continent: 'asia'},
+	{ name: 'Malaysia', name_cn: '马来西亚', name_short: 'mys', continent: 'asia'},
+	{ name: 'Philippines', name_cn: '菲律宾', name_short: 'phi', continent: 'asia'}
 ]
 

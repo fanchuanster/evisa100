@@ -101,7 +101,11 @@ var config = {
 
   
   config.getFields = function(country) {
-    return this.countryFields[country]
+    var fields = this.countryFields[country]
+    if (!fields) {
+      fields = this.countryFields["all"]
+    }
+    return fields;
   };
   config.getEntryPoints = function(country) {
     return this.entrypoints[country]

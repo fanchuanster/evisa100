@@ -22,6 +22,21 @@ namespace EVisa100.Automations
             var entryPoint = new SelectElement(driver.FindElement(By.CssSelector(@"#pd-airport")));
             entryPoint.SelectByText(application.EntryPoint, true);
 
+            var salutation = application.Passport.data["sex"].ToString() == "M" ? "Mr" : "Ms";
+            var salutationList = new SelectElement(driver.FindElement(By.CssSelector(@"#pd-salutation")));
+            salutationList.SelectByText(salutation);
+
+            var surnameInput = driver.FindElement(By.XPath(@"//*[@id=""passengerdetails-form""]/div[2]/ul[2]/li[2]/input"));
+            surnameInput.SendKeys(application.Passport.SurName);
+
+            var givennameInput = driver.FindElement(By.XPath(@"//*[@id=""passengerdetails-form""]/div[2]/ul[2]/li[4]/input"));
+            givennameInput.SendKeys(application.Passport.GivenName);
+
+            // male or female.
+            var genderList = new SelectElement(driver.FindElement(By.XPath(@"//*[@id=""pd-salutation""]")));
+            var gender = (application.Passport.data["sex"].ToString() == "M") ? "Male" : "Female";
+            genderList.SelectByText(gender);
+
             // Expand kenya visa list.
             driver.FindElement(By.XPath(@"//*[@id=""accordion-test-2""]/div/div[1]/h4/a")).Click();
 
@@ -35,24 +50,8 @@ namespace EVisa100.Automations
             var drpForWhom = new SelectElement(driver.FindElement(By.XPath(@"//*[@id=""element_54""]")));
             drpForWhom.SelectByText("Agent");
 
-            var surnameInput = driver.FindElement(By.XPath(@"//*[@id=""element_4""]"));
-            surnameInput.SendKeys(application.Passport.SurName);
 
-            var givennameInput = driver.FindElement(By.XPath(@"//*[@id=""element_5""]"));
-            givennameInput.SendKeys(application.Passport.GivenName);
-
-            // male or female.
-            var radios = driver.FindElements(By.XPath(@"//input[@type=""radio""]"));
-            if (application.Passport.data["sex"].ToString() == "M")
-            {
-                radios[0].Click();
-            }
-            else
-            {
-                radios[1].Click();
-            }
-
-            var mm = driver.FindElement(By.CssSelector(@"#element_8_1"));
+            var mm = driver.FindElement(By.CssSelector(@"#js-datepicker-datebirth"));
             mm.SendKeys(application.Passport.BirthDate.Month.ToString());
 
             var dd = driver.FindElement(By.CssSelector(@"#element_8_2"));

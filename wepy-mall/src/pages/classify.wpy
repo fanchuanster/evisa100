@@ -3,7 +3,7 @@
     <view class="search_read_only">
       <navigator class="search_content" url="/pages/search">
         <i class="iconfont icon-search"></i>
-        <view class="search_input">搜索商品</view>
+        <view class="search_input">搜索</view>
       </navigator>
     </view>
   </view>
@@ -35,7 +35,7 @@ import tip from '@/utils/tip'
 
 export default class Classify extends wepy.page {
   config = {
-    navigationBarTitleText: '分类',
+    navigationBarTitleText: '一起飞',
   }
   components = {
 

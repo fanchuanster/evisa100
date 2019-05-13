@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EVisa100.Automations
 {
@@ -14,6 +10,7 @@ namespace EVisa100.Automations
         static AutomationsFactory()
         {
             Register<KenyaAutomation>("ke");
+            Register<ThailandAutomation>("tl");
         }
 
         public static void Register<T>(string countryCode)

@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System.Net;
 using EVisa100.DataStructure;
+using System.Collections.Generic;
 
 namespace EVisa100.Automations
 {
@@ -36,6 +37,14 @@ namespace EVisa100.Automations
             var genderList = new SelectElement(driver.FindElement(By.XPath(@"//*[@id=""pd-salutation""]")));
             var gender = (application.Passport.data["sex"].ToString() == "M") ? "Male" : "Female";
             genderList.SelectByText(gender);
+
+            // birth date input click which to open the datepicker form.
+            IWebElement birthdateInput = driver.FindElement(By.XPath(@"//*[@id=""js-datepicker-datebirth""]"));
+            birthdateInput.Click();
+
+            Utility.SelectTableCell(driver, @"/html/body/div[7]/div[3]/table/tbody/tr/td", application.Passport.BirthDate.Year.ToString());
+            Utility.SelectTableCell(driver, @"/html/body/div[7]/div[2]/table/tbody/tr/td", application.Passport.BirthDate.Month.ToString());
+            Utility.SelectTableCell(driver, @"/html/body/div[7]/div[1]/table/tbody", application.Passport.BirthDate.Day.ToString(), "day");
 
             // Expand kenya visa list.
             driver.FindElement(By.XPath(@"//*[@id=""accordion-test-2""]/div/div[1]/h4/a")).Click();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,24 @@ namespace EVisa100
             }
 
             return Result;
+        }
+
+        public static void SelectTableCell(IWebDriver driver, string tableXPath, string expectedText, string expectedClass = "")
+        {
+            var datepickerForm = driver.FindElement(By.XPath(tableXPath));
+            var cells = datepickerForm.FindElements(By.TagName("td"));
+
+            foreach (var cell in cells)
+            {
+                if (cell.Text.Contains(expectedText))
+                {
+                    if (string.IsNullOrEmpty(expectedClass) || expectedClass == cell.GetAttribute("class"))
+                    {
+                        cell.Click();
+                        break;
+                    }
+                }
+            }
         }
     }
 }

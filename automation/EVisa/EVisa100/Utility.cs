@@ -9,6 +9,7 @@ namespace EVisa100
 {
     static class Utility
     {
+        public static List<string> TwelveMonths = new List<string> { "Jan", "Feb", "Mar", "Apr", "Aug", "Sep", "Oct", "Nov", "Dec" };
         /// <summary>
         /// Un-quotes a quoted string
         /// </summary>
@@ -42,14 +43,14 @@ namespace EVisa100
             return Result;
         }
 
-        public static void SelectTableCell(IWebDriver driver, string tableXPath, string expectedText, string expectedClass = "")
+        public static void SelectTableCell(IWebDriver driver, string tableCSS, string cellTag, string expectedText, string expectedClass = "")
         {
-            var datepickerForm = driver.FindElement(By.XPath(tableXPath));
-            var cells = datepickerForm.FindElements(By.TagName("td"));
+            var datepickerForm = driver.FindElement(By.CssSelector(tableCSS));
+            var cells = datepickerForm.FindElements(By.TagName(cellTag));
 
             foreach (var cell in cells)
             {
-                if (cell.Text.Contains(expectedText))
+                if (cell.Text.ToLower().Contains(expectedText.ToLower()))
                 {
                     if (string.IsNullOrEmpty(expectedClass) || expectedClass == cell.GetAttribute("class"))
                     {

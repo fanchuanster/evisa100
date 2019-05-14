@@ -35,8 +35,9 @@ namespace EVisa100
             var server = new Server();
 
             var application = server.GetApplication();
-            
+
             var automation = Automations.AutomationsFactory.GetAutomation(application.data["to_country"].ToString());
+            //var automation = Automations.AutomationsFactory.GetAutomation("tl");
             automation.Run(application);
         }
     }

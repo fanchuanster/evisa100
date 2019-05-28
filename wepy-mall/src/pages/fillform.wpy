@@ -678,6 +678,7 @@ input {
                 console.log('orderupdated', that.applicationId, res);
               })
             }
+            wepy.clearStorage()
             wepy.navigateBack()
           }
         })

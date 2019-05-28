@@ -50,11 +50,11 @@ namespace EVisa100.Automations
             var radios = driver.FindElements(By.XPath(@"//input[@type=""radio""]"));
             if (application.Passport.data["sex"].ToString() == "M")
             {
-                radios[0].Click();
+                radios[1].Click();
             }
             else
             {
-                radios[1].Click();
+                radios[0].Click();
             }
 
             var mm = driver.FindElement(By.CssSelector(@"#element_8_1"));
@@ -101,7 +101,8 @@ namespace EVisa100.Automations
 
             // #element_57 - city
             var city = driver.FindElement(By.CssSelector(@"#element_57"));
-            city.SendKeys(application.Passport.CityPinyin);
+            //city.SendKeys(application.Passport.CityPinyin);
+            city.SendKeys("Shanghai");
             // #element_17 - email
             var email = driver.FindElement(By.CssSelector(@"#element_17"));
             email.SendKeys(application.Passport.data["email"] as string);

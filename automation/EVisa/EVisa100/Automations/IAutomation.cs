@@ -36,9 +36,9 @@ namespace EVisa100.Automations
         {
             var options = new ChromeOptions();
             options.AddArgument("no-sandbox");
-            driver = new ChromeDriver("../", options, TimeSpan.FromMinutes(3));
+            driver = new ChromeDriver("./", options, TimeSpan.FromMinutes(30));
             {
-                driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(200);
+                driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(2000);
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(40);
             }
         }

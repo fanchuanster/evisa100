@@ -101,8 +101,8 @@ namespace EVisa100.Automations
 
             // #element_57 - city
             var city = driver.FindElement(By.CssSelector(@"#element_57"));
-            //city.SendKeys(application.Passport.CityPinyin);
-            city.SendKeys("Shanghai");
+            city.SendKeys(application.Passport.CityPinyin);
+            //city.SendKeys("Shanghai");
             // #element_17 - email
             var email = driver.FindElement(By.CssSelector(@"#element_17"));
             email.SendKeys(application.Passport.data["email"] as string);

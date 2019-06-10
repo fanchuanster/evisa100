@@ -93,7 +93,7 @@ input {
               <input placeholder="当前职业的具体描述" value="{{passport.data.job_title_cn}}" bindinput="onJobTitleChangeCn" type="text"/>
             </view>
             <view wx:if="{{!!fields.job_title}}">
-              <text class="fieldLabel">职位名称(英文)</text>
+              <text class="fieldLabel">职业描述(英文)</text>
               <input placeholder="选填可空" value="{{passport.data.job_title}}" bindinput="onJobTitleChange" type="text"/>
             </view>
           </view>

@@ -6,7 +6,7 @@
  
  $input = file_get_contents("php://input");
  $product = json_decode($input); 
- $data = json_encode($product->data);
+ $data = ($product->data);
 
  if ($product->id) {
 	// update it.

@@ -20,7 +20,7 @@
       </view>
     </view>
     <block wx:for="{{list}}" wx:key="id" wx:for-item="product">
-      <navigator url="/pages/product/product-detail?country_id={{product.country_id}}&country_name_short={{product.name_short}}" class="widget">
+      <navigator url="/pages/product/product-detail?id={{product.id}}" class="widget">
         <view class="list_box">
           <image class="list_item_img" src="{{product.background_img}}" />
           <view class="list_item_word">
@@ -77,21 +77,20 @@ export default class Home extends wepy.page {
     is_show_alert: true
   }
   async getProductsList() {
-    let that = this;
     const json = await api.getProductsList({
       query: {}
     });
     console.log(json)
     if (json.statusCode == 200) {
-      that.list = json.data;
-      that.list.forEach(element => {
+      this.list = json.data;
+      this.list.forEach(element => {
         element.background_img = api.ossHost + '/country/' + element.name_short + '/1.jpg'
         element.name_cn = JSON.parse(element.name_cn)
         element.data = JSON.parse(element.data)
       });
-      // console.log(that.list)
-      that.$parent.globalData.productList = that.list
-      that.$apply()
+      console.log(this.list)
+      this.$parent.globalData.productList = that.list
+      this.$apply()
     } else {
       tip.error(json.msg);
     }

@@ -84,7 +84,6 @@ export default class orderItem extends wepy.component {
   }
 
   async editOrderInfo(orderNo,flag) {
-    console.log("调用方法");
     let that = this;
     let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
     const json = await api.editOrderInfo({

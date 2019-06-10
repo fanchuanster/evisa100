@@ -42,11 +42,17 @@ namespace testcsharp
         public string name_short;
         public string continent;
     }
+    class productData
+    {
+        public string time_required;
+        public string name;
+        public int price;
+    }
     class product
     {
         public int country_id;
         public int store_id;
-        public string data;
+        public productData data;
     }
     class Program
     {

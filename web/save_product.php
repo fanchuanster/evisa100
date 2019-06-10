@@ -21,7 +21,7 @@
 	$insertStr = "insert into product(store_id, country_id, data) ".
 	"values(".$product->store_id.",".
 	$product->country_id.",'".
-	($data)."')";
+	addslashes($data)."')";
 	var_dump($insertStr);
 	$mysqli->query($insertStr);
 	

@@ -53,7 +53,7 @@ namespace testcsharp
         static void SaveCountries()
         {
             JavaScriptSerializer converter = new JavaScriptSerializer();
-            using (StreamReader r = new StreamReader("../../../../../MiniApp/doc/country.json", Encoding.UTF8))
+            using (StreamReader r = new StreamReader("../../../../../doc/country.json", Encoding.UTF8))
             {
                 var json = r.ReadToEnd();
                 var items = converter.Deserialize<List<country>>(json);
@@ -82,7 +82,7 @@ namespace testcsharp
         static void SaveProducts()
         {
             JavaScriptSerializer converter = new JavaScriptSerializer();
-            using (StreamReader r = new StreamReader("../../../../../MiniApp/doc/products.json", Encoding.UTF8))
+            using (StreamReader r = new StreamReader("../../../../../doc/products.json", Encoding.UTF8))
             {
                 var json = r.ReadToEnd();
                 var items = converter.Deserialize<List<product>>(json);

@@ -104,7 +104,8 @@ export default class extends wepy.app {
     sysConfig: {
       consumer_hotline: "13641841103",
       working_time: "8:00-21:00"
-    }
+    },
+    productList = []
   }
 
   constructor() {

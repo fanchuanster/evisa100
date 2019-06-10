@@ -87,10 +87,11 @@ export default class Home extends wepy.page {
       that.list.forEach(element => {
         element.background_img = api.ossHost + '/country/' + element.name_short + '/1.jpg'
         element.name_cn = JSON.parse(element.name_cn)
-        // element.items = JSON.parse(element.data)
+        element.data = JSON.parse(element.data)
       });
-      console.log(that.list)
-      that.$apply();
+      // console.log(that.list)
+      that.$parent.globalData.productList = that.list
+      that.$apply()
     } else {
       tip.error(json.msg);
     }

@@ -12,7 +12,7 @@ const ossHost = "http://evisa.oss-cn-shanghai.aliyuncs.com"
  * @return {[type]}        [description]
  */
 const getDiscoverList = (params) => wxRequest(params, apiMall + '/goods/list?cateidOne=1&cateidTwo=0&price=0&sales=2');
-const getProductsList = (params) => wxRequest(params, apiMall + '/api/product/list.php');
+const getProductsList = (params) => wxRequest(params, apiMall + '/api/product/list.php?status=1');
 //微信的jscode换取sessionKey
 const wxJsCode2Session = (params) => wxRequest(params, apiMall + "/api/wechat/jscode2session.php");
 const user2session = (params) => wxRequest(params, apiMall + "/api/wechat/user2session?jsoncallback=?");

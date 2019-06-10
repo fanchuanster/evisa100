@@ -7,6 +7,7 @@
 	{ name: 'Cambodia', name_cn: '柬埔寨', name_short: 'khm', continent: 'asia'},
 	{ name: 'Vietnam', name_cn: '越南', name_short: 'vnm', continent: 'asia'},
 	{ name: 'Malaysia', name_cn: '马来西亚', name_short: 'mys', continent: 'asia'},
-	{ name: 'Philippines', name_cn: '菲律宾', name_short: 'phi', continent: 'asia'}
+	{ name: 'Philippines', name_cn: '菲律宾', name_short: 'phi', continent: 'asia'},
+	{ name: 'Pakistan', name_cn: '巴基斯坦', name_short: 'pka', continent: 'asia'}
 ]
 

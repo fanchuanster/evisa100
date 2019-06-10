@@ -89,12 +89,12 @@ export default class Home extends wepy.page {
         element.data = JSON.parse(element.data)
       });
       console.log(this.list)
-      this.$parent.globalData.productList = that.list
+      this.$parent.globalData.productList = this.list
       this.$apply()
     } else {
       tip.error(json.msg);
     }
-    that.showLoading = false;
+    this.showLoading = false;
   }
   async getAdList() {
     const json = await api.getAdList({

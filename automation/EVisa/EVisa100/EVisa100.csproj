@@ -60,6 +60,7 @@
     <Compile Include="Automations\AutomationsFactory.cs" />
     <Compile Include="Automations\IAutomation.cs" />
     <Compile Include="Automations\KenyaAutomation.cs" />
+    <Compile Include="Automations\PakistanAutomation.cs" />
     <Compile Include="Automations\ThailandAutomation.cs" />
     <Compile Include="CitiesManager.cs" />
     <Compile Include="Constants.cs" />

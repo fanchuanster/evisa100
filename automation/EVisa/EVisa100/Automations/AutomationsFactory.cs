@@ -11,6 +11,7 @@ namespace EVisa100.Automations
         {
             Register<KenyaAutomation>("ke");
             Register<ThailandAutomation>("tl");
+            Register<PakistanAutomation>("pak");
         }
 
         public static void Register<T>(string countryCode)

@@ -15,6 +15,7 @@ namespace EVisa100.Automations
         void Select(string listId, string itemText, string itemTag = "li")
         {
             driver.FindElement(By.Id(listId)).Click();
+            System.Threading.Thread.Sleep(1000);
             var dropdown = driver.FindElement(By.Id($"{listId}_panel"));
 
             var options = dropdown.FindElements(By.TagName(itemTag));
@@ -27,6 +28,18 @@ namespace EVisa100.Automations
                 }
             }
         }
+        void DropAndSearch(string dropId, string searchText)
+        {
+            driver.FindElement(By.Id(dropId)).Click();
+            System.Threading.Thread.Sleep(1000);
+
+            // appOptionForm:q1_panel
+            var dropDiv = driver.FindElement(By.Id($"{dropId}_panel"));
+
+            var filterInput = dropDiv.FindElement(By.TagName(@"input"));
+            filterInput.SendKeys(searchText);
+            filterInput.SendKeys(Keys.Return);
+        }
         void SetDate(string fieldId, DateTime date)
         {
             // renewalForm:ArrivalDatePnl
@@ -34,14 +47,27 @@ namespace EVisa100.Automations
             // ui-datepicker-div
 
             driver.FindElement(By.Id(fieldId)).Click();
-            var picker = driver.FindElement(By.Id("ui-datepicker-div"));
+            System.Threading.Thread.Sleep(1000);
 
-            var month = new SelectElement(picker.FindElement(By.CssSelector(@"#ui-datepicker-div > div > div > select.ui-datepicker-month")));
+            var pickerDiv = driver.FindElement(By.Id("ui-datepicker-div"));
+
+            var month = new SelectElement(pickerDiv.FindElement(By.CssSelector(@"#ui-datepicker-div > div > div > select.ui-datepicker-month")));
             month.SelectByValue((date.Month - 1).ToString());
 
             // 
-            var year = new SelectElement(picker.FindElement(By.CssSelector(@"#ui-datepicker-div > div > div > select.ui-datepicker-year")));
+            var year = new SelectElement(pickerDiv.FindElement(By.CssSelector(@"#ui-datepicker-div > div > div > select.ui-datepicker-year")));
             year.SelectByText(date.Year.ToString());
+
+            // ui-datepicker-calendar
+            var calendar = pickerDiv.FindElement(By.ClassName(@"ui-datepicker-calendar"));
+            var tds = calendar.FindElements(By.TagName("td"));
+            foreach (var td in tds)
+            {
+                if (td.Enabled && td.Text.Equals(date.Day.ToString()))
+                {
+                    td.Click();
+                }
+            }
         }
         protected override void Execute(Application application)
         {
@@ -72,7 +98,7 @@ namespace EVisa100.Automations
 
                 nextUrl = driver.Url;
             }
-
+            System.Threading.Thread.Sleep(1000);
             var agreeCB = driver.FindElement(By.CssSelector(@"#sss\:checkboxId"));
             if (!agreeCB.Selected)
             {
@@ -85,10 +111,7 @@ namespace EVisa100.Automations
             acceptAndContinueBtn.Click();
 
             // Nationality
-            driver.FindElement(By.CssSelector(@"#appOptionForm\:q1_label")).Click();
-            var filterInput = driver.FindElement(By.CssSelector(@"#appOptionForm\:q1_filter"));
-            filterInput.SendKeys("China");
-            filterInput.SendKeys(Keys.Return);
+            DropAndSearch("appOptionForm:q1", "China");
 
             // 
             driver.FindElement(By.CssSelector(@"#appOptionForm\:submit-renewal")).Click();
@@ -98,9 +121,13 @@ namespace EVisa100.Automations
             // application info
             //////
             Select("renewalForm:visaCat", "Tourist");
+            System.Threading.Thread.Sleep(3000);
             Select("renewalForm:visaSubCat", "Individual (less Than 3 Months)");
+            System.Threading.Thread.Sleep(1000);
             Select("renewalForm:appType", "First Time Application");
+            System.Threading.Thread.Sleep(1000);
             Select("renewalForm:visaType", "Single Entry");
+            System.Threading.Thread.Sleep(1000);
             Select("renewalForm:visaCat", "Tourist");
 
             driver.FindElement(By.CssSelector(@"#renewalForm\:visitPurpose")).SendKeys("Tourism");
@@ -109,8 +136,8 @@ namespace EVisa100.Automations
             Select("renewalForm:visaDuration", "1");
             Select("renewalForm:visaDurationType", "Month(s)");
 
-            Select("renewalForm:cntry", "China", "td");
-
+            DropAndSearch("renewalForm:cntry", "China");
+            System.Threading.Thread.Sleep(1000);
             // renewalForm:
             Select("renewalForm:mission", "Shanghai");
 
@@ -127,7 +154,6 @@ namespace EVisa100.Automations
             SetDate("renewalForm:leavingDate", new DateTime(2019, 10, 19));
 
 
-
             //////////////
             // passport
 
@@ -136,7 +162,7 @@ namespace EVisa100.Automations
             driver.FindElement(By.CssSelector(@"#renewalForm\:passIssueAuthority")).SendKeys("MPS");
 
             Select("renewalForm:passportType", "Ordinary");
-            Select("renewalForm:passIssuingCountry", "China", "td");
+            DropAndSearch("renewalForm:passIssuingCountry", "China");
 
             // renewalForm:passIssueDate
             // renewalForm:passExpiryDate

@@ -19,13 +19,6 @@ namespace EVisa100.Automations
             driver.Navigate().GoToUrl(url);
 
             System.Threading.Thread.Sleep(18000);
-            //var category = driver.FindElement(By.CssSelector(@"#menu-item-1000"));
-            //var action = new Actions(driver);
-            //action.MoveToElement(category).Perform();
-
-            //System.Threading.Thread.Sleep(3000);
-            //var tour = driver.FindElement(By.CssSelector("#menu-item-2033"));
-            //action.MoveToElement(tour).Click().Perform();
 
             var applyButton = driver.FindElement(By.CssSelector(@"#content > section.section.full-width-bg.gray-bg > div > div > div > div > div > div > div:nth-child(1) > div.wpb_column.vc_column_container.vc_col-sm-2 > div > div > div"));
             applyButton.Click();

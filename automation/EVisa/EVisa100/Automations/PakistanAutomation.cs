@@ -89,7 +89,11 @@ namespace EVisa100.Automations
 
             driver.Navigate().GoToUrl(url);
 
-            System.Threading.Thread.Sleep(28000);
+            var pageLoader = driver.FindElement(By.CssSelector(@"body > div.smart-page-loader"));
+            while (pageLoader.Displayed)
+            {
+                System.Threading.Thread.Sleep(1000);
+            }
 
             var applyButton = driver.FindElement(By.CssSelector(@"#content > section.section.full-width-bg.gray-bg > div > div > div > div > div > div > div:nth-child(1) > div.wpb_column.vc_column_container.vc_col-sm-2 > div > div > div"));
             applyButton.Click();

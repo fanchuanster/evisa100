@@ -28,13 +28,13 @@ namespace EVisa100.Automations
                 }
             }
         }
-        void DropAndSearch(string dropId, string searchText)
+        void DropAndSearch(string dropFieldId, string searchText)
         {
-            driver.FindElement(By.Id(dropId)).Click();
+            driver.FindElement(By.Id(dropFieldId)).Click();
             System.Threading.Thread.Sleep(1000);
 
             // appOptionForm:q1_panel
-            var dropDiv = driver.FindElement(By.Id($"{dropId}_panel"));
+            var dropDiv = driver.FindElement(By.Id($"{dropFieldId}_panel"));
 
             var filterInput = dropDiv.FindElement(By.TagName(@"input"));
             filterInput.SendKeys(searchText);

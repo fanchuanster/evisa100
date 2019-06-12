@@ -12,6 +12,20 @@ namespace EVisa100.Automations
 {
     class PakistanAutomation : Automation
     {
+        void SelectCell(string tableId, string cellText, string cellTag = "td")
+        {
+            var table = driver.FindElement(By.Id(tableId));
+            var cells = table.FindElements(By.TagName(cellTag));
+
+            foreach (var td in cells)
+            {
+                if (td.Enabled && td.Text.Equals(cellText, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    td.Click();
+                    break;
+                }
+            }
+        }
         void Select(string listId, string itemText, string itemTag = "li")
         {
             driver.FindElement(By.Id(listId)).Click();
@@ -51,13 +65,12 @@ namespace EVisa100.Automations
 
             var pickerDiv = driver.FindElement(By.Id("ui-datepicker-div"));
 
-            var month = new SelectElement(pickerDiv.FindElement(By.CssSelector(@"#ui-datepicker-div > div > div > select.ui-datepicker-month")));
-            month.SelectByValue((date.Month - 1).ToString());
-
-            // 
             var year = new SelectElement(pickerDiv.FindElement(By.CssSelector(@"#ui-datepicker-div > div > div > select.ui-datepicker-year")));
             year.SelectByText(date.Year.ToString());
 
+            var month = new SelectElement(pickerDiv.FindElement(By.CssSelector(@"#ui-datepicker-div > div > div > select.ui-datepicker-month")));
+            month.SelectByValue((date.Month - 1).ToString());
+            
             // ui-datepicker-calendar
             var calendar = pickerDiv.FindElement(By.ClassName(@"ui-datepicker-calendar"));
             var tds = calendar.FindElements(By.TagName("td"));
@@ -66,6 +79,7 @@ namespace EVisa100.Automations
                 if (td.Enabled && td.Text.Equals(date.Day.ToString()))
                 {
                     td.Click();
+                    break;
                 }
             }
         }
@@ -174,6 +188,72 @@ namespace EVisa100.Automations
 
             // Next
             driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2246")).Click();
+
+            /////////////////
+            // personal info
+
+            // 
+            driver.FindElement(By.CssSelector(@"#renewalForm\:surname")).SendKeys("Dong");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:givenName")).SendKeys("Wen");
+
+            SetDate("renewalForm:dobPI", new DateTime(1984, 1, 20));
+            driver.FindElement(By.CssSelector(@"#renewalForm\:idMark")).SendKeys("Hubei");
+
+            SelectCell("renewalForm:maritalStatus", "Married");
+            SelectCell("renewalForm:gender", "Male");
+            DropAndSearch("renewalForm:nationality", "China");
+            
+            driver.FindElement(By.CssSelector(@"#renewalForm\:email")).SendKeys("wen@mail.com");
+            DropAndSearch("renewalForm:mobileCountry", "China");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:mobile")).SendKeys("13323322221");
+
+            driver.FindElement(By.CssSelector(@"#renewalForm\:nav-middle_content > table > tbody > tr:nth-child(1) > td:nth-child(4)")).Click();
+
+            // #renewalForm\:fNam2
+            driver.FindElement(By.CssSelector(@"#renewalForm\:fNam2")).SendKeys("Dong shenfa");
+            DropAndSearch("renewalForm:fnat", "China");
+
+            // #renewalForm\:mNam2
+            driver.FindElement(By.CssSelector(@"#renewalForm\:mNam2")).SendKeys("Chen yy");
+            DropAndSearch("renewalForm:mnat", "China");
+
+            // Do you have a Spouse ?
+            if (true)
+            {
+                driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt569 > div.ui-chkbox-box.ui-widget.ui-corner-all.ui-state-default")).Click();
+                System.Threading.Thread.Sleep(1000);
+
+                // #renewalForm\:sNam2
+                driver.FindElement(By.CssSelector(@"#renewalForm\:sNam2")).SendKeys("Ding xl");
+                // renewalForm:snat
+                DropAndSearch("renewalForm:snat", "China");
+                // renewalForm:sbCountry1
+                DropAndSearch("renewalForm:sbCountry1", "China");
+
+                SelectCell("renewalForm:sTrav", "No");
+            }
+            
+            // save and continue
+            driver.FindElement(By.CssSelector(@"#renewalForm\:nav-middle_content > table > tbody > tr:nth-child(1) > td:nth-child(4)")).Click();
+
+            ////////////
+            // finance
+
+            // renewalForm:persCircumstance
+            SelectCell("renewalForm:persCircumstance", "Unemployed");
+
+            // save and continue.
+            driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2254")).Click();
+
+            // history
+
+            // renewalForm:j_idt959 renewalForm:j_idt1024
+            SelectCell("renewalForm:j_idt959", "No");
+            SelectCell("renewalForm:j_idt1024", "No");
+            SelectCell("renewalForm:j_idt1088", "No");
+            SelectCell("renewalForm:j_idt1170", "No");
+
+            driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2254")).Click();
         }
     }
 }

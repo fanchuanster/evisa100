@@ -12,13 +12,44 @@ namespace EVisa100.Automations
 {
     class PakistanAutomation : Automation
     {
+        void Select(string listId, string itemText, string itemTag = "li")
+        {
+            driver.FindElement(By.Id(listId)).Click();
+            var dropdown = driver.FindElement(By.Id($"{listId}_panel"));
+
+            var options = dropdown.FindElements(By.TagName(itemTag));
+            foreach (var option in options)
+            {
+                if (option.Text.Equals(itemText, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    option.Click(); // click the desired option
+                    break;
+                }
+            }
+        }
+        void SetDate(string fieldId, DateTime date)
+        {
+            // renewalForm:ArrivalDatePnl
+            // renewalForm:leavingDate
+            // ui-datepicker-div
+
+            driver.FindElement(By.Id(fieldId)).Click();
+            var picker = driver.FindElement(By.Id("ui-datepicker-div"));
+
+            var month = new SelectElement(picker.FindElement(By.CssSelector(@"#ui-datepicker-div > div > div > select.ui-datepicker-month")));
+            month.SelectByValue((date.Month - 1).ToString());
+
+            // 
+            var year = new SelectElement(picker.FindElement(By.CssSelector(@"#ui-datepicker-div > div > div > select.ui-datepicker-year")));
+            year.SelectByText(date.Year.ToString());
+        }
         protected override void Execute(Application application)
         {
             string url = "https://visa.nadra.gov.pk/tourist-visa/";
 
             driver.Navigate().GoToUrl(url);
 
-            System.Threading.Thread.Sleep(18000);
+            System.Threading.Thread.Sleep(28000);
 
             var applyButton = driver.FindElement(By.CssSelector(@"#content > section.section.full-width-bg.gray-bg > div > div > div > div > div > div > div:nth-child(1) > div.wpb_column.vc_column_container.vc_col-sm-2 > div > div > div"));
             applyButton.Click();
@@ -38,15 +69,17 @@ namespace EVisa100.Automations
                 driver.FindElement(By.CssSelector(@"#login\:captchaCodeTextBox")).SendKeys(captcha);
                 var loginButton = driver.FindElement(By.CssSelector(@"#login\:submit-login"));
                 loginButton.Click();
-                
+
                 nextUrl = driver.Url;
             }
-            
+
             var agreeCB = driver.FindElement(By.CssSelector(@"#sss\:checkboxId"));
             if (!agreeCB.Selected)
             {
                 agreeCB.Click();
             }
+
+            System.Threading.Thread.Sleep(5000);
 
             var acceptAndContinueBtn = driver.FindElement(By.CssSelector(@"#sss\:j_idt21"));
             acceptAndContinueBtn.Click();
@@ -60,51 +93,61 @@ namespace EVisa100.Automations
             // 
             driver.FindElement(By.CssSelector(@"#appOptionForm\:submit-renewal")).Click();
 
+
             //////////////////////
             // application info
             //////
+            Select("renewalForm:visaCat", "Tourist");
+            Select("renewalForm:visaSubCat", "Individual (less Than 3 Months)");
+            Select("renewalForm:appType", "First Time Application");
+            Select("renewalForm:visaType", "Single Entry");
+            Select("renewalForm:visaCat", "Tourist");
+
+            driver.FindElement(By.CssSelector(@"#renewalForm\:visitPurpose")).SendKeys("Tourism");
+
+            //   
+            Select("renewalForm:visaDuration", "1");
+            Select("renewalForm:visaDurationType", "Month(s)");
+
+            Select("renewalForm:cntry", "China", "td");
+
+            // renewalForm:
+            Select("renewalForm:mission", "Shanghai");
+
+            // No Gov project
+            driver.FindElement(By.CssSelector(@"#renewalForm\:cpecP > tbody > tr > td:nth-child(3) > div")).Click();
+
+            Select("renewalForm:entryPort", "Islamabad Airport");
+            Select("renewalForm:departurePort", "Islamabad Airport");
+
+            // renewalForm:travalDate
+            // renewalForm:leavingDate
+            // ui-datepicker-div
+            SetDate("renewalForm:travalDate", new DateTime(2019, 10, 12));
+            SetDate("renewalForm:leavingDate", new DateTime(2019, 10, 19));
+
+
+
+            //////////////
+            // passport
 
             // 
-            var selectVisaType = new SelectElement(driver.FindElement(By.CssSelector(@"#renewalForm\:visaCat")));
-            selectVisaType.SelectByText("Tourist", true);
+            driver.FindElement(By.CssSelector(@"#renewalForm\:passPassportNo")).SendKeys("E12233309");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:passIssueAuthority")).SendKeys("MPS");
 
-            // point of entry
-            //var entryPoint = new SelectElement(driver.FindElement(By.CssSelector(@"#pd-airport")));
-            //entryPoint.SelectByText(application.EntryPoint, true);
+            Select("renewalForm:passportType", "Ordinary");
+            Select("renewalForm:passIssuingCountry", "China", "td");
 
-            //var salutation = application.Passport.data["sex"].ToString() == "M" ? "Mr" : "Ms";
-            //var salutationList = new SelectElement(driver.FindElement(By.CssSelector(@"#pd-salutation")));
-            //salutationList.SelectByText(salutation);
+            // renewalForm:passIssueDate
+            // renewalForm:passExpiryDate
+            SetDate("renewalForm:passIssueDate", new DateTime(2009, 10, 19));
+            SetDate("renewalForm:passExpiryDate", new DateTime(2029, 10, 19));
 
-            //var surnameInput = driver.FindElement(By.XPath(@"//*[@id=""passengerdetails-form""]/div[2]/ul[2]/li[2]/input"));
-            //surnameInput.SendKeys(application.Passport.SurName);
+            // No other passports.
+            driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt206 > tbody > tr > td:nth-child(3) > div")).Click();
 
-            //var givennameInput = driver.FindElement(By.XPath(@"//*[@id=""passengerdetails-form""]/div[2]/ul[2]/li[4]/input"));
-            //givennameInput.SendKeys(application.Passport.GivenName);
-
-            //// male or female.
-            //var genderList = new SelectElement(driver.FindElement(By.XPath(@"//*[@id=""pd-gender""]")));
-            //var gender = (application.Passport.data["sex"].ToString() == "M") ? "Male" : "Female";
-            //genderList.SelectByText(gender);
-
-            //System.Threading.Thread.Sleep(1000);
-
-            //// birth date input click which to open the datepicker form.
-            //IWebElement birthdateInput = driver.FindElement(By.XPath(@"//*[@id=""js-datepicker-datebirth""]"));
-            //birthdateInput.Click();
-
-            //Utility.SelectTableCell(driver, @"body > div.datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-top > div.datepicker-years > table > tbody > tr > td", "span", application.Passport.BirthDate.Year.ToString());
-            //Utility.SelectTableCell(driver, @"body > div.datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-top > div.datepicker-months > table > tbody > tr > td", "span", Utility.TwelveMonths[application.Passport.BirthDate.Month]);
-            //Utility.SelectTableCell(driver, @"body > div.datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-top > div.datepicker-days > table > tbody", "td", application.Passport.BirthDate.Day.ToString(), "day");
-
-            //var email = driver.FindElement(By.CssSelector(@"#passengerdetails-form > div.l-form-grid > ul:nth-child(2) > li:nth-child(7) > input[type=text]"));
-            //email.SendKeys(application.Passport.data["email"] as string);
-
-            //var phone = driver.FindElement(By.CssSelector(@"#pd-mobilenum"));
-            //phone.SendKeys(application.Passport.data["phone"] as string);
-
-            //var passport = driver.FindElement(By.CssSelector(@"#passengerdetails-form > div.l-form-grid > ul.l-form-grid__fivecol.l-form-grid__singlelayer > li:nth-child(1) > input[type=text]"));
-            //passport.SendKeys(application.Passport.passport_no);
+            // Next
+            driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2246")).Click();
         }
     }
 }

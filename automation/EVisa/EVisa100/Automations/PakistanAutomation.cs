@@ -254,6 +254,10 @@ namespace EVisa100.Automations
             SelectCell("renewalForm:j_idt1170", "No");
 
             driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2254")).Click();
+
+            // Do you intend to visit Azad Jammu and Kashmir during your stay in Pakistan?
+            SelectCell("renewalForm:muzMir", "No");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2254")).Click();
         }
     }
 }

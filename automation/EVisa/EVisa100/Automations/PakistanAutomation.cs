@@ -145,8 +145,6 @@ namespace EVisa100.Automations
             Select("renewalForm:appType", "First Time Application");
             System.Threading.Thread.Sleep(1000);
             Select("renewalForm:visaType", "Single Entry");
-            System.Threading.Thread.Sleep(1000);
-            Select("renewalForm:visaCat", "Tourist");
 
             driver.FindElement(By.CssSelector(@"#renewalForm\:visitPurpose")).SendKeys("Tourism");
 
@@ -155,8 +153,7 @@ namespace EVisa100.Automations
             Select("renewalForm:visaDurationType", "Month(s)");
 
             DropAndSearch("renewalForm:cntry", "China");
-            System.Threading.Thread.Sleep(1000);
-            // renewalForm:
+            System.Threading.Thread.Sleep(3000);
             Select("renewalForm:mission", "Shanghai");
 
             // No Gov project
@@ -170,7 +167,6 @@ namespace EVisa100.Automations
             // ui-datepicker-div
             SetDate("renewalForm:travalDate", new DateTime(2019, 10, 12));
             SetDate("renewalForm:leavingDate", new DateTime(2019, 10, 19));
-
 
             //////////////
             // passport

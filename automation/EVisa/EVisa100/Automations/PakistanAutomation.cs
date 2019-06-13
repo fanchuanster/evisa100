@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using OpenQA.Selenium;
-
+using System.Windows.Forms;
 using OpenQA.Selenium.Support.UI;
 using System.Net;
 using EVisa100.DataStructure;
@@ -52,7 +52,7 @@ namespace EVisa100.Automations
 
             var filterInput = dropDiv.FindElement(By.TagName(@"input"));
             filterInput.SendKeys(searchText);
-            filterInput.SendKeys(Keys.Return);
+            filterInput.SendKeys(OpenQA.Selenium.Keys.Return);
         }
         void SetDate(string fieldId, DateTime date)
         {
@@ -83,7 +83,7 @@ namespace EVisa100.Automations
                 }
             }
         }
-        protected override void Execute(Application application)
+        protected override void Execute(DataStructure.Application application)
         {
             string url = "https://visa.nadra.gov.pk/tourist-visa/";
 
@@ -172,7 +172,7 @@ namespace EVisa100.Automations
             // passport
 
             // 
-            driver.FindElement(By.CssSelector(@"#renewalForm\:passPassportNo")).SendKeys("E12233301");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:passPassportNo")).SendKeys("E12233303");
             driver.FindElement(By.CssSelector(@"#renewalForm\:passIssueAuthority")).SendKeys("MPS");
 
             Select("renewalForm:passportType", "Ordinary");
@@ -184,7 +184,8 @@ namespace EVisa100.Automations
             SetDate("renewalForm:passExpiryDate", new DateTime(2029, 10, 19));
 
             // No other passports.
-            driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt206 > tbody > tr > td:nth-child(3) > div")).Click();
+            SelectCell("renewalForm:j_idt206", "No");
+            //driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt206 > tbody > tr > td:nth-child(3) > div")).Click();
 
             // Next
             driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2246")).Click();
@@ -264,9 +265,40 @@ namespace EVisa100.Automations
             //1: Letter By Sponsor / Hotel – Letter By Operator(recog.By Dept.Of Tourist Services)
             //2: Passport
             //3: Photograph
-            DropAndSearch("renewalForm:docType", "Passport");
+            Select("renewalForm:docType", "Passport");
+            
+            // Choose and upload
+            driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/span")).Click();
+            System.Threading.Thread.Sleep(2000);
+            SendKeys.SendWait(@"C:\Users\donwen.CORPDOM\Pictures\Saved Pictures\dongwen_photo.jpg");
+            SendKeys.SendWait(@"{Enter}");
+            driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/button[1]")).Click();
 
-            // OpenFileDialog dialog = new OpenFileDialog();
+
+            Select("renewalForm:docType", "Photograph");
+            // Choose and upload
+            driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/span")).Click();
+            System.Threading.Thread.Sleep(2000);
+            SendKeys.SendWait(@"C:\Users\donwen.CORPDOM\Pictures\Saved Pictures\dongwen_photo.jpg");
+            SendKeys.SendWait(@"{Enter}");
+            driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/button[1]")).Click();
+
+            
+            Select("renewalForm:docType", "Letter By Sponsor/Hotel – Letter By Operator (recog. By Dept. Of Tourist Services)");
+            // Choose and upload
+            driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/span")).Click();
+            System.Threading.Thread.Sleep(2000);
+            SendKeys.SendWait(@"C:\Users\donwen.CORPDOM\Pictures\Saved Pictures\dongwen_photo.jpg");
+            SendKeys.SendWait(@"{Enter}");
+            driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/button[1]")).Click();
+
+            // save and continue.
+            driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2254")).Click();
+
+            // To the best of my knowledge and belief the information given in this application is correct.
+            driver.FindElement(By.CssSelector(@"#renewalForm\:reviewDeclr > div.ui-chkbox-box.ui-widget.ui-corner-all.ui-state-default")).Click();
+
+            driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2254")).Click();
         }
     }
 }

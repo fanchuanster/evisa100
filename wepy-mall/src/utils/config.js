@@ -54,7 +54,7 @@ var config = {
       ever_been_to:1
     },
     pak: {
-      passport_file:1, photo_file:1, purpose:1, nationality:1,
+      passport_file:1, photo_file:1, purpose:1, 
       country_cn:0, name_cn:1, name:1, sex:1, marital_status:1, birth_date:1, birth_place_cn:1, birth_place:1,
       job_type:1, job_comp_cn:0, job_comp:0, job_title_cn:1, job_title:1,
       passport_no:1, authority:1, issue_place:1, issue_date:1, expiry_date:1,
@@ -99,10 +99,35 @@ var config = {
         { name_cn: '老港', name: 'Old Port' },
         { name_cn: '希莫尼', name: 'Shimoni' },
         { name_cn: '万加', name: 'Vanga' }]],
-
+    pak: [[
+      { name_cn: 'Islamabad Airport', name: 'Islamabad Airport' },
+      { name_cn: 'Lahore Airport机场', name: 'Lahore Airport' },
+      { name_cn: 'Peshawar Airport机场', name: 'Peshawar Airport' },
+      { name_cn: 'Karachi Airport机场', name: 'Karachi Airport' },
+      { name_cn: 'Quetta Airport机场', name: 'Quetta Airport' },
+      { name_cn: 'Multan Airport机场', name: 'Multan Airport' },
+      { name_cn: 'Rahim Yar Khan Airport机场', name: 'Rahim Yar Khan Airport' },
+      { name_cn: 'Bahawalpur Airport机场', name: 'Bahawalpur Airport' },
+      { name_cn: 'Faisalabad Airport机场', name: 'Faisalabad Airport' },
+      { name_cn: 'Gwadar机场', name: 'Gwadar Airport' },
+      { name_cn: 'Sialkot', name: 'Sialkot Airport' }],
+    [
+      { name_cn: 'Wahga Land Route', name: 'Wahga Land Route' },
+      { name_cn: 'Chamman', name: 'Chamman' },
+      { name_cn: 'Torkham', name: 'Torkham' },
+      { name_cn: 'Taftan', name: 'Taftan' },
+      { name_cn: 'Sost', name: 'Sost' },
+      { name_cn: 'Khokarapar Railway Station', name: 'Khokarapar Railway Station' },
+      { name_cn: 'Wahga Railway Station', name: 'Wahga Railway Station' }],
+    [
+      { name_cn: 'Karachi Sea Port', name: 'Karachi Sea Port' },
+      { name_cn: 'Ghassbandar Sea Port', name: 'Ghassbandar Sea Port' },
+      { name_cn: 'Port Bin Qasim', name: 'Port Bin Qasim' },
+      { name_cn: 'Gwadar Sea Port', name: 'Gwadar Sea Port' }]],
+    },
+    
     destinations: {
       tz: []
-    }
   }
 };
 

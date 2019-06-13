@@ -172,7 +172,7 @@ namespace EVisa100.Automations
             // passport
 
             // 
-            driver.FindElement(By.CssSelector(@"#renewalForm\:passPassportNo")).SendKeys("E12233309");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:passPassportNo")).SendKeys("E12233301");
             driver.FindElement(By.CssSelector(@"#renewalForm\:passIssueAuthority")).SendKeys("MPS");
 
             Select("renewalForm:passportType", "Ordinary");
@@ -258,6 +258,15 @@ namespace EVisa100.Automations
             // Do you intend to visit Azad Jammu and Kashmir during your stay in Pakistan?
             SelectCell("renewalForm:muzMir", "No");
             driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2254")).Click();
+
+            /// documents
+            //The following documents are mandatory for your Visa application.
+            //1: Letter By Sponsor / Hotel – Letter By Operator(recog.By Dept.Of Tourist Services)
+            //2: Passport
+            //3: Photograph
+            DropAndSearch("renewalForm:docType", "Passport");
+
+            // OpenFileDialog dialog = new OpenFileDialog();
         }
     }
 }

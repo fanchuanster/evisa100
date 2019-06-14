@@ -353,7 +353,6 @@
       maritalStatuses: ['单身', '已婚', '离婚', '丧偶'],
       by: ['飞机', '陆路', '水路'],
       jobs: ['学生', '无业', '在职', '退休', '其他'],
-      openid: ''
     }
     computed = {
       maritalStatusIndex() {
@@ -438,7 +437,7 @@
         return this.today
       },
       isAdmin() {
-        return this.openid === env.adminOpenid
+        return !!this.passport && this.passport.openid === env.adminOpenid
       },
       passportFile() {
         if (!this.passport) {
@@ -652,7 +651,6 @@
     }
     async submit() {
       let that = this;
-      this.passport.openid = this.openid
 
       console.log('saving passport:')
       console.log(this.passport)
@@ -710,7 +708,6 @@
 
     async onLoad(option) {
       let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
-      this.openid = userSpecialInfo.openid;
 
       let that = this
       if (option.id) {
@@ -758,6 +755,8 @@
         this.fields = env.getFields(this.application.data.to_country)
         this.entrypoints = env.getEntryPoints(this.application.data.to_country)
       }
+
+      this.passport.openid = this.openid
     }
   }
 </script>

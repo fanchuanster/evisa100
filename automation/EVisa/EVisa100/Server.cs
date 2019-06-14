@@ -35,7 +35,7 @@ namespace EVisa100
         }
         public Application GetApplication()
         {
-            var url = $"https://php.evisa100.com/get_application.php?status={(Int32)(ApplicationStatus.Reviewed)}&count=1";
+            var url = $"https://php.evisa100.com/get_application.php?status={(Int32)(ApplicationStatus.Created)}&count=1";
 
             var httpRequest = (HttpWebRequest)WebRequest.Create(url);
             httpRequest.Method = "GET";

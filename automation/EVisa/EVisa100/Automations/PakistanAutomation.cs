@@ -247,8 +247,6 @@ namespace EVisa100.Automations
             driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2254")).Click();
 
             // history
-
-            // renewalForm:j_idt959 renewalForm:j_idt1024
             SelectCell("renewalForm:j_idt959", "No");
             SelectCell("renewalForm:j_idt1024", "No");
             SelectCell("renewalForm:j_idt1088", "No");

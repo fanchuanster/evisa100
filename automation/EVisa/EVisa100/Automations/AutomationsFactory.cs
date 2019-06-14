@@ -9,7 +9,7 @@ namespace EVisa100.Automations
 
         static AutomationsFactory()
         {
-            Register<PakistanAutomation>("ke");
+            Register<KenyaAutomation>("ke");
             Register<ThailandAutomation>("tl");
             Register<PakistanAutomation>("pak");
         }

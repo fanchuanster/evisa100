@@ -350,7 +350,7 @@
       application: {},
       entrypoints: [],
       purposes: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居', '其他'],
-      maritalStatuses: ['单身', '结婚', '离婚', '丧偶'],
+      maritalStatuses: ['单身', '已婚', '离婚', '丧偶'],
       by: ['飞机', '陆路', '水路'],
       jobs: ['学生', '无业', '在职', '退休', '其他'],
       openid: ''
@@ -646,7 +646,7 @@
     next() {
       wepy.setStorageSync('passport', this.passport)
       wepy.setStorageSync('application', this.application)
-      wepy.navigateTo({
+      wepy.redirectTo({
         url: "./special/" + this.fields.special
       })
     }

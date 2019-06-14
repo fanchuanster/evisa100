@@ -25,14 +25,19 @@
       <text wx:if="{{passportUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
-    <view class="uploader" @tap="upload_photo" wx:if="{{ !!fields.photo_file }}" >
+    <view class="uploader" @tap="uploadPhoto" wx:if="{{ !!fields.photo_file }}" >
       <text>个人照片</text>
       <text wx:if="{{photoUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
     <view class="uploader" id="other_file" @tap="uploadFile" wx:if="{{ !!fields.other_file }}" >
       <text>其他文件</text>
-      <text wx:if="{{otherFileUploaded}}">完成</text>
+      <text wx:if="{{fileUploaded}}">完成</text>
+      <text wx:else>></text>
+    </view>
+    <view class="uploader" id="hotel_letter" @tap="uploadFile" wx:if="{{ !!fields.hotel_letter }}" >
+      <text>酒店预订单</text>
+      <text wx:if="{{fileUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
     <view>
@@ -67,13 +72,13 @@
       photoUploaded() {
         return this.passportUploaded && this.passport.data.photo_file != null
       },
-      otherFileUploaded() {
+      fileUploaded() {
         return this.passportUploaded && this.passport.data.other_file != null
       },
       allUploaded() {
         return (this.passportUploaded || !this.fields.passport_file)
         && (this.photoUploaded || !this.fields.photo_file)
-        && (this.otherFileUploaded || !this.fields.other_file)
+        && (this.fileUploaded || !this.fields.other_file)
       }
     }
 
@@ -87,7 +92,7 @@
         url: './upload_passport'
       })
     }
-    upload_photo() {
+    uploadPhoto() {
       wepy.navigateTo({
         url: './upload_photo'
       })

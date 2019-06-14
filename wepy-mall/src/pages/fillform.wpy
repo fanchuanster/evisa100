@@ -734,9 +734,5 @@ input {
         this.entrypoints = env.getEntryPoints(this.application.data.to_country)
       }
     }
-    onUnload() {
-      wepy.setStorageSync('passport', this.passport)
-      wepy.setStorageSync('application', this.application)
-    }
   }
 </script>

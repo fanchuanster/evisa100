@@ -23,6 +23,14 @@
   flex-direction: row;
   justify-content: space-evenly;
 }
+.visa_detail_bottom_btn {
+  width: 100%;
+  height: 92rpx;
+  line-height: 92rpx;
+  font-size: 32rpx;
+  margin: 0 20rpx 0 0;
+  bottom:0
+}
 </style>
 <script>
 import wepy from 'wepy';

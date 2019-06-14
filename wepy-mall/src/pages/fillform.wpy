@@ -315,7 +315,12 @@ input {
       </i-collapse-item>
 
     </i-collapse>
-    <view>
+    <view wx:if="{{!!fields.special}}">
+      <navigator class="visa_detail_bottom_btn" url="/pages/pictures?country={{product.name_short}}">
+        <button type="primary" class="visa_detail_bottom_btn">下一步</button>
+      </navigator>
+    </view>
+    <view wx:else>
       <button type="primary" @tap="submit">确定</button>
     </view>
   </view>
@@ -456,6 +461,12 @@ input {
         }
         return env.ossHost + '/' + this.passport.data.other_file
       },
+      hotelLetter() {
+        if (!this.passport || !this.passport.data.hotel_letter) {
+          return ''
+        }
+        return env.ossHost + '/' + this.passport.data.hotel_letter
+      },
       filesUrls() {
         var files = []
         if (this.idFrontFile) {
@@ -466,6 +477,9 @@ input {
         }
         if (this.otherFile) {
           files.push(this.otherFile)
+        }
+        if (this.hotel_letter) {
+          files.push(this.hotelLetter)
         }
         return files
       }
@@ -645,7 +659,7 @@ input {
           this.passport.id = res.data.id
         }
         this.application.passport_id = this.passport.id
-        this.application.price = 359
+        this.application.price = 999
         console.log('saving application:')
         console.log(this.application)
         wepy.request({

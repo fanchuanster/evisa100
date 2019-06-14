@@ -37,10 +37,10 @@
     </view>
     <view class="uploader" id="hotel_letter" @tap="uploadFile" wx:if="{{ !!fields.hotel_letter }}" >
       <text>酒店预订单</text>
-      <text wx:if="{{fileUploaded}}">完成</text>
+      <text wx:if="{{hotelLetterUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
-    <view>
+    <view class="visa_detail_bottom_box">
       <button type="primary" disabled="{{!allUploaded}}" bindtap="next">下一步</button>
     </view>
 </view>
@@ -75,10 +75,14 @@
       fileUploaded() {
         return this.passportUploaded && this.passport.data.other_file != null
       },
+      hotelLetterUploaded() {
+        return this.passportUploaded && this.passport.data.hotel_letter != null
+      },
       allUploaded() {
         return (this.passportUploaded || !this.fields.passport_file)
         && (this.photoUploaded || !this.fields.photo_file)
         && (this.fileUploaded || !this.fields.other_file)
+        && (this.hotelLetterUploaded || !this.fields.hotel_letter)
       }
     }
 

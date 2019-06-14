@@ -684,9 +684,10 @@
                 console.log('orderupdated', that.applicationId, res);
               })
             }
-            wepy.clearStorage()
             wepy.navigateBack()
           }
+          wepy.clearStorage()
+          console.log('clearStorage done')
         })
       })
     }

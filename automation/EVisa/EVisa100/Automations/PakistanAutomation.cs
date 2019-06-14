@@ -149,7 +149,7 @@ namespace EVisa100.Automations
             driver.FindElement(By.CssSelector(@"#renewalForm\:visitPurpose")).SendKeys("Tourism");
 
             //   
-            Select("renewalForm:visaDuration", "1");
+            Select("renewalForm:visaDuration", "3");
             Select("renewalForm:visaDurationType", "Month(s)");
 
             DropAndSearch("renewalForm:cntry", "China");

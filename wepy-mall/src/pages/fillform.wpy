@@ -29,13 +29,6 @@
               <label class="radio"><radio value="F" checked="{{passport.data.sex != 'M'}}"/>女</label>
             </radio-group>
           </view>
-          <view wx:if="{{ !!fields.marital_status }}">
-            <picker @change="bindMaritalStatusChange" value="{{maritalStatusIndex}}" range="{{maritalStatuses}}">
-            <view class="picker">
-              {{maritalStatuses[maritalStatusIndex]}}
-            </view>
-            </picker>
-          </view>
           <view wx:if="{{ !!fields.birth_date }}">
             <picker mode="date" value="{{passport.data.birth_date}}" end="{{today}}" @change="bindBirthChange">
               <text class="fieldLabel">出生日期 </text><text>{{birthDate}}</text>
@@ -133,6 +126,23 @@
       </i-collapse-item>
       <i-collapse-item title="家庭信息">
         <view slot="content">
+        <view wx:if="{{ !!fields.marital_status }}">
+          <picker @change="bindMaritalStatusChange" value="{{maritalStatusIndex}}" range="{{maritalStatuses}}">
+          <view class="picker">
+            <text class="fieldLabel">婚姻状态 </text>{{maritalStatuses[maritalStatusIndex]}}
+          </view>
+          </picker>
+          <view wx:if="{{maritalStatusIndex == 1 && !!fields.spouse_name}}">
+            <view>
+              <text class="fieldLabel">配偶的姓(拼音)</text>
+              <input value="{{passport.data.spouse_name_sur}}" bindinput="oninputSpouseSurName" type="text"/>
+            </view>
+            <view>
+              <text class="fieldLabel">配偶的名(拼音)</text>
+              <input value="{{passport.data.spouse_name_given}}" bindinput="oninputSpouseGivenName" type="text"/>
+            </view>
+          </view>
+        </view>
         <view wx:if="{{!!fields.father_name}}">
           <text class="fieldLabel">父亲的姓(拼音)</text>
           <input value="{{passport.data.father_name_sur}}" bindinput="oninputFatherSurName" type="text"/>
@@ -527,6 +537,12 @@
       },
       oninputFatherSurNameCn(e) {
         this.passport.data.father_name_sur_cn = e.detail.value
+      },
+      oninputSpouseSurName(e) {
+        this.passport.data.spouse_name_sur = e.detail.value
+      },
+      oninputSpouseGivenName(e) {
+        this.passport.data.spouse_name_given = e.detail.value
       },
       oninputFatherGivenName(e) {
         this.passport.data.father_name_given = e.detail.value

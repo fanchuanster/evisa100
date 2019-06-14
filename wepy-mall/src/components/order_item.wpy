@@ -23,14 +23,17 @@
           </view>
         </view>
 
+        <!-- 1 created; 2 paid; 4 reviewed; 8 submitted; 16 succeeded; 32 failed -->
         <view>
           <text class="defult" wx:if="{{item.status==0}}">
             <view class="order_state">待支付</view>
           </text>
           <view class="order_state" wx:if="{{item.status==1}}">待付款</view>
-          <view class="order_state" wx:if="{{item.status==2}}">待收货</view>
-          <view class="order_state" wx:if="{{item.status==4}}">已完成</view>
-          <!-- <view class="order_state" wx:if="{{item.status==3}}">待评论</view> -->
+          <view class="order_state" wx:if="{{item.status==2}}">已支付</view>
+          <view class="order_state" wx:if="{{item.status==4}}">Reviewed</view>
+          <view class="order_state" wx:if="{{item.status==8}}">submitted</view>
+          <view class="order_state" wx:if="{{item.status==16}}">succeeded</view>
+          <view class="order_state" wx:if="{{item.status==32}}">failed</view>
         </view>
     </view>
 

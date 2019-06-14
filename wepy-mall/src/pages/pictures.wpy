@@ -41,7 +41,7 @@
       <text wx:else>></text>
     </view>
     <view class="visa_detail_bottom_box">
-      <button type="primary" disabled="{{!allUploaded}}" bindtap="next">下一步</button>
+      <button type="primary" class="visa_detail_bottom_btn" disabled="{{!allUploaded}}" bindtap="next">下一步</button>
     </view>
 </view>
 </template>

@@ -450,12 +450,6 @@ input {
         }
         return this.passport.data.photo_file
       },
-      idFrontFile() {
-        if (!this.passport || !this.passport.data.id_front_file) {
-          return ''
-        }
-        return env.ossHost + '/' + this.passport.data.id_front_file
-      },
       otherFile() {
         if (!this.passport || !this.passport.data.other_file) {
           return ''

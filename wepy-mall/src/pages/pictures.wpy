@@ -30,11 +30,6 @@
       <text wx:if="{{photoUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
-    <view class="uploader" id="id_front_file" @tap="uploadFile" wx:if="{{ !!fields.id_front_file }}" >
-      <text>身份证正面</text>
-      <text wx:if="{{idFrontUploaded}}">完成</text>
-      <text wx:else>></text>
-    </view>
     <view class="uploader" id="other_file" @tap="uploadFile" wx:if="{{ !!fields.other_file }}" >
       <text>其他文件</text>
       <text wx:if="{{otherFileUploaded}}">完成</text>
@@ -72,16 +67,12 @@
       photoUploaded() {
         return this.passportUploaded && this.passport.data.photo_file != null
       },
-      idFrontUploaded() {
-        return this.passportUploaded && this.passport.data.id_front_file != null
-      },
       otherFileUploaded() {
         return this.passportUploaded && this.passport.data.other_file != null
       },
       allUploaded() {
         return (this.passportUploaded || !this.fields.passport_file)
         && (this.photoUploaded || !this.fields.photo_file)
-        && (this.idFrontUploaded || !this.fields.id_front_file)
         && (this.otherFileUploaded || !this.fields.other_file)
       }
     }

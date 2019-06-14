@@ -119,7 +119,6 @@
             if (that.passport) {
               passport.data.photo_file = that.passport.data.photo_file
               passport.data.other_file = that.passport.data.other_file
-              passport.data.id_front_file = that.passport.data.id_front_file
             }
             that.passport = passport
             wepy.showLoading({

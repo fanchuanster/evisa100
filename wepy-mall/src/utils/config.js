@@ -61,7 +61,7 @@ var config = {
       father_name:1, mother_name:1, region:1, address_cn:1, address:1, phone:1, email:1,
       purpose:1, entry_date:1, departure_date:1, by:1, entry_point:1, departure_point:1,
       ever_been_to:1,
-      special:1
+      special:"pak"
     }
   },
 

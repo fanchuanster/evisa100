@@ -1,15 +1,4 @@
 <style lang="less">
-.fieldLabel {
-  font-size: 11px;
-  font-weight: lighter;
-  color: gray;
-}
-view {
-  margin-top: 20rpx;
-}
-input {
-  border-bottom: 1px solid #ddd;
-}
 </style>
 <template>
   <view class="container">
@@ -316,9 +305,7 @@ input {
 
     </i-collapse>
     <view wx:if="{{!!fields.special}}">
-      <navigator class="visa_detail_bottom_btn" url="/pages/pictures?country={{product.name_short}}">
-        <button type="primary" class="visa_detail_bottom_btn">下一步</button>
-      </navigator>
+      <button type="primary" class="visa_detail_bottom_btn" @tap="next">下一步</button>
     </view>
     <view wx:else>
       <button type="primary" @tap="submit">确定</button>
@@ -638,6 +625,13 @@ input {
       wx.previewImage({
         current: src,
         urls: imgList
+      })
+    }
+    next() {
+      wepy.setStorageSync('passport', this.passport)
+      wepy.setStorageSync('application', this.application)
+      wepy.navigateTo({
+        url: "./special/" + this.fields.special
       })
     }
     async submit() {

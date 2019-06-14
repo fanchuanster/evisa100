@@ -1,0 +1,133 @@
+<style lang="less">
+
+</style>
+<template>
+  <view class="container">
+    <Steps current="1">
+      <Step title="资料上传" content=""></Step>
+      <Step title="申请表填写" content=""></Step>
+      <Step title="确认订单" content=""></Step>
+    </Steps>
+    <i-collapse simple style="width:100%;margin-top:30rpx">
+      <i-collapse-item title="基本信息">
+        <view slot="content">
+          <view>
+            <picker @change="bindvisaSubCatChange" value="{{application.data.visa_sub_cat}}" range="{{visaSubCat}}">
+              <view class="picker">
+                <text class="fieldLabel">签证子类别 </text>{{visaSubCat[application.data.visa_sub_cat]}}
+              </view>
+            </picker>
+          </view>
+        </view>
+      </i-collapse-item>
+    </i-collapse>
+    <view>
+      <button type="primary" @tap="submit">确定</button>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import api from '@/api/api'
+  import {
+    SYSTEM_INFO,
+    USER_SPECICAL_INFO,
+    ADDRESS_ID
+  } from '@/utils/constant';
+
+  export default class Pak extends wepy.page {
+    config = {
+      navigationBarTitleText: '填表',
+      usingComponents: {
+        'i-collapse': '/resources/iview/collapse/index',
+        'i-collapse-item': '/resources/iview/collapse-item/index',
+        Step: '/resources/iview/step/index',
+        Steps: '/resources/iview/steps/index'
+      }
+    }
+    components = {
+    }
+    data = {
+      fields: [],
+      passport: null,
+      application: {},
+      entrypoints: [],
+      visaSubCat: ['3个月', '6个月', '6个月以上'],
+    }
+    
+
+    methods = {
+      bindvisaSubCatChange(e) {
+        this.application.data.visa_sub_cat = e.detail.value
+      }
+    }
+    
+    async submit() {
+      let that = this;
+
+      console.log('saving passport:')
+      console.log(this.passport)
+      wepy.request({
+        url: 'https://php.evisa100.com/save_passport.php',
+        method: 'POST',
+        data: this.passport,
+        header: {
+          'content-type': 'application/json; charset=UTF-8'
+        }
+      }).then(res => {
+        console.log(res)
+        if (res.data.id) {
+          this.passport.id = res.data.id
+        }
+        this.application.passport_id = this.passport.id
+        this.application.price = 999
+        console.log('saving application:')
+        console.log(this.application)
+        wepy.request({
+          url: 'https://php.evisa100.com/submit_application.php',
+          method: 'POST',
+          data: this.application,
+          header: {
+            'content-type': 'application/json; charset=UTF-8'
+          }
+        }).then(res => {
+          console.log(res)
+          if (res.data.id) {
+            this.application.id = res.data.id
+          }
+          if (this.application.status == 1) {
+            wepy.redirectTo({
+              url: '/pages/comfire_order?fee=' + that.application.price + "&applicationId=" + this.application.id
+            })
+          } else {
+            if (this.application.status == 2 && this.isAdmin) {
+              api.updateOrder({
+                query: {
+                  id: this.application.id,
+                  status : 4
+                },
+                method: 'POST'
+              }).then(res => {
+                console.log('orderupdated', that.applicationId, res);
+              })
+            }
+            
+            wepy.navigateBack()
+          }
+          wepy.clearStorage()
+          console.log('clearStorage done')
+        })
+      })
+    }
+
+    async onLoad(option) {
+      this.passport = wepy.getStorageSync('passport')
+      this.application = wepy.getStorageSync('application')
+
+      // defaults
+      if (!this.application.data.visa_sub_cat) {
+        this.application.data.visa_sub_cat = 0
+      }
+    }
+  }
+</script>

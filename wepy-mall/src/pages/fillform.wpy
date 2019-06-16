@@ -25,8 +25,8 @@
           <view wx:if="{{ !!fields.sex }}">
             <text class="fieldLabel">性别</text>
             <radio-group class="radio-group" bindchange="radioChange">
-              <label class="radio"><radio value="M" checked="{{passport.data.sex == 'M'}}"/>男</label>
-              <label class="radio"><radio value="F" checked="{{passport.data.sex != 'M'}}"/>女</label>
+              <label class="radio"><radio value="M" checked="{{passport.data.sex == 'M'}}"/> 男 </label>
+              <label class="radio"><radio value="F" checked="{{passport.data.sex != 'M'}}"/> 女 </label>
             </radio-group>
           </view>
           <view wx:if="{{ !!fields.birth_date }}">
@@ -465,16 +465,13 @@
       },
       filesUrls() {
         var files = []
-        if (this.idFrontFile) {
-          files.push(this.idFrontFile)
-        }
         if (this.photoFile) {
           files.push(this.photoFile)
         }
         if (this.otherFile) {
           files.push(this.otherFile)
         }
-        if (this.hotel_letter) {
+        if (this.hotelLetter) {
           files.push(this.hotelLetter)
         }
         return files
@@ -682,7 +679,7 @@
           if (res.data.id) {
             this.application.id = res.data.id
           }
-          if (this.application.status == 1) {
+          if (this.application.status <= 1) {
             wepy.redirectTo({
               url: '/pages/comfire_order?fee=' + that.application.price + "&applicationId=" + this.application.id
             })
@@ -695,7 +692,7 @@
                 },
                 method: 'POST'
               }).then(res => {
-                console.log('orderupdated', that.applicationId, res);
+                console.log('status updated to 4', that.applicationId, res);
               })
             }
             wepy.navigateBack()
@@ -757,6 +754,7 @@
       }
 
       this.passport.openid = this.openid
+      console.log('passport.openid set to ', this.openid);
     }
   }
 </script>

@@ -95,7 +95,7 @@
           if (res.data.id) {
             this.application.id = res.data.id
           }
-          if (this.application.status == 1) {
+          if (this.application.status <= 1) {
             wepy.redirectTo({
               url: '/pages/comfire_order?fee=' + that.application.price + "&applicationId=" + this.application.id
             })
@@ -108,7 +108,7 @@
                 },
                 method: 'POST'
               }).then(res => {
-                console.log('orderupdated', that.applicationId, res);
+                console.log('status updated to 4', that.applicationId, res);
               })
             }
             

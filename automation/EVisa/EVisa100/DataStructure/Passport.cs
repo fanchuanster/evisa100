@@ -126,7 +126,13 @@ namespace EVisa100.DataStructure
             get
             {
                 var region = data["region"] as System.Collections.ArrayList;
-                return region[1] as string;
+                var city = region[1] as string;
+                if (city == "全部")
+                {
+                    city = region[0] as string;
+                }
+
+                return city;
             }
         }
         public string CityPinyin => CitiesManager.GetCityPinyin(City);

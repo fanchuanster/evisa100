@@ -33,14 +33,29 @@ namespace EVisa100.Automations
             var dropdown = driver.FindElement(By.Id($"{listId}_panel"));
 
             var options = dropdown.FindElements(By.TagName(itemTag));
-            foreach (var option in options)
+
+            if (itemText.StartsWith("#"))
             {
-                if (option.Text.Equals(itemText, StringComparison.CurrentCultureIgnoreCase))
+                // whether by index, 0-based.
+                var number = itemText.Remove(0, 1);
+                int index = -1;
+                if (Int32.TryParse(number, out index))
                 {
-                    option.Click(); // click the desired option
-                    break;
+                    // + 1 for Select is the first item.
+                    options[index+1].Click();
                 }
             }
+            else
+            {
+                foreach (var option in options)
+                {
+                    if (option.Text.Equals(itemText, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        option.Click(); // click the desired option
+                        break;
+                    }
+                }
+            }            
         }
         void DropAndSearch(string dropFieldId, string searchText)
         {
@@ -140,7 +155,7 @@ namespace EVisa100.Automations
             //////
             Select("renewalForm:visaCat", "Tourist");
             System.Threading.Thread.Sleep(3000);
-            Select("renewalForm:visaSubCat", "Individual (less Than 3 Months)");
+            Select("renewalForm:visaSubCat", $"#{application.data["visa_sub_cat"]}");
             System.Threading.Thread.Sleep(1000);
             Select("renewalForm:appType", "First Time Application");
             System.Threading.Thread.Sleep(1000);

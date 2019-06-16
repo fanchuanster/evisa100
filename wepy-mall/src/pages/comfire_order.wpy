@@ -113,7 +113,7 @@ export default class ComfireOrder extends wepy.page {
           }, 2000)
         },
         fail: function (res) {
-          tip.alert('支付失败');
+          tip.alert('支付失败-', res);
           setTimeout(() => {
             //支付失败 关闭loadding
             tip.loaded();

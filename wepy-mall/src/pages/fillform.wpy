@@ -704,8 +704,6 @@
     }
 
     async onLoad(option) {
-      let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
-
       let that = this
       if (option.id) {
         var json = await api.getApplicationList({
@@ -753,8 +751,11 @@
         this.entrypoints = env.getEntryPoints(this.application.data.to_country)
       }
 
-      this.passport.openid = this.openid
-      console.log('passport.openid set to ', this.openid);
+      if (!this.passport.openid) {
+        let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
+        this.passport.openid = userSpecialInfo.openid;
+        console.log('passport.openid set to ', this.passport.openid);
+      }      
     }
   }
 </script>

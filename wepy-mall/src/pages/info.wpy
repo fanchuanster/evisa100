@@ -81,7 +81,7 @@ export default class Index extends wepy.page {
       }
       that.$apply();
     } else {
-      tip.error(json.data.msg)
+      tip.error(json)
     }
     that.showLoading = false;
   }
@@ -94,7 +94,7 @@ export default class Index extends wepy.page {
   }
   onShow(){
     let that = this;
-    this.getUserInfo();
+    // this.getUserInfo();
   }
   computed = {
 

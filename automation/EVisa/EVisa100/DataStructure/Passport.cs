@@ -177,8 +177,6 @@ namespace EVisa100.DataStructure
         public Passport Passport;
 
         public int status;
-        public string to_country;
-        public Purpose purpose;
         public DateTime entry_date;
         public DateTime departure_date;
         public Dictionary<string, object> data;

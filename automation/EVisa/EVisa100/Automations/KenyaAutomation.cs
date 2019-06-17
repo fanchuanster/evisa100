@@ -137,7 +137,7 @@ namespace EVisa100.Automations
 
             // reason travel
             var reasontravel = new SelectElement(driver.FindElement(By.CssSelector(@"#element_65")));
-            reasontravel.SelectByText(application.purpose.ToString());
+            reasontravel.SelectByText(application.data["purpose"].ToString());
             // entry date: #element_27_1 - mm; #element_27_2 - dd; #element_27_3 - yyyy
             var entryMM = driver.FindElement(By.CssSelector(@"#element_27_1"));
             entryMM.SendKeys(application.entry_date.Month.ToString());

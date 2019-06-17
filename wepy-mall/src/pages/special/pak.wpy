@@ -29,6 +29,7 @@
 <script>
   import wepy from 'wepy'
   import api from '@/api/api'
+  const env = require('@/utils/config.js')
   import {
     SYSTEM_INFO,
     USER_SPECICAL_INFO,
@@ -54,7 +55,11 @@
       entrypoints: [],
       visaSubCat: ['3个月', '6个月', '6个月以上'],
     }
-    
+    computed = {
+      isAdmin() {
+        return !!this.passport && this.passport.openid === env.adminOpenid
+      }
+    }
 
     methods = {
       bindvisaSubCatChange(e) {
@@ -100,7 +105,7 @@
               url: '/pages/comfire_order?fee=' + that.application.price + "&applicationId=" + this.application.id
             })
           } else {
-            if (this.application.status == 2 && this.isAdmin) {
+            if (this.application.status == '2' && this.isAdmin) {
               api.updateOrder({
                 query: {
                   id: this.application.id,
@@ -114,8 +119,9 @@
             
             wepy.navigateBack()
           }
-          wepy.clearStorage()
-          console.log('clearStorage done')
+          wepy.removeStorageSync('passport')
+          wepy.removeStorageSync('application')
+          console.log('removeStorageSync done')
         })
       })
     }

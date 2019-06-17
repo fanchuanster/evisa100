@@ -208,7 +208,7 @@
         </picker>
         </view>
         <view wx:if="{{!!fields.purpose}}">
-          <picker bindchange="bindPurposeChange" value="{{application.purpose}}" range="{{purposes}}">
+          <picker bindchange="bindPurposeChange" value="{{application.data.purpose}}" range="{{purposes}}">
             <view class="picker">
               <text class="fieldLabel">旅行目的 </text>{{purposeDisplay}}
             </view>
@@ -347,7 +347,7 @@
     data = {
       fields: [],
       passport: null,
-      application: {},
+      application: null,
       entrypoints: [],
       purposes: ['旅游', '商务', '教育', '前往工作', '求医', '宗教', '移民定居', '其他'],
       maritalStatuses: ['单身', '已婚', '丧偶', '离婚', '分居'],
@@ -392,37 +392,37 @@
         return ''
       },
       purposeDisplay() {
-        if (this.application.purpose) {
-          return this.purposes[this.application.purpose]
+        if (this.application && this.application.data.purpose) {
+          return this.purposes[this.application.data.purpose]
         }
         return ''
       },
       entryDate() {
-        if (this.application.data) {
+        if (this.application && this.application.data) {
           return this.application.entry_date
         }
         return ''
       },
       departureDate() {
-        if (this.application.data) {
+        if (this.application && this.application.data) {
           return this.application.departure_date
         }
         return ''
       },
       byDisplay() {
-        if (this.application.data && this.application.data.by) {
+        if (this.application && this.application.data && this.application.data.by) {
           return this.by[this.application.data.by]
         }
         return ''
       },
       entryPointDisplay() {
-        if (this.application.data && this.application.data.entry_point) {
+        if (this.application && this.application.data && this.application.data.entry_point) {
           return this.application.data.entry_point.name_cn
         }
         return ''
       },
       destinationDisplay() {
-        if (this.application.data && this.application.data.destination) {
+        if (this.application && this.application.data.destination) {
           return this.application.data.destination.name_cn
         }
         return ''
@@ -431,7 +431,7 @@
         return new Date().toJSON().slice(0, 10).replace(/-/g, '/')
       },
       departureDateStart() {
-        if (this.application.entry_date) {
+        if (this.application && this.application.entry_date) {
           return this.application.entry_date
         }
         return this.today
@@ -575,7 +575,7 @@
         this.passport.data.email = e.detail.value
       },
       bindPurposeChange(e) {
-        this.application.purpose = e.detail.value
+        this.application.data.purpose = e.detail.value
       },
       bindEntryDateChange(e) {
         this.application.entry_date = e.detail.value
@@ -684,7 +684,7 @@
               url: '/pages/comfire_order?fee=' + that.application.price + "&applicationId=" + this.application.id
             })
           } else {
-            if (this.application.status == 2 && this.isAdmin) {
+            if (this.application.status == '2' && this.isAdmin) {
               api.updateOrder({
                 query: {
                   id: this.application.id,
@@ -697,8 +697,9 @@
             }
             wepy.navigateBack()
           }
-          wepy.clearStorage()
-          console.log('clearStorage done')
+          wepy.removeStorageSync('passport')
+          wepy.removeStorageSync('application')
+          console.log('removeStorageSync done')
         })
       })
     }
@@ -733,8 +734,10 @@
         
         if (application) {
           this.application = application
+        } else {
+          this.application = {}
         }
-        this.application.status = 1;
+        
         if (!this.application.data) {
           this.application.data = {}
           // default values.
@@ -744,6 +747,8 @@
           this.application.data.ever_denied = false
           this.application.data.ever_denied_by_others = false
           this.application.data.ever_convicted = false
+
+          this.application.status = 1
         }
         if (option.country) {
           this.application.data.to_country = option.country

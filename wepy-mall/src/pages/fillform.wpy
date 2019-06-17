@@ -744,7 +744,6 @@
           this.application.data.ever_convicted = false
         }
         if (option.country) {
-          console.log('set country = ' + option.country)
           this.application.data.to_country = option.country
         }
         this.fields = env.getFields(this.application.data.to_country)
@@ -754,7 +753,6 @@
       if (!this.passport.openid) {
         let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
         this.passport.openid = userSpecialInfo.openid;
-        console.log('passport.openid set to ', this.passport.openid);
       }      
     }
   }

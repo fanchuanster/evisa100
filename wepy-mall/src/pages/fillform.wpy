@@ -730,9 +730,11 @@
       } else {
         this.passport = wepy.getStorageSync('passport')
         var application = wepy.getStorageSync('application')
+        
         if (application) {
           this.application = application
         }
+        this.application.status = 1;
         if (!this.application.data) {
           this.application.data = {}
           // default values.

@@ -66,11 +66,24 @@ namespace EVisa100.DataStructure
                 return data["mother_name_sur_cn"] as string + ", " + data["mother_name_given_cn"] as string;
             }
         }
+        public string SpouseName
+        {
+            get
+            {
+                if (data.ContainsKey("spouse_name_sur"))
+                {
+                    var sur = data["spouse_name_sur"] as string;
+                    return sur + ", " + data["spouse_name_given"] as string;
+                }
+
+                return data["spouse_name_sur_cn"] as string + ", " + data["spouse_name_given_cn"] as string;
+            }
+        }
         public string SurName
         {
             get
             {
-                var fields = name.Split(new char[] { ' ', ',', '.', '\n', '\t' });
+                var fields = name.Split(new char[] { ' ', ',', '.', '\n', '\t', '/' });
 
                 return fields.FirstOrDefault();
             }
@@ -80,7 +93,7 @@ namespace EVisa100.DataStructure
         {
             get
             {
-                var fields = name.Split(new char[] { ' ', ',', '.', '\n', '\t' });
+                var fields = name.Split(new char[] { ' ', ',', '.', '\n', '\t', '/' });
 
                 return fields.LastOrDefault();
             }

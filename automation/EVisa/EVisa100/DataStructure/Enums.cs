@@ -22,6 +22,15 @@ namespace EVisa100.Enums
         Others
     }
 
+    public enum MaritalStatus
+    {
+        Single,
+        Married,
+        Widowed,
+        Divorced,
+        Separated
+    }
+
     public enum JobType
     {
         Student = 0,

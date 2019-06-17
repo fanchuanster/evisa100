@@ -7,6 +7,7 @@ using EVisa100.DataStructure;
 using System.Collections.Generic;
 using System;
 using OpenQA.Selenium.Interactions;
+using EVisa100.Enums;
 
 namespace EVisa100.Automations
 {
@@ -174,29 +175,29 @@ namespace EVisa100.Automations
             // No Gov project
             driver.FindElement(By.CssSelector(@"#renewalForm\:cpecP > tbody > tr > td:nth-child(3) > div")).Click();
 
-            Select("renewalForm:entryPort", "Islamabad Airport");
-            Select("renewalForm:departurePort", "Islamabad Airport");
+            Select("renewalForm:entryPort", application.EntryPoint);
+            Select("renewalForm:departurePort", application.EntryPoint);
 
             // renewalForm:travalDate
             // renewalForm:leavingDate
             // ui-datepicker-div
-            SetDate("renewalForm:travalDate", new DateTime(2019, 10, 12));
-            SetDate("renewalForm:leavingDate", new DateTime(2019, 10, 19));
+            SetDate("renewalForm:travalDate", application.entry_date);
+            SetDate("renewalForm:leavingDate", application.departure_date);
 
             //////////////
             // passport
 
             // 
-            driver.FindElement(By.CssSelector(@"#renewalForm\:passPassportNo")).SendKeys("E12233303");
-            driver.FindElement(By.CssSelector(@"#renewalForm\:passIssueAuthority")).SendKeys("MPS");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:passPassportNo")).SendKeys("E12233306");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:passIssueAuthority")).SendKeys(application.Passport.data["authority"] as string);
 
             Select("renewalForm:passportType", "Ordinary");
             DropAndSearch("renewalForm:passIssuingCountry", "China");
 
             // renewalForm:passIssueDate
             // renewalForm:passExpiryDate
-            SetDate("renewalForm:passIssueDate", new DateTime(2009, 10, 19));
-            SetDate("renewalForm:passExpiryDate", new DateTime(2029, 10, 19));
+            SetDate("renewalForm:passIssueDate", application.Passport.IssueDate);
+            SetDate("renewalForm:passExpiryDate", application.Passport.ExpiryDate);
 
             // No other passports.
             SelectCell("renewalForm:j_idt206", "No");
@@ -209,28 +210,30 @@ namespace EVisa100.Automations
             // personal info
 
             // 
-            driver.FindElement(By.CssSelector(@"#renewalForm\:surname")).SendKeys("Dong");
-            driver.FindElement(By.CssSelector(@"#renewalForm\:givenName")).SendKeys("Wen");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:surname")).SendKeys(application.Passport.SurName);
+            driver.FindElement(By.CssSelector(@"#renewalForm\:givenName")).SendKeys(application.Passport.GivenName);
 
-            SetDate("renewalForm:dobPI", new DateTime(1984, 1, 20));
-            driver.FindElement(By.CssSelector(@"#renewalForm\:idMark")).SendKeys("Hubei");
+            SetDate("renewalForm:dobPI", application.Passport.BirthDate);
+            driver.FindElement(By.CssSelector(@"#renewalForm\:idMark")).SendKeys(application.Passport.BirthPlace);
 
-            SelectCell("renewalForm:maritalStatus", "Married");
-            SelectCell("renewalForm:gender", "Male");
+            var maritalStatus = (MaritalStatus)Int32.Parse(application.Passport.data["marital_status"].ToString());
+
+            SelectCell("renewalForm:maritalStatus", maritalStatus.ToString());
+            SelectCell("renewalForm:gender", (application.Passport.data["sex"].ToString() == "M" ? "Male" : "Female"));
             DropAndSearch("renewalForm:nationality", "China");
             
-            driver.FindElement(By.CssSelector(@"#renewalForm\:email")).SendKeys("wen@mail.com");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:email")).SendKeys(application.Passport.data["email"].ToString());
             DropAndSearch("renewalForm:mobileCountry", "China");
-            driver.FindElement(By.CssSelector(@"#renewalForm\:mobile")).SendKeys("13323322221");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:mobile")).SendKeys(application.Passport.data["phone"] as string);
 
             driver.FindElement(By.CssSelector(@"#renewalForm\:nav-middle_content > table > tbody > tr:nth-child(1) > td:nth-child(4)")).Click();
 
             // #renewalForm\:fNam2
-            driver.FindElement(By.CssSelector(@"#renewalForm\:fNam2")).SendKeys("Dong shenfa");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:fNam2")).SendKeys(application.Passport.FatherName);
             DropAndSearch("renewalForm:fnat", "China");
 
             // #renewalForm\:mNam2
-            driver.FindElement(By.CssSelector(@"#renewalForm\:mNam2")).SendKeys("Chen yy");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:mNam2")).SendKeys(application.Passport.MotherName);
             DropAndSearch("renewalForm:mnat", "China");
 
             // Do you have a Spouse ?
@@ -240,7 +243,7 @@ namespace EVisa100.Automations
                 System.Threading.Thread.Sleep(1000);
 
                 // #renewalForm\:sNam2
-                driver.FindElement(By.CssSelector(@"#renewalForm\:sNam2")).SendKeys("Ding xl");
+                driver.FindElement(By.CssSelector(@"#renewalForm\:sNam2")).SendKeys(application.Passport.SpouseName);
                 // renewalForm:snat
                 DropAndSearch("renewalForm:snat", "China");
                 // renewalForm:sbCountry1
@@ -278,12 +281,27 @@ namespace EVisa100.Automations
             //1: Letter By Sponsor / Hotel – Letter By Operator(recog.By Dept.Of Tourist Services)
             //2: Passport
             //3: Photograph
+
+            // download documents.
+            var passportFile = Constants.OssHost + (application.Passport.data["passport_file"] as string);
+            passportFile = passportFile.Replace("\\", "");
+            var photoFile = (application.Passport.data["photo_file"] as string);
+            photoFile = photoFile.Replace("\\", "");
+            var hotelLetter = Constants.OssHost + (application.Passport.data["hotel_letter"] as string);
+            hotelLetter = hotelLetter.Replace("\\", "");
+            var temp = Path.GetTempPath();
+            using (var client = new WebClient())
+            {
+                client.DownloadFile(passportFile, temp + "passport.jpg");
+                client.DownloadFile(photoFile, temp + "photo.jpg");
+                client.DownloadFile(hotelLetter, temp + "hotel_letter.jpg");
+            }
+
             Select("renewalForm:docType", "Passport");
-            
             // Choose and upload
             driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/span")).Click();
             System.Threading.Thread.Sleep(2000);
-            SendKeys.SendWait(@"C:\Users\donwen.CORPDOM\Pictures\Saved Pictures\dongwen_photo.jpg");
+            SendKeys.SendWait(temp + "passport.jpg");
             SendKeys.SendWait(@"{Enter}");
             driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/button[1]")).Click();
 
@@ -292,7 +310,7 @@ namespace EVisa100.Automations
             // Choose and upload
             driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/span")).Click();
             System.Threading.Thread.Sleep(2000);
-            SendKeys.SendWait(@"C:\Users\donwen.CORPDOM\Pictures\Saved Pictures\dongwen_photo.jpg");
+            SendKeys.SendWait(temp + "photo.jpg");
             SendKeys.SendWait(@"{Enter}");
             driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/button[1]")).Click();
 
@@ -301,7 +319,7 @@ namespace EVisa100.Automations
             // Choose and upload
             driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/span")).Click();
             System.Threading.Thread.Sleep(2000);
-            SendKeys.SendWait(@"C:\Users\donwen.CORPDOM\Pictures\Saved Pictures\dongwen_photo.jpg");
+            SendKeys.SendWait(temp + "hotel_letter.jpg");
             SendKeys.SendWait(@"{Enter}");
             driver.FindElement(By.XPath(@"//*[@id=""renewalForm:uploadFileCom""]/div[1]/button[1]")).Click();
 

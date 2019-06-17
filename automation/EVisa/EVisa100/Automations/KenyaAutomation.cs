@@ -193,25 +193,26 @@ namespace EVisa100.Automations
             // passportUploadBtn - #element_43
             var passportUploadBtn = driver.FindElement(By.CssSelector(@"#element_43"));
 
+            // download documents.
             var passportFile = Constants.OssHost + (application.Passport.data["passport_file"] as string);
             passportFile = passportFile.Replace("\\", "");
             var photoFile = (application.Passport.data["photo_file"] as string);
             photoFile = photoFile.Replace("\\", "");
-            var idFrontFile = Constants.OssHost + (application.Passport.data["id_front_file"] as string);
-            idFrontFile = idFrontFile.Replace("\\", "");
+            var otherFile = Constants.OssHost + (application.Passport.data["other_file"] as string);
+            otherFile = otherFile.Replace("\\", "");
             var temp = Path.GetTempPath();
             using (var client = new WebClient())
             {
                 client.DownloadFile(passportFile, temp + "passport.jpg");
                 client.DownloadFile(photoFile, temp + "photo.jpg");
-                client.DownloadFile(idFrontFile, temp + "idfront.jpg");
+                client.DownloadFile(otherFile, temp + "other.jpg");
             }
 
             passportUploadBtn.SendKeys(temp + "passport.jpg");
 
             // additional - #element_42
             var additionalfile = driver.FindElement(By.CssSelector(@"#element_42"));
-            additionalfile.SendKeys(temp + "idfront.jpg");
+            additionalfile.SendKeys(temp + "other.jpg");
 
             // photo - #element_44
             var photofile = driver.FindElement(By.CssSelector(@"#element_44"));

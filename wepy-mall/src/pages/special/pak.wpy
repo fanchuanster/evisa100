@@ -12,9 +12,9 @@
       <i-collapse-item title="基本信息">
         <view slot="content">
           <view>
-            <picker @change="bindvisaSubCatChange" value="{{application.data.visa_sub_cat}}" range="{{visaSubCat}}">
+            <picker @change="bindvisaSubCatChange" value="{{application.data.visa_sub_cat}}" range="{{visaSubCat4Business}}">
               <view class="picker">
-                <text class="fieldLabel">签证子类别 </text>{{visaSubCat[application.data.visa_sub_cat]}}
+                <text class="fieldLabel">签证子类别 </text>{{visaSubCat4Business[application.data.visa_sub_cat]}}
               </view>
             </picker>
           </view>
@@ -54,10 +54,22 @@
       application: {},
       entrypoints: [],
       visaSubCat: ['3个月', '6个月', '6个月以上'],
+      visaSubCat4Business: ['个人', '家庭']
     }
     computed = {
       isAdmin() {
         return !!this.passport && this.passport.openid === env.adminOpenid
+      },
+      visaSubCatRange() {
+        if (!this.application || !this.application.data) {
+          return ""
+        }
+        
+        if (this.application.data.purpose == 0) {
+          return this.visaSubCat
+        } else {
+          return this.visaSubCat4Business
+        }
       }
     }
 

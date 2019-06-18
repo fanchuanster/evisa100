@@ -21,6 +21,11 @@
         </view>
       </i-collapse-item>
     </i-collapse>
+    <view class="uploader" id="hotel_letter" @tap="uploadFile" wx:if="{{ application.data.purpose == 0 }}" >
+      <text>酒店预订单</text>
+      <text wx:if="{{hotelLetterUploaded}}">完成</text>
+      <text wx:else>></text>
+    </view>
     <view>
       <button type="primary" @tap="submit">确定</button>
     </view>
@@ -29,6 +34,7 @@
 <script>
   import wepy from 'wepy'
   import api from '@/api/api'
+  import UploadFile from '@/utils/lib/uploadFile.js'
   const env = require('@/utils/config.js')
   import {
     SYSTEM_INFO,
@@ -60,6 +66,12 @@
       isAdmin() {
         return !!this.passport && this.passport.openid === env.adminOpenid
       },
+      hotelLetterUploaded() {
+        if (!this.passport) {
+          return ""
+        }
+        return this.passport.data.hotel_letter != null
+      },
       visaSubCatRange() {
         if (!this.application || !this.application.data) {
           return ""
@@ -77,6 +89,51 @@
       bindvisaSubCatChange(e) {
         this.application.data.visa_sub_cat = e.detail.value
       }
+    }
+
+    uploadFile(e) {
+      console.log(e)
+      wepy.showLoading({
+        title: '加载中',
+        mask: true
+      })
+      let that = this
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success(res) {
+          const imagePath = res.tempFilePaths[0]
+          wx.getFileSystemManager().readFile({
+            filePath: imagePath,
+            encoding: 'base64',
+            success: function(res) {
+              wepy.showLoading({
+                title: '上传中',
+                mask: true
+              })
+              var photoFileName = 'photo/' + (that.passport ? that.passport.passport_no : Date.now()) + e.target.id + "." + imagePath.split('.').pop()
+              console.log(photoFileName)
+              UploadFile(imagePath, photoFileName,
+                function(res) {
+                  console.log(res)
+                  wepy.hideLoading()
+                  that.passport.data[e.target.id] = photoFileName
+                  wepy.setStorageSync('passport', that.passport)
+                  that.$apply()
+                },
+                function(err) {
+                  wepy.hideLoading()
+                  console.log(err)
+                }
+              )
+            }
+          })
+        },
+        complete: function(res) {
+          wepy.hideLoading()
+        }
+      })
     }
     
     async submit() {

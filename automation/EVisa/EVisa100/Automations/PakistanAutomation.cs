@@ -154,7 +154,8 @@ namespace EVisa100.Automations
             //////////////////////
             // application info
             //////
-            Select("renewalForm:visaCat", "Tourist");
+            var purposeStr = application.Purpose == Purpose.Tourism ? "Tourist" : "Business";
+            Select("renewalForm:visaCat", purposeStr);
             System.Threading.Thread.Sleep(3000);
             Select("renewalForm:visaSubCat", $"#{application.data["visa_sub_cat"]}");
             System.Threading.Thread.Sleep(1000);
@@ -162,7 +163,7 @@ namespace EVisa100.Automations
             System.Threading.Thread.Sleep(1000);
             Select("renewalForm:visaType", "Single Entry");
 
-            driver.FindElement(By.CssSelector(@"#renewalForm\:visitPurpose")).SendKeys("Tourism");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:visitPurpose")).SendKeys(purposeStr);
 
             //   
             Select("renewalForm:visaDuration", "3");
@@ -180,7 +181,6 @@ namespace EVisa100.Automations
 
             // renewalForm:travalDate
             // renewalForm:leavingDate
-            // ui-datepicker-div
             SetDate("renewalForm:travalDate", application.entry_date);
             SetDate("renewalForm:leavingDate", application.departure_date);
 

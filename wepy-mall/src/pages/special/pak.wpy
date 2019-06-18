@@ -12,9 +12,9 @@
       <i-collapse-item title="基本信息">
         <view slot="content">
           <view>
-            <picker @change="bindvisaSubCatChange" value="{{application.data.visa_sub_cat}}" range="{{visaSubCat4Business}}">
+            <picker @change="bindvisaSubCatChange" value="{{application.data.visa_sub_cat}}" range="{{visaSubCatRange}}">
               <view class="picker">
-                <text class="fieldLabel">签证子类别 </text>{{visaSubCat4Business[application.data.visa_sub_cat]}}
+                <text class="fieldLabel">签证子类别 </text>{{visaSubCatRange[application.data.visa_sub_cat]}}
               </view>
             </picker>
           </view>
@@ -64,7 +64,7 @@
         if (!this.application || !this.application.data) {
           return ""
         }
-        
+        console.log('visaSubCatRange', this.application.data)
         if (this.application.data.purpose == 0) {
           return this.visaSubCat
         } else {

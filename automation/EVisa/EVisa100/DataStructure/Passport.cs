@@ -197,6 +197,14 @@ namespace EVisa100.DataStructure
                 return npoints["name"].ToString();
             }
         }
+        public Purpose Purpose
+        {
+            get
+            {
+                var str = data["purpose"] as string;
+                return (Purpose)int.Parse(str)
+            }
+        }
     }
 
     public class ResponseData<T>

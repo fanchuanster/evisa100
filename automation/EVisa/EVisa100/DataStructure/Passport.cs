@@ -47,10 +47,10 @@ namespace EVisa100.DataStructure
                 if (data.ContainsKey("father_name_sur"))
                 {
                     var sur = data["father_name_sur"] as string;
-                    if (sur != null) return sur + ", " + data["father_name_given"] as string;
+                    if (sur != null) return sur + " " + data["father_name_given"] as string;
                 }
 
-                return data["father_name_sur_cn"] as string + ", " + data["father_name_given_cn"] as string;
+                return data["father_name_sur_cn"] as string + " " + data["father_name_given_cn"] as string;
             }
         }
         public string MotherName
@@ -60,10 +60,10 @@ namespace EVisa100.DataStructure
                 if (data.ContainsKey("mother_name_sur"))
                 {
                     var sur = data["mother_name_sur"] as string;
-                    return sur + ", " + data["mother_name_given"] as string;
+                    return sur + " " + data["mother_name_given"] as string;
                 }
 
-                return data["mother_name_sur_cn"] as string + ", " + data["mother_name_given_cn"] as string;
+                return data["mother_name_sur_cn"] as string + " " + data["mother_name_given_cn"] as string;
             }
         }
         public string SpouseName
@@ -73,10 +73,10 @@ namespace EVisa100.DataStructure
                 if (data.ContainsKey("spouse_name_sur"))
                 {
                     var sur = data["spouse_name_sur"] as string;
-                    return sur + ", " + data["spouse_name_given"] as string;
+                    return sur + " " + data["spouse_name_given"] as string;
                 }
 
-                return data["spouse_name_sur_cn"] as string + ", " + data["spouse_name_given_cn"] as string;
+                return data["spouse_name_sur_cn"] as string + " " + data["spouse_name_given_cn"] as string;
             }
         }
         public string SurName
@@ -202,7 +202,7 @@ namespace EVisa100.DataStructure
             get
             {
                 var str = data["purpose"] as string;
-                return (Purpose)int.Parse(str)
+                return (Purpose)int.Parse(str);
             }
         }
     }

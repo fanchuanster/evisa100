@@ -188,8 +188,8 @@ namespace EVisa100.Automations
             // passport
 
             // 
-            driver.FindElement(By.CssSelector(@"#renewalForm\:passPassportNo")).SendKeys("E12233307");
-            driver.FindElement(By.CssSelector(@"#renewalForm\:passIssueAuthority")).SendKeys(application.Passport.data["authority"] as string);
+            driver.FindElement(By.CssSelector(@"#renewalForm\:passPassportNo")).SendKeys("E12233311");
+            driver.FindElement(By.CssSelector(@"#renewalForm\:passIssueAuthority")).SendKeys((application.Passport.data["authority"] as string).Replace("&", ""));
 
             Select("renewalForm:passportType", "Ordinary");
             DropAndSearch("renewalForm:passIssuingCountry", "China");
@@ -200,11 +200,10 @@ namespace EVisa100.Automations
             SetDate("renewalForm:passExpiryDate", application.Passport.ExpiryDate);
 
             // No other passports.
-            SelectCell("renewalForm:j_idt206", "No");
-            //driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt206 > tbody > tr > td:nth-child(3) > div")).Click();
+            SelectCell("renewalForm:j_idt219", "No");
 
             // Next
-            driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2246")).Click();
+            driver.FindElement(By.CssSelector(@"#renewalForm\:nav-first_content > table > tbody > tr:nth-child(1) > td:nth-child(3)")).Click();
 
             /////////////////
             // personal info
@@ -235,22 +234,6 @@ namespace EVisa100.Automations
             // #renewalForm\:mNam2
             driver.FindElement(By.CssSelector(@"#renewalForm\:mNam2")).SendKeys(application.Passport.MotherName);
             DropAndSearch("renewalForm:mnat", "China");
-
-            // Do you have a Spouse ?
-            if (true)
-            {
-                driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt569 > div.ui-chkbox-box.ui-widget.ui-corner-all.ui-state-default")).Click();
-                System.Threading.Thread.Sleep(1000);
-
-                // #renewalForm\:sNam2
-                driver.FindElement(By.CssSelector(@"#renewalForm\:sNam2")).SendKeys(application.Passport.SpouseName);
-                // renewalForm:snat
-                DropAndSearch("renewalForm:snat", "China");
-                // renewalForm:sbCountry1
-                DropAndSearch("renewalForm:sbCountry1", "China");
-
-                SelectCell("renewalForm:sTrav", "No");
-            }
             
             // save and continue
             driver.FindElement(By.CssSelector(@"#renewalForm\:nav-middle_content > table > tbody > tr:nth-child(1) > td:nth-child(4)")).Click();
@@ -259,18 +242,18 @@ namespace EVisa100.Automations
             // finance
 
             // renewalForm:persCircumstance
-            SelectCell("renewalForm:persCircumstance", "Unemployed");
+            SelectCell("renewalForm:persCircumstance", "Self Employed");
 
             // save and continue.
-            driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2254")).Click();
+            driver.FindElement(By.CssSelector(@"#renewalForm\:nav-middle_content > table > tbody > tr:nth-child(1) > td:nth-child(4)")).Click();
 
-            // history
-            SelectCell("renewalForm:j_idt959", "No");
-            SelectCell("renewalForm:j_idt1024", "No");
-            SelectCell("renewalForm:j_idt1088", "No");
-            SelectCell("renewalForm:j_idt1170", "No");
+            // travel history
+            // Have you travelled to any country in past 3 years? No
+            // Have you ever been refused a visa for any country? No
+            // Have you been granted Pakistani visa before? No
+            // Have you been convicted of any criminal offence (including driving offences) in Pakistan or any other country, at any time?
 
-            driver.FindElement(By.CssSelector(@"#renewalForm\:j_idt2254")).Click();
+            driver.FindElement(By.CssSelector(@"#renewalForm\:nav-middle_content > table > tbody > tr:nth-child(1) > td:nth-child(4)")).Click();
 
             // Do you intend to visit Azad Jammu and Kashmir during your stay in Pakistan?
             SelectCell("renewalForm:muzMir", "No");

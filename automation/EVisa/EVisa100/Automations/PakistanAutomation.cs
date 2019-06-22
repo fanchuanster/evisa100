@@ -225,7 +225,8 @@ namespace EVisa100.Automations
             DropAndSearch("renewalForm:mobileCountry", "China");
             driver.FindElement(By.CssSelector(@"#renewalForm\:mobile")).SendKeys(application.Passport.data["phone"] as string);
 
-            driver.FindElement(By.CssSelector(@"#renewalForm\:nav-middle_content > table > tbody > tr:nth-child(1) > td:nth-child(4)")).Click();
+            var saveAndContinueCssSelector = @"#1renewalForm\:nav-middle_content > table > tbody > tr:nth-child(1) > td:nth-child(4)";
+            driver.FindElement(By.CssSelector(saveAndContinueCssSelector)).Click();
 
             // #renewalForm\:fNam2
             driver.FindElement(By.CssSelector(@"#renewalForm\:fNam2")).SendKeys(application.Passport.FatherName);
@@ -236,7 +237,7 @@ namespace EVisa100.Automations
             DropAndSearch("renewalForm:mnat", "China");
             
             // save and continue
-            driver.FindElement(By.CssSelector(@"#renewalForm\:nav-middle_content > table > tbody > tr:nth-child(1) > td:nth-child(4)")).Click();
+            driver.FindElement(By.CssSelector(saveAndContinueCssSelector)).Click();
 
             ////////////
             // finance
@@ -245,7 +246,7 @@ namespace EVisa100.Automations
             SelectCell("renewalForm:persCircumstance", "Self Employed");
 
             // save and continue.
-            driver.FindElement(By.CssSelector(@"#renewalForm\:nav-middle_content > table > tbody > tr:nth-child(1) > td:nth-child(4)")).Click();
+            driver.FindElement(By.CssSelector(saveAndContinueCssSelector)).Click();
 
             // travel history
             // Have you travelled to any country in past 3 years? No
@@ -253,7 +254,7 @@ namespace EVisa100.Automations
             // Have you been granted Pakistani visa before? No
             // Have you been convicted of any criminal offence (including driving offences) in Pakistan or any other country, at any time?
 
-            driver.FindElement(By.CssSelector(@"#renewalForm\:nav-middle_content > table > tbody > tr:nth-child(1) > td:nth-child(4)")).Click();
+            driver.FindElement(By.CssSelector(saveAndContinueCssSelector)).Click();
 
             // Do you intend to visit Azad Jammu and Kashmir during your stay in Pakistan?
             SelectCell("renewalForm:muzMir", "No");

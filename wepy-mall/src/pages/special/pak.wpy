@@ -76,11 +76,11 @@
         if (!this.application || !this.application.data) {
           return ""
         }
-        console.log('visaSubCatRange', this.application.data)
-        if (this.application.data.purpose == 0) {
-          return this.visaSubCat
-        } else {
+        
+        if (this.application.data.purpose == 1) {
           return this.visaSubCat4Business
+        } else {
+          return this.visaSubCat
         }
       }
     }

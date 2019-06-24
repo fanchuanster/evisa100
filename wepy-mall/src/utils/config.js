@@ -14,7 +14,8 @@ var config = {
       father_name:1, father_name_cn:1, mother_name:1, mother_name_cn:1, region:1, address_cn:1, address:1, phone:1, email:1,
       purpose:1, entry_date:1, departure_date:1, by:1, entry_point:1, departure_point:0,
       return_to_domicile:1, been_other_country:1, ever_been_to:1, ever_denied:1,
-      ever_denied_by_other:1, ever_convicted:1, destination: 0
+      ever_denied_by_other:1, ever_convicted:1, destination: 0,
+      spouse_name:1, 
     },
     ke: {
       passport_file:1, photo_file:1, other_file:1,
@@ -33,7 +34,7 @@ var config = {
       passport_no:1, authority:1, issue_place:1, issue_date:1, expiry_date:1,
       father_name:1, mother_name:1, region:1, address_cn:1, address:1, phone:1, email:1,
       purpose:1, entry_date:1, departure_date:1, by:1,
-      ever_been_to:1, destination: 0
+      ever_been_to:1
     },
     zm: {
       passport_file:1, photo_file:1,
@@ -55,7 +56,7 @@ var config = {
     },
     pak: {
       passport_file:1, photo_file:1,
-      country_cn:0, name_cn:1, name:1, sex:1, marital_status:1, spouse_name:1, birth_date:1, birth_place_cn:1, birth_place:1,
+      country_cn:0, name_cn:1, name:1, sex:1, marital_status:1, birth_date:1, birth_place_cn:1, birth_place:1,
       job_type:1, job_comp_cn:1, job_comp:0, job_title_cn:1, job_title:1,
       job_comp_address_cn:1, job_comp_address:1, job_comp_email:1, job_comp_tel:1, job_comp_join_date:1,  
       passport_no:1, authority:1, issue_place:1, issue_date:1, expiry_date:1,
@@ -102,7 +103,7 @@ var config = {
         { name_cn: '希莫尼', name: 'Shimoni' },
         { name_cn: '万加', name: 'Vanga' }]],
     pak: [[
-      { name_cn: 'Islamabad Airport', name: 'Islamabad Airport' },
+      { name_cn: 'Islamabad Airport机场', name: 'Islamabad Airport' },
       { name_cn: 'Lahore Airport机场', name: 'Lahore Airport' },
       { name_cn: 'Peshawar Airport机场', name: 'Peshawar Airport' },
       { name_cn: 'Karachi Airport机场', name: 'Karachi Airport' },
@@ -122,10 +123,10 @@ var config = {
       { name_cn: 'Khokarapar Railway Station', name: 'Khokarapar Railway Station' },
       { name_cn: 'Wahga Railway Station', name: 'Wahga Railway Station' }],
     [
-      { name_cn: 'Karachi Sea Port', name: 'Karachi Sea Port' },
-      { name_cn: 'Ghassbandar Sea Port', name: 'Ghassbandar Sea Port' },
-      { name_cn: 'Port Bin Qasim', name: 'Port Bin Qasim' },
-      { name_cn: 'Gwadar Sea Port', name: 'Gwadar Sea Port' }]],
+      { name_cn: 'Karachi Sea Port港', name: 'Karachi Sea Port' },
+      { name_cn: 'Ghassbandar Sea Port港', name: 'Ghassbandar Sea Port' },
+      { name_cn: 'Port Bin Qasim港', name: 'Port Bin Qasim' },
+      { name_cn: 'Gwadar Sea Port港', name: 'Gwadar Sea Port' }]],
     },
     
     destinations: {

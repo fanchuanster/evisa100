@@ -555,14 +555,6 @@ page {
   font-size: 24rpx;
 }
 
-.visa_detail_bottom_btn {
-  width: 560rpx;
-  height: 92rpx;
-  line-height: 92rpx;
-  font-size: 32rpx;
-  margin: 0 20rpx 0 0;
-}
-
 .flow_box_cont {
   padding: 40rpx 0 0 20rpx;
 }

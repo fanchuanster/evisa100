@@ -27,6 +27,11 @@
       <text wx:if="{{hotelLetterUploaded}}">完成</text>
       <text wx:else>></text>
     </view>
+    <view wx:for="{{!!passports}}" wx:key="item">
+      <view>
+        <text class="fieldLabel">item.id</text>
+      </view>      
+    </view>
     <view class="visa_detail_bottom_box">
       <button type="primary" class="visa_detail_bottom_btn" disabled="{{!allUploaded}}" bindtap="next">下一步</button>
     </view>
@@ -49,6 +54,7 @@
     }
     data = {
       passport: null,
+      passports: [],
       country: '',
       fields: []
     }
@@ -141,6 +147,18 @@
         this.country = res.country
         this.fields = Config.getFields(this.country)
       }
+
+      let userSpecialInfo = wepy.getStorageSync(USER_SPECICAL_INFO) || {};
+      let openid = userSpecialInfo.openid;
+      json = await api.getPassportList({
+          query: {
+            openid: openid
+          }
+        });
+        this.passport = json.data;
+        that.$apply()
+        console.log('passports:')
+        console.log(this.passports)
     }
   }
 </script>

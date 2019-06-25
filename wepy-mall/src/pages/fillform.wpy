@@ -54,6 +54,37 @@
               <text class="fieldLabel">单位名称</text>
               <input  value="{{passport.data.job_comp_cn}}" bindinput="onJobCompChange" type="text"/>
             </view>
+            <view wx:if="{{!!fields.job_comp_cn && isAdmin}}">
+              <text class="fieldLabel">单位名称(英)</text>
+              <input  value="{{passport.data.job_comp}}" bindinput="onJobCompChange" type="text"/>
+            </view>
+
+            <view wx:if="{{!!fields.job_comp_address_cn}}">
+              <text class="fieldLabel">单位地址</text>
+              <input  value="{{passport.data.job_comp_address_cn}}" bindinput="onJobCompChange" type="text"/>
+            </view>
+            <view wx:if="{{!!fields.job_comp_address_cn && isAdmin}}">
+              <text class="fieldLabel">单位地址(英)</text>
+              <input  value="{{passport.data.job_comp_address}}" bindinput="onJobCompChange" type="text"/>
+            </view>
+
+            <view wx:if="{{!!fields.job_comp_email}}">
+              <text class="fieldLabel">单位email</text>
+              <input value="{{passport.data.job_comp_email}}" bindinput="onJobTitleChangeCn" type="text"/>
+            </view>
+            <view wx:if="{{!!fields.job_comp_tel}}">
+              <text class="fieldLabel">单位电话</text>
+              <input value="{{passport.data.job_comp_tel}}" bindinput="onJobTitleChangeCn" type="text"/>
+            </view>
+
+            <view wx:if="{{!!fields.job_comp_join_date}}">
+            <picker mode="date" value="{{passport.data.job_comp_join_date}}" start="1970-01-01" end="{{today}}" @change="bindDateChange">
+              <view class="picker">
+                <text class="fieldLabel">入职日期 </text> {{!passport ? '' : passport.data.job_comp_join_date}}
+              </view>
+            </picker>
+          </view>
+
             <view wx:if="{{!!fields.job_title_cn}}">
               <text class="fieldLabel">职位名称</text>
               <input value="{{passport.data.job_title_cn}}" bindinput="onJobTitleChangeCn" type="text"/>
@@ -108,7 +139,7 @@
           <view wx:if="{{!!fields.issue_date}}">
             <picker mode="date" value="{{passport.data.issue_date}}" start="1980-01-01" end="2019-09-01" @change="bindDateChange">
               <view class="picker">
-                <text class="fieldLabel">颁发日期 </text> {{issueDate}}
+                <text class="fieldLabel">颁发日期 </text> {{!!passport ? passport.data.issue_date : ''}}
               </view>
             </picker>
           </view>
@@ -364,12 +395,6 @@
       birthDate() {
         if (this.passport) {
           return this.passport.data.birth_date
-        }
-        return ''
-      },
-      issueDate() {
-        if (this.passport) {
-          return this.passport.data.issue_date
         }
         return ''
       },

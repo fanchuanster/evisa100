@@ -12,38 +12,38 @@
         <view slot="content">
           <view wx:if="{{ !!fields.country_cn }}">
             <text class="fieldLabel">国籍</text>
-            <input placeholder="国籍" value="{{passport.data.country_cn}}" bindinput="oninputNationality" type="text"/>
+            <input id="country_cn" placeholder="国籍" value="{{passport.data.country_cn}}" bindinput="onInput" type="text"/>
           </view>
           <view wx:if="{{ !!fields.name_cn }}">
             <text class="fieldLabel">姓名</text>
-            <input value="{{passport.name_cn}}" bindinput="oninputNamecn" type="text"/>
+            <input id="name_cn" value="{{passport.name_cn}}" bindinput="onInput" type="text"/>
           </view>
           <view wx:if="{{ !!fields.name }}">
             <text class="fieldLabel">姓名(拼音)</text>
-            <input value="{{passport.name}}" bindinput="oninputName" type="text"/>
+            <input id="name" value="{{passport.name}}" bindinput="onInput" type="text"/>
           </view>
           <view wx:if="{{ !!fields.sex }}">
             <text class="fieldLabel">性别</text>
-            <radio-group class="radio-group" bindchange="radioChange">
+            <radio-group class="radio-group" bindchange="onInput">
               <label class="radio"><radio value="M" checked="{{passport.data.sex == 'M'}}"/> 男 </label>
               <label class="radio"><radio value="F" checked="{{passport.data.sex != 'M'}}"/> 女 </label>
             </radio-group>
           </view>
           <view wx:if="{{ !!fields.birth_date }}">
-            <picker mode="date" value="{{passport.data.birth_date}}" end="{{today}}" @change="bindBirthChange">
+            <picker id="birth_date" mode="date" value="{{passport.data.birth_date}}" end="{{today}}" @change="onInput">
               <text class="fieldLabel">出生日期 </text><text>{{birthDate}}</text>
             </picker>
           </view>
           <view wx:if="{{ !!fields.birth_place_cn }}">
             <text class="fieldLabel">出生地</text>
-            <input value="{{passport.data.birth_place_cn}}" bindinput="oninputName" type="text"/>
+            <input id="birth_place_cn" value="{{passport.data.birth_place_cn}}" bindinput="onInput" type="text"/>
           </view>
           <view wx:if="{{ !!fields.birth_place }}">
             <text class="fieldLabel">出生地(拼音)</text>
-            <input value="{{passport.data.birth_place}}" bindinput="oninputName" type="text"/>
+            <input id="birth_place" value="{{passport.data.birth_place}}" bindinput="onInput" type="text"/>
           </view>
           <view wx:if="{{ !!fields.job_type }}">
-            <picker mode="selector" value="{{passport.data.job_type}}" range="{{jobs}}" @change="onJobTypeChange">
+            <picker id="job_type" mode="selector" value="{{passport.data.job_type}}" range="{{jobs}}" @change="onInput">
               <view class="picker">
                 <text class="fieldLabel">职业 </text>{{jobTypeDisplay}}
               </view>
@@ -52,62 +52,62 @@
           <view wx:if="{{passport.data.job_type == 2}}">
             <view wx:if="{{!!fields.job_comp_cn}}">
               <text class="fieldLabel">单位名称</text>
-              <input  value="{{passport.data.job_comp_cn}}" bindinput="onJobCompChange" type="text"/>
+              <input id="job_comp_cn"  value="{{passport.data.job_comp_cn}}" bindinput="onInput" type="text"/>
             </view>
-            <view wx:if="{{!!fields.job_comp_cn && isAdmin}}">
+            <view wx:if="{{!!fields.job_comp && isAdmin}}">
               <text class="fieldLabel">单位名称(英)</text>
-              <input  value="{{passport.data.job_comp}}" bindinput="onJobCompChange" type="text"/>
+              <input id="job_comp" value="{{passport.data.job_comp}}" bindinput="onInput" type="text"/>
             </view>
 
             <view wx:if="{{!!fields.job_comp_address_cn}}">
               <text class="fieldLabel">单位地址</text>
-              <input  value="{{passport.data.job_comp_address_cn}}" bindinput="onJobCompChange" type="text"/>
+              <input id="job_comp_address_cn" value="{{passport.data.job_comp_address_cn}}" bindinput="onInput" type="text"/>
             </view>
-            <view wx:if="{{!!fields.job_comp_address_cn && isAdmin}}">
+            <view wx:if="{{!!fields.job_comp_address && isAdmin}}">
               <text class="fieldLabel">单位地址(英)</text>
-              <input  value="{{passport.data.job_comp_address}}" bindinput="onJobCompChange" type="text"/>
+              <input id="job_comp_address" value="{{passport.data.job_comp_address}}" bindinput="onInput" type="text"/>
             </view>
 
             <view wx:if="{{!!fields.job_comp_email}}">
               <text class="fieldLabel">单位email</text>
-              <input value="{{passport.data.job_comp_email}}" bindinput="onJobTitleChangeCn" type="text"/>
+              <input id="job_comp_email" value="{{passport.data.job_comp_email}}" bindinput="onInput" type="text"/>
             </view>
             <view wx:if="{{!!fields.job_comp_tel}}">
               <text class="fieldLabel">单位电话</text>
-              <input value="{{passport.data.job_comp_tel}}" bindinput="onJobTitleChangeCn" type="text"/>
+              <input id="job_comp_tel" value="{{passport.data.job_comp_tel}}" bindinput="onInput" type="text"/>
             </view>
 
             <view wx:if="{{!!fields.job_comp_join_date}}">
-            <picker mode="date" value="{{passport.data.job_comp_join_date}}" start="1970-01-01" end="{{today}}" @change="bindDateChange">
-              <view class="picker">
-                <text class="fieldLabel">入职日期 </text> {{!passport ? '' : passport.data.job_comp_join_date}}
-              </view>
-            </picker>
-          </view>
+              <picker id="job_comp_join_date" mode="date" value="{{passport.data.job_comp_join_date}}" start="1970-01-01" end="{{today}}" @change="onInput">
+                <view class="picker">
+                  <text class="fieldLabel">入职日期 </text> {{!passport ? '' : passport.data.job_comp_join_date}}
+                </view>
+              </picker>
+            </view>
 
             <view wx:if="{{!!fields.job_title_cn}}">
               <text class="fieldLabel">职位名称</text>
-              <input value="{{passport.data.job_title_cn}}" bindinput="onJobTitleChangeCn" type="text"/>
+              <input id="job_title_cn" value="{{passport.data.job_title_cn}}" bindinput="onInput" type="text"/>
             </view>
             <view wx:if="{{!!fields.job_title}}">
               <text class="fieldLabel">职位名称(英文)</text>
-              <input placeholder="选填可空" value="{{passport.data.job_title}}" bindinput="onJobTitleChange" type="text"/>
+              <input id="job_title" placeholder="选填可空" value="{{passport.data.job_title}}" bindinput="onInput" type="text"/>
             </view>
           </view>
           <view wx:if="{{passport.data.job_type == 0}}">
             <view wx:if="{{!!fields.job_comp_cn}}">
               <text class="fieldLabel">学校名称</text>
-              <input  value="{{passport.data.job_comp_cn}}" bindinput="onJobCompChange" type="text"/>
+              <input id="job_comp_cn" value="{{passport.data.job_comp_cn}}" bindinput="onInput" type="text"/>
             </view>
           </view>
           <view wx:if="{{passport.data.job_type == 4}}">
             <view wx:if="{{!!fields.job_title_cn}}">
               <text class="fieldLabel">职业描述</text>
-              <input placeholder="当前职业的具体描述" value="{{passport.data.job_title_cn}}" bindinput="onJobTitleChangeCn" type="text"/>
+              <input id="job_title_cn" placeholder="你职业的具体描述" value="{{passport.data.job_title_cn}}" bindinput="onInput" type="text"/>
             </view>
             <view wx:if="{{!!fields.job_title}}">
               <text class="fieldLabel">职业描述(英文)</text>
-              <input placeholder="选填可空" value="{{passport.data.job_title}}" bindinput="onJobTitleChange" type="text"/>
+              <input id="job_title" placeholder="选填可空" value="{{passport.data.job_title}}" bindinput="onInput" type="text"/>
             </view>
           </view>
           <view wx:if="{{!!filesUrls}}">
@@ -122,29 +122,29 @@
         <view slot="content">
           <view wx:if="{{!!fields.passport_no}}">
             <text class="fieldLabel">护照号码</text>
-            <input placeholder="护照号码" value="{{passport.passport_no}}" bindinput="oninputPassport" type="text"/>
+            <input id="passport_no" placeholder="护照号码" value="{{passport.passport_no}}" bindinput="onInput" type="text"/>
           </view>
           <view wx:if="{{!!fields.authority}}">
             <text class="fieldLabel">颁发机构(英文)</text>
-            <input placeholder="确保与护照一致" name="authority" value="{{passport.data.authority}}" bindinput="oninputAuthority" type="text"/>
+            <input id="authority" placeholder="确保与护照一致" name="authority" value="{{passport.data.authority}}" bindinput="onInput" type="text"/>
           </view>
           <view wx:if="{{!!fields.issue_place_cn}}">
             <text class="fieldLabel">颁发地</text>
-            <input placeholder="颁发地" value="{{passport.data.issue_place_cn}}" bindinput="oninputIssuePlaceCn" type="text"/>
+            <input id="issue_place_cn" placeholder="颁发地" value="{{passport.data.issue_place_cn}}" bindinput="onInput" type="text"/>
           </view>
           <view wx:if="{{!!fields.issue_place}}">
             <text class="fieldLabel">颁发地(拼音)</text>
-            <input placeholder="颁发地" value="{{passport.data.issue_place}}" bindinput="oninputIssuePlace" type="text"/>
+            <input id="issue_place" value="{{passport.data.issue_place}}" bindinput="onInput" type="text"/>
           </view>
           <view wx:if="{{!!fields.issue_date}}">
-            <picker mode="date" value="{{passport.data.issue_date}}" start="1980-01-01" end="2019-09-01" @change="bindDateChange">
+            <picker id="issue_date" mode="date" value="{{passport.data.issue_date}}" start="1980-01-01" end="{{today}}" @change="onInput">
               <view class="picker">
                 <text class="fieldLabel">颁发日期 </text> {{!!passport ? passport.data.issue_date : ''}}
               </view>
             </picker>
           </view>
           <view wx:if="{{!!fields.expiry_date}}">
-            <picker mode="date" value="{{passport.data.expiry_date}}" start="2019-01-01" end="2039-09-01" @change="bindExpiryChange">
+            <picker id="expiry_date" mode="date" value="{{passport.data.expiry_date}}" start="{{today}}" end="2039-09-01" @change="onInput">
               <view class="picker">
                 <text class="fieldLabel">有效期至 </text>{{expiryDate}}
               </view>
@@ -158,7 +158,7 @@
       <i-collapse-item title="家庭信息">
         <view slot="content">
         <view wx:if="{{ !!fields.marital_status }}">
-          <picker @change="bindMaritalStatusChange" value="{{maritalStatusIndex}}" range="{{maritalStatuses}}">
+          <picker id="marital_status" @change="onInput" value="{{maritalStatusIndex}}" range="{{maritalStatuses}}">
           <view class="picker">
             <text class="fieldLabel">婚姻状态 </text>{{maritalStatuses[maritalStatusIndex]}}
           </view>
@@ -166,108 +166,92 @@
           <view wx:if="{{maritalStatusIndex == 1 && !!fields.spouse_name}}">
             <view>
               <text class="fieldLabel">配偶的姓(拼音)</text>
-              <input value="{{passport.data.spouse_name_sur}}" bindinput="oninputSpouseSurName" type="text"/>
+              <input id="spouse_name_sur" value="{{passport.data.spouse_name_sur}}" bindinput="onInput" type="text"/>
             </view>
             <view>
               <text class="fieldLabel">配偶的名(拼音)</text>
-              <input value="{{passport.data.spouse_name_given}}" bindinput="oninputSpouseGivenName" type="text"/>
+              <input id="spouse_name_given" value="{{passport.data.spouse_name_given}}" bindinput="onInput" type="text"/>
             </view>
           </view>
         </view>
         <view wx:if="{{!!fields.father_name}}">
           <text class="fieldLabel">父亲的姓(拼音)</text>
-          <input value="{{passport.data.father_name_sur}}" bindinput="oninputFatherSurName" type="text"/>
+          <input id="father_name_sur" value="{{passport.data.father_name_sur}}" bindinput="onInput" type="text"/>
         </view>
         <view wx:if="{{!!fields.father_name}}">
           <text class="fieldLabel">父亲的名(拼音)</text>
-          <input value="{{passport.data.father_name_given}}" bindinput="oninputFatherGivenName" type="text"/>
-        </view>
-        <view wx:if="{{!!fields.father_name_cn}}">
-          <text class="fieldLabel">父亲的姓</text>
-          <input value="{{passport.data.father_name_sur_cn}}" bindinput="oninputFatherSurNameCn" type="text"/>
-        </view>
-        <view wx:if="{{!!fields.father_name_cn}}">
-          <text class="fieldLabel">父亲的名</text>
-          <input value="{{passport.data.father_name_given_cn}}" bindinput="oninputFatherGivenNameCn" type="text"/>
+          <input id="father_name_given" value="{{passport.data.father_name_given}}" bindinput="onInput" type="text"/>
         </view>
         <view wx:if="{{!!fields.mother_name}}">
           <text class="fieldLabel">母亲的姓(拼音)</text>
-          <input value="{{passport.data.mother_name_sur}}" bindinput="oninputMotherSurName" type="text"/>
+          <input id="mother_name_sur" value="{{passport.data.mother_name_sur}}" bindinput="onInput" type="text"/>
         </view>
         <view wx:if="{{!!fields.mother_name}}">
           <text class="fieldLabel">母亲的名(拼音)</text>
-          <input value="{{passport.data.mother_name_given}}" bindinput="oninputMotherGivenName" type="text"/>
-        </view>
-        <view wx:if="{{!!fields.mother_name_cn}}">
-          <text class="fieldLabel">母亲的姓</text>
-          <input value="{{passport.data.mother_name_sur_cn}}" bindinput="oninputMotherSurNameCn" type="text"/>
-        </view>
-        <view wx:if="{{!!fields.mother_name_cn}}">
-          <text class="fieldLabel">母亲的名</text>
-          <input value="{{passport.data.mother_name_given_cn}}" bindinput="oninputMotherGivenNameCn" type="text"/>
+          <input id="mother_name_given" value="{{passport.data.mother_name_given}}" bindinput="onInput" type="text"/>
         </view>
         <view wx:if="{{!!fields.region}}">
-          <picker mode="region" @change="bindRegionChange" custom-item="全部">
+          <picker id="region" mode="region" @change="onInput" custom-item="全部">
             <text class="fieldLabel">住址城市 </text><view class="picker">{{regionDisplay}}</view>
           </picker>
         </view>
         <view wx:if="{{!!fields.address_cn}}">
           <text class="fieldLabel">详细地址</text>
-          <input placeholder="" value="{{passport.data.address_cn}}" bindinput="oninputAddressCn" type="text"/>
+          <input id="address_cn" value="{{passport.data.address_cn}}" bindinput="onInput" type="text"/>
         </view>
         <view wx:if="{{!!fields.address}}">
           <text class="fieldLabel">详细地址(英文)</text>
-          <input placeholder="选填可空" value="{{passport.data.address}}" bindinput="oninputAddress" type="text"/>
+          <input id="address" placeholder="选填可空" value="{{passport.data.address}}" bindinput="onInput" type="text"/>
         </view>
         <view wx:if="{{!!fields.phone}}">
           <text class="fieldLabel">电话号码</text>
-          <input value="{{passport.data.phone}}" bindinput="oninputPhone" type="number"/>
+          <input id='phone' value="{{passport.data.phone}}" bindinput="onInput" type="number"/>
         </view>
         <view wx:if="{{!!fields.email}}">
           <text class="fieldLabel">电子邮件</text>
-          <input placeholder="" value="{{passport.data.email}}" bindinput="oninputEmail" type="text"/>
+          <input id="email" value="{{passport.data.email}}" bindinput="onInput" type="text"/>
         </view>
         </view>
       </i-collapse-item>
       <i-collapse-item title="旅行信息">
         <view slot="content">
         <view wx:if="{{!!fields.destination}}">
-          <picker bindchange="bindDestinationChange" range="{{destinations}}" range-key="name_cn">
-        <view class="picker">
-          <text class="fieldLabel">目的地   </text>{{destinationDisplay}}
-        </view>
+          <picker id="destination" bindchange="onInputApp" range="{{destinations}}" range-key="name_cn">
+          <view class="picker">
+            <text class="fieldLabel">目的地   </text>{{destinationDisplay}}
+          </view>
         </picker>
         </view>
         <view wx:if="{{!!fields.purpose}}">
-          <picker bindchange="bindPurposeChange" value="{{application.data.purpose}}" range="{{purposes}}">
+          <picker id="purpose" bindchange="onInputApp" value="{{application.data.purpose}}" range="{{purposes}}">
             <view class="picker">
               <text class="fieldLabel">旅行目的 </text>{{purposeDisplay}}
             </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.entry_date}}">
-          <picker mode="date" value="{{application.entry_date}}"  @change="bindEntryDateChange" start="{{today}}">
+          <picker id="entry_date" mode="date" value="{{application.entry_date}}"  @change="onInputApp" start="{{today}}">
             <view class="picker">
               <text class="fieldLabel">入境日期 </text>{{entryDate}}
             </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.departure_date}}">
-          <picker mode="date" value="{{application.departure_date}}" @change="bindDepartureDateChange" start="{{departureDateStart}}">
+          <picker id="departure_date" mode="date" value="{{application.departure_date}}" @change="onInputApp" start="{{departureDateStart}}">
             <view class="picker">
               <text class="fieldLabel">离境日期 </text>{{departureDate}}
             </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.by}}">
-          <picker bindchange="bindByChange" range="{{by}}">
+          <picker id='by' bindchange="onInputApp" range="{{by}}">
           <view class="picker">
             <text class="fieldLabel">旅行方式 </text>{{byDisplay}}
           </view>
           </picker>
         </view>
         <view wx:if="{{!!fields.entry_point}}">
-          <picker bindchange="bindEntryPointChange" range="{{entrypoints[application.data.by]}}" range-key="name_cn">
+          <picker id='entry_point' bindchange="onInputApp" range="{{entrypoints[application.data.by]}}" range-key="name_cn">
           <view class="picker">
             <text class="fieldLabel">入境点   </text>{{entryPointDisplay}}
           </view>
@@ -293,13 +277,13 @@
               </label>
             </checkbox-group>
             <view wx:if="{{application.data.been_other_country}}">
-              <input placeholder="国家名称" value="{{application.data.been_other_country_name}}" bindinput="oninputCountry" type="text"/>
-              <picker mode="date" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3EntryDateChange">
+              <input id='been_other_country_name' placeholder="国家名称" value="{{application.data.been_other_country_name}}" bindinput="onInputApp" type="text"/>
+              <picker id="been_other_country_date" mode="date" start="{{threeMonthAgo()}}" end="{{today()}}" @change="onInputApp">
                 <view class="picker">
                   入境日期: {{application.data.been_other_country_date}}
                 </view>
               </picker>
-              <picker mode="date" start="{{threeMonthAgo()}}" end="{{today()}}" @change="bind3DepartureDateChange">
+              <picker id='been_other_country_departure_date' mode="date" start="{{threeMonthAgo()}}" end="{{today()}}" @change="onInputApp">
                 <view class="picker">
                   离境日期: {{application.data.been_other_country_departure_date}}
                 </view>
@@ -314,12 +298,12 @@
               </label>
             </checkbox-group>
             <view wx:if="{{application.data.ever_been_to}}">
-              <picker mode="date" end="{{today()}}" @change="bindEverEntryDateChange">
+              <picker id='ever_been_to_date' mode="date" end="{{today()}}" @change="onInputApp">
                 <view class="picker">
                   入境日期: {{application.data.ever_been_to_date}}
                 </view>
               </picker>
-              <picker mode="date" end="{{today()}}" @change="bindEverDepartureDateChange">
+              <picker id='ever_been_to_departure_date' mode="date" end="{{today()}}" @change="onInputApp">
                 <view class="picker">
                   离境日期: {{application.data.ever_been_to_departure_date}}
                 </view>
@@ -504,117 +488,43 @@
     }
 
     methods = {
-      oninputPassport(e) {
-        this.passport.passport_no = e.detail.value
+      onInput(e) {
+        switch (e.currentTarget.id) {
+          case 'passport_no':
+            this.passport.passport_no = e.detail.value
+            break
+          case 'name_cn':
+            this.passport.name_cn = e.detail.value
+            break
+          case 'name':
+            this.passport.name = e.detail.value
+            break
+          default:
+            this.passport.data[e.currentTarget.id] = e.detail.value
+            break
+        }
       },
-      oninputAuthority(e) {
-        this.passport.data.authority = e.detail.value
+      onInputApp(e) {
+        switch (e.currentTarget.id) {
+          default:
+            this.application.data[e.currentTarget.id] = e.detail.value
+            break
+          case 'entry_date':
+            this.application.entry_date = e.detail.value
+            break;
+          case 'departure_date':
+            this.application.departure_date = e.detail.value
+            break;
+          case 'by':
+            this.application.data.by = e.detail.value
+            this.application.data.entry_point = this.entrypoints[this.application.data.by][0]
+            break;
+          case 'entry_point':
+            this.application.data.entry_point = this.entrypoints[this.application.data.by][e.detail.value]
+            break;
+        }
       },
-      oninputIssuePlaceCn(e) {
-        this.passport.data.issue_place_cn = e.detail.value
-      },
-      oninputIssuePlace(e) {
-        this.passport.data.issue_place = e.detail.value
-      },
-      oninputNamecn(e) {
-        this.passport.name_cn = e.detail.value
-      },
-      oninputName(e) {
-        this.passport.name = e.detail.value
-      },
-      oninputNationality(e) {
-        this.passport.data.country = e.detail.value
-      },
-      bindDateChange(e) {
-        this.passport.data.issue_date = e.detail.value
-      },
-      bindExpiryChange(e) {
-        this.passport.data.expiry_date = e.detail.value
-      },
-      bindMaritalStatusChange(e) {
-        this.passport.data.marital_status = e.detail.value
-      },
-      bindBirthChange(e) {
-        this.birth_date = e.detail.value
-        this.passport.data.birth_date = e.detail.value
-      },
-      radioChange(e) {
-        this.passport.data.sex = e.detail.value
-      },
-      onJobTypeChange(e) {
-        this.passport.data.job_type = e.detail.value
-      },
-      onJobCompChange(e) {
-        this.passport.data.job_comp_cn = e.detail.value
-      },
-      onJobTitleChangeCn(e) {
-        this.passport.data.job_title_cn = e.detail.value
-      },
-      onJobTitleChange(e) {
-        this.passport.data.job_title = e.detail.value
-      },
-      oninputFatherSurName(e) {
-        this.passport.data.father_name_sur = e.detail.value
-      },
-      oninputFatherSurNameCn(e) {
-        this.passport.data.father_name_sur_cn = e.detail.value
-      },
-      oninputSpouseSurName(e) {
-        this.passport.data.spouse_name_sur = e.detail.value
-      },
-      oninputSpouseGivenName(e) {
-        this.passport.data.spouse_name_given = e.detail.value
-      },
-      oninputFatherGivenName(e) {
-        this.passport.data.father_name_given = e.detail.value
-      },
-      oninputFatherGivenNameCn(e) {
-        this.passport.data.father_name_given_cn = e.detail.value
-      },
-      oninputMotherSurName(e) {
-        this.passport.data.mother_name_sur = e.detail.value
-      },
-      oninputMotherSurNameCn(e) {
-        this.passport.data.mother_name_sur_cn = e.detail.value
-      },
-      oninputMotherGivenName(e) {
-        this.passport.data.mother_name_given = e.detail.value
-      },
-      oninputMotherGivenNameCn(e) {
-        this.passport.data.mother_name_given_cn = e.detail.value
-      },
-      bindRegionChange(e) {
-        console.log(e.detail.value)
-        this.passport.data.region = e.detail.value
-      },
-      oninputAddressCn(e) {
-        this.passport.data.address_cn = e.detail.value
-      },
-      oninputAddress(e) {
-        this.passport.data.address = e.detail.value
-      },
-      oninputPhone(e) {
-        this.passport.data.phone = e.detail.value
-      },
-      oninputEmail(e) {
-        this.passport.data.email = e.detail.value
-      },
-      bindPurposeChange(e) {
-        this.application.data.purpose = e.detail.value
-      },
-      bindEntryDateChange(e) {
-        this.application.entry_date = e.detail.value
-      },
-      bindDepartureDateChange(e) {
-        this.application.departure_date = e.detail.value
-      },
-      bindByChange(e) {
-        this.application.data.by = e.detail.value
-        this.application.data.entry_point = this.entrypoints[this.application.data.by][0]
-      },
-      bindEntryPointChange(e) {
-        this.application.data.entry_point = this.entrypoints[this.application.data.by][e.detail.value]
-      },
+      
       checkboxChangeReturnDomicile(e) {
         this.application.data.return_to_domicile = e.detail.value.includes('return_to_domicile')
       },
@@ -629,21 +539,6 @@
         this.application.data.ever_denied = e.detail.value.includes('ever_denied')
         this.application.data.ever_denied_by_others = e.detail.value.includes('ever_denied_by_others')
         this.application.data.ever_convicted = e.detail.value.includes('ever_convicted')
-      },
-      oninputCountry(e) {
-        this.application.data.been_other_country_name = e.detail.value
-      },
-      bind3EntryDateChange(e) {
-        this.application.data.been_other_country_date = e.detail.value
-      },
-      bind3DepartureDateChange(e) {
-        this.application.data.been_other_country_departure_date = e.detail.value
-      },
-      bindEverEntryDateChange(e) {
-        this.application.data.ever_been_to_date = e.detail.value
-      },
-      bindEverDepartureDateChange(e) {
-        this.application.data.ever_been_to_departure_date = e.detail.value
       }
     }
     previewPassport(event) {

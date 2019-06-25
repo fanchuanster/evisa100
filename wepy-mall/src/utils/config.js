@@ -60,7 +60,7 @@ var config = {
       job_type:1, job_comp_cn:1, job_comp:0, job_title_cn:1, job_title:1,
       job_comp_address_cn:1, job_comp_address:1, job_comp_email:1, job_comp_tel:1, job_comp_join_date:1,  
       passport_no:1, authority:1, issue_place:1, issue_date:1, expiry_date:1,
-      father_name:1, mother_name:1, region:1, address_cn:1, address:1, phone:1, email:1,
+      father_name:1, mother_name:1, spouse_name:1, region:1, address_cn:1, address:1, phone:1, email:1,
       purpose:1, entry_date:1, departure_date:1, by:1, entry_point:1, departure_point:1,
       ever_been_to:1,
       special:"pak"

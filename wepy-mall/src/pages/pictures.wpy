@@ -31,7 +31,7 @@
       <i-collapse-item title="我的护照">
         <view slot="content">
           <view wx:for="{{passports}}" wx:key="item" id="{{item.id}}" @tap="ShowPassport">
-            <text class="fieldLabel">{{item.id}} {{item.passport_no}}</text>
+            <text class="fieldLabel">{{item.name}} {{item.passport_no}}</text>
           </view>
         </view>
       </i-collapse-item>

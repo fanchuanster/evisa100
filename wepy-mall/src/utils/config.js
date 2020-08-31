@@ -1,7 +1,7 @@
 var config = {
   //aliyun OSS config
   ossHost: 'https://evisa.oss-cn-shanghai.aliyuncs.com',
-  accesskey: 'NyNOmcGHgyKX5vHUtn9lv7M1vCJWL3',
+  accesskey: '',
   accessid: 'LTAIQMDDOG5SOtsh',
   timeout: 87600, // policy valid timespan.
   adminOpenid: 'opini5GNX-N6JKq6aqutfPHCxUDc',
